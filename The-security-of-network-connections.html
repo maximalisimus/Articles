@@ -99,6 +99,8 @@
 			<p><blockquote>AllowUsers root networks</blockquote></p>
 			<p>Можно разрешить доступ всем, кроме указанных:</p>
 			<p><blockquote>DenyUsers root networks</blockquote></p>
+			<p>Выбранных пользователей можно добавить в группу и разрешить доступ только этой группе:</p>
+			<p><blockquote>AllowGroups ssh_group</blockquote></p>
 			<p>Укажем время, в течение которого, неактивная сессия будет завершена, а также количество проверок доступности клиента, которые могут оставаться без ответа:</p>
 			<p><blockquote>ClientAliveInterval 300</br>
 							ClientAliveCountMax 3</blockquote></p>
@@ -113,10 +115,10 @@
 			<p><blockquote>PermitEmptyPasswords no</blockquote></p>
 			<p>Изменяем порт по умолчанию. Обязательно запомните его. Он понадобится при настройке фаервола.</p>
 			<p><blockquote>Port 962</blockquote></p>
-			<p></p>
-			<p><blockquote></blockquote></p>
-			<p></p>
-			<p><blockquote></blockquote></p>
+			<p>Анализ логов, для расширенного контроля над системой:</p>
+			<p><blockquote>LogLevel INFO</blockquote></p>
+			<p>Отключаем пересылку X11 через ssh, т.к. данный протокол не ориентирован на безопасность.</p>
+			<p><blockquote>X11Forwarding no</blockquote></p>
 			<p></p>
 			<p><blockquote></blockquote></p>
 		</div>
