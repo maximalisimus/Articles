@@ -1,0 +1,30 @@
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#page {
+  width: 70%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+img {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.fz__minimized {
+  width: 300px;
+  cursor: pointer;
+  border: 1px solid #FFF;
+}
+
+.fz__minimized:hover {
+  border: 1px solid yellow;
+}
