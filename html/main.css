@@ -132,7 +132,7 @@ BODY {
 .images {
 	display: inline-block;
 	position: relative;
-	margin: 0px;
+	margin: 0px; 
 	padding: 0px;
 }
 .images img {
@@ -140,6 +140,7 @@ BODY {
 	position: relative;
 	margin: 0px;
 	padding: 0px;
+	mix-blend-mode: multiply;
 }
 .about {
 	margin: 10px 20px 10px 20px;
