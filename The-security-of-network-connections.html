@@ -234,7 +234,75 @@
 			<p class="codes">
 				$: systemctl restart fail2ban
 			</p>
-			
+			<p>Для гарантии, что fail2ban не заблокирут компьютер администратора или другой важный узел, предусмотрена настройка исключений с помощью опции ignoreip. Опция может быть применена как на глобальном уровне (default), так и для конкретного правила.</p>
+			<p>Для того, чтобы задать общую настроку, откроем наш файл default:</p>
+			<p class="codes">
+				[DEFAULT]</br>
+				...</br>
+				ignoreip = 192.168.0.0/24 95.95.95.95
+			</p>
+			<p>* в данном примере под фильтры не будут попадать адреса с 192.168.0.1 по 192.168.0.255 и адрес 95.95.95.95.</p>
+			<p>Файлы с настройкой действий находятся в каталоге /etc/fail2ban/action.d. Чтобы блокировать адрес, Fail2ban создает правило в брандмауэре netfilter. Для этого, чаще всего, используются утилиты iptables или firewall-cmd. Последняя применяется в последних версиях CentOS / Red Hat / Fedora. iptables более универсальная и может использоваться, почти, во всех системах Linux.</p>
+			<p>Остановимся на описании самых используемых действий:</p>
+			<ul>
+				<li>iptables — создание простого правила в netfilter с помощью одноименной утилиты;</li>
+				<li>iptables-multiport — использование модуля multiports, позволяющий добавлять диапазоны портов для блокировки;</li>
+				<li>iptables-ipset — использование ipset для придания более лаконичного вида правилам;</li>
+				<li>iptables-allports — блокирует для адреса все порты;</li>
+				<li>firewallcmd-new — создание простого правила в netfilter с помощью firewall-cmd;</li>
+				<li>firewallcmd-ipset — добавляет правила с помощью утилиты firewall-cmd, используя ipset;</li>
+				<li>firewallcmd-rich-rules — создает rich-rules при помощи firewall-cmd.</li>
+			</ul>
+			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге /etc/fail2ban/filter.d.</p>
+		</div>
+		<div class="content">
+			<h4>Примеры правил</h4>
+			<p>CentOS</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				[ssh]</br>
+				enabled = true</br>
+				port = ssh</br>
+				filter = sshd</br>
+				action = firewallcmd-new[name=sshd]</br>
+				logpath = /var/log/secure
+			</p>
+			<p>Ubuntu</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				[ssh]</br>
+				enabled = true</br>
+				port = ssh</br>
+				filter = sshd</br>
+				action = iptables[name=sshd]</br>
+				logpath = /var/log/auth.log
+			</p>
+			<p>Asterisk</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/asterisk.conf</br></br>
+				[asterisk]</br>
+				enabled = true</br>
+				filter = asterisk</br>
+				action = iptables-allports[name=asterisk, protocol=all]</br>
+				logpath = /var/log/asterisk/messages
+			</p>
+			<p>NGINX</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/nginx.conf</br></br>
+				[nginx]</br>
+				enabled = true</br>
+				port = http,https</br>
+				filter = nginx-http-auth</br>
+				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
+				logpath = /var/log/nginx/error.log
+			</p>
+			</br>
+			<b>NGINX DDoS (req limit)</b>
+			<p></p>
+			<p></p>
+			<p class="codes">
+				
+			</p>
 		</div>
 		<div class="about">
 			<p>Copyright &copy; 14.01.2021 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
