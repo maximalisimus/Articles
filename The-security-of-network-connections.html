@@ -254,48 +254,6 @@
 				<li>firewallcmd-rich-rules — создает rich-rules при помощи firewall-cmd.</li>
 			</ul>
 			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге /etc/fail2ban/filter.d.</p>
-		</div>
-		<div class="content">
-			<h4>Примеры правил</h4>
-			<p>CentOS</p>
-			<p class="codes">
-				/etc/fail2ban/jail.d/ssh.conf</br></br>
-				[ssh]</br>
-				enabled = true</br>
-				port = ssh</br>
-				filter = sshd</br>
-				action = firewallcmd-new[name=sshd]</br>
-				logpath = /var/log/secure
-			</p>
-			<p>Ubuntu</p>
-			<p class="codes">
-				/etc/fail2ban/jail.d/ssh.conf</br></br>
-				[ssh]</br>
-				enabled = true</br>
-				port = ssh</br>
-				filter = sshd</br>
-				action = iptables[name=sshd]</br>
-				logpath = /var/log/auth.log
-			</p>
-			<p>Asterisk</p>
-			<p class="codes">
-				/etc/fail2ban/jail.d/asterisk.conf</br></br>
-				[asterisk]</br>
-				enabled = true</br>
-				filter = asterisk</br>
-				action = iptables-allports[name=asterisk, protocol=all]</br>
-				logpath = /var/log/asterisk/messages
-			</p>
-			<p>NGINX</p>
-			<p class="codes">
-				/etc/fail2ban/jail.d/nginx.conf</br></br>
-				[nginx]</br>
-				enabled = true</br>
-				port = http,https</br>
-				filter = nginx-http-auth</br>
-				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
-				logpath = /var/log/nginx/error.log
-			</p>
 			</br>
 			<b>NGINX DDoS (req limit)</b>
 			<p>Данное правило поможет защитить веб-сервер nginx от DDoS-атак. В некоторых сборках, для данного правило может не оказаться готового фильтра, поэтому в данном примере, мы его создадим вручную.</p>
@@ -406,6 +364,48 @@
 			<p>После необходимо перечитать правила:</p>
 			<p class="codes">
 				$: firewall-cmd --reload
+			</p>
+		</div>
+		<div class="content">
+			<h4>Примеры правил</h4>
+			<p>CentOS</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				[ssh]</br>
+				enabled = true</br>
+				port = ssh</br>
+				filter = sshd</br>
+				action = firewallcmd-new[name=sshd]</br>
+				logpath = /var/log/secure
+			</p>
+			<p>Ubuntu</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				[ssh]</br>
+				enabled = true</br>
+				port = ssh</br>
+				filter = sshd</br>
+				action = iptables[name=sshd]</br>
+				logpath = /var/log/auth.log
+			</p>
+			<p>Asterisk</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/asterisk.conf</br></br>
+				[asterisk]</br>
+				enabled = true</br>
+				filter = asterisk</br>
+				action = iptables-allports[name=asterisk, protocol=all]</br>
+				logpath = /var/log/asterisk/messages
+			</p>
+			<p>NGINX</p>
+			<p class="codes">
+				/etc/fail2ban/jail.d/nginx.conf</br></br>
+				[nginx]</br>
+				enabled = true</br>
+				port = http,https</br>
+				filter = nginx-http-auth</br>
+				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
+				logpath = /var/log/nginx/error.log
 			</p>
 		</div>
 		<div class="about">
