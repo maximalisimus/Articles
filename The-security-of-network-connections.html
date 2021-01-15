@@ -298,10 +298,114 @@
 			</p>
 			</br>
 			<b>NGINX DDoS (req limit)</b>
-			<p></p>
-			<p></p>
+			<p>Данное правило поможет защитить веб-сервер nginx от DDoS-атак. В некоторых сборках, для данного правило может не оказаться готового фильтра, поэтому в данном примере, мы его создадим вручную.</p>
+			<p>Для начала, необходимо настроить NGINX:</p>
 			<p class="codes">
-				
+				$: vi /etc/nginx/nginx.conf
+			</p>
+			<p>В раздел http добавим:</p>
+			<p class="codes">
+				http {</br>
+				...</br>
+				limit_req_zone $binary_remote_addr zone=one:10m rate=5r/s;</br>
+				...</br>
+			</p>
+			<p>* данная настройка создает зону с интенсивностью запросов в 1 запрос в секунду.</p>
+			<p>После настраиваем лимит для конкретного виртуального домена в разделе server - location:</p>
+			<p class="codes">
+				server {</br>
+				...</br>
+				location / {</br>
+				...</br>
+				limit_req zone=one burst=5 nodelay;</br>
+				...
+			</p>
+			<p>* данная настройка вместе с предыдущей зоной, созданной в секции http, позволит лимитировать запросы — 1 запрос в секунду при всплеске 5 запросов.</p>
+			<p>Проверяем конфигурационный файл nginx и перезапускаем сервис:</p>
+			<p class="codes">
+				$: nginx -t</br>
+				$: systemctl reload nginx
+			</p>
+			<p>В лог-файле /var/log/nginx/error.log мы должны увидеть запись на подобие:</p>
+			<p class="codes">
+				2020/11/16 19:11:08 [error] 1330844#1330844: *16640836 limiting requests, excess: 10.520 by zone "one", client: xxx.xxx.xxx.xxx, server: dmosk.ru, request: "GET / HTTP/1.1", host: "dmosk.ru", referrer: "https://dmosk.ru/page1"
+			</p>
+			<p>Теперь можно приступать к настройке fail2ban. Создаем фильтр:</p>
+			<p class="codes">
+				$: vi /etc/fail2ban/filter.d/nginx-limit-req.conf</br></br>
+				[Definition]</br>
+				ngx_limit_req_zones = [^"]+</br>
+				failregex = ^\s*\[error\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "(?:%(ngx_limit_req_zones)s)", client: <HOST></br>
+				ignoreregex =
+			</p>
+			<p>Создаем правило в fail2ban:</p>
+			<p class="codes">
+				$: vi /etc/fail2ban/jail.d/nginx-ddos.conf</br></br>
+				[nginx-ddos]</br>
+				enabled = true</br>
+				port = http,https</br>
+				filter = nginx-limit-req</br>
+				action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
+				logpath = /var/log/nginx/error.log
+			</p>
+			<p>После настройки не забываем перезапустить fail2ban:</p>
+			<p class="codes">
+				$: systemctl restart fail2ban
+			</p>
+			</br>
+			<b>Работа со списком заблокированных адресов</b>
+			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
+			<p class="codes">
+				$: fail2ban-client status <имя правила>
+			</p>
+			<p>Получить список правил можно командой:</p>
+			<p class="codes">
+				$: fail2ban-client status
+			</p>
+			<p>При наличие заблокированных IP-адресов мы увидим, примерно, следующее:</p>
+			<p class="codes">
+				`- action</br>
+				|- Currently banned: 2</br>
+				|  `- IP list:       31.207.47.55 10.212.245.29</br>
+			</p>
+			<p>С помощью iptables:</p>
+			<p class="codes">
+				$: iptables -L -n --line
+			</p>
+			<p>С помощью firewall-cmd:</p>
+			<p class="codes">
+				$: firewall-cmd --direct --get-all-rules
+			</p>
+			</br>
+			<b>Удаление</b>
+			<p class="pbold">Средствами fail2ban:</p>
+			<p>Для удаление адреса из списка вводим:</p>
+			<p class="codes">
+				$: fail2ban-client set <имя правила> unbanip <IP-адрес>
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: fail2ban-client set ssh unbanip 31.207.47.55
+			</p>
+			<p class="pbold">С помощью iptables:</p>
+			<p class="codes">
+				$: iptables -D <цепочка правил> -s IP-адрес
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: iptables -D fail2ban-ssh -s 10.212.245.29
+			</p>
+			<p class="pbold">С помощью firewall-cmd:</p>
+			<p class="codes">
+				$: firewall-cmd --direct --permanent --remove-rule <правило>
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
+			</p>
+			<p>После необходимо перечитать правила:</p>
+			<p class="codes">
+				$: firewall-cmd --reload
 			</p>
 		</div>
 		<div class="about">

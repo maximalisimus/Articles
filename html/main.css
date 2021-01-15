@@ -127,7 +127,10 @@ BODY {
 	position: relative;
 	margin: 0px 0px 0px 25px;
 	padding: 10px;
-	background-color: #d2d2d2;
+	background-color: #ccdfe8;
+}
+.content p.pbold {
+	font-weight: bold;
 }
 .images {
 	display: inline-block;
