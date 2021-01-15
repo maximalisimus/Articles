@@ -65,8 +65,25 @@
 			</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-3.jpg" class="fz__minimized" alt="клик для увеличения" title="Локальное управление" />
-				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-4.jpg" class="fz__minimized" alt="клик для увеличения" title="Локальное управление2" />
-			</div>	
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr841-config-4.jpg" class="fz__minimized" alt="клик для увеличения" title="Локальное управление2" />
+			</div>
+			<p>Также не забудьте про протокол UPnP.</p>
+			<p>UPnP - это протокол, который позволяет приложениям и другим устройствам в вашей сети автоматически открывать и закрывать порты для подключения друг к другу. Например, если вы решили подключить принтер ко всем устройствам в доме без UPnP, то вам потребуется сделать это вручную, уделяя внимание каждому отдельному девайсу. Но благодаря UPnP можно автоматизировать этот процесс.</p>
+			<p>С поддержкой UPnP они могут автоматически подключаться к сети, получать IP-адрес, находить другие устройства в сети и подключаться к ним, и это очень удобно.</p>
+			<p>Первоначально предполагалось, что UPnP будет работать только на уровне локальной сети, что означает, что устройства только в вашей сети могут подключаться друг к другу. Однако многие производители маршрутизаторов теперь включают UPnP по умолчанию, что делает их доступными для обнаружения из WAN, а это приводит к многочисленным проблемам безопасности.</p>
+			<p>UPnP не использует аутентификацию или авторизацию (только некоторые устройства), предполагая, что устройства, пытающиеся подключиться к нему, являются надежными и поступают из вашей локальной сети. Это означает, что хакеры могут найти бэкдоры в вашей сети. Например, они отправят UPnP-запрос на ваш маршрутизатор и он откроет им порт без лишних вопросов.</p>
+			<p>Если вы планируете отключить протокол UPnP, то вам придётся настроить проброс портов вручную для каждого устройства или программы отдельно. При этом также будет необходимо зарезервировать для каждого устройства отдельный IP адрес.</p>
+			<p>Например, для каждого Torrent клиента (или сервера) порт подключения + ip адресс ПК, на котором используется тот или иной Torrent клиент. Иначе, рано или поздно, обнаружете что ваши torrent закачки попросту не работают.</p>
+			<p>По умолчанию порт uTorrent клиента ОС Windows 35691. Поэтому рекомендую сгенерировать случайный порт с помощью кнопочки "Случайный".</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-5.png" class="fz__minimized" alt="клик для увеличения" title="Список клиентов DHCP" />
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-6.png" class="fz__minimized" alt="клик для увеличения" title="Резервирование адресов" />
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-7.png" class="fz__minimized" alt="клик для увеличения" title="UPnP" />
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/tplink-wr741-config-8.png" class="fz__minimized" alt="клик для увеличения" title="Виртуальный сервер" />
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/utorrent.png" class="fz__minimized" alt="клик для увеличения" title="uTorrent" />
+				<img src="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/transmission.png" class="fz__minimized" alt="клик для увеличения" title="Transmission" />
+			</div>
+			
 			<p>
 				Если вы ещё не сделали указанных настроек, то поспешите, пока злоумышленники не причинили вред вашему сетевому устройству и не завладели вашими персональными данными. Данных настроек вполне достаточно, чтобы ограничить доступ любому злоумышленнику. Однако всегда помните, что указанные настройки роутера вовсе не универсальны а только усложняют недоброжелателям работу. 
 			</p>
