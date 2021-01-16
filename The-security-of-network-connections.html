@@ -148,6 +148,11 @@
 			<p><blockquote>Protocol 2</blockquote></p>
 			<p>Отключение проверки пароля:</p>
 			<p><blockquote>PasswordAuthentication no</blockquote></p>
+			<p>Включаем аутентификацию по открытому ключу:</p>
+			<p><blockquote>PubkeyAuthentication yes</blockquote></p>
+			<p>Параметр AuthorizedKeysFile определяет файл, в котором содержатся публичные ключи, используемые для аутентификации пользователей по открытому ключу. В записи могут присутствовать переменные, например %h означает домашний каталог пользователя, а %u – имя пользователя. В дальнейшем мы планируем использование аутентификации по открытому ключу - раскомментируем эту строку.
+			</p>
+			<p><blockquote>AuthorizedKeysFile .ssh/authorized_keys</blockquote></p>
 			<p>По умолчанию, все системные пользователи имеют возможность подключаться к системе по SSH. Например, разрешим SSH для пользователей root и networks:</br>
 			</p>
 			<p><blockquote>AllowUsers root networks</blockquote></p>
