@@ -1,0 +1,18 @@
+Команды для Linux:
+
+	cqtdeployer -bin myApp -qmake /usr/bin/qmake -qmlDir ./
+	
+Команды для Windows:
+
+	cqtdeployer -bin myApp.exe -qmake C:\\Qt\Qt5.7.0\5.7\mingw53_32/bin\qmake.exe -qmlDir .
+	
+	C:\cqtdeployer.bat -bin ./release/DirModel.exe -qmake qmake -qmlDir .
+
+cqtdeployer - это вызов утилиты. (до версии 1.4 в Windows использовалась команда %cqtdeployer%)
+
+-bin - флаг для передачи путей исполняемых файлов приложения.
+myApp.exe и myApp - сам путь к исполняемому файлу приложения
+-qmake - флаг для передачи путей к qmake для развертывания qt.
+-qmlDir - флаг для передачи путей к qml файлам приложения.
+
+
