@@ -1,3 +1,15 @@
+
+pyinstaller
+
+--onefile — сборка в один файл, т.е. файлы .dll не пишутся.
+--windowed -при запуске приложения, будет появляться консоль.
+--noconsole — при запуске приложения, консоль появляться не будет.
+--icon=app.ico — добавляем иконку в окно.
+--paths — возможность вручную прописать путь к необходимым файлам, если pyinstaller
+не может их найти(например: --paths D:\python35\Lib\site-packages\PyQt5\Qt\bin)
+
+pyinstaller --onefile --noconsole test.py
+
 Команды для Linux:
 
 	cqtdeployer -bin myApp -qmake /usr/bin/qmake -qmlDir ./
