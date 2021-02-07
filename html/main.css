@@ -129,6 +129,13 @@ BODY {
 	padding: 10px;
 	background-color: #ccdfe8;
 }
+.content .codeses {
+	display: block;
+	position: relative;
+	margin: 10px 10px 10px 25px;
+	padding: 5px 10px 5px 10px;
+	background-color: #ccdfe8;
+}
 .content p.pbold {
 	font-weight: bold;
 }

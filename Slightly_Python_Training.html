@@ -1,8 +1,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Немного Python уроков</title>
+	<title>Немного уроков Python скриптов</title>
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
+	
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
 	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
@@ -11,7 +12,7 @@
 	<div class="site">
 		<div class="header">
 			<div id="logo">
-				<p style="margin:10px; padding:0px;">Немного Python уроков</p>
+				<p style="margin:10px; padding:0px;">Немного уроков Python скриптов</p>
 			</div>
 		</div>
 		<div class="content">
@@ -20,14 +21,25 @@
 			</center>
 			<center>
 				<div class="images">
-					<img src="" width="150px"/>
+					<img src="https://maximalisimus.github.io/Articles/image/Slightly_Python_Training/python_2_png.png" width="150px"/>
 				</div>
 				<div style="clear:both"></div>
 			</center>
 			</br>
 		</div>
 		<div class="content">
-			
+			<p>Для выполнения данного урока нам понадобится всего три модуля: sys, re и pathlib.
+			</p><p>А начнем мы конструкций switch - case. На языках C/C++/Bash она упрощают нашу работу. Однако, её нет в языке Python. Но мы легко можем это исправить.
+			</p><p>Для этого достаточно воспользоваться функцией, которая возвращает по словарю одно из его значений, в зависимости от ключа, включая значение по умолчанию если ключ не был найден.
+			</p><p>Выглядит это следующим образом:</p>
+			<div class="codeses">
+				<pre>
+def switch(case):
+   return {
+      "-stdin": 1,
+      "-next": 2
+   }.get(case, None)</pre>
+			</div>
 		</div>
 		<div class="content">
 			
@@ -35,9 +47,7 @@
 				<img src="https://maximalisimus.github.io/Articles/image/" class="fz__minimized" alt="клик для увеличения" title="Список клиентов DHCP" />
 			</div>
 			<p class="codes">
-				$: </br>
-				$: </br>
-				$: 
+			
 			</p>
 			<p><blockquote>Text</blockquote></p>
 			<ul>
