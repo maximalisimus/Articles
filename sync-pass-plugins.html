@@ -16,11 +16,11 @@
 		</div>
 		<div class="content">
 			<center>
-				<h2>Теория и практика.</h2>
+				<h2>Ваши пароли под вашей защитой.</h2>
 			</center>
 			<center>
 				<div class="images">
-					<img src="" width="150px"/>
+					<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/sync-pass-plugins.jpg" width="300px"/>
 				</div>
 				<div style="clear:both"></div>
 				<p>Данные рекомендаций ориентированы на пользователей <b>Linux</b>. Однако, большая часть указанных рекомендаций будет работать и в <b>Windows</b></p>
@@ -28,10 +28,67 @@
 			</br>
 		</div>
 		<div class="content">
+			<p>Большинство из нас успешно пользуются синхронизацией. Нам всем нравится начинать работать на ПК и при необходимости продолжать работу уже на смартфоне.</p>
+			<p>К сожалению, политика chromium подобных браузеров серьёзно изменилась и с марта 2021 года синхронизация поддерживаться больше не будет.</p>
+			<p>Как бы ни было печально, но, я думаю, что со временем эту функцию могут убрать и из google-crhome. Функция синхронизации присутствует и в бразурах FireFox, Yandex.</p>
+			<p>Но мы все знаем, что из любой ситуации есть выход. В данном случае воспользоваться другим браузером, который пока ещё поддерживает синхронизацию или сразу перейти на профессиональное решение - менеджер паролей.
+			На сегодня существует несколько типов менедежеров паролей, а именно: онлайн (требующие доступ к интернету) и офлайн (хранящие свою базу на локальном диске вашего пк). И у тех и у других иногда встречаются функции управления доступом к паролям по WiFi сети.
+			</p>
+			<p>Онлайн версии таких менеджеров мы не будем сегодня рассматривать, т.к. они хранят свои базы на серверах разработчиков в зашифрованном виде, т.е. в виде хеша. Хоть разработчики толком по сути и не имеют доступ к вашим паролям, но это зависимость от чужих серверов. Один из примеров такого менеджера - <b>Bitwarden</b>. Мы же сегодня рассмотрим офлайн менеджер паролей <b>KeePassXC</b> в сочатании с плагином для большинства браузеров (Google Chrome, Chromium, FireFox, Vivaldi, Tor Browser, Brave, MS Edge) - <b>KeePassXC-Browser</b>.</p>
+			<p>Но не спешите расстраиваться. Мы сегодня с вами сделаем так, что один <b>KeePassXC</b> сможет синхронизировать свою базу через любой облачный сервис с вашим смартфоном или планшетом с такой же программой <b>KeePassDroid</b>.
+			Конечно у всего есть недостатки и наше решение ими не обделено. Но помните, что в этом случае база паролей в любом случае всегда будет оставаться у нас и даже в зашифрованном виде. Даже если ваше облако случайно взломают, надо будет ещё расшировать базу с паролями.</p>
+			<p>Так, что пристёгивайте ремни, наливайте приятную для вас жидкость, а мы начинаем.</p>
+			<p>Прежде всего необходимо добавить в ваш браузер плагин для работы с локальной базой паролей - <b>KeePassXC-Browser</b> и немного настроить его по своему вкусу. Я для себя поставил несколько дополнительных галочек в настройках.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-6.png" class="fz__minimized" alt="клик для увеличения" title="Google Chrome Plugin" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-7.png" class="fz__minimized" alt="клик для увеличения" title="Mozila FireFox Plugin" />
+			</div>	
+			<p>Затем необходимо установить и настроить один из дисков - google диск, yandex диск. Мне наиболее симпотичен - Yandex.</p>
+			<p>Для всех дистрибутивов, основанных на Debian и использующих файловый менеджер apt для установки Yandex-Диска воспользуемся следующими командами:</p>
+			<p class="codes">
+				$ sudo echo "deb http://repo.yandex.ru/yandex-disk/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/yandex-disk.list</br>
+				$ wget http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG -O- | sudo apt-key add -</br>
+				$ sudo apt update</br>
+				$ sudo apt install yandex-disk
+			</p>
+			<p>Далее установим индикатор системного трея, т.е. GUI интерфейс:</p>
+			<p class="codes">
+				$ sudo add-apt-repository ppa:slytomcat/ppa</br>
+				$ sudo apt-get update</br>
+				$ sudo apt-get install yd-tools
+			</p>
+			<p>Если вам надо установить программу в CentOS или Fedora воспользуемся другими командами:</p>
+			<p class="codes">
+				$ sudo nano /etc/yum.repos.d/yandex.repo</br>
+				</br>
+				[yandex]</br>
+				name=Yandex</br>
+				failovermethod=priority</br>
+				baseurl=http://repo.yandex.ru/yandex-disk/rpm/stable/$basearch/</br>
+				enabled=1</br>
+				metadata_expire=1d</br>
+				gpgcheck=1</br>
+				gpgkey=http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG</br>
+				</br>
+				$ sudo rpm --import http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG</br>
+				$ sudo yum install yandex-disk
+			</p>
+			<p>Для Archlinux и Manjaro необходимо из AUR собрать и установить пакеты: <b>yandex-disk</b> и <b>yandex-disk-indicator</b>. К сожалению индикатора (т.е. GUI интерфейса) для CentOS и Fedora нет. Но не беспокойтесь я для вас уже всё конвертировал с помощью утилиты <b>alien</b>. Вам осталось только скачать и установить.</p>
+			<p class="codes">
+				CentOS, Fedora:</br>
+				$ svn export https://github.com/maximalisimus/repo/trunk/deb_rpm/yd-tools-1.11.0-2.noarch.rpm</br>
+				$ rpm -ivh yd-tools-1.11.0-2.noarch.rpm</br>
+				</br>
+				Archlinux, Manjaro:</br>
+				$ svn export https://github.com/maximalisimus/repo/trunk/aur-packages/x86_64/yandex-disk-0.1.5.1039-2-x86_64.pkg.tar.zst</br>
+				$ svn export https://github.com/maximalisimus/repo/trunk/aur-packages/x86_64/yandex-disk-indicator-1.11.0-3-x86_64.pkg.tar.zst</br>
+				$ sudo pacman -U yandex-disk-0.1.5.1039-2-x86_64.pkg.tar.zst</br>
+				$ sudo pacman -U yandex-disk-indicator-1.11.0-3-x86_64.pkg.tar.zst
+			</p>
+			<p>Для перехода в репозиторий с пакетом индикатора Яндекс диска для Debian-подобных систем <a href="http://ppa.launchpad.net/slytomcat/ppa/ubuntu/pool/main/y/yd-tools/">воспользуйтесь это ссылкой</a>.</p>
+			<p>После установки заходим в свой аккаунт и настраиваем места расположения папки для синхронизации и данных для входа. Я оставил всё по умолчанию.</p>
 			<p></p>
 			<p></p>
-			<p></p>
-			<p><b></b></p>
 			<p></p>
 			<div class="codeses">
 				<pre>
@@ -39,6 +96,10 @@ Code function
 	operation
 </pre>
 			</div>
+			<div id="page" class="clearfix">
+				<img src="" class="fz__minimized" alt="клик для увеличения" title="" />
+				<img src="" class="fz__minimized" alt="клик для увеличения" title="" />
+			</div>	
 			<p class="codes">
 				string 1</br>
 				string 2</br>
