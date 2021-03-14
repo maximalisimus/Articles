@@ -113,6 +113,42 @@
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-15.png" class="fz__minimized" alt="клик для увеличения" title="Запуск индикатора Yandex-disk" />
 			</div>
 			<p>Создаем на диске отдельную папку для паролей. Назовите её как вам будет угодно - любое имя на ваше усмотрение. Занимать пароли будут не много. Но, чтобы избежать дальнейших ошибок синхронизации или открытия базы с разными устройствами, разными ОС, наличие/отсутствие кодировок и т.д. и т.п. - я назвал папку на английском языке без пробелов. Например: <b>"KeePassXC_Passwords"</b>.</p>
+			<p>Теперь необходимо экспортировать пароли из вашего браузера в файл с расширением <b>.csv</b>. По умолчанию все браузеры поддерживают экспорт паролей. А вот импорт не все. <b>Google Chrome</b> пока ещё поддерживает функцию импорта паролей. Однако, оба браузера необходимо немного поднастроить, чтобы был доступен импорт паролей, помимо экспорта.</p>
+			<p>Сделать это можно следующими командами:</p>
+			<p class="codes">
+				<b>Google Chrome:</b></br>
+				Вводим в адресную строку: chrome://flags</br>
+				Затем вводим в поиск: "Password", находим там функцию: "Password import", и отмечаем её как "Enabled".</br></br>
+				<b>FireFox</b></br>
+				Вводим в адресную строку: about:config</br>
+				Затем вводим в поиск: "signon.management.page.fileImport.enabled" и отмечаем её как "True".
+			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-12.png" class="fz__minimized" alt="клик для увеличения" title="FireFox about:config" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-13.png" class="fz__minimized" alt="клик для увеличения" title="FireFox Fileimport enabled" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-27.png" class="fz__minimized" alt="клик для увеличения" title="Google Chrome chrome://flags" />
+			</div>
+			<p>Теперь устанавливаем <b>KeePassXC</b>, запускаем, создаём базу данных и сохраняем её в настроенную папку с <b>Yandex-диском</b>, но также указываем название базы на английском, без пробелов.</p>
+			<p>После этого можно импортировать все ваши старые пароли в новую защищенную базу данных. Теперь все пароли во всех браузерах с установленным плагином <b>KeePassXC-Browser</b> будут доступны. Однако помните, что чтобы иметь доступ к вашей базе с паролями - база в <b>KeePassXC</b> должна быть <b>открыта и не заблокирована</b>.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-1.png" class="fz__minimized" alt="клик для увеличения" title="KeePassXC Импорт паролей из csv файла" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-8.png" class="fz__minimized" alt="клик для увеличения" title="Google chrome выбор пароля KeePassXC" />
+			</div>
+			<p>Теперь можно открывать эту же базу с <b>Yandex-Диска</b> в вашем смартфоне. Одним из достоинст такого хранения паролей - мой <b>Android</b> автоматически добавил в эту базу все введёные пароли в систему.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-16.jpg" class="fz__minimized" alt="клик для увеличения" title="Yandex-Disk открыть с помощью" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-17.jpg" class="fz__minimized" alt="клик для увеличения" title="Открыть с помощью KeePassDroid" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-18.jpg" class="fz__minimized" alt="клик для увеличения" title="Ввод пароля базы данных" />
+			</div>
+			<p>К сожалению, ни один <b>KeePass</b> на <b>Android</b> не поддерживается браузерами в качестве расширения для доступа к вашим паролям. Поэтому одним из недостатков такого решения является то, что любой логин или пароль придётся копировать вручную через сам менеджер <b>KeePassDroid</b>.</p>
+			<p>В браузере <b>FireFox</b> имеется дополнение(плагин) <b>KeePassXC-Browser</b>, но отсутствует для <b>Android</b>. Если же вы всё-таки решили синхронизировать свои логины и пароли с помощью браузера и аккаунта <b>FireFox</b>, то для начала экспортируем и немного подправим файл из <b>KeePassXC</b> с паролями и расширением "<b>.csv</b>".</p>
+			<p>Нас интересуют только 3 столбца: адресс веб-сайта, имя пользователя и пароль. <b><u>При этом стобцы обязательно должны быть подписаны, иначе FireFox выдаст ошибку</u></b>.</p>
+			<p>"url", "username", "password"</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-2.png" class="fz__minimized" alt="клик для увеличения" title="KeePassXC экспорт паролей" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-4.png" class="fz__minimized" alt="клик для увеличения" title="Редактирование файла .csv" />
+				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-5.png" class="fz__minimized" alt="клик для увеличения" title="FireFox импорт паролей" />
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
