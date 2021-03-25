@@ -104,7 +104,8 @@
 				$ sudo rpm --import http://repo.yandex.ru/yandex-disk/YANDEX-DISK-KEY.GPG</br>
 				$ sudo yum install yandex-disk
 			</p>
-			<p>Для Archlinux и Manjaro необходимо из AUR собрать и установить пакеты: <b>yandex-disk</b> и <b>yandex-disk-indicator</b>. К сожалению индикатора (т.е. GUI интерфейса) для CentOS и Fedora нет. Но не беспокойтесь я для вас уже всё конвертировал с помощью утилиты <b>alien</b>. Вам осталось только скачать и установить.</p>
+			<p>Для Archlinux и Manjaro необходимо из AUR собрать и установить пакеты: <b>yandex-disk</b> и <b>yandex-disk-indicator</b>. К сожалению индикатора (т.е. GUI интерфейса) для CentOS и Fedora нет.
+			Но не беспокойтесь я для вас уже всё конвертировал с помощью утилиты <b>alien</b>. Вам осталось только скачать с одного из моих репозиториев и установить.</p>
 			<p class="codes">
 				CentOS, Fedora:</br>
 				$ svn export https://github.com/maximalisimus/repo/trunk/deb_rpm/yd-tools-1.11.0-2.noarch.rpm</br>
@@ -158,13 +159,13 @@
 			На самом деле это не так! По факту у приложения имеется своя собственная клавиатура <b>«MegiKeyboard»</b>, но только для передачи через собственную клавиатуру логинов и паролей в указанные поля ввода, а также очистки последних по завершении всех вставок в целях безопасности. 
 			</p>
 			<p>Теперь можно открывать нашу базу, точно также как и в <b>«KeePassDroid»</b>, прямо с <b>Yandex</b> или <b>Google</b> диска. Как только вам где-то понадобится ввести логин (и/или пароль), смените клавиатуру на <b>«MegiKeyboard»</b>, повторно разблокируйте базу если она вдруг заблокировалась, выберите нужный пароль из любой категории,и затем вставляйте соответствующими кнопками управления новой клавиатуры.</p>
-			<p>Приложение неплохо отображает все вложенности, интерфейс вполне приятный и адекватный.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-42.jpg" class="fz__minimized" alt="клик для увеличения" title="Открытие базы с Yandex-Диска" />
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-43.jpg" class="fz__minimized" alt="клик для увеличения" title="Смена клавиатуры на «MegiKeyboard»" />
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-44.jpg" class="fz__minimized" alt="клик для увеличения" title="Ввод логина из «KeePassDX»" />
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-45.jpg" class="fz__minimized" alt="клик для увеличения" title="Ввод пароля из «KeePassDX»" />
 			</div>
+			<p>Приложение <b>«KeePassDX»</b> неплохо отображает все вложенности, интерфейс вполне приятный и адекватный.</p>
 			<p>В браузере <b>FireFox</b> имеется дополнение(плагин) <b>KeePassXC-Browser</b>, но отсутствует для <b>Android</b>.
 			Если же вы всё-таки решили синхронизировать свои логины и пароли с помощью браузера и аккаунта <b>FireFox</b>, то для начала экспортируем нашу базу из <b>«KeePassXC»</b> в формат <b>«.csv»</b> и немного подправим полученный файл экспорта любым табличным редактором.
 			Например, «LibreOffice Calc», «Microsoft Office Excel», «МойОфис Таблица», «AlterOffice ACell», «Р7-Офис Редактор таблиц» и другие.
