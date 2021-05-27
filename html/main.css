@@ -164,3 +164,16 @@ BODY {
 	font-size: 0.8em;
 }
 
+.imgex {
+	display: inline-block;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+}
+.imgex img {
+	display: inline-block;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	margin-left: 10%;
+}
