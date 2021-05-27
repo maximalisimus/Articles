@@ -60,14 +60,31 @@
 				$ smartctl -t conveyance /dev/sdX
 			</p>
 			<h3>Просмотр результатов тестирования</h3>
+			<p>Краткая информация:</p>
 			<p class="codes">
 				$ smartctl -H /dev/sdX
 			</p>
-			<p>Вы также можете просмотреть список последних результатов тестирования и подробную информацию об устройстве:</p>
+			<p>Список последних результатов тестирования и подробную информацию об устройстве:</p>
 			<p class="codes">
 				$ smartctl -l selftest /dev/sdX</br>
-				$ smartctl -a /dev/sdX
+				$ smartctl -a /dev/sdX</br>
+				$ smartctl -i -a /dev/sda</br>
+				$ smartctl -s on -a /dev/sda
 			</p>
+			<p>Самое главное, что вы должны увидеть - строчку об успешно пройденом результате тестирования:</p>
+			<p class="codes">
+				=== START OF READ SMART DATA SECTION ===</br>
+				SMART overall-health self-assessment test result: <b>PASSED</b></br>
+				...
+			</p>
+			<p>Этот тест может быть пройден <b>(PASSED)</b> или <b>(FAILED)</b>. В последнем случае необходимо срочно начинать резервное копирование данных.</p>
+			<p>Следующая интересующая нас запись, которую можно посмотреть, когда выполняется диагностика 
+			<b>HDD</b> в <b>Linux</b>, это таблица <b>SMART</b> атрибутов.</p>
+			<p></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Taking_care_SSD/" class="fz__minimized" alt="клик для увеличения" title="Таблица S.M.A.R.T. аттрибутов" />
+				
+			</div>
 			<h3>Trim</h3>
 			<p>Trim — команда интерфейса ATA, позволяющая операционной системе уведомить твердотельный накопитель о том, 
 			какие блоки данных не несут полезной нагрузки и их можно не хранить физически.</p>
