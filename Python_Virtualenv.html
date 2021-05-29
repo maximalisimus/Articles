@@ -90,6 +90,8 @@
 			<p class="codes">
 				$ mkvirtualenv myenvironment --no-site-packages
 			</p>
+			<p>Учтите также, что в переменной <b>&lt;&nbsp;VIRTUALENVWRAPPER_PYTHON&nbsp;&gt;</b> указан интерпретатор по умолчанию, 
+			который при создании окружения можно изменить.</p>
 			<p>Я указал его в конце команды не просто так. Данная команда чаще всего первый аргумент считает за наименование окружения. 
 			Чтобы избежать этой проблемы - <b>просто указывайте все необходимые параметры и ключи в конце команды</b>.</p>
 			<p>Создайте каталог проектов вручную:</p>	
@@ -99,6 +101,7 @@
 				$ mkdir -p $WORKON_HOME
 			</p>
 			<h3>Основные команды.</h3>
+			<p><u>Команды одинаково работают как в <b>Linux</b>, так и в <b>Windows</b>.</u></p>
 			<ul>
 				<li><b>mkvirtualenv</b> - создание окружения;</li>
 				<li><b>lsvirtualenv</b> - отображение списка окружений;</li>
@@ -110,6 +113,13 @@
 			<p class="codes">
 				$ cd $PROJECT_HOME</br>
 				$ mkvirtualenv project_name
+			</p>
+			<p>Созданное окружение автоматически авктивируется и можно устанавливать в него все необходимые пакеты и зависимости:</p>
+			<p class="codes">
+				$ pip list </br>
+				$ pip install package-name </br>
+				<span style="color:blue;"># Или так</span></br>
+				$ pip install package-name --upgrade
 			</p>
 			<p>Выйдем из созданной среды:</p>
 			<p class="codes">
@@ -127,22 +137,160 @@
 			<p class="codes">
 				mkvirtualenv -h
 			</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>			
-			<h3></h3>
+			<p>Для очистики одного из окружений ото всех установленных пакетов <b>PIP</b>, сначала деактивируйте его, затем воспользуйтесь следующими командами:</p>
 			<p class="codes">
-				</br>
+				$ deactivate</br>
+				$ mkvirtualenv project_name --clear
 			</p>
-			<div class="imgex">
-				<img src="https://maximalisimus.github.io/Articles/image/Python_Virtualenv/" width="300px" />
-			</div>
-			<div class="codeses">
-				<pre>
-
-				</pre>
-			</div>
+			<p>Для удаления:</p>
+			<p class="codes">
+				$ deactivate</br>
+				$ rmvirtualenv project_name
+			</p>
+			<p>Если вам больше не требуются виртуальные окружения и вы хотите от них отказаться - 
+			сначала деактивируйте виртаульное окружение, затем просто удалите папку со всеми виртуальными окружениями и следующий код из конца файла <b>~/.bashrc</b>:</p>
+			<p class="codes">
+				$ deactivate</br>
+				$ sudo rm -rm $PROJECT_HOME</br></br>
+				<span style="color:blue;"># Код для удаления:</span></br>
+				export WORKON_HOME=$HOME/python-environments/.virtualenvs</br>
+				export PROJECT_HOME=$HOME/python-environments</br>
+				export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python</br>
+				export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv</br>
+				<span style="color:blue;"># export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'</span></br>
+				export PIP_VIRTUALENV_BASE=$WORKON_HOME</br>
+				export PIP_RESPECT_VIRTUALENV=true</br>
+				if [[ -r `which virtualenvwrapper.sh` ]]; then  source `which virtualenvwrapper.sh`; fi				
+			</p>
+			<p>Или так:</p>
+			<p class="codes">
+				$ sudo rm -rm $PROJECT_HOME</br></br>
+				$ sed -E -i "/export WORKON_HOME/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/export PROJECT_HOME/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/export VIRTUALENVWRAPPER_PYTHON/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/export VIRTUALENVWRAPPER_VIRTUALENV/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/\# export VIRTUALENVWRAPPER_VIRTUALENV_ARGS/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/export PIP_VIRTUALENV_BASE/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/export PIP_RESPECT_VIRTUALENV/d" <span style="color:blue;">~/.bashrc</span></br>
+				$ sed -E -i "/which virtualenvwrapper.sh/d" <span style="color:blue;">~/.bashrc</span>
+			</p>
+			<h3>Практика</h3>
+			<p>В моей системе используется <b>SHELL - Fish</b>. Поэтому мне придётся переключаться в <b>Bash</b>. 
+			Чтобы мне не прописывать указанный код в файл <b>&lt;&nbsp;~/.bashrc&nbsp;&gt;</b> и удалить только одну единственную папку со всеми настройками и окружениями - 
+			я буду использовать локальный файл <b>&lt;&nbsp;./.bashrc&nbsp;&gt;</b> с аналогичным содержимым в отведенной папке для тестов.</p>
+			<h4>Linux:</h4>
+			<p class="codes">
+				<span style="color:blue;"># Создаю папку для теста, захожу в неё и вставляю код для виртуальных окружений.</span></br>
+				$ mkdir -p ~/project-test/virtualenvs/ &nbsp;&amp;&amp;&nbsp;cd ~/project-test/</br>
+				$ nano ~/project-test/.bashrc</br></br>
+				export WORKON_HOME=$HOME/project-test/.virtualenvs</br>
+				export PROJECT_HOME=$HOME/project-test</br>
+				export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python</br>
+				export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv</br>
+				# export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'</br>
+				export PIP_VIRTUALENV_BASE=$WORKON_HOME</br>
+				export PIP_RESPECT_VIRTUALENV=true</br>
+				if [[ -r `which virtualenvwrapper.sh` ]]; then  source `which virtualenvwrapper.sh`; fi</br></br>
+				<span style="color:blue;"># Сохраняю и хакрываю</span></br>
+				$ CTRL + o</br>
+				$ CTRL + x</br></br>
+				<span style="color:blue;"># Перехожу в bash и даю команду на автоматическое подключение скриптов virtualenvwrapper.</span></br>
+				$ bash</br>
+				$ source ./.bashrc</br></br>
+				<span style="color:blue;"># Создаю 2 виртуальных окружения с разными версиями Python и пакетов.</span></br></br>
+				<span style="color:blue;"># Python 3.10. У меня заранее собран и установлен вручную для тестов.</span></br>
+				$ mkvirtualenv -p /usr/bin/python3.10 kivy-env</br>
+				$ pip install builldozer Cython kivy[base] kivy_examples</br>
+				$ deactivate</br></br>
+				<span style="color:blue;"># Python 3.9.5</span></br>
+				$ mkvirtualenv pyqt-env</br>
+				$ pip install altgraph pyinstaller pyinstaller-hooks-contrib PyQT5 PyQT5-sip PyQT5-QT PyQT5-QT5 PyQT6 PyQT6-sip PyQT6-QT</br>
+				$ deactivate</br></br>
+				<span style="color:blue;"># Проверяем:</span></br>
+				$ lsvirtual</br>
+				kivy-env</br>
+				pyqt-env</br></br>
+				$ workon kivy-env</br>
+				$ python --version</br>
+				$ pip list</br></br>
+				$ workon pyqt-env</br>
+				$ python --version</br>
+				$ pip list</br></br>
+				<span style="color:blue;"># Очищу от всех PIP пакетов одно из окружений и проверю:</span></br></br>
+				$ mkvirtualenv pyqt-env --clear</br>
+				$ workon pyqt-env</br>
+				$ pip list</br>
+				<span style="color:blue;"># Деактивирую и удаляю всё ненужное:</span></br></br>
+				<span style="color:blue;"># bash  shell:</span></br>
+				$ deactivate</br>
+				$ exit</br></br>
+				<span style="color:blue;"># back to fish:</span></br>
+				$ cd ~/</br>
+				$ sudo rm -rf ~/project-test/</br>
+				$ exit
+			</p>
+			<h4>Windows:</h4>
+			<p>В <b>Windows</b> всё гораздо проще и сложнее одновременно.</p>
+			<p>Чтобы иметь возможность работать сразу в 2 разрядностях и с 2-мя разными версиями <b>Python</b>, 
+			я заранее скачал пакеты <b>Python-portable</b> последнии версии 2 архитектур с <a href="https://sourceforge.net/projects/portable-python/files/">SourceForge.net</a> и 
+			распаковал в любую папку (например  <b>&lt;&nbsp;C:\python\python-3.8-x86\&nbsp;&gt;</b> и 
+			<b>&lt;&nbsp;C:\python\python-3.8-x64\&nbsp;&gt;</b>) с наименованием на английском языке, <b>без пробелов</b> (вместо пробелов могут быть тире и точки, <b>но без пробелов</b>).</p>
+			<p>Пусть папка для проектов будет, например <b>&lt;&nbsp;C:\Python-Projects\&nbsp;&gt;</b>.</p>
+			<p>Затем создаю в папке <b>&lt;&nbsp;C:\python\&nbsp;&gt;</b> два <b>BAT</b> файла со следующим содержимым:</p>
+			<p>C:\python\python-3.8-x86.bat</p>
+			<p class="codes">
+				@echo off</br>
+				SET PATH=C:\Python38-x86\;C:\Python38-x86\Scripts\;%PATH%</br>
+				SET WORKON_HOME=C:\Python-Projects\Envs-x86\</br>
+				cmd.exe /s /k pushd "%V"
+			<p>C:\python\python-3.8-x64.bat</p>
+			<p class="codes">
+				@echo off</br>
+				SET PATH=C:\Python38\;C:\Python38\Scripts\;%PATH%</br>
+				SET WORKON_HOME=C:\Python-Projects\Envs-x64\</br>
+				cmd.exe /s /k pushd "%V"
+			</p>
+			<p>Не забываем создать все необходимые для работы папки:</p>
+			<p class="codes">
+				$ mkdir C:\Python-Projects\Envs-x86\</br>
+				$ mkdir C:\Python-Projects\Envs-x64\
+			</p>
+			<p>Теперь можно перенести оба <b>.bat</b> файла в папку <b>&lt;&nbsp;C:\Python-Projects\&nbsp;&gt;</b>. 
+			При запуске любого из них создается сеанс с временными переменными окружения. После закрытия окна командной строки переменные станут недоступны.</p>
+			<p>Можно приступать к тесту из любой архитектуры <b>Python</b>. Такое может понадобится при создании кросплатформенных приложений и необходимости компиляции для разных систем и архитектур.</p>	
+			<p>Для примера пусть будет <b>python-3.8-x64.bat</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Переходим в паку с проектами и создаем 2 папки для проектов. Для понимания - с папки будет гораздо удобнее. Но можно обойтись и без них.</span></br>
+				<span style="color:blue;"># Работать будете именно в этих папках. Просто, чтобы не путаться.</span></br>
+				$ cd C:\Python-Projects\</br>
+				$ mkdir kivy-env</br>
+				$ mkdir pyqt-env</br></br>
+				<span style="color:blue;"># Создаём 2 окружения.</span></br>
+				$ mkvirtualenv kivy-env</br>
+				$ pip install builldozer Cython kivy[base] kivy_examples</br></br>
+				$ deactivate</br>
+				$ mkvirtualenv pyqt-env</br>
+				$ pip install pyinstaller PyQT5 PyQT5-sip PyQT6 PyQT6-sip pywin32 pywin32-ctypes</br>
+				$ deactivate</br></br>
+				<span style="color:blue;"># Проверяем:</span></br>
+				$ lsvirtual</br>
+				kivy-env</br>
+				pyqt-env</br></br>
+				$ workon kivy-env</br>
+				$ python --version</br>
+				$ pip list</br></br>
+				$ workon pyqt-env</br>
+				$ python --version</br>
+				$ pip list</br></br>
+				<span style="color:blue;"># Очищу от всех PIP пакетов одно из окружений и проверю:</span></br></br>
+				$ mkvirtualenv pyqt-env --clear</br>
+				$ workon pyqt-env</br>
+				$ pip list</br></br>
+				<span style="color:blue;"># Деактивирую и удаляю всё ненужное:</span></br></br>
+				$ deactivate</br>
+				$ cd C:\</br>
+				$ rd /s/q C:\Python-Projects\</br>
+			</p>
 		</div>
 		<div class="content">
 			<p>Ну а на этом на сегодня всё. Моё дело - лишь заинтересовать вас. Не пренебрегайте виртуальным окружением для своих проектов.</p>
