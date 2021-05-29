@@ -42,19 +42,95 @@
 			<p>Мне почему-то кажется, что решить эту проблему можно только полным сносом системы, потому что перепробывал я всё что только можно и нельзя. 
 			А обошёл я далеко не 10 форумов и перепробывал немалое количество вариантов решений проблемы.</p>
 			<p>Чтобы избежать подобных инцидентов мы научимся создавать виртуальные окружения, управлять ими, установливать в них необходимые пакеты и зависимости для будущей работы, а также очищать.</p>
+			<h3>Небольшое отступление для <b>Linux</b> систем.</h3>
+			<p>Работу с виртуальными окружениями рекомендуется выполнять только в <b>SHELL - BASH</b>, 
+			иначе команды могут <b><u>не работать</u></b> или <b><u>выполняться некорректно</u></b>.</p>
+			<h3>Установка</h3>
 			<p>Для начала убедитесь, что у вас установлены все необходимые пакеты и зависимости:</p>
 			<p class="codes">
 				<b>Debian:</b> $ sudo apt install python-virtualenv python3-virtualenvwrapper</br>
 				<b>Archlinux:</b> $ sudo pacman -S python-virtualenv python-virtualenvwrapper</br>
 				<b>PIP:</b> $ python -m pip install --upgrade pip setuptools virtualenv virtualenvwrapper</br>
-				<b>Windows:</b> $ pip install setuptools virtualenv virtualenvwrapper-win
+				<b>Windows PIP:</b> $ pip install setuptools virtualenv virtualenvwrapper-win
+			</p>
+			<h3>virtualenvwrapper</h3>
+			<p>Virtualenvwrapper хранит все окружения в одном месте. 
+			Это место определяется через переменную <b>WORKON_HOME</b>. </br>В <b>Linux</b> и по умолчанию равно директории: <b>/home/пользователь/.virtualenvs</b>.</br> 
+			Если вы хотите изменить это расположение - выполните команду экспорта с нужным путем.</p>
+			<h4>Windows.</h4>
+			<p>Все виртуальные среды, которые будут созданы, по умолчанию будут располагаться по пути <b>"C:\Users\%USERNAME%\Envs"</b>. 
+			Если вам нужно изменить расположение, то создайте переменную <b>WORKON_HOME</b> с нужной директорией:</p>
+			<div class="imgex">
+				<img src="https://maximalisimus.github.io/Articles/image/Python_Virtualenv/workon-home-win.jpg" height="400px" />
+			</div>
+			<p><b>Важный момент</b>, в случае с <b>Windows</b>, команды <b>virtualenvwrapper</b> не будут выполняться <b>Powershell</b>. 
+			Команды работают только через <b><u>CMD</u></b>.</p>
+			<h4>Linux.</h4>
+			<p>Для того, чтобы настроить <b>virtualenvwrapper</b> в <b>Linux</b> сначала необходимо решить - где будет расположена папка со всеми окружениями. 
+			Например, в домашнем каталоге - <b>~/python-environments/</b>.</p>
+			<p>Затем исправте папку <b>PROJECT_HOME</b> и <b>WORKON_HOME</b> с виртуальными окружениями в следующем коде и добавьте его в конец файла <b>~/.bashrc</b>.</p>
+			<p>Debian/Archlinux:</p>
+			<p class="codes">
+				export WORKON_HOME=$HOME/python-environments/.virtualenvs</br>
+				export PROJECT_HOME=$HOME/python-environments</br>
+				export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python</br>
+				export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv</br>
+				<span style="color:blue;"># export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'</span></br>
+				export PIP_VIRTUALENV_BASE=$WORKON_HOME</br>
+				export PIP_RESPECT_VIRTUALENV=true</br>
+				if [[ -r `which virtualenvwrapper.sh` ]]; then  source `which virtualenvwrapper.sh`; fi
+			</p>
+			<p>Обратите внимание, что строку с аргументом <b>VIRTUALENVWRAPPER_VIRTUALENV_ARGS</b> я пометил - как неактивную. В <b>ОС Archlinux</b> данный аргумент не работает.</p>
+			<p>В <b>Debian</b> подобных системах <b>—no-site-packages</b> - запретит использование одноименного системного <b>site-packages</b> 
+			(для полной изоляции вашего окружения от системы). 
+			Например, у вас в системе установлена <b>Django</b>, если вы будете использовать эту опцию, то в созданном окружении 
+			<b>Django</b> не будет доступна.</br>
+			Вы также можете, при создании окружения указать этот параметр вручную:
+			</p>
+			<p class="codes">
+				$ mkvirtualenv myenvironment --no-site-packages
+			</p>
+			<p>Я указал его в конце команды не просто так. Данная команда чаще всего первый аргумент считает за наименование окружения. 
+			Чтобы избежать этой проблемы - <b>просто указывайте все необходимые параметры и ключи в конце команды</b>.</p>
+			<p>Создайте каталог проектов вручную:</p>	
+			<p class="codes">
+				$ mkdir -p ~/python-environments/</br>
+				# или</br>
+				$ mkdir -p $WORKON_HOME
+			</p>
+			<h3>Основные команды.</h3>
+			<ul>
+				<li><b>mkvirtualenv</b> - создание окружения;</li>
+				<li><b>lsvirtualenv</b> - отображение списка окружений;</li>
+				<li><b>rmvirtualenv</b> - удаление;</li>
+				<li><b>workon</b> - переключение между виртуальными средами;</li>
+				<li><b>deactivate</b> - выход из текущего окружения.</li>
+			</ul>
+			<p>Переходим в каталог с окружениями и создаем новое:</p>
+			<p class="codes">
+				$ cd $PROJECT_HOME</br>
+				$ mkvirtualenv project_name
+			</p>
+			<p>Выйдем из созданной среды:</p>
+			<p class="codes">
+				$ deactivate
+			</p>
+			<p>Активация окружения:</p>
+			<p class="codes">
+				$ workon project_name
+			</p>
+			<p>Если нужно использовать другую версию Python:</p>
+			<p class="codes">
+				mkvirtualenv -p python2.7 project_name
+			</p>
+			<p>Справка:</p>
+			<p class="codes">
+				mkvirtualenv -h
 			</p>
 			<p></p>
 			<p></p>
 			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p></p>			
 			<h3></h3>
 			<p class="codes">
 				</br>
