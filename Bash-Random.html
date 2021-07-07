@@ -69,31 +69,110 @@
 			и для нижнего регистра символов в <u>десятичной системе счисления</u> в диапазоне от <b>97</b> до <b>122</b>. 
 			В <u>Шестнадцатеричной</u> соответственно для верхнего от <b>41</b> до <b>5A</b> и для нижнего от <b>61</b> до <b>7A</b>.</p>
 			<p><b>Проверяем ...</b></p>
-			<div class="imgex">
-				<img src="" height="400px" />
-			</div>
-			<p></p>
-			<p></p>
-			<p></p>
-			<center><h3>Заголовок по центру!</h3></center> 
-			<h3>Другой заголовок</h3>
-			<p></p>
 			<p class="codes">
-				<span style="color:blue;"># Некое выделение</span></br>
-				Код 1
+				<span style="color:blue;">#!/bin/bash</span></br>
+				echo -e -n "41 59 5A - A Y Z - HEX\n65 89 90 - A Y Z - DEC\n"</br>
+				echo ""</br>
+				echo "HEX:"</br>
+				echo -e -n "A" | xxd -p</br>
+				echo -e -n "Z" | xxd -p</br>
+				echo "DEC:"</br>
+				echo "ibase=16;obase=A;41" | bc</br>
+				echo "ibase=16;obase=A;5A" | bc</br>
+				echo ""</br>
+				echo -e -n "61 79 7A - a y z - HEX\n97 121 122 - a y z - DEC\n"</br>
+				echo ""</br>
+				echo "HEX:"</br>
+				echo -e -n "a" | xxd -p</br>
+				echo -e -n "z" | xxd -p</br>
+				echo "DEC:"</br>
+				echo "ibase=16;obase=A;61" | bc</br>
+				echo "ibase=16;obase=A;7A" | bc
 			</p>
+			<div class="imgex">
+				<img src="https://maximalisimus.github.io/Articles/image/Bash_Random/scr-rnd-3.png" height="400px" />
+			</div>
+			<p>Хотелось бы немного быстрее - автоматическую генерацию, а также обратное преобразование текста в десятичные числа.</p>
+			<p><b>Не вопрос. Сказано, сделано ...</b> &#128512;&nbsp;&#128526;</p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<div class="codeses">
 				<pre>
-Функция()
-	{
-		с отступами
-	}
+<span style="color:blue;">#!/bin/bash</span>
+function ord()
+{
+	echo -e -n "$@" | xxd -p | tr [:lower:] [:upper:]
+}
+function chr()
+{
+	echo -e -n "$@" | xxd -r -p
+}
+function hex_to_count()
+{
+	in_str="${1}"
+	declare -a out_str
+	temp=""
+	count=$(echo "${1}" | awk '{print length}')
+	for (( i=0; i<=${count}; i+=2 )); do
+		temp=$(echo "${in_str:$i:2}" | tr [:lower:] [:upper:])
+		dec_count=$(echo "ibase=16;obase=A;${temp}" | bc)
+		out_str=("${out_str[*]}" "$dec_count")
+	done
+	echo "${out_str[*]}"
+}
+function gen_rand_hex()
+{
+	<span style="color:blue;"># echo "ibase=16; 61" | bc</span>
+	<span style="color:blue;"># 65</span>
+	<span style="color:blue;"># echo "obase=16; 26" | bc</span>
+	<span style="color:blue;"># 1A</span>
+	<span style="color:blue;"># ord "AYZ"</span>
+	<span style="color:blue;"># ord "ayz"</span>
+	<span style="color:blue;"># 41 59 5A - A Y Z - HEX</span>
+	<span style="color:blue;"># 65 89 90 - A Y Z - DEC</span>
+	<span style="color:blue;"># 61 79 7A - a y z - HEX</span>
+	<span style="color:blue;"># 97 121 122 - a y z - DEC</span>
+	<span style="color:blue;"># 65...122 - DEC</span>
+	rez_str=""
+	cnt=1
+	declare -i count
+	count=$1
+	while [ $cnt -le $count ]; do
+		rnd_count=$(echo $((1 + RANDOM % 25 + 97)))
+		hex_count=$( echo "obase=16; ${rnd_count[*]}" | bc )
+		rez_str="${rez_str}${hex_count}"
+		let cnt+=1
+	done
+	echo "${rez_str[*]}"
+}
+rand_hex=$(gen_rand_hex "5")
+dec_str=$(hex_to_count "$rand_hex")
+rez_str=$(chr "${rand_hex}")
+echo "${dec_str} = ${rand_hex} = ${rez_str}"
+echo ""
+<span style="color:blue;">#</span>
+echo "41 59 5A - A Y Z - HEX"
+echo "65 89 90 - A Y Z - DEC"
+<span style="color:blue;">#</span>
+my_str="AYZ"
+hex_my_str=$(ord "$my_str")
+dec_my_str=$(hex_to_count "${hex_my_str}")
+echo "${dec_my_str} - ${hex_my_str} - A Y Z"
+echo ""
+<span style="color:blue;">#</span>
+echo "61 79 7A - a y z - HEX"
+echo "97 121 122 - a y z - DEC"
+<span style="color:blue;">#</span>
+my_str="ayz"
+hex_my_str=$(ord "$my_str")
+dec_my_str=$(hex_to_count "${hex_my_str}")
+echo "${dec_my_str} - ${hex_my_str} - a y z"
+echo ""
+<span style="color:blue;">#</span>
+<span style="color:blue;">exit 0</span>
 				</pre>
 			</div>
-			
-			<ul>
-				<li>Список</li>
-			</ul>
 			<div class="imgex">
 				<img src="" height="480px" />
 			</div>
