@@ -26,6 +26,56 @@
 			<p>В процессе работы со случайными числами нам понадобится 2 дополнительных пакета: <b>bc</b> и <b>xxd</b>.</p>
 			<p>Для исключения непредвиденных ошибок терминала, все команды рекомендуется выполнять в <b>Bash</b>.</p>
 			<i>А теперь начинаем ...</i></br>
+			<p>Для генерации случайного числа используется <b>$RANDOM</b>. А мы можем сгенерировать числов диапазоне, например от 0 до 100.</p>
+			<p><b>Конечно, можем</b></p>
+			<p class="codes">
+				$ echo $((0+$RANDOM%100))</br>
+				<span style="color:blue;"># 0 - число <b>ОТ</b>, 100 - число <b>ДО</b></span></br>
+			</p>
+			<p>На скриншоте вы можете видеть как скорретировать диапазон генерации псевдослучайного числа.</p>
+			<div class="imgex">
+				<img src="https://maximalisimus.github.io/Articles/image/Bash_Random/scr-rnd-1.png" height="400px" />
+			</div>
+			<p>Хорошо. А мы можем сгенерировать случайное имя. Ответ - да, можем.</p>
+			<p>Можно воспользоваться следующими командами:</p>
+			<p class="codes">
+				<span style="color:blue;"># Linux</span></br>
+				$ cat /dev/urandom | tr -cd 'a-f0-9' | head -c 32</br>
+				<span style="color:blue;"># OS X или другой BSD</span></br>
+				$ cat /dev/urandom | env LC_CTYPE=C tr -cd 'a-f0-9' | head -c 32				
+			</p>
+			<p>Можно воспользоваться <b>unix mktemp</b>:</p>
+			<p class="codes">
+				$ TMPFILE=`mktemp tmp.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX` &amp;&amp;  echo $TMPFILE</br>
+				tmp.PwowNsqK6yiHzSP4wB1meJvnzErQacI6
+			</p>
+			<p>Но куда интереснее поработать с именами через <b>RANDOM</b>. Т.к. в этом случае мы сможем понять как преобразуются символы в числа и обратно, 
+			а также диапазон алфавита.
+			Именно для этого и понадобятся 2 дополнительных утилиты - <b>basic calculator (bc)</b> и <b>xxd</b>.</p>
+			<p><b>xxd</b> грубо говоря, преобрузет строку в шестнадцатеричный код или обратно из шестнадцатеричного кода в строку.</p>
+			<p class="codes">
+				<span style="color:blue;"># Из строки в шестнадцатеричный формат HEX</span></br>
+				$ echo -e -n "string" | xxd -p | tr [:lower:] [:upper:]</br>
+				<span style="color:blue;"># tr преобразует символы нижнего регистра в верхний для дальнейшего использования</span></br></br>
+				<span style="color:blue;"># Из шестнадцатеричного формата в строку</span></br>
+				echo -e -n "hex" | xxd -r -p
+			</p>
+			<p>У <b>bc</b> есть одна меленькая особенность. 
+			Работая с шестнадцатеричной системой счисления ему обязательно нужен верхний регистр символов, иначе он выдаст ошибку синтаксиса.</p>
+			<p class="codes">
+				$ echo "ibase=16; obase=A; 4f" | bc</br>
+				(standard_in) 1: syntax error</br></br>
+				$ echo "ibase=16; obase=A; 4F" | bc</br>
+				79</br></br>
+				$ echo "obase=16; 97" | bc</br>
+				61</br></br>
+				$ echo "obase=16; 65" | bc</br>
+				41
+			</p>
+			<div class="imgex">
+				<img src="" height="400px" />
+			</div>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
