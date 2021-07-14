@@ -293,6 +293,46 @@
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-32.png" class="fz__minimized" alt="клик для увеличения" title="Добавить/убрать ключ из агента по вложению" />
 				<img src="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/scr-33.png" class="fz__minimized" alt="клик для увеличения" title="Тестирование SSH-соединения" />
 			</div>
+			<p>В <b>Windows</b> всё немного сложнее с хранением ssh ключей. <u>Но вполне возможно</u>.</p>
+			<p>Здесь нам понадобятся несколько дополнительных утилит.</p>
+			<ul>
+				<li>OpenSSH-Windows</li>
+				<ul>
+					<li>Portable <a href="https://github.com/PowerShell/Win32-OpenSSH/releases">OpenSSH-Win</a></li>
+					<li>Или установочный пакет <a href="https://github.com/LumitoLuma/OpenSSH-for-Windows/releases">OpenSSH-for-Windows-8.6p1</a></li>
+				</ul>
+				<li>А также любая версия GIT</li>
+				<ul>
+					<li><a href="https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.2/Git-2.32.0.2-32-bit.exe">Git-Win-32</a></li>
+					<li><a href="https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.2/Git-2.32.0.2-64-bit.exe">Git-Win-64</a></li>
+					<li><a href="https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.2/PortableGit-2.32.0.2-32-bit.7z.exe">Portable-Git-Win-32</a></li>
+					<li><a href="https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.2/PortableGit-2.32.0.2-64-bit.7z.exe">Portable-Git-Win-64</a></li>
+				</ul>
+			</ul>
+			<p>При использовании <b>Portable</b> версии <b>OpenSSH</b>, чтобы агент заработал необходимы <b>2xbat</b> файла, отдельно для запуска и отдельно для остановки сервиса агента.</p>
+			<p class="codes">
+				<span style="color:Blue;">ssh-agent-start.bat</span></br>
+				@echo off</br>
+				SET PATH=%CD%\;%PATH%</br>
+				sc \\localhost create ssh-agent DisplayName= "OpenSSH Authentication Agent" binpath= "%CD%\ssh-agent.exe" type= own start= "demand"</br>
+				sc \\localhost config ssh-agent obj= LocalSystem</br>
+				sc \\localhost sdset ssh-agent "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RP;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)"</br>
+				sc \\localhost privs ssh-agent SeImpersonatePrivilege</br>
+				ssh-agent</br></br>
+				<span style="color:Blue;">ssh-agent-stop.bat</span></br>
+				@echo off</br>
+				SET PATH=%CD%\;%PATH%</br>
+				ssh-agent -k</br>
+				sc \\localhost stop ssh-agent</br>
+				sc \\localhost delete ssh-agent</br>
+			</p>
+			<p>Затем уже в самом <b>Git-Bash</b> вводим для запуска подагента и синхронизации ключей между сервисом и bash-агентом:</p>
+			<p class="codes">
+				<span style="color:Blue;">Для запуска подагента</span></br>
+				$ eval `ssh-agent`</br></br>
+				<span style="color:Blue;">Для остановки подагента</span></br>
+				$ ssh-agent -k
+			</p>
 			<p>К сожалению, такое безопасное хранение не поддерживается ни одним менеджером паролей для GPG-Ключей. Однако, вы всегда можете создать зашированный файловый контейнер, например, с помощью <b>«VeraCrypt»</b>, и пользоваться ими с дополнительным параметром для смены рабочей директории хранилища ключей. Например так:</p>
 			<p class="codes">
 				$ gpg --homedir /home/mikl/002/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b># и далее нужные вам ключи и параметры</b>
