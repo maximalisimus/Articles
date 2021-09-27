@@ -95,7 +95,7 @@
 			</div>
 			<p><b>Не забудьте скопировать этот пароль. Он показывается только один раз при создании. 
 			Если забудете - придётся пересоздавать пароль приложения.</b></p>
-			<p>В любой электронной почте есть так называния страница контактов. Нобходимо сделать <b>BackUp</b> - экспортировать все контакты в файл. 
+			<p><b>В любой электронной почте есть так называния страница контактов.</b> Нобходимо сделать <b>BackUp</b> - экспортировать все контакты в файл. 
 			Позже это пригодится при переносе контактов в протокол DavX через ПК + резервная копия контактов электронной почты.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-3.png" class="fz__minimized" alt="клик для увеличения" title="Эксопрт / импорт контактов" />
@@ -121,13 +121,16 @@
 			</div>
 			<p>В Simple Contacts Pro экспортируем телефоны с той SIM-карты на которую всё сохраняли, или с памяти телефона. 
 			Затем в DAVx5 настраиваем CardDav аккаунт. Возвращаемся в Simple contacts и импортируем контакты уже не в SIM-ку или телефон а в наш CardDav.</p>
-			<p>URL CardDav Yandex: 
-			<a href="https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/">https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/</a>.
-			</p>
-			<p>URL CardDav Google: 
-			<a href="https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default">https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default</a>.</p>
-			<p>Обратите внимание на <a href="user@yandex.ru">user@yandex.ru</a> и <a href="user@gmail.com">user@gmail.com</a>.</p>
-			<p><u>Это имена ваших аккаунтов с обязательным окончанием с собакой</u>.</p>
+			<ul>
+				<li>Для Yandex: 
+					<a href="https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/">https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/</a>
+				</li>
+				<li>Для Google: 
+					<a href="https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default">https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default</a>
+				</li>
+			</ul>
+			<p>Обратите внимание на <u>user@yandex.ru</u> и <u>user@gmail.com</u>.</p>
+			<p><u>Это имена ваших аккаунтов с обязательной собакой и всего что после неё.</u></p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-9.jpg" class="fz__minimized" alt="клик для увеличения" title="Экспорт контактов" />
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-10.jpg" class="fz__minimized" alt="клик для увеличения" title="Настройка DAVx5" />
@@ -146,13 +149,47 @@
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-13.png" class="fz__minimized" alt="клик для увеличения" title="Google Контакты" />
 			</div>
 			<h1>Mozila Thunderbird.</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Синхронизация контактов электронной почты (номеров телефонов) через ПК настраивается немного проще. 
+			В этом смысле никаких дополнительных утилит, кроме самого <i>Thunderbird</i> не потребуется.</p>
+			<p>Помните мы выше экспортировали адресную книгу из аккаунта. Так сказать, сделали её <b>Backup</b>.  
+			Теперь пришло время вернуться в контакты нашего <b>Yandex (или Google)</b> аккаунта, выделить все контакты и удалить их.</p>
+			<p>Потому что при переносе контактов по протоколу CardDav Они будут продублированы в вашем аккаунте. Не волнуйтесь, вы сделали backup. 
+			В случае непредвиденных обстоятельств и ошибок сможете их восстановить.</p>
+			<p>Возвращаемся в <i>Thunderbird</i>. Нажимаем <b>ALT</b>, чтобы появилось главное меню, ищем в нём Адресную книгу. 
+			Затем идём в файл -> Создать -> Адресную кингу CardDav. Указываем имя пользователя вместе с собакой. 
+			А вот <b>URL</b> адреса укажите один из следующих:</p>
+			<ul>
+				<li>Для Yandex: 
+					<a href="https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/">https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/</a>
+				</li>
+				<li>Для Google: 
+					<a href="https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default">https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default</a>
+				</li>
+			</ul>
+			<p>Обратите внимание на <u>user@yandex.ru</u> и <u>user@gmail.com</u>.</p>
+			<p><u>Это имена ваших аккаунтов с обязательной собакой и всего что после неё.</u></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-14.png" class="fz__minimized" alt="клик для увеличения" title="Файл создать CardDav" />
+				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-15.png" class="fz__minimized" alt="клик для увеличения" title="Имя пользователя пароль CardDav" />
+			</div>
+			<h1>Бонус. Адоны Mozila Thunderbird.</h1>
+			<p>У адонов есть одна особенность - версия и совместимость с разными версиями клента. Об это уже упоминалось выше.</p>
+			<p>Если у вас вдруг оказалась под рукой англиская версия, то не имеет никакого значения в какой OS вы находитесь. Установить русский язык просто.</p>
+			<p>Либо вы переходие по адресу <a href="https://addons.thunderbird.net/ru/thunderbird/">addons.thunderbird.net</a> и в разделе 
+			<i>ещё -> Словари и локализация</i> скачиваете русский язык и словари для проверки орфографии.</p>
+			<ul>
+				<li>Русский язык:</li>
+				<ul>
+					<li>russian_ru_language_pack</li>
+				</ul>
+				<li>Словари для проверки орфографии:</li>
+				<ul>
+					<li>russian_hunspell_dictionary</li>
+					<li>russian_spellchecking_dictionary</li>
+				</ul>
+			</ul>
+			<p>Либо ищите в меню <i>Thunderbird</i> меню настройки, а в нём - дополнения -> рекомендации. 
+			В самом низу нажмите кнопку <i>Найти больше дополнений</i>.</p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -184,10 +221,6 @@
 <!--
 
 #Thunderbird #Yandex #Google #DaVx5 #CardDav #Contacts #SimpleContactsPro
-
-https://www.googleapis.com/carddav/v1/principals/user@gmail.com/lists/default
-
-https://carddav.yandex.ru/addressbook/user@yandex.ru/addressbook/
 
 russian_hunspell_dictionary
 russian_ru_language_pack
