@@ -1,0 +1,46 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 1.1;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+	background: -moz-radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+    background: -webkit-radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+    background: -o-radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+    background: -ms-radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
+	color: #0C213B;
+}
+caption {
+  font-family: annabelle, cursive;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 0px 0px 10px 0px;
+  padding:0px;
+  color: #000;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+  text-align: left;
+ }
+caption:before, caption:after {
+  color: #000;
+  margin: 0 10px;
+}
+th {
+  padding: 5px 7px; 
+  border: 1px solid #6b9ab3;
+  /* border: 1px solid #A9E2CC; */
+  text-align: left;
+}
+td {
+  font-size: 0.8em;
+  padding: 5px 7px;
+  border: 1px solid #6b9ab3;
+  /* border: 1px solid #A9E2CC; */
+  vertical-align:top;
+}
+.first {
+  font-size: 0.8em;
+  text-align: left;
+}
+.vertalign {
+	vertical-align:middle;
+}
