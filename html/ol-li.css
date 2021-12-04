@@ -13,8 +13,8 @@ OL
 
 OL LI:before
 {
- counter-increment: list1; /* Увеличиваем значение счетчика */
- content: counter(list1) ". "; /* Выводим значение в виде 1., 2.*/
+	counter-increment: list1; /* Увеличиваем значение счетчика */
+	content: counter(list1) ". "; /* Выводим значение в виде 1., 2.*/
 }
 
 OL OL 
@@ -23,6 +23,16 @@ OL OL
 }
 
 OL OL LI:before { /* Список второго уровня */
- counter-increment: list2; /* Увеличиваем значение счетчика */
- content: counter(list1) "." counter(list2) ". "; /* Выводим значение типа 2.1, 2.2,... */
+	counter-increment: list2; /* Увеличиваем значение счетчика */
+	content: counter(list1) "." counter(list2) ". "; /* Выводим значение типа 2.1, 2.2,... */
+}
+
+OL OL OL
+{
+	counter-reset: list3;  /* Список третьего уровня*/
+}
+
+OL OL OL LI:before { /* Список третьего уровня */
+	counter-increment: list3; /* Увеличиваем значение счетчика */
+	content: counter(list1) "." counter(list2) "." counter(list3) ". "; /* Выводим значение типа 2.1, 2.2,... */
 }
