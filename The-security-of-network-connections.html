@@ -5,6 +5,10 @@
 	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/The-security-of-network-connections/firewall-favicon.ico">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/frame.css">
+	<link rel="stylesheet" href="html/ol-li.css" type="text/css">
+	<!-- <link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css"> -->
 	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
 </head>
@@ -17,7 +21,7 @@
 		</div>
 		<div class="content">
 			<center>
-				<h2>Теория и практика.</h2>
+				<h1>Теория и практика.</h1>
 			</center>
 			<center>
 				<div class="images">
@@ -28,7 +32,28 @@
 			</br>
 		</div>
 		<div class="content">
-			<h3>Пароли.</h3>
+			<p><a name="oglavlenie"></a></p>
+			<h2>Оглавление</h2>
+			<ol>
+				<li><a href="#part1">Пароли</a></li>
+				<li><a href="#part2">Настройка роутеров и маршрутизаторв</a></li>
+				<li><a href="#part3">Настройка безопасности ssh соединений</a></li>
+				<li><a href="#part4">Фаервол</a></li>
+				<li><a href="#part5.0">Fail2ban</a></li>
+				<ol>
+					<li><a href="#part5.1">Установка и запуск</a></li>
+					<li><a href="#part5.2">Базовая настройка</a></li>
+					<li><a href="#part5.3">Настройка правил</a></li>
+					<li><a href="#part5.4">NGINX DDoS (req limit)</a></li>
+					<li><a href="#part5.5">Работа со списком заблокированных адресов</a></li>
+					<li><a href="#part5.6">Примеры правил</a></li>
+					<li><a href="#part5.7">Удаление</a></li>
+				</ol>
+			</ol>
+		</div>
+		<div class="content">
+			<p><a name="part1"></a></p>
+			<h2>Пароли.</h2>
 			<p>
 				Первое что каждый пользователь хочет услышать – ваше соединение максимально защищено. Но так ли это на самом деле? Так ли безопасны соединения с вашими серверами как мы думаем? Будь то сервер контроля версий GIT, файловый сервер или любой другой.
 			</p><p>
@@ -46,9 +71,11 @@
 			</p><p>
 				24 символа. Неплохо, правда? Такая задача злоумышленникам будет явно не по силам. Разумеется данную комбинацию уже не стоит использовать. Она приведена только в качестве примера, а алгоритм вы должны будете придумать самостоятельно под свои нужды. Теперь созданные наборы паролей можно записать на отдельную Флеш-карту и хранить дома в сейфе за 7 замками. Шучу конечно. Просто использовать лишь в крайнем случае.
 			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
-			<h3>Настройка роутеров и маршрутизаторв.</h3>
+			<p><a name="part2"></a></p>
+			<h2>Настройка роутеров и маршрутизаторв.</h2>
 			<p>Теперь немного уделим внимания настройкам ваших роутеров и маршрутизаторов.</p>
 			<p>
 				Многие из вас, дорогие друзья, даже не догадываются насколько они уязвимы. А ведь такое упущение может принести для вас много головной боли. Давайте же это исправим.
@@ -108,10 +135,11 @@
 			<p>
 				Если вы ещё не сделали указанных настроек, то поспешите, пока злоумышленники не причинили вред вашему сетевому устройству и не завладели вашими персональными данными. Данных настроек вполне достаточно, чтобы ограничить доступ любому злоумышленнику. Однако всегда помните, что указанные настройки роутера вовсе не универсальны а только усложняют недоброжелателям работу. 
 			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
-			<h3>Настройка безопасности ssh соединений</h3>
-			<h4>SSH</h4>
+			<p><a name="part3"></a></p>
+			<h2>Настройка безопасности ssh соединений</h2>
 			<p>Наконец мы подошли к главному вопросу дня – «Настройка безопасности ssh соединений».</p>	
 			<p>Для начала необходимо установить пакет для ssh:</p>
 			<p class="codes">
@@ -183,7 +211,10 @@
 			<p class="codes">
 				$: sudo systemctl restart sshd
 			</p>
-			<h4>Фаервол</h4>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part4"></a></p>
+			<h2>Фаервол</h2>
 			<p>Наливайте ещё немного чая, осталось совсем немного.</p>
 			<p>Ну а я пока расскажу про команды и настройки фаервола.</p>
 			<p>Не во всех ОС в репозиториях имеется графическая оболочка к консольной версии утилиты, но с консольной версией работается намного быстрее и удобнее. Установка выполняется следующей командой:</p>
@@ -218,8 +249,12 @@
 				$: sudo ufw enable</br>
 				$: sudo systemctl enable ufw
 			</p>
-			<h4>Fail2ban</h4>
-			<b>Установка и запуск</b>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.0"></a></p>
+			<h2>Fail2ban</h2>
+			<p><a name="part5.1"></a></p>
+			<h3>Установка и запуск</h3>
 			<p>Описывая Fail2ban в двух словах, можно сказать, что он позволяет на основе анализа логов блокировать тех, кто злоупотребляет доступностью сервера по сети. Например, защитить почтовые ящики от взлома путем перебора паролей или многократного запроса какого-либо ресурса.</p>
 			<p>Установка производится следующей командой:</p>
 			<p class="codes">
@@ -232,8 +267,10 @@
 				$: systemctl enable fail2ban</br>
 				$: systemctl start fail2ban
 			</p>
-			</br>
-			<b>Базовая настройка</b>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.2"></a></p>
+			<h3>Базовая настройка</h3>
 			<p>Процесс настройки fail2ban не зависит от дистрибутива Linux. Основной конфигурационный файл находится по пути /etc/fail2ban/jail.conf. Однако, его не рекомендуется менять и для настройки используют подключаемые файлы из каталога /etc/fail2ban/jail.d.</p>
 			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию: /etc/fail2ban/jail.d/default.conf</p>
 			<p class="codes">
@@ -254,8 +291,10 @@
 			</ul>
 			<p>* В данном примере, если в течение 8 минут (480) будет найдено 5 строк (maxretry = 4), содержащих критерий фильтра, Fail2ban заблокирует IP-адрес, с которого идет подключение на 12 минут (720);</p>
 			<p>* В секции [DEFAULT] хранятся общие настройки для всех правил. Каждую из настроек можно переопределить при конфигурировании самого правила.</p>
-			</br>
-			<b>Настройка правил</b>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.3"></a></p>
+			<h3>Настройка правил</h3>
 			<p>Для нового правила необходимо создать конфигурационный файл в каталоге /etc/fail2ban/jail.d, например: /etc/fail2ban/jail.d/service.conf</p>
 			<p class="codes">
 				[ssh]</br>
@@ -301,8 +340,10 @@
 				<li>firewallcmd-rich-rules — создает rich-rules при помощи firewall-cmd.</li>
 			</ul>
 			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге /etc/fail2ban/filter.d.</p>
-			</br>
-			<b>NGINX DDoS (req limit)</b>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.4"></a></p>
+			<h3>NGINX DDoS (req limit)</h3>
 			<p>Данное правило поможет защитить веб-сервер nginx от DDoS-атак. В некоторых сборках, для данного правило может не оказаться готового фильтра, поэтому в данном примере, мы его создадим вручную.</p>
 			<p>Для начала, необходимо настроить NGINX:</p>
 			<p class="codes">
@@ -357,8 +398,10 @@
 			<p class="codes">
 				$: systemctl restart fail2ban
 			</p>
-			</br>
-			<b>Работа со списком заблокированных адресов</b>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.5"></a></p>
+			<h3>Работа со списком заблокированных адресов</h3>
 			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
 			<p class="codes">
 				$: fail2ban-client status <имя правила>
@@ -381,40 +424,10 @@
 			<p class="codes">
 				$: firewall-cmd --direct --get-all-rules
 			</p>
-			</br>
-			<b>Удаление</b>
-			<p class="pbold">Средствами fail2ban:</p>
-			<p>Для удаление адреса из списка вводим:</p>
-			<p class="codes">
-				$: fail2ban-client set <имя правила> unbanip <IP-адрес>
-			</p>
-			<p>например:</p>
-			<p class="codes">
-				$: fail2ban-client set ssh unbanip 31.207.47.55
-			</p>
-			<p class="pbold">С помощью iptables:</p>
-			<p class="codes">
-				$: iptables -D <цепочка правил> -s IP-адрес
-			</p>
-			<p>например:</p>
-			<p class="codes">
-				$: iptables -D fail2ban-ssh -s 10.212.245.29
-			</p>
-			<p class="pbold">С помощью firewall-cmd:</p>
-			<p class="codes">
-				$: firewall-cmd --direct --permanent --remove-rule <правило>
-			</p>
-			<p>например:</p>
-			<p class="codes">
-				$: firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
-			</p>
-			<p>После необходимо перечитать правила:</p>
-			<p class="codes">
-				$: firewall-cmd --reload
-			</p>
-		</div>
-		<div class="content">
-			<h4>Примеры правил</h4>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.6"></a></p>
+			<h3>Примеры правил</h3>
 			<p>CentOS</p>
 			<p class="codes">
 				/etc/fail2ban/jail.d/ssh.conf</br></br>
@@ -454,6 +467,40 @@
 				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
 				logpath = /var/log/nginx/error.log
 			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.7"></a></p>
+			<h3>Удаление</h3>
+			<p class="pbold">Средствами fail2ban:</p>
+			<p>Для удаление адреса из списка вводим:</p>
+			<p class="codes">
+				$: fail2ban-client set <имя правила> unbanip <IP-адрес>
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: fail2ban-client set ssh unbanip 31.207.47.55
+			</p>
+			<p class="pbold">С помощью iptables:</p>
+			<p class="codes">
+				$: iptables -D <цепочка правил> -s IP-адрес
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: iptables -D fail2ban-ssh -s 10.212.245.29
+			</p>
+			<p class="pbold">С помощью firewall-cmd:</p>
+			<p class="codes">
+				$: firewall-cmd --direct --permanent --remove-rule <правило>
+			</p>
+			<p>например:</p>
+			<p class="codes">
+				$: firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
+			</p>
+			<p>После необходимо перечитать правила:</p>
+			<p class="codes">
+				$: firewall-cmd --reload
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="about">
 			<p>Copyright &copy; 14.01.2021 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
