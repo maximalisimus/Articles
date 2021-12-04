@@ -2,7 +2,8 @@
 <head>
 	<meta charset="utf-8">
 	<title>Sync, contacts, phones</title>
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
 	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
@@ -28,6 +29,25 @@
 			</br>
 		</div>
 		<div class="content">
+			<p><a name="oglavlenie"></a></p>
+			<h2>Оглавление</h2>
+			<ol>
+				<li><a href="#part1">Вводная информация.</a></li>
+				<li><a href="#part2.0">Настройки аккаунтов.</a></li>
+				<ol>
+					<li><a href="#part2.1">Настройки Yandex, Google.</a></li>
+					<li><a href="#part2.2">Настройки Android.</a></li>
+				</ol>
+				<li><a href="#part3">Mozila Thunderbird.</a></li>
+				<li><a href="#part4.0">Бонус 1. Адоны Mozila Thunderbird.</a></li>
+				<ol>
+					<li><a href="#part4.1">Локализация</a></li>
+					<li><a href="#part4.2">Дополнения</a></li>
+				</ol>
+				<li><a href="#part5">Бонус 2. Форматы контактов адресных книг.</a></li>
+			</ol>
+		</div>
+		<div class="content">
 			<p>Сегодня мы поговорим с вами на тему синхронизации контактов — не только электронной почты, но и номеров телефонов. 
 			При этом не имеется значения откуда и куда будет происходить синхронизация — со смартфона или с ПК в ваш аккаунт или облачное хранилище.</p>
 			<p>Порою синхронизация необходима и упрощает нам жизнь.</p>
@@ -36,6 +56,7 @@
 			<p>Мы ведь все пракрасно знаем, что туда можно сохранять не только номера телефонов, но и записывать дополнительно и электронную почту человека и 
 			другую информацию. И наверняка все скажут, что и память смартфона и память SIM-ок не резиновая. Да, вы правы.</p>
 			<p><b>Для этого будем использовать синхронизацию, но не только. Но, обо всем по порядку</b>.</p>
+			<p><a name="part1"></a></p>
 			<h1>Вводная информация.</h1>
 			<p>Обычно синхронизация любых контактов происходит по протоколу <b>Davx5</b>. 
 			Такой протокол поддерживает <b>Yandex и Google</b> (<i>CardDav</i>), но, к сожалению, не <b>Mail.ru</b>. 
@@ -86,6 +107,9 @@
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-0-1.png" class="fz__minimized" alt="клик для увеличения" title="Пример плагина" />
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-0-2.png" class="fz__minimized" alt="клик для увеличения" title="Версии плагина" />
 			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.0"></a></p>
 			<h1>Настройки аккаунтов.</h1>
 			<p>Чтобы CardDav заработал <b>Yandex (или Google)</b> аккаунт надо настроить.</p>
 			<p>Первое что необходимо сделать - создать пароль приложения в настройках аккаунта и включить для почты доступ по IMAP.</p>
@@ -95,6 +119,7 @@
 			</div>
 			<p><b>Не забудьте скопировать этот пароль. Он показывается только один раз при создании. 
 			Если забудете - придётся пересоздавать пароль приложения.</b></p>
+			<p><a name="part2.1"></a></p>
 			<p><b>В любой электронной почте есть так называния страница контактов.</b> Нобходимо сделать <b>BackUp</b> - экспортировать все контакты в файл. 
 			Позже это пригодится при переносе контактов в протокол DavX через ПК + резервная копия контактов электронной почты.</p>
 			<div id="page" class="clearfix">
@@ -110,6 +135,7 @@
 			<p>Забегу наперёд. Пароли приложений в Google работают не совсем правильно. По крайней мере при настройке CardDav адресной книги на ПК не пригодились. 
 			Нужен был именно пароль от самого аккаунта. Почему Google так сделали - не знаю. А вот при настройке Davx5 на смартфоне - нужен был именно пароль приложения, а не пароль от аккаунта. 
 			<b>Это важно!</b></p>
+			<p><a name="part2.2"></a></p>
 			<p>На смартфоне понадобятся 3 приложения: <b>FDroid, Simple Contacts Pro</b> и <b>DAVx5</b>. 
 			Дело в том, что в обычных контактах смартфона <u>по умолчанию не поддерживается импорт и эспорт контактов</u>. 
 			<u>Стандартное приложение DAVx5</u> для синхронизации телефоных номеров <u>в PlayMarket - платное</u>. 
@@ -158,6 +184,9 @@
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-13.png" class="fz__minimized" alt="клик для увеличения" title="Google Контакты" />
 			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
 			<h1>Mozila Thunderbird.</h1>
 			<p>Синхронизация контактов электронной почты (номеров телефонов) через ПК настраивается немного проще. 
 			В этом смысле никаких дополнительных утилит, кроме самого <i>Thunderbird</i> не потребуется.</p>
@@ -182,9 +211,12 @@
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-14.png" class="fz__minimized" alt="клик для увеличения" title="Файл создать CardDav" />
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-15.png" class="fz__minimized" alt="клик для увеличения" title="Имя пользователя пароль CardDav" />
 			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
+			<p><a name="part4.0"></a></p>
 			<h1>Бонус. Адоны Mozila Thunderbird.</h1>
+			<p><a name="part4.1"></a></p>
 			<h2>Локализация</h2>
 			<p>У адонов есть одна особенность - версия и совместимость с разными версиями клента. Об это уже упоминалось выше.</p>
 			<p>Если у вас вдруг оказалась под рукой англиская версия, то не имеет никакого значения в какой OS вы находитесь. Установить русский язык просто.</p>
@@ -217,6 +249,7 @@
 				<img src="https://maximalisimus.github.io/Articles/image/Sync_Contacts_Phones/scr-17.png" class="fz__minimized" alt="клик для увеличения" title="Расширения Thunderbird" />
 			</div>
 			<p><b>И всё! Этого достаточно!</b></p>
+			<p><a name="part4.2"></a></p>
 			<h2>Дополнения.</h2>
 			<p>Дополнения призваны для того, чтобы либо расширить функционал клиента, либо улучшить. Рассмотрим несколько наиболее полезных.</p>
 			<ol>
@@ -261,8 +294,10 @@
 			Тогда вы сможете экспортировать все контакты в <b>vcf</b> файл, и уже импортировать её вручную обратно в ваши контакты вашего аккаунта.</p>
 			<p>Как я упоминал ранее - в этом случае стоит воспользоваться отдельным <i>Yandex (или Google)</i> 
 			аккаунтом только для синхронизации контактов, ну и упрощения получения к ним доступа из любой точки мира.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
+			<p><a name="part5"></a></p>
 			<h1>Бонус 2. Форматы контактов адресных книг.</h1>
 			<ul>
 				<li>Адресные книги любой электронной почты экспортируются и импортируются в формате <b>vcf</b>.</li>
@@ -288,6 +323,7 @@
 			Причем все дубли.
 			</p>
 			<p>Пришлось полностью удалить все конакты. Благо у меня была сделана резервная копия - как я в начале и писал. </p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>

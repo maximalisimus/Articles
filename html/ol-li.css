@@ -1,0 +1,28 @@
+/*
+	OL LI CSS Mode
+ */
+
+LI {
+	list-style-type: none;  /* Убираем исходную нумерацию */
+}
+
+OL
+{
+	counter-reset: list1;  /* Список первого уровня */
+}
+
+OL LI:before
+{
+ counter-increment: list1; /* Увеличиваем значение счетчика */
+ content: counter(list1) ". "; /* Выводим значение в виде 1., 2.*/
+}
+
+OL OL 
+{
+	counter-reset: list2;  /* Список второго уровня*/
+}
+
+OL OL LI:before { /* Список второго уровня */
+ counter-increment: list2; /* Увеличиваем значение счетчика */
+ content: counter(list1) "." counter(list2) ". "; /* Выводим значение типа 2.1, 2.2,... */
+}
