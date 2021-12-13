@@ -37,3 +37,23 @@ ol ol ol li:before { /* Список третьего уровня */
 	counter-increment: list3; /* Увеличиваем значение счетчика */
 	content: counter(list1) "." counter(list2) "." counter(list3) ". "; /* Выводим значение типа 2.1, 2.2,... */
 }
+
+ol ol ol ol
+{
+	counter-reset: list4;  /* Список четвертого уровня*/
+}
+
+ol ol ol ol li:before { /* Список четвортого уровня */
+	counter-increment: list4; /* Увеличиваем значение счетчика */
+	content: counter(list1) "." counter(list2) "." counter(list3) "." counter(list4) ". "; /* Выводим значение типа 2.1, 2.2,... */
+}
+
+ol ol ol ol ol
+{
+	counter-reset: list5;  /* Список пятого уровня*/
+}
+
+ol ol ol ol ol li:before { /* Список пятого уровня */
+	counter-increment: list5; /* Увеличиваем значение счетчика */
+	content: counter(list1) "." counter(list2) "." counter(list3) "." counter(list4) "." counter(list5) ". "; /* Выводим значение типа 2.1, 2.2,... */
+}
