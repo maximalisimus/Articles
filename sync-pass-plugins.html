@@ -394,10 +394,58 @@
 			</p>
 			<p>К сожалению, такое безопасное хранение не поддерживается ни одним менеджером паролей для GPG-Ключей. Однако, вы всегда можете создать зашированный файловый контейнер, например, с помощью <b>«VeraCrypt»</b>, и пользоваться ими с дополнительным параметром для смены рабочей директории хранилища ключей. Например так:</p>
 			<p class="codes">
-				$ gpg --homedir /home/mikl/002/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b># и далее нужные вам ключи и параметры</b>
+				$ gpg --homedir /home/mikl/002/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:Blue;"># и далее нужные вам ключи и параметры</span>
 			</p>
-			<p>А вот как добавить <b>«GPG-Ключи»</b> по умолчанию в <b>«GIT»</b> при изменении рабочей директории мне пока не известно.</p>
 			<p>Ещё одним решение по безопасному хранению <b>«GPG-Ключей»</b> может быть отдельный зашированный раздел <b>«/home/»</b>. Тогда и убирать <b>«SSH-Ключи»</b> в <b>«KeePassXC»</b> не придётся.</p>
+			<p>Для использования <b>«GPG-Ключей»</b>, например в <b>«GIT»</b>, при изменении рабочей директории можно воспользоваться переменной окружения <b>«GNUPGHOME»</b>.
+			</br> В этом случаее параметр <b>--homedir</b> Не понадобится.</p>
+			<p><b>Но, сначала необходимо создать отдельную директорию и добавить туда пару файлов настроек самого GPG.</b></p>
+			<p>При этом, где будет находится ваша директория с ключами <b>GPG</b> - решать только Вам.</p>
+			<p><span style="color:Blue;">Обратите внимание на настройки. Вы можете изменить их по своему усмотрению.</span> Например, keyid-format - none, short, 0xshort, long, 0xlong.</p>
+			<p class="codes">
+				<span style="color:Blue;"># Сначала необходимо узнать 16 последних символов идентификатора ключа, который будет использоваться по умолчанию.</span>
+				</br>$ --homedir /home/mikl/002/ -k --keyid-format=0xlong
+				</br>...
+				</br>pub   rsa2048/0xBE2BA3C896E3C043 ...
+				</br>...
+				</br><span style="color:Blue;"># Нас интересует из такой вот строки то, что находится после <b>«0x»</b>, например, BE2BA3C896E3C043.</span>
+				</br><span style="color:Blue;"># А также полная запись идентификатора публичного ключа.</span>
+				</br>
+				</br>$ echo -e -n "keyid-format 0xshort\nthrow-keyids\nno-emit-version\nno-comments\n\ndefault-key  BE2BA3C896E3C043\n" > /home/mikl/002/gpg.conf
+				</br>$ echo -e -n "default-cache-ttl 300\nmax-cache-ttl 999999\n" > /home/mikl/002/gpg-agent.conf
+				</br>$ echo -e -n "default-key 1DEC8548C828F98EBDE8D46ABE2BA3C896E3C043\ndetailed-view\n" > /home/mikl/002/gpa.conf
+			</p>
+			<p>По итогу в нашем измененном каталоге <b>/home/mikl/002/</b> для <b>GPG</b> получились файлы: 
+			<span style="color:Red;">gpg.conf, gpg-agent.conf, gpa.conf</span>.</p>
+			<p>Файл <b>/home/mikl/002/gpg.conf</b>.</p>
+			<p class="codes">
+				keyid-format 0xshort
+				</br>throw-keyids
+				</br>no-emit-version
+				</br>no-comments
+				</br>
+				</br>default-key  BE2BA3C896E3C043
+			</p>
+			<p>Файл <b>/home/mikl/002/gpg-agent.conf</b>.</p>
+			<p class="codes">
+				default-cache-ttl 300
+				</br>max-cache-ttl 999999
+			</p>
+			<p>Файл <b>/home/mikl/002/gpa.conf</b>.</p>
+			<p class="codes">
+				default-key 1DEC8548C828F98EBDE8D46ABE2BA3C896E3C043
+				</br>detailed-view
+			</p>
+			<p>Теперь можно воспользоваться переменной <b>«GNUPGHOME»</b>.</p>
+			<p class="codes">
+				<span style="color:Blue;"># Пусть, например рабочая директория /home/mikl/002/</span>
+				</br>$ GNUPGHOME=/home/mikl/002/ gpg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:Blue;"># и далее нужные вам ключи и параметры</span>
+				</br><span style="color:Blue;"># Например так.</span>
+				</br>$ GNUPGHOME=/home/mikl/002/ git add -A
+				</br>$ GNUPGHOME=/home/mikl/002/ git commit -m "Update"
+				</br>$ GNUPGHOME=/home/mikl/002/ git push -u origin master
+			</p>
+			<p>Вот теперь для измененного домашнего каталога <b>GPG</b> и вывод правильный и команды выполняются верно.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.4.2"></a></p>
