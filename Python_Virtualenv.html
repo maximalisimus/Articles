@@ -5,6 +5,7 @@
 	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/Python_Virtualenv/python-favicon.ico">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="html/ol-li.css" type="text/css">
 	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
 </head>  
@@ -28,7 +29,11 @@
 			<h2>Оглавление</h2>
 			<ol>
 				<li><a href="#part1">Установка</a></li>
-				<li><a href="#part2">Основные команды</a></li>
+				<li><a href="#part2.0">Основные команды</a></li>
+					<ol>
+						<li><a href="#part2.1">Основные команды</a></li>
+						<li><a href="#part2.2">Команды из под самого Python</a></li>
+					</ol>
 				<li><a href="#part3">Практика <b>Linux</b></a></li>
 				<li><a href="#part4">Практика <b>Windows</b></a></li>
 			</ol>
@@ -114,8 +119,9 @@
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part2"></a></p>
+			<p><a name="part2.0"></a></p>
 			<h3>Основные команды.</h3>
+			<p><a name="part2.1"></a></p>
 			<p><u>Команды одинаково работают как в <b>Linux</b>, так и в <b>Windows</b>.</u></p>
 			<ul>
 				<li><b>mkvirtualenv</b> - создание окружения;</li>
@@ -188,6 +194,17 @@
 				$ sed -E -i "/export PIP_VIRTUALENV_BASE/d" <span style="color:blue;">~/.bashrc</span></br>
 				$ sed -E -i "/export PIP_RESPECT_VIRTUALENV/d" <span style="color:blue;">~/.bashrc</span></br>
 				$ sed -E -i "/which virtualenvwrapper.sh/d" <span style="color:blue;">~/.bashrc</span>
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.2"></a></p>
+			<h3>Команды из под самого Python</h3>
+			<p>Создание новой виртуальной среды внутри каталога:</p>
+			<p class="codes">
+				$ bash</br>
+				$ python -m venv env</br>
+				$ source ./env/bin/activate</br></br>
+				(env) $ deactivate
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
