@@ -377,14 +377,33 @@
 				sc \\localhost config ssh-agent obj= LocalSystem</br>
 				sc \\localhost sdset ssh-agent "D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RP;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)"</br>
 				sc \\localhost privs ssh-agent SeImpersonatePrivilege</br>
-				ssh-agent</br></br>
+				ssh-agent</br>
+				pause</br></br>
 				<span style="color:Blue;">ssh-agent-stop.bat</span></br>
 				@echo off</br>
 				SET PATH=%CD%\;%PATH%</br>
 				ssh-agent -k</br>
 				sc \\localhost stop ssh-agent</br>
 				sc \\localhost delete ssh-agent</br>
+				pause</br>
 			</p>
+			<p>
+				<span style="color:Red;">Поместите их в папку с самим 
+				<span style="color:Black;"><b>OpenSSH</b></span> со всеми его <span style="color:Black;"><b>EXE-никами</b></span>. 
+				В полном пути к <span style="color:Black;"><b>OpenSSH</b> (конечная папка, куда вы распакуете <b>portable-версию</b>)</span> <u>не должно быть никаких пробелов</u>, 
+				<b>иначе</b> <u>ни запуск</u>, <u>ни остановка</u> <span style="color:Black;"><b>сервиса агента</b></span> работать не будут!</span>			
+				</br><span style="color:Red;">Тоже самое касается и <span style="color:Black;"><b>установочной версии программы</b></span> - папка назначения при установки программы.</span>
+				</br>Т.е. стандартные <b>&laquo;Program Files&raquo;</b> и <b>&laquo;Program Files (x86)&raquo;</b> - не подойдут.
+			</p>
+			<p>Лучше используйте что-нибудь вроде этого:</p>
+			<ul>
+				<li>C:\OpenSSH</li>
+				<li>C:\OpenSSH-x64</li>
+				<li>C:\Programs\OpenSSH-x64</li>
+				<li>C:\Programs\OpenSSH</li>
+				<li>И другие.</li>
+			</ul>
+			<p>Повторюсь: <span style="color:Red;">&laquo;Главное, чтобы в путях не было <b>никаких пробелов</b>&raquo;</span>.</p>
 			<p>Затем уже в самом <b>Git-Bash</b> вводим для запуска подагента и синхронизации ключей между сервисом и bash-агентом:</p>
 			<p class="codes">
 				<span style="color:Blue;">Для запуска подагента</span></br>
