@@ -370,7 +370,7 @@
 			</ul>
 			<p>При использовании <b>Portable</b> версии <b>OpenSSH</b>, чтобы агент заработал необходимы <b>2xbat</b> файла, отдельно для запуска и отдельно для остановки сервиса агента.</p>
 			<p class="codes">
-				<span style="color:Blue;">ssh-agent-start.bat</span></br>
+				<span style="color:Blue;"><a href="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/ssh-agent-start.bat">ssh-agent-start.bat</a></span></br>
 				@echo off</br>
 				SET PATH=%CD%\;%PATH%</br>
 				sc \\localhost create ssh-agent DisplayName= "OpenSSH Authentication Agent" binpath= "%CD%\ssh-agent.exe" type= own start= "demand"</br>
@@ -379,7 +379,7 @@
 				sc \\localhost privs ssh-agent SeImpersonatePrivilege</br>
 				ssh-agent</br>
 				pause</br></br>
-				<span style="color:Blue;">ssh-agent-stop.bat</span></br>
+				<span style="color:Blue;"><a href="https://maximalisimus.github.io/Articles/image/sync_pass_plugins/ssh-agent-stop.bat">ssh-agent-stop.bat</a></span></br>
 				@echo off</br>
 				SET PATH=%CD%\;%PATH%</br>
 				ssh-agent -k</br>
