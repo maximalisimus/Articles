@@ -207,6 +207,11 @@
 			<p class="codes">LogLevel INFO</p>
 			<p>Отключаем пересылку X11 через ssh, т.к. данный протокол не ориентирован на безопасность.</p>
 			<p class="codes">X11Forwarding no</p>
+			<p>Сначала нужно задать эти параметры в sshd_config. Поскольку мы вносим изменения в интерфейсы и удалённой, и клиентской системы, нам нужны права root с обеих сторон.</p>
+			<p class="codes">
+				PermitRootLogin yes</br>
+				PermitTunnel yes
+			</p>
 			<p>Форвардинг портов. С помощью SSH туннелей вы можете строить целые цепочки для форвардинга портов. Включить или отключить SSH туннелирование можно следующими директивами.</p>
 			<p class="codes">AllowStreamLocalForwarding yes</br>
 				# AllowTcpForwarding remote</br>
