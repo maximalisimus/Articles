@@ -209,7 +209,8 @@
 			<p class="codes">X11Forwarding no</p>
 			<p>Форвардинг портов. С помощью SSH туннелей вы можете строить целые цепочки для форвардинга портов. Включить или отключить SSH туннелирование можно следующими директивами.</p>
 			<p class="codes">AllowStreamLocalForwarding yes</br>
-				AllowTcpForwarding remote
+				AllowTcpForwarding remote</br>
+				GatewayPorts yes
 			</p>
 			<p>Сохраните файл и перезапустите sshd сервис:</p>
 			<p class="codes">
