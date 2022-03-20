@@ -1,0 +1,423 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Alpine linux setup</title>
+	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/favicon.svg" type=" image/svg+xml">
+	<!--
+		<link rel="icon" href="https://maximalisimus.github.io/Articles/image/favicon.png">
+		<link rel="shortcut icon" href="js-css/404-2.ico" Type="image/x-icon">
+		type="image/png"
+		<link rel="shortcut icon" href="favicon.png" type="image/png">
+		<link rel="icon" href="https://www.webpupil.ru/favicon.svg" type=" image/svg+xml">
+	-->
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/frame.css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css">
+	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
+	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
+</head>
+<body>
+	<div class="site">
+		<div class="header">
+			<div id="logo">
+				<p style="margin:10px; padding:0px;">Alpine linux setup</p>
+			</div>
+		</div>
+		<div class="content">
+			<center>
+				<div class="images">
+					<img src="https://maximalisimus.github.io/Articles/image/Alpine-Linux-image/alpine-logo.jpg" width="500px"/>
+				</div>
+				<div style="clear:both"></div>
+			</center>
+		</div>
+		<div class="content">
+			<p><a name="oglavlenie"></a></p>
+			<h1>Alpine Linux. Рекомендации по установке.</h1>
+			<h2>Оглавление</h2>
+			<ol>
+				<li><a href="#part1">Видео. Вводная часть.</a></li>
+				<li><a href="#part2">Базовая установка.</a></li>
+				<li><a href="#part3">Аудио.</a></li>
+				<li><a href="#part4">Пользователи.</a></li>
+				<li><a href="#part5">Настройка сети.</a></li>
+				<li><a href="#part6">Маршрутизация.</a></li>
+				<li><a href="#part7">Локализация.</a></li>
+				<li><a href="#part8">Загрузчики.</a></li>
+				<li><a href="#part9">Wireguard.</a></li>
+				<li><a href="#part10">Wireguard ifupdown-ng.</a></li>
+				<li><a href="#part11">Docker and docker-compose. Podman and podman-compose.</a></li>
+				<li><a href="#part12">Docker изоляция контейнеров.</a></li>
+				<li><a href="#part13">Принтеры.</a></li>
+			</ol>
+		</div>
+		<div class="content">
+			<p><a name="part1"></a></p>
+			<h1>Alpine Linux. Рекомендации по установке.</h1>
+			<h2>Содержание.</h2>
+			<h2>Видео.</h2>
+			<iframe width="720" height="480" src="https://www.youtube.com/embed/VffFuW6yzRk">
+			</iframe>
+			<h2>Вводная часть.</h2>
+			<p><b>Первое что вам необходимо усвоить - это то, что у вас не будет красивого grub и некоторых стандартных утилит, к которым вы привыкли в обычном Linux.</b></p>
+			<p><span style="color:blue;">По крайней мере, у меня при попытке добавить картинку к любому загрузчику полностью выводил его из строя. Восстановить систему и убрать картинку у меня так толком и не получилось. Мне пришлось полностью переустанавливать систему. <b>Благо это была виртуалка</b>.</span></p>
+			<p><u>Второе - у вас не будет полноценной обработки чего-либо, потому что многие библиотеки специально урезаны ради экономии места на жестком диске. Т.е. как минимум для полноценной компиляции она точно не подойдёт.</u>
+			</br><span style="color:red;">
+			Однако, это же и преимущество, которое говорит о том, что система подойдёт либо для очень старых компьютеров, либо там, где важен каждый магабайт.</span></p>
+			<p><u>Это специфичная система которая подойдёт для узкого круга задач.</u> <b>Однако, это не означает, что её нельзя настроить как полноценную Desktop-ую версию.</b></p>
+			<p>Возможно с первого раза вы даже не всё поймёте в этой системе и не всё сможете запустить или настроить.</p>
+			<p><b>Всё приходит с ошибками и практикой. Поэтому не отчаивайтесь и для начала испытайте её на виртуальной машине, чтобы определиться - подойдёт такая система для вас и ваших задач или нет.</b></p>
+			<p>Во всем привычном Debian или Ubuntu при установке Xorg и менеджера дисплея автоматически устанавливаются минимальный набор графических, офисных программ и системных утилит.</br>
+			<span style="color:Red;">Здесь же в Alpine linux вам буквально придётся выбирать и устанавливать все указанные утилиты вручную.</span><b>Что даёт вам гораздо больший контроль над системой по сравнению с указанными.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h2>Базовая установка.</h2>
+			<p>Первым делом для входа в систему введите логин:</p>
+			<p class="codes">
+				$ root
+			</p>
+			<p>Для установки системы введите команду:</p>
+			<p class="codes">
+				$ setup-alpnie
+			</p>
+			<p>Следуйте указаниям мастера-установщика.</p>
+			<p class="codes">
+				us</br>
+				us</br>
+				eth0</br>
+				dhcpcd</br>
+				no</br>
+				proxy - none</br>
+				openssh</br>
+				sda</br>
+				sys</br>
+				y</br>
+				reboot</br>
+			</p>
+			<p>После перезагрузки введите: «<b>root</b>».</p>
+			<p>Далее обновите пакеты, установите редактор nano, раскоментируйте все репозитории и снова обновитесь.</p>
+			<p class="codes">
+				$ apk update</br>
+				$ apk add nano</br>
+				$ nano /etc/apk/repositories</br>
+				# uncomment all</br>
+				$ apk update</br>
+				$ apk upgrade
+			</p>
+			<p>Установим минимальный набор утилит, шрифтов и тем.</p>
+			<p class="codes">
+				$ apk add sed attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc \</br>
+				util-linux util-linux-doc pciutils usbutils binutils findutils readline \</br>
+				man-pages lsof lsof-doc less less-doc nano nano-doc curl curl-doc \</br>
+				coreutils coreutils-doc</br></br>
+				$ apk add terminus-font ttf-inconsolata ttf-dejavu font-misc-cyrillic font-mutt-misc \</br>
+				font-screen-cyrillic font-winitzki-cyrillic font-cronyx-cyrillic terminus-font \</br>
+				font-sony-misc font-daewoo-misc font-jis-misc font-isas-misc
+			</p>
+			<p>Настройка skel директории.</p>
+			<p class="codes">
+				$ mkdir -p /etc/skel</br>
+				$ nano /etc/skel/.Xresources</br></br>
+
+				Xft.antialias: 0</br>
+				Xft.rgba:      rgb</br>
+				Xft.autohint:  0</br>
+				Xft.hinting:   1</br>
+				Xft.hintstyle: hintslight
+			</p>
+			<p>Установка и автозапуск аудио Alsa.</p>
+			<p class="codes">
+				$ apk add alsa-utils alsa-utils-doc alsa-lib alsaconf</br>
+				$ rc-service alsa start</br>
+				$ rc-update add alsa</br>
+			</p>
+			<p>cshrc и profile.</p>
+			<p class="codes">
+				$ nano /root/.cshrc</br>
+				unsetenv DISPLAY || true</br>
+				HISTCONTROL=ignoreboth</br></br>
+
+				$ cp /root/.cshrc /root/.profile
+			</p>
+			<p>Xorg, Display manager - XFCE4.</p>
+			<p class="codes">
+				$ setup-xorg-base</br>
+				$ apk add xfce4 thunar-volman faenza-icon-theme</br>
+				$ rc-service dbus start</br>
+				$ rc-update add dbus</br>
+				$ rc-service udev start</br>
+				$ rc-update add udev</br>
+				$ apk add accountsservice ttf-cantarell librsvg gnome-icon-theme adwaita-icon-theme lightdm lightdm-gtk-greeter lightdm-openrc</br>
+				$ rc-update add lightdm</br>
+				$ apk add polkit consolekit2 xterm</br>
+				$ apk add firefox</br></br>
+
+				$ reboot
+			</p>
+			<p>И мы получаем примерно вот такую картину.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Alpine-Linux-image/alpine-1.png" class="fz__minimized" alt="клик для увеличения" title="Alpine Вход в систему." />
+				<img src="https://maximalisimus.github.io/Articles/image/Alpine-Linux-image/alpine-2.png" class="fz__minimized" alt="клик для увеличения" title="Alpine Desktop" />
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h2>Аудио.</h2>
+			<p>Мышь, тачпад, регулятор громкости...</p>
+			<p class="codes">
+				$ apk add xf86-input-synaptics alsa-utils alsa-plugins volumeicon
+			</p>
+			<p>Pulseaudio.</p>
+			<p class="codes">
+				$ apk add pavucontrol pulseaudio pulseaudio-alsa pulseaudio-equalizer pulseaudio-jack pulsemixer pamixer pulseview
+			</p>
+			<p>xdg, polkit, gvfs.</p>
+			<p class="codes">
+				$ apk add xdg-user-dirs xdg-utils polkit gvfs gvfs-afc gvfs-mtp gvfs-smb acpid avahi cronie</br></br>
+				$ rc-service acpid start</br>
+				$ rc-service avahi-daemon start</br>
+				$ rc-service cronie start</br>
+				$ rc-update add acpid</br>
+				$ rc-update add avahi-daemon
+			</p>
+			<p>Архиваторы, архивы.</p>
+			<p class="codes">
+				apk add ark xarchiver file-roller</br>
+				apk add unzip zip p7zip
+			</p>
+			<p>Шрифты, темы.</p>
+			<p class="codes">
+				apk add ttf-liberation ttf-dejavu terminus-font fontforge</br>
+				apk add breeze breeze-grub breeze-icons faenza-icon-theme adwaita-icon-theme
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part4"></a></p>
+			<h2>Пользователи.</h2>
+			<p>Установка утилиты для добавлению пользователей.</p>
+			<p class="codes">
+				apk add libuser
+			</p>
+			<p>Настройка skel и default.</p>
+			<p class="codes">
+				$ touch /etc/login.defs</br>
+				$ mkdir -p /etc/default/</br>
+				$ touch /etc/default/useradd</br>
+				$ mkdir -p /etc/skel/</br>
+				$ touch /etc/skel/.logout</br>
+				$ nano /etc/skel/.cshrc</br></br>
+				set autologout = 30</br>
+				set prompt = "\$ "</br>
+				set ignoreeof</br></br>
+				$ cp /etc/skel/.cshrc /etc/skel/.profile
+			</p>
+			<p>Добавление пользователя, настройка пароля групп.</p>
+			<p class="codes">
+				$ adduser -D -k /etc/skel -h /home/mikl -s /bin/bash mikl</br>
+				$ chown YourUserName /home/YourUserName && chmod 700 /home/YourUsername</br>
+				# or</br>
+				$ chown YourUserName /home/YourUserName && chmod 750 /home/YourUsername</br></br>
+				# или так</br>
+				$ adduser -D -h /home/mikl -s /bin/bash mikl</br></br>
+				$ echo "mikl:1234" | chpasswd</br>
+				$ for u in $(ls /home); do for g in disk usb cdrw ping kvm lp floppy audio cdrom dialout video netdev games users wheel; do addgroup $u $g; done;done</br></br>
+				# Перечисление всех групп.</br>
+				# disk lp floppy audio cdrom dialout ping tape video netdev kvm games cdrw apache usb users
+			</p>
+			<p>Изменить shell по умолчанию.</p>
+			<p class="codes">
+				$ lchsh</br>
+				$ lchsh root</br>
+				$ lchsh mikl</br>
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5"></a></p>
+			<h2>Настройка сети.</h2>
+			<p>Имя машины, dns-адреса.</p>
+			<p class="codes">
+				$ echo "shortname" > /etc/hostname</br>
+				$ nano /etc/hosts</br>
+				$ nano /etc/resolv.conf</br></br>
+				nameserver 8.8.8.8</br>
+				nameserver 8.8.4.4
+			</p>
+			<p>Если вдруг нужен ipv6.</p>
+			<p class="codes">
+				# Enabling IPv6 (Optional)</br>
+				$ modprobe ipv6</br>
+				$ echo "ipv6" >> /etc/modules
+			</p>
+			<p><b>Обязательно</b> настройка адресов - вручную или автоматически - на ваше усмотрение.</p>
+			<p class="codes">
+				nano /etc/network/interfaces
+			</p>
+			<p>Network Manager.</p>
+			<p class="codes">
+				$ apk add networkmanager networkmanager-bash-completion networkmanager-cli networkmanager-qt network-manager-applet</br></br>
+				# Для KDE воспользуйтесь этой утилитой</br>
+				$ plasma-nm network-manager-applet</br></br>
+
+				$ rc-service networkmanager start</br>
+				$ adduser YourUsername plugdev</br></br>
+
+				# Если WiFi секция не нужна, то просто не копируйте её и пропустите.</br>
+				<b># Обратите внимание, что флаг managed установлен в true, т.е. все соединения управляются вручную. Это обязательно.</b></br>
+				$ nano /etc/NetworkManager/NetworkManager.conf</br></br>
+
+				[main]</br>
+				dhcp=internal</br>
+				plugins=ifupdown,keyfile</br></br>
+
+				[ifupdown]</br>
+				managed=true</br></br>
+
+				[device]</br>
+				wifi.scan-rand-mac-address=yes</br>
+				wifi.backend=wpa_supplicant</br></br>
+
+				# Now you need to stop conflicting services:</br>
+				$ rc-service networking stop</br>
+				$ rc-service wpa_supplicant stop</br>
+				# Now restart NetworkManager:</br>
+				$ rc-service networkmanager restart</br></br>
+
+				$ rc-update add networkmanager</br></br>
+
+				$ rc-service iwd start</br>
+				$ rc-service networkmanager restart</br></br>
+
+				# rc-update del networking boot</br>
+				# rc-update del wpa_supplicant boot</br>
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part6"></a></p>
+			<h2>Маршрутизация.</h2>
+			<p>Таблицы маршрутизации а автозапуск.</p>
+			<p class="codes">
+				$ apk add iptables</br>
+				$ apk add ip6tables</br>
+				$ apk add iptables-doc</br></br>
+
+				$ rc-update add iptables</br>
+				$ /etc/init.d/iptables save</br>
+				# lbu ci</br></br>
+
+				$ rc-update add ip6tables</br>
+				/etc/init.d/ip6tables save</br>
+				# lbu ci</br></br>
+
+				$ apk add iputils iproute2
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part7"></a></p>
+			<h2>Лоаклизация.</h2>
+			<p>Установка утилит для локализации. Время. Временная зона.</p>
+			<p class="codes">
+				$ apk add tzdata musl-locales musl-locales-lang</br>
+				$ cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime</br>
+				$ echo "Europe/Moscow" >  /etc/timezone
+			</p>
+			<p>Настройка локали.</p>
+			<p class="codes">
+				$ nano /etc/profile.d/locale.sh</br></br>
+
+				export TZ=Europe/Moscow</br>
+				export CHARSET=ru_RU.UTF-8</br>
+				export LANG=ru_RU.UTF-8</br>
+				export LANGUAGE=ru_RU.UTF-8</br>
+				export LC_ALL=ru_RU.UTF-8
+			</p>
+			<p>Настройка клавиатуры и русской раскладки.</p>
+			<p class="codes">
+				$ apk add terminus-font kbd-bkeymaps kbd</br>
+				$ wget -O ru-utf.map.gz https://aur.archlinux.org/cgit/aur.git/plain/ru-utf.map.gz?h=kbd-ru-keymaps
+			</p>
+			<p>Применение локализаций + автозагрузка.</p>
+			<p class="codes">
+				$ sed -i 's/unicode="NO"/unicode="YES"/' /etc/rc.conf</br>
+				$ cat /etc/conf.d/consolefont</br></br>
+
+				$ rc-update add consolefont boot</br></br>
+
+				$ cp ru-utf.map.gz /usr/share/keymaps/xkb/</br>
+				$ sed -i 's/keymap="us"/keymap="ru-utf"/' /etc/conf.d/loadkeys</br>
+				$ sed -i 's/dumpkeys_charset="no"/dumpkeys_charset="yes"/' /etc/conf.d/loadkeys</br>
+				$ rc-update add loadkeys boot
+			</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p class="codes">
+				</br>
+			</p>
+			<p class="codes">
+				$ Codes</br>
+				<span style="color:blue;"># Comment <b>at</b>, the number <b>of</b></span></br>
+			</p>
+			<div class="codeses">
+				<pre>
+<span style="color:blue;">#!/bin/bash</span>
+...
+script
+...
+<span style="color:blue;"># echo "result"</span>
+				</pre>
+			</div>
+			<ul>
+				<li><span style="color:Blue;">Blue</span></li>
+				<li>Black</li>
+				<li><span style="color:Red;">Reed</span></li>
+				<li><span style="color:Yellow;">Yellow</span></li>
+				<li><span style="color:Green;">Green</span></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h2>Part-2 H1</h2>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h1>Part-3 H1</h1>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+						
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
+		</div>	
+		<div class="about">
+			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+		</div>
+		</br>
+	</div>
+	<script type="text/javascript">$('.fz__minimized').litezoom({speed:400, viewTitle:true});</script>
+</body>
+</html>
