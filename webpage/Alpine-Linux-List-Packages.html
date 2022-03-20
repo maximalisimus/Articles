@@ -1,0 +1,703 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Alpine list-packages.</title>
+	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/favicon.png">
+	<!--
+		<link rel="shortcut icon" href="js-css/404-2.ico" Type="image/x-icon">
+		type="image/png"
+		<link rel="shortcut icon" href="favicon.png" type="image/png">
+	-->
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/frame.css">
+	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css">
+	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
+	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
+</head>
+<body>
+	<div class="site">
+		<div class="header">
+			<div id="logo">
+				<p style="margin:10px; padding:0px;">Alpine list-packages.</p>
+			</div>
+		</div>
+		<div class="content">
+			<center>
+				<div class="images">
+					<img src="https://maximalisimus.github.io/Articles/image/Alpine-Linux-image/libs.jpg" width="800px"/>
+				</div>
+				<div style="clear:both"></div>
+			</center>
+		</div>
+		<div class="content">
+			<p><a name="oglavlenie"></a></p>
+			<h1>Оглавление</h1>
+			<ol>
+				<li><a href="#part1">Базовые пакеты.</a></li>
+				<li><a href="#part2">Сетевые пакеты.</a></li>
+				<li><a href="#part3">Docker docker-compose.</a></li>
+				<li><a href="#part4">Сервер.</a></li>
+				<li><a href="#part5">Загрузчики.</a></li>
+				<li><a href="#part6">Видеодрайвера.</a></li>
+				<li><a href="#part7">Display manager.</a></li>
+				<li><a href="#part8">Desktop environment.</a></li>
+				<li><a href="#part9">Xorg.</a></li>
+				<li><a href="#part10">Alsa, Pulseaudio.</a></li>
+				<li><a href="#part11">xdg, gvfs.</a></li>
+				<li><a href="#part12">Архиваторы, архивы.</a></li>
+				<li><a href="#part13">TTF, theme.</a></li>
+				<li><a href="#part14">CD/DVD.</a></li>
+				<li><a href="#part15">Интернет.</a></li>
+				<li><a href="#part16">Графика.</a></li>
+				<li><a href="#part17">Офисные пакеты.</a></li>
+				<li><a href="#part18">Мониторинг.</a></li>
+				<li><a href="#part19">Звезды.</a></li>
+				<li><a href="#part20">Буфер обмена.</a></li>
+				<li><a href="#part21">CAD.</a></li>
+				<li><a href="#part22">Виртуализация.</a></li>
+				<li><a href="#part23">Игры, эмуляторы.</a></li>
+				<li><a href="#part24">Wine.</a></li>
+				<li><a href="#part25">Программирование.</a></li>
+				<li><a href="#part26">Принтеры.</a></li>
+				<li><a href="#part27">Шифрование.</a></li>
+				<li><a href="#part28">Users.</a></li>
+				<li><a href="#part29">Локализация.</a></li>
+				<li><a href="#part30">Wireguard.</a></li>
+			</ol>
+		</div>
+		<div class="content">
+			<p><a name="part1"></a></p>
+			<h1>Базовые пакеты</h1>
+			<p>Базовые пакеты минимум (archlinux).</p>
+			<p class="codes">
+				bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linux-headers squashfs-tools upower mlocate testdisk hwinfo mkinitcpio
+			</p>
+			<p>Базовые пакеты максимум (archlibux).</p>
+			<p class="codes">
+				bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools linux-headers squashfs-tools upower mlocate recordmydesktop testdisk hwinfo
+			</p>
+			<p>Ядро ЛТС</p>
+			<p class="codes">
+				linux-lts
+			</p>
+			<p>Заголовочные файлы ядра</p>
+			<p class="codes">
+				linux-headers
+			</p>
+			<p>Проверено.</p>
+			<p class="codes">
+				apk add sed attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc util-linux util-linux-doc pciutils usbutils binutils findutils readline man-pages lsof lsof-doc less less-doc nano nano-doc curl curl-doc coreutils coreutils-doc
+			</p>
+			<p>Base TTF.</p>
+			<p class="codes">
+				terminus-font ttf-inconsolata ttf-dejavu font-misc-cyrillic font-mutt-misc font-screen-cyrillic font-winitzki-cyrillic font-cronyx-cyrillic terminus-font font-sony-misc font-daewoo-misc font-jis-misc font-isas-misc
+			</p>
+			<p>Dialog Linux.</p>
+			<p class="codes">
+				dialog xdialog zenity kdialog libnotify ncurses ncurses-libs ncurses-terminfo ncurses-static
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h1>Сетевые пакеты.</h1>
+			<p>Connman.</p>
+			<p class="codes">
+				connman connman-doc connman-nftables connman-openrc connman-openvpn connman-l2tp libconnman-qt-dev libconnman-qt connman-iptables connman-vpnc connman-wireguard lua-connman_dbus lua5.2-connman_dbus
+			</p>
+			<p>DHCPCD.</p>
+			<p class="codes">
+				dhcpcd
+			</p>
+			<p>Network Manager.</p>
+			<p class="codes">
+				networkmanager networkmanager-cli networkmanager-qt network-manager-applet </br>
+				</br>
+				networkmanager-l2tp networkmanager-bash-completion networkmanager-cli networkmanager-openrc</br>
+				networkmanager-openvpn networkmanager-lang networkmanager-qt-dev</br>
+				networkmanager-elogind-cli networkmanager-elogind-openrc networkmanager-qt networkmanager-elogind
+			</p>
+			<p>WiFi.</p>
+			<p class="codes">
+				iw wireless_tools wpa_actiond wpa_supplicant
+			</p>
+			<p>Broadcom.</p>
+			<p class="codes">
+				b43-fwcutter
+			</p>
+			<p>Bluetooth.</p>
+			<p class="codes">
+				blueman bluez bluez-libs bluez-plugins bluez-utils bluez-tools
+			</p>
+			<p>Samba</p>
+			<p class="codes">
+				samba libwbclient smb4k smbclient smbnetfs gvfs-smb libgtop
+			</p>
+			<p>Network connetctions.</p>
+			<p class="codes">
+				openvpn networkmanager-openvpn connman-openvpn
+			</p>
+			<p>Адресация.</p>
+			<p class="codes">
+				iptables iputils iproute2
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h1>Docker docker-compose.</h1>
+			<p>Docker.</p>
+			<p class="codes">
+				docker docker-compose
+			</p>
+			<p>Podman.</p>
+			<p class="codes">
+				podman podman-compose podman-docker buildah
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part4"></a></p>
+			<h1>Сервер.</h1>
+			<p>Mail.</p>
+			<p class="codes">
+				postfix
+			</p>
+			<p>NAMP, LAMP.</p>
+			<p class="codes">
+				nginx apache mysql++ mariadb mariadb-clients php phpmyadmin php-fpm php-apache uwsgi
+			</p>
+			<p>FTP.</p>
+			<p class="codes">
+				atftp bftpd curlftpfs filezilla gftp lftp tnftp vsftpd
+			</p>
+			<p>Firewall.</p>
+			<p class="codes">
+				ufw gufw
+			</p>
+			<p>Fail2ban.</p>
+			<p class="codes">
+				fail2ban
+			</p>
+			<p>Antivirus.</p>
+			<p class="codes">
+				clamav clamav-daemon clamav-scanner
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5"></a></p>
+			<h1>Загрузчики.</h1>
+			<p>Grub.</p>
+			<p class="codes">
+				grub os-prober breeze-grub
+			</p>
+			<p>Syslinux.</p>
+			<p class="codes">
+				syslinux
+			</p>
+			<p>Grub UEFI.</p>
+			<p class="codes">
+				grub os-prober efibootmgr dosfstools
+			</p>
+			<p>rEfind.</p>
+			<p class="codes">
+				refind efibootmgr dosfstools
+			</p>
+			<p>Systemd boot.</p>
+			<p class="codes">
+				efibootmgr dosfstools
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part6"></a></p>
+			<h1>Видеодрайвера.</h1>
+			<p>Intel.</p>
+			<p class="codes">
+				xf86-video-intel libva-intel-driver intel-ucode
+			</p>
+			<p>ATI.</p>
+			<p class="codes">
+				xf86-video-ati amd-ucode
+			</p>
+			<p>Nouveau.</p>
+			<p class="codes">
+				xf86-video-nouveau
+			</p>
+			<p>Openchrome.</p>
+			<p class="codes">
+				xf86-video-openchrome
+			</p>
+			<p>Vbox guest additions.</p>
+			<p class="codes">
+				virtualbox-guest-additions virtualbox-guest-additions-x11
+			</p>
+			<p>Vmware.</p>
+			<p class="codes">
+				xf86-video-vmware xf86-input-vmmouse
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part7"></a></p>
+			<h1>Display manager</h1>
+			<p>LXDM.</p>
+			<p class="codes">
+				lxdm
+			</p>
+			<p>LightDM.</p>
+			<p class="codes">
+				lightdm lightdm-gtk-greeter
+			</p>
+			<p>SDDM.</p>
+			<p class="codes">
+				sddm sddm-kcm sddm-breeze
+			</p>
+			<p>SLIM.</p>
+			<p class="codes">
+				slim
+			</p>
+			<p>GDM.</p>
+			<p class="codes">
+				gdm
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part8"></a></p>
+			<h1>Desktop environment.</h1>
+			<p>Polkit.</p>
+			<p class="codes">
+				polkit polkit-gnome
+			</p>
+			<p>Cinnamon.</p>
+			<p class="codes">
+				cinnamon-desktop
+			</p>
+			<p>Gnome.</p>
+			<p class="codes">
+				gnome gnome-shell
+			</p>
+			<p>KDE.</p>
+			<p class="codes">
+				plasma plasma-desktop
+			</p>
+			<p>LXQT.</p>
+			<p class="codes">
+				lxqt and else package oxygen-icons
+			</p>
+			<p>Mate.</p>
+			<p class="codes">
+				mate
+			</p>
+			<p>XFCE4.</p>
+			<p class="codes">
+				xfce4 xfce4-pulseaudio-plugin thunar-volman faenza-icon-theme </br></br>
+				accountsservice ttf-cantarell librsvg gnome-icon-theme adwaita-icon-theme lightdm lightdm-gtk-greeter lightdm-openrc polkit consolekit2 xterm firefox
+			</p>
+			<p></p>
+			<p class="codes">
+				
+			</p>
+			<p>Awesome.</p>
+			<p class="codes">
+				awesome ttf-font-awesome vicious
+			</p>
+			<p>Fluxbox.</p>
+			<p class="codes">
+				fluxbox
+			</p>
+			<p>IceWM.</p>
+			<p class="codes">
+				icewm icewm-lang
+			</p>
+			<p>OpenBox.</p>
+			<p class="codes">
+				openbox openbox-kde openbox-gnome openbox-libs numix-themes-openbox
+			</p>
+			<p>PekWM.</p>
+			<p class="codes">
+				pekwm
+			</p>
+			<p>Windowmaker.</p>
+			<p class="codes">
+				windowmaker
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9"></a></p>
+			<h1>Xorg.</h1>
+			<p>Xorg.</p>
+			<p class="codes">
+				setup-xorg-base
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part10"></a></p>
+			<h1>Alsa, Pulseaudio.</h1>
+			<p>Alsa.</p>
+			<p class="codes">
+				xf86-input-synaptics alsa-utils alsa-plugins volumeicon alsa-utils alsa-utils-doc alsa-lib alsaconf
+			</p>
+			<p>Pulseaudio.</p>
+			<p class="codes">
+				pavucontrol pulseaudio pulseaudio-alsa pulseaudio-equalizer pulseaudio-jack pulsemixer pamixer pulseview
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part11"></a></p>
+			<h1>xdg, gvfs.</h1>
+			<p>xdg, gvfs.</p>
+			<p class="codes">
+				xdg-user-dirs xdg-utils polkit gvfs gvfs-afc gvfs-mtp gvfs-smb acpid avahi cronie
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part12"></a></p>
+			<h1>Архиваторы, архивы.</h1>
+			<p>Архиваторы.</p>
+			<p class="codes">
+				ark xarchiver file-roller
+			</p>
+			<p>Архивы.</p>
+			<p class="codes">
+				unzip zip p7zip
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part13"></a></p>
+			<h1>TTF, theme.</h1>
+			<p>TTF.</p>
+			<p class="codes">
+				ttf-liberation ttf-dejavu terminus-font ttf-cantarell fontforge
+			</p>
+			<p>Theme.</p>
+			<p class="codes">
+				breeze breeze-grub breeze-icons faenza-icon-theme adwaita-icon-theme librsvg gnome-icon-theme adwaita-icon-theme
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part14"></a></p>
+			<h1>CD/DVD.</h1>
+			<p>CD/DVD.</p>
+			<p class="codes">
+				brasero
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part15"></a></p>
+			<h1>Интернет.</h1>
+			<p>Браузеры.</p>
+			<p class="codes">
+				firefox chromium lynx links
+			</p>
+			<p>TOR.</p>
+			<p class="codes">
+				tor tor-openrc torsocks
+			</p>
+			<p>Telegram.</p>
+			<p class="codes">
+				telegram-desktop protobuf
+			</p>
+			<p>Messengers.</p>
+			<p class="codes">
+				pidgin pidgin-otr
+			</p>
+			<p>Mail-клиент.</p>
+			<p class="codes">
+				evolution evolution-ews evolution-on
+			</p>
+			<p>ThunderBird.</p>
+			<p class="codes">
+				thunderbird faenza-icon-theme-thunderbird
+			</p>
+			<p>Transmission.</p>
+			<p class="codes">
+				transmission transmission-cli transmission-static transmission-remote-gtk transmission-daemon transmission-remote-gtk-lang transmission-lang faenza-icon-theme-transmission
+			</p>
+			<p>Torrent.</p>
+			<p class="codes">
+				ktorrent qbittorrent
+			</p>
+			<p>Download менедеры.</p>
+			<p class="codes">
+				wget kget curl git youtube-dl youtube-dl-bash-completion youtube-dl-fish-completion youtube-dl-zsh-completion
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part16"></a></p>
+			<h1>Графика.</h1>
+			<p>Редакторы.</p>
+			<p class="codes">
+				blender inkscape gimp gimp-lang pinta pinta-lang krita krita-lang gcolor3
+			</p>
+			<p>Просмотрщики, вьюверы.</p>
+			<p class="codes">
+				viewnior viewnior-lang gthumb gthumb-lang gpicview gpicview-lang
+			</p>
+			<p>Видео-плеер.</p>
+			<p class="codes">
+				vlc
+			</p>
+			<p>Аудио-плееры.</p>
+			<p class="codes">
+				rhythmbox rhythmbox-lang audacious audacious-lang audacious-plugins audacious-plugins-lang
+			</p>
+			<p>Аудио-редакторы.</p>
+			<p class="codes">
+				audacity audacity-lang lmms
+			</p>
+			<p>Видео-конвертеры.</p>
+			<p class="codes">
+				ffmpeg ffmpeg-libs ffmpeg4 ffmpeg4-libs handbrake handbrake-gtk handbrake-lang
+			</p>
+			<p>Видео-редакторы.</p>
+			<p class="codes">
+				shotcut pitivi
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part17"></a></p>
+			<h1>Офисные пакеты.</h1>
+			<p>Текстовые редакторы.</p>
+			<p class="codes">
+				vim geany geany-lang mousepad mousepad-lang gedit micro
+			</p>
+			<p>Редакторы кода.</p>
+			<p class="codes">
+				emacs geany
+			</p>
+			<p>Офисные пакеты.</p>
+			<p class="codes">
+				libreoffice libreoffice-base libreoffice-common </br>
+				libreoffice-writer libreoffice-calc libreoffice-draw libreoffice-impress libreoffice-math </br></br>
+				faenza-icon-theme-libreoffice-main faenza-icon-theme-libreoffice faenza-icon-theme-libreoffice-impress </br>
+				faenza-icon-theme-libreoffice-common faenza-icon-theme-libreoffice-draw faenza-icon-theme-libreoffice-calc </br>
+				faenza-icon-theme-libreoffice-math aenza-icon-theme-libreoffice-writer </br></br>
+				libreoffice-lang-ru </br></br>
+				libreoffice-qt5 </br>
+				libreoffice-connector-postgres </br>
+				libreoffice-sdk
+			</p>
+			<p>Просмотрщики pdf, djvu.</p>
+			<p class="codes">
+				okular okular-lang evince evince-lang evince-libs evince-nautilus faenza-icon-theme-evince djvulibre libdjvulibre
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part18"></a></p>
+			<h1>Мониторинг.</h1>
+			<p>Диспетчер задач, получение информации, подсчеты.</p>
+			<p class="codes">
+				ksysguard ksysguard-lang libksysguard libksysguard-lang dmidecode dconf dconf-editor dconf-editor-lang bc galculator kcalc kcalc-lang octave
+			</p>
+			<p>GPG GUI.</p>
+			<p class="codes">
+				gpa kgpg kgpg-lang kleopatra kleopatra-lang
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part19"></a></p>
+			<h1>Звезды.</h1>
+			<p>Звездное небо.</p>
+			<p class="codes">
+				stellarium
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part20"></a></p>
+			<h1>Буфер обмена.</h1>
+			<p></p>
+			<p class="codes">
+				xclip gpaste gpaste-lang gpaste-zsh-completion gpaste-gnome gpaste-bash-completion
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part21"></a></p>
+			<h1>CAD.</h1>
+			<p></p>
+			<p class="codes">
+				kicad kicad-library kicad-library-3d freecad
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part22"></a></p>
+			<h1>Виртуализация.</h1>
+			<p></p>
+			<p class="codes">
+				aqemu qemu qemu-img qemu-lang qemu-i386 qemu-x86_64 qemu-alpha </br>
+				qemu-audio-oss qemu-audio-alsa qemu-audio-pa qemu-audio-sdl </br>
+				qemu-hw-display-virtio-gpu </br>
+				qemu-modules qemu-hppa qemu-audio-spice qemu-hw-usb-redirect
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part23"></a></p>
+			<h1>Игры, эмуляторы.</h1>
+			<p>Игры.</p>
+			<p class="codes">
+				supertuxkart supertuxkart-static supertuxkart-server </br>
+			xonotic xonotic-sdl xonotic-glx xonotic-data xonotic-server </br>
+			aisleriot aisleriot-lang kpat kpat-lang gnome-chess gnome-chess-lang gnuchess </br>gnome-sudoku gnome-sudoku-lang madbomber
+			</p>
+			<p>Эмуляторы.</p>
+			<p class="codes">
+				dosbox mednafen mednafen-lang mupen64plus pcsx2 ppsspp
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part24"></a></p>
+			<h1>Wine.</h1>
+			<p>Wine, wine-mono, winetricks.</p>
+			<p class="codes">
+				wine wine-mono wine_gecko winetricks faenza-icon-theme-wine winetricks-bash-completion gnome-wine-icon-theme
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part25"></a></p>
+			<h1>Программирование.</h1>
+			<p>Arduino</p>
+			<p class="codes">
+				gcc-avr avrdude avr-libc
+			</p>
+			<p>Проверка bash-скриптов.</p>
+			<p class="codes">
+				shellcheck
+			</p>
+			<p>Сборка.</p>
+			<p class="codes">
+				make cmake autoconf automake
+			</p>
+			<p>Компиляция.</p>
+			<p class="codes">
+				gcc binutils binutils-avr mingw-w64-binutils </br>
+				mingw-w64-binutils mingw-w64-crt mingw-w64-gcc mingw-w64-headers mingw-w64-winpthreads
+			</p>
+			<p>Golang.</p>
+			<p class="codes">
+				go
+			</p>
+			<p>Python.</p>
+			<p class="codes">
+				$ apk add python2 python3</br></br>
+				$ ln -s /usr/bin/python3 /usr/bin/python</br>
+				$ curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py</br>
+				$ python get-pip.py</br>
+				$ python -m pip install --upgrade pip setuptools virtualenv virtualenvwrapper --upgrade
+			</p>
+			<p>QT Creator.</p>
+			<p class="codes">
+				qt-creator qt5-qtbase qt5-qtbase-x11 qt5-qtbase-doc </br>
+				qt5-qtbase-mysql qt5-qtbase-sqlite qt5-qtbase-postgresql </br>
+				qt6-qtbase qt6-qtbase-doc qt6-qtbase-mysql qt6-qtbase-sqlite qt6-qtbase-postgresql
+			</p>
+			<p>GTK3.</p>
+			<p class="codes">
+				gtk+3.0 libcolord colord-gtk
+			</p>
+			<p>GTKMM3.</p>
+			<p class="codes">
+				gtkmm3 libsigc++3 cairomm pangomm atkmm atkmm2 pkgconf atk pango cairo
+			</p>
+			<p>GTK4.</p>
+			<p class="codes">
+				gtk4.0 gtk4.0-lang gtk4.0-demo colord-gtk libportal-gtk4 libcolord
+			</p>
+			<p>GTKMM4.</p>
+			<p class="codes">
+				gtkmm4
+			</p>
+			<p>Java.</p>
+			<p class="codes">
+				openjdk17-jre openjdk17-jdk openjdk17-demos openjdk17-src
+			</p>
+			<p>Java IDE.</p>
+			<p class="codes">
+				eclipse-ecj
+			</p>
+			<p>Perl.</p>
+			<p class="codes">
+				perl
+			</p>
+			<p></p>
+			<p class="codes">
+				
+			</p>
+			<p>Ruby.</p>
+			<p class="codes">
+				ruby
+			</p>
+			<p>NodeJS.</p>
+			<p class="codes">
+				nodejs
+			</p>
+			<p>IDE редакторы.</p>
+			<p class="codes">
+				codeblocks kdevelop kdevelop-lang
+			</p>
+			<p>Pascal.</p>
+			<p class="codes">
+				fpc
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part26"></a></p>
+			<h1>Принтеры.</h1>
+			<p>Принтеры.</p>
+			<p class="codes">
+				cups cups-lang cups-libs cups-pdf print-manager
+			</p>
+			<p></p>
+			<p class="codes">
+				
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part27"></a></p>
+			<h1>Шифрование.</h1>
+			<p>Менеджер паролей, шифрованные виртуальные диски.</p>
+			<p class="codes">
+				keepassxc keepassxc-lang veracrypt
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part28"></a></p>
+			<h1>Users.</h1>
+			<p>Users.</p>
+			<p class="codes">
+				libuser
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part29"></a></p>
+			<h1>Локализация.</h1>
+			<p>Пакеты локализации.</p>
+			<p class="codes">
+				tzdata musl-locales musl-locales-lang
+			</p>
+			<p>Клавиатуры.</p>
+			<p class="codes">
+				terminus-font kbd-bkeymaps kbd
+			</p>
+			<p>Русская раскладка.</p>
+			<p class="codes">
+				wget -O ru-utf.map.gz https://aur.archlinux.org/cgit/aur.git/plain/ru-utf.map.gz?h=kbd-ru-keymaps
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part30"></a></p>
+			<h1>Wireguard</h1>
+			<p></p>
+			<p class="codes">
+				wireguard-tools wireguard-tools-wg
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
+		</div>	
+		<div class="about">
+			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+		</div>
+		</br>
+	</div>
+	<script type="text/javascript">$('.fz__minimized').litezoom({speed:400, viewTitle:true});</script>
+</body>
+</html>
