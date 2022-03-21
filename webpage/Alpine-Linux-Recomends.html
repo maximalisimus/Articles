@@ -49,9 +49,9 @@
 				<li><a href="#part8">Загрузчики.</a></li>
 				<li><a href="#part9">Wireguard.</a></li>
 				<li><a href="#part10">Wireguard ifupdown-ng.</a></li>
-				<li><a href="#part11">Docker and docker-compose. Podman and podman-compose.</a></li>
+				<li><a href="#part11">Docker, docker-compose.</a></li>
 				<li><a href="#part12">Docker изоляция контейнеров.</a></li>
-				<li><a href="#part13">Принтеры.</a></li>
+				<li><a href="#part13">Принтеры. Archlinux recomends.</a></li>
 			</ol>
 			<p><a href="https://maximalisimus.github.io/Articles/webpage/Alpine-Linux-List-Packages.html">Большой список программ и утилит для Alpine Linux 30 различных категорий</a>.</p>
 		</div>
@@ -253,7 +253,7 @@
 				$ modprobe ipv6</br>
 				$ echo "ipv6" >> /etc/modules
 			</p>
-			<p><b>Обязательно</b> настройка адресов - вручную или автоматически - на ваше усмотрение.</p>
+			<p><b>Обязательно</b>, настройка адресов - вручную или автоматически - на ваше усмотрение.</p>
 			<p class="codes">
 				nano /etc/network/interfaces
 			</p>
@@ -299,7 +299,7 @@
 			<hr>
 			<p><a name="part6"></a></p>
 			<h2>Маршрутизация.</h2>
-			<p>Таблицы маршрутизации а автозапуск.</p>
+			<p>Таблицы маршрутизации, добавление в автозапуск.</p>
 			<p class="codes">
 				$ apk add iptables</br>
 				$ apk add ip6tables</br>
@@ -352,70 +352,203 @@
 				$ sed -i 's/dumpkeys_charset="no"/dumpkeys_charset="yes"/' /etc/conf.d/loadkeys</br>
 				$ rc-update add loadkeys boot
 			</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part8"></a></p>
+			<h2>Загрузчики.</h2>
+			<p>Установка rEfind.</p>
 			<p class="codes">
+				$ apk install refind</br>
+				$ refind-install --alldrivers</br>
+				$ echo '"Alpine" "modules=loop,squashfs,sd-mod,usb-storage quiet initrd=\boot\intel-ucode.img initrd=\boot\amd-ucode.img initrd=\boot\initramfs-lts"' > /media/sdXY/boot/refind_linux.conf
+			</p>
+			<p>Syslinux.</p>
+			<p class="codes">
+				$ apk add syslinux</br>
+				$ dd bs=440 count=1 conv=notrunc if=/usr/share/syslinux/gptmbr.bin of=/dev/sda</br>
+				# или</br>
+				$ dd bs=440 count=1 conv=notrunc if=/usr/share/syslinux/mbr.bin of=/dev/sda</br></br>
+				
+				$ extlinux --install /boot</br>
 				</br>
 			</p>
+			<p>UEFI syslinux.</p>
 			<p class="codes">
-				$ Codes</br>
-				<span style="color:blue;"># Comment <b>at</b>, the number <b>of</b></span></br>
+				$ mkdir -p /mnt/EFI/syslinux</br>
+				$ cp /usr/share/syslinux/efi64/* /mnt/EFI/syslinux/</br>
+				$ cp /boot/extlinux.conf /mnt/EFI/syslinux/syslinux.cfg</br>
+				$ cp /boot/vmlinuz* /mnt/</br>
+				$ cp /boot/initramfs* /mnt/</br>
+				# You may need to modify /mnt/EFI/syslinux/syslinux.cfg to change the paths to absolute paths (just add a / in front of the vmlinuz/initramfs entries), or copy the files to /mnt/EFI/syslinux instead (XXX: untested).
 			</p>
-			<div class="codeses">
-				<pre>
-<span style="color:blue;">#!/bin/bash</span>
-...
-script
-...
-<span style="color:blue;"># echo "result"</span>
-				</pre>
-			</div>
-			<ul>
-				<li><span style="color:Blue;">Blue</span></li>
-				<li>Black</li>
-				<li><span style="color:Red;">Reed</span></li>
-				<li><span style="color:Yellow;">Yellow</span></li>
-				<li><span style="color:Green;">Green</span></li>
-			</ul>
+			<p>GRUB.</p>
+			<p class="codes">
+				$ apk del syslinux</br>
+				$ apk add grub grub-bios os-prober breeze-grub</br></br>
+
+				$ apk add grub-efi</br>
+				$ grub-install /dev/sda # sdb, sdc...</br>
+				# GRUB UEFI.</br>
+				$ grub-install --target=x86_64-efi --efi-directory=/boot</br></br>
+				$ grub-mkconfig -o /boot/grub/grub.cfg</br></br>
+
+				$ nano /etc/default/grub</br>
+				GRUB_DISABLE_OS_PROBER=false</br></br>
+
+				$ grub-mkconfig -o /boot/grub/grub.cfg
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part2"></a></p>
-			<h2>Part-2 H1</h2>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
-			</div>
+			<p><a name="part9"></a></p>
+			<h2>Wireguard.</h2>
+			<p>Установка и настройка.</p>
+			<p class="codes">
+				$ apk add wireguard-tools</br>
+				$ modprobe wireguard</br>
+				# /etc/modules</br>
+				$ echo "wireguard" >> /etc/modules
+			</p>
+			<p>Генерирование ключей, запуск.</p>
+			<p class="codes">
+				$ wg genkey | tee privatekey | wg pubkey > publickey</br></br>
+
+				Interface]</br>
+				Address = 10.123.0.1/24</br>
+				ListenPort = 45340</br>
+				PrivateKey = SG1nXk2+kAAKnMkL5aX3NSFPaGjf9SQI/wWwFj9l9U4= # the key from the previously generated privatekey file</br>
+				PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE;iptables -A FORWARD -o %i -j ACCEPT</br>
+				PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE;iptables -D FORWARD -o %i -j ACCEPT</br></br>
+
+				$ wg-quick up wg0</br>
+				$ wg-quick down wg0
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part3"></a></p>
-			<h1>Part-3 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-						
+			<p><a name="part10"></a></p>
+			<h2>Wireguard ifupdown-ng.</h2>
+			<p>Установка и настройка интерфейса.</p>
+			<p class="codes">
+$ apk add wireguard-tools-wg</br>
+$ nano /etc/network/interfaces</br></br>
+
+auto wg0</br>
+iface wg0 inet static</br>
+	requires eth0</br>
+	use wireguard</br>
+	address 192.168.42.1</br>
+	post-up iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE;iptables -A FORWARD -o wg0 -j ACCEPT</br>
+	post-down iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE;iptables -D FORWARD -o wg0 -j ACCEPT</br>
+			</p>
+			<p>Включить перенаправления.</p>
+			<p class="codes">
+				$ nano /etc/sysctl.conf</br>
+				# or</br>
+				$ mkdir -p /etc/sysctl.d/ && nano /etc/sysctl.d/forwarding.conf</br></br>
+				net.ipv4.ip_forward = 1
+			</p>
+			<p>Запуск, остановка.</p>
+			<p class="codes">
+				$ ifup wg0</br>
+				$ ifdown wg0
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part11"></a></p>
+			<h2>Docker, docker-compose.</h2>
+			<p>Установка и настрнойка.</p>
+			<p class="codes">
+				$ apk add docker</br>
+				$ addgroup username docker</br></br>
+
+				$ rc-update add docker boot</br>
+				$ service docker start</br>
+
+				$ sysctl -w kernel.grsecurity.chroot_deny_chmod=0</br>
+				$ sysctl -w kernel.grsecurity.chroot_deny_mknod=0</br></br>
+
+				$ apk add docker-compose</br>
+				# Или установка из pip:</br>
+				$ apk add py-pip python3-dev libffi-dev openssl-dev gcc libc-dev make</br>
+				$ pip3 install docker-compose
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part12"></a></p>
+			<h2>Docker изоляция контейнеров.</h2>
+			<p class="codes">
+				$ adduser -SDHs /sbin/nologin dockremap</br>
+				$ addgroup -S dockremap</br>
+				$ echo dockremap:$(cat /etc/passwd|grep dockremap|cut -d: -f3):65536 >> /etc/subuid</br>
+				$ echo dockremap:$(cat /etc/passwd|grep dockremap|cut -d: -f4):65536 >> /etc/subgid</br>
+				$ add to /etc/docker/daemon.json</br></br>
+
+				{</br>
+						"userns-remap": "dockremap"</br>
+				}</br>
+				You may also consider these options : '</br></br>
+
+					   "experimental": false,</br>
+					   "live-restore": true,</br>
+					   "ipv6": false,</br>
+					   "icc": false,</br>
+					   "no-new-privileges": false
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part13"></a></p>
+			<h2>Принтеры. Archlinux recomends.</h2>
+			<p>Установка.</p>
+			<p class="codes">
+				apk add cups cups-lang cups-libs cups-pdf print-manager
+			</p>
+			<p>По умолчанию файлы PDF хранятся в /var/spool/cups-pdf/имя_пользователя.</br>
+				Местоположение можно изменить в /etc/cups/cups-pdf.conf.</p>
+			<p class="codes">
+				# Добавить локальный принтер - Cups-PDF</br>
+				$ mkdir ~/cups-pdf</br>
+				# Настраиваем конфиг</br>
+				$ sudo nano /etc/cups/cups-pdf.conf</br>
+				...</br>
+				Out /home/mikl/cups-pdf/</br>
+				...</br>
+				TitlePref 1</br>
+				...</br>
+				DecodeHexStrings 1</br>
+				...</br></br>
+
+				http://localhost:631/</br></br>
+
+				# cups.service</br>
+				# cups.socket
+			</p>
+			<p>При активации cups.socket и выключении cups.service, CUPS запускается только тогда, когда программа хочет его использовать.</p>
+			<p>Gutenprint Printer Drivers: Canon, Epson, Lexmark, Sony, Olympus, PCL.</p>
+			<p class="codes">
+				sudo pacman -S gutenprint foomatic-db-gutenprint-ppds
+			</p>
+			<p>Foomatic Printer Drivers.</br>
+			Чтобы использовать foomatic, установите foomatic-db-engine и по крайней мере один из пакетов:</br>
+			foomatic-db - коллекция файлов XML, используемая foomatic-db-engine для генерации файлов PPD.</br>
+			foomatic-db-ppds - прекомпилированные файлы PPD.</br>
+			foomatic-db-nonfree - коллекция файлов XML под несвободными лицензиями от производителей принтеров, используемая foomatic-db-engine для генерации файлов PPD.</br>
+			foomatic-db-nonfree-ppds - прекомпилированные файлы PPD под несвободными лицензиями.
+			</p>
+			<p>Инструмент для управления заданиями печати и принтерами (KDE):</p>
+			<p class="codes">
+				print-manager
+			</p>
+			<p>Инструмент настройки принтера GTK+ и апплет состояния (GNOME и другие):</p>
+			<p class="codes">
+				system-config-printer
+			</p>
+			<p>Настройки сервера CUPS находятся в <b>/etc/cups/cupsd.conf</b> и <b>/etc/cups/cups-files.conf</b>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
 		<div class="about">
-			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+			<p>Copyright &copy; 21.03.2022 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
 		</div>
 		</br>
 	</div>
