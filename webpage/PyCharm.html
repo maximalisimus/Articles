@@ -50,7 +50,8 @@
 			<p>Для <b>ОС Windows</b> пользоваться виртуальным окружением отдельно от самого <b>PyCharm</b> не получится.</p>
 			<p>По крайней мере, мне, адекватно осуществить это так и не удалось.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
+		</div>
+		<div class="content">
 			<p><a name="part2"></a></p>
 			<h1>Исходные данные</h1>
 			<p>Для выполнения задачи я буду использовать временную папку: <b>~/002/</b></p>
@@ -68,7 +69,8 @@
 			<br>
 			Последнее влияет только на веше удобство использования.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
+		</div>
+		<div class="content">
 			<p><a name="part3"></a></p>
 			<h1>Консоль</h1>
 			<p>Перейдёт непосредственно к самим настройкам.</p>
@@ -115,6 +117,9 @@
 				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-1.png" class="fz__minimized" alt="клик для увеличения" title="Create folders" />
 				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-2.png" class="fz__minimized" alt="клик для увеличения" title="Create virtualenvs" />
 				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-3.png" class="fz__minimized" alt="клик для увеличения" title="Create .pycharmrc" />
+			</div>
+			<p>Не забудьте создать самый примитивный файл <b>main.py</b> в корне проекта. В дальнейшем он понадобится при добавлении конфигурации запуска в <b>PyCharm</b>.</p>
+			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-4.png" class="fz__minimized" alt="клик для увеличения" title="main.py" />
 			</div>
 			<p>Только теперь переходим к созданию самого виртуального окружения и установки необходимых pip пакетов.</p>
@@ -122,6 +127,7 @@
 				$ source .bashrc</br>
 				$ lsvirtualenv</br>
 				$ mkvirtualenv project-env</br>
+				<span style="color:blue;"># У вас будут свои списки pip пикетов. Здесь они приведены только для примера</span><br>
 				$ pip install numpy scipy matplotlib networkx altgraph pyinstaller pyinstaller-hooks-contrib PyQT5 PyQT5-sip PyQT5-QT PyQT5-QT5</br>
 				$ clear</br>
 				$ pip list
@@ -131,7 +137,8 @@
 			</div>
 			<p>Теперь можно перейти к настройкам самого <b>PyCharm</b>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
+		</div>
+		<div class="content">
 			<p><a name="part4"></a></p>
 			<h1>IDE PyCharm</h1>
 			<p>Добавляем проект - именно открываем его, указывая нашу папку без вложенных. Обязательно нажимаем кнопочку, что мы согласны открыть проект в режиме как есть - <b>Trust Project</b>.</p>
@@ -139,73 +146,71 @@
 				~/002/project/
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-6.png" class="fz__minimized" alt="клик для увеличения" title="Open file or project" />
-				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-7.png" class="fz__minimized" alt="клик для увеличения" title="Trust project" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-6.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Open file or project" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-7.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Trust project" />
 			</div>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Теперь откройте главное меню <b>File -> Settings</b>. Нас интересуют только разделы <b>Python interpreter</b> и <b>Terminal</b>.</p>
+			<p>Дело в том, что когда мы создали виртуальное окружение, у нас в нашей скрытой под-директории (в данном случае <i>~/002/project/.virtualenvs/project-env/bin/</i>) как бы, имеется отдельная версия интерпретатора. Да она ссылается на стандартную версию ( <i>/usr/bin/python</i> ), если вы не указывали другую. Однако, эта версия привязана к изменённому расположению пакетов вашего <b>pip</b>.</p>
+			<p>Дело в том, что в других <i>IDE</i> для <i>Python</i> ( например, <i>sublime-text-3</i> ) в настройках именно за счет измененного расположения интерпретатора и привязок менеджера пакетов как раз и используется привязка плагинов к новому местоположению пакетов. Таким образом в них и работает автозавершение кода и нормальный запуск скриптов.</p>
+			<p>Необходимо щелкнуть по шестеренке и добавить <b>Python</b> из нашего виртуального окружения. <b>По окончании работы с вашим проектом, необходимо будет здесь же, убрать из этого списка уже не существующий интерпретатор виртуального окружения.</b></p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-8.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Python interpreter" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-9.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Virtual environment" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-10.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Select Python venv" />
 			</div>
+			<p>Теперь необходимо перейти в раздел <b>Terminal</b> и указать файл <b>.pycharmrc</b>, который отвечает за настройку виртуального окружения в самом <b>PyCharm</b>.</p>
 			<p class="codes">
-				$ Codes</br>
-				<span style="color:blue;"># Comment <b>at</b>, the number <b>of</b></span></br>
+				/bin/bash --rcfile ~/002/project/.pycharmrc
 			</p>
-			<div class="codeses">
-				<pre>
-def myfunc:
-	pass
-				</pre>
-			</div>
-			<div class="codeses">
-				<pre>
-<span style="color:blue;">#!/bin/bash</span>
-...
-script
-...
-<span style="color:blue;"># echo "result"</span>
-				</pre>
-			</div>
-			<ul>
-				<li><span style="color:Blue;">Blue</span></li>
-				<li>Black</li>
-				<li><span style="color:Red;">Reed</span></li>
-				<li><span style="color:Yellow;">Yellow</span></li>
-				<li><span style="color:Green;">Green</span></li>
-			</ul>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part2"></a></p>
-			<h1>Part-2 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>По окончании работы с проектом, не забудьте также и здесь очистить строку от лишних частей. Т.е. оставить только: /bin/bash</b></p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-11.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Settings Terminal" />
+			</div>
+			<p>Базовая настройка завершена. Автозавершение кода уже должно подхватываться, а <b>pip</b> должен отвечать именно за наше виртуальное окружение.</p>
+			<p>Остаётся только проверить наши настройки и настроить запуск проекта ( <i>Run/Debug</i> ) на выполнение.</p>
+			<p>Ждём, когда <i>IDE</i> закончит индексирование пакетов и под-директорий, далее открываем закладку <i>Terminal</i> главного окна. Первое что мы должны увидеть - наше виртуальное окружение распозналась PyCharm-ом. При введении команды &laquo;pip list&raquo; мы должны увидеть только пакеты нашего виртуального окружения.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-12.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm Terminal" />
+			</div>
+			<p>Далее в правой верхней части окна открываем &laquo;Run/Debug Configuration&raquo;, добавляем наш <i>main.py</i> и выбираем интерпретатор. <b>Рекомендую</b> ставить <b>Default</b>.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-13.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Run/Debug Configuration" />
+			</div>
+			<p>Снова переходим в терминал и если уже имеется файл с некой библиотекой - проверям и само виртуальное окружение внутри <i>PyCharm</i>.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-14.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Terminal" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-15.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Editor, Autocomplete" />
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part3"></a></p>
-			<h1>Part-3 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-						
+		</div>
+		<div class="content">
+			<p><a name="part5"></a></p>
+			<h1>Завершение.</h1>
+			<p>По окончании работы с проектом на главном окне, до запуска IDE, убрать проект из списка можно щелкнув по шестеренке справа от самого проекта.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-16.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Remove project" />
+			</div>
+			<p>Однако, это только уберет его из списка, но никак не удалить файлы и директории самого проекта.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-17.png" class="fz__minimized" alt="клик для увеличения" title="Remove project directory" />
+			</div>
+			<p><b>По окончании работы с вашим проектом, необходимо будет здесь же, убрать из этого списка уже не существующий интерпретатор виртуального окружения.</b></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-8.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Python interpreter" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-9.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Virtual environment" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-10.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Select Python venv" />
+			</div>
+			<p><b>По окончании работы с проектом, не забудьте также и очистить строку терминала от лишних частей. Т.е. оставить только: /bin/bash</b></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-11.png" class="fz__minimized" alt="клик для увеличения" title="PyCharm. Settings Terminal" />
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
 		<div class="about">
-			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+			<p>Copyright &copy; 17.06.2022 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
 		</div>
 		</br>
 	</div>
