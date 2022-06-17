@@ -1,8 +1,9 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Example</title>
+	<title>PyCharm Venv</title>
 	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/PyCharn-image/pycharm-icon.png">
+	<link rel="shortcut icon" href="https://maximalisimus.github.io/Articles/image/PyCharn_image/favicon.ico" Type="image/x-icon">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
@@ -16,34 +17,118 @@
 	<div class="site">
 		<div class="header">
 			<div id="logo">
-				<p style="margin:10px; padding:0px;">Example</p>
+				<p style="margin:10px; padding:0px;">PyCharm Venv</p>
 			</div>
 		</div>
 		<div class="content">
 			<center>
+				<h1>Такие разные виртуальные окружения.</h1>
 				<div class="images">
-					<img src="https://maximalisimus.github.io/Articles/image/image-0.png" width="500px"/>
+					<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/pycharm.png" width="500px"/>
 				</div>
 				<div style="clear:both"></div>
 			</center>
 		</div>
 		<div class="content">
 			<p><a name="oglavlenie"></a></p>
-			<center>
-				<h1>Example H1</h1>
-			</center>
 			<h2>Оглавление</h2>
 			<ol>
-				<li><a href="#part1">Part-1</a></li>
-				<li><a href="#part2">Part-2</a></li>
-				<li><a href="#part3">Part-3</a></li>
+				<li><a href="#part1">Введение</a></li>
+				<li><a href="#part2">Исходные данные</a></li>
+				<li><a href="#part3">Консоль</a></li>
+				<li><a href="#part4">IDE PyCharm</a></li>
+				<li><a href="#part5">Завершение</a></li>
 			</ol>
 		</div>
 		<div class="content">
 			<p><a name="part1"></a></p>
-			<h1>Part-1 H1</h1>
-			<p></p>
-			<p></p>
+			<h1>Введение.</h1>
+			<p>Часто бывает так, что при создании проекта через <b>IDE PyCharm</b> не удаётся подключиться к созданному виртуальному окружению <b>.virtualenvs</b>.<br>
+			Та же проблема встречается и при ручном режиме создании виртуального окружения через консоль - его не удётся подключить в <b>PyCharm</b>.</p>
+			<p>	Сегодня, мы с вами <b><span style="color:Green;">правильно</span></b> создадим виртуальное окружение и подключить его в <b>PyCharm</b>.</p>
+			<p><b>Однако, работать такой способ будет <span style="color:Red;">только</span> на <span style="color:Green;">ОС Linux</span>.</b></p>
+			<p>Для <b>ОС Windows</b> пользоваться виртуальным окружением отдельно от самого <b>PyCharm</b> не получится.</p>
+			<p>По крайней мере, мне, адекватно осуществить это так и не удалось.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h1>Исходные данные</h1>
+			<p>Для выполнения задачи я буду использовать временную папку: <b>~/002/</b></p>
+			<p><span style="color:Red;">Однако, помните, что хранить и создавать виртуальные окружения в базовых директориях может привести к выводу вашей системы из строя!</span>
+			<br>
+			<span style="color:Blue;">/; /home/; /home/&lt;UserName&gt;/;/boot/; /dev/; /etc/ и другие.</span>
+			<br>
+			<b>Лучше создайте для этого отдельную директорию и работайте только внутри неё!</b>
+			<br>
+			<span style="color:Green;">Например: /mnt/temp/; /mnt/002/; /home/&lt;UserName&gt;/001/; /home/&lt;UserName&gt;/temp/ и другие.</span>
+			</p>
+			<p>Пусть папка с проектом будет называться незамысловато: <b>project</b></p>
+			<p>Виртуальные окружения будут храниться в отдельной под-директории: <b>~/002/project/.virtualenvs</b></p>
+			<p><b><span style="color:Red;">Обратите внимание</span></b>, что папку с проектом можно хранить <b>почти</b> в любой месте, а вот все виртуальные окружения лучше хранить либо в отдельной папке, которая никогда не меняется, либо каждый раз создавать новую под-директорию.
+			<br>
+			Последнее влияет только на веше удобство использования.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h1>Консоль</h1>
+			<p>Перейдёт непосредственно к самим настройкам.</p>
+			<p>Первое что необходимо сделать - это создать определённый набор папок и файлов, с заданным содержимым.</p>
+			<p><b>Обратите внимание, что все пути прописываются не полными, а относительно домашней директории пользователя!</b></p>
+			<p class="codes">
+				$ cd ~/002/</br>
+				$ mkdir -p project/{.virtualenvs,.pycharm} && cd project && ls -lha</br>
+				<span style="color:blue;"># Последняя команда в конвеере только для проверки результата</span>
+			</p>
+			<p>Файл активирования виртуального окружения внутри PyCharm.</p>
+			<p class="codes">
+				$ touch .pycharm/term-activate</br>
+				$ echo "export PYCHARM_VENV=project-env" > .pycharm/term-activate
+			</p>
+			<p>Создаём основной файл подключения консоли PyCharm.</p>
+			<p class="codes">
+				$ nano .pycharmrc</br></br>
+				<span style="color:blue;"># Содержимое файла .pycharmrc. Строки, на которые следует обратить внимание выделены зелёным цветом.</span></br>
+				if [ -r "<span style="color:Green;">~/002/project/.pycharm/term-activate</span>" ]; then</br>
+   				echo "Terminal activation hook detected."</br>
+   				echo "Loading Bash profile..."</br>
+   				<span style="color:Green;">source ~/002/project/.bashrc</span></br>
+   				echo "Activating terminal hook..."</br>
+   				<span style="color:Green;">source "~/002/project/.pycharm/term-activate"</span></br>
+   				source activate $PYCHARM_VENV</br>
+				fi</br>
+				wait</br>
+				<span style="color:Green;">cd ~/002/project/</span>
+			</p>
+			<p>Создаём файл с переменными окружения для работы виртуального.</p>
+			<p class="codes">
+				$ nano ~/002/project/.bashrc</br></br>
+				<span style="color:Green;">export WORKON_HOME=$HOME/002/project/.virtualenvs</br>
+				export PROJECT_HOME=$HOME/002/project/</span></br>
+				export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python</br>
+				export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv</br>
+				<span style="color:Blue;"># export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'</span></br>
+				export PIP_VIRTUALENV_BASE=$WORKON_HOME</br>
+				export PIP_RESPECT_VIRTUALENV=true</br>
+				if [[ -r `which virtualenvwrapper.sh` ]]; then source `which virtualenvwrapper.sh`; fi
+			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-1.png" class="fz__minimized" alt="клик для увеличения" title="Create folders" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-2.png" class="fz__minimized" alt="клик для увеличения" title="Create virtualenvs" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-3.png" class="fz__minimized" alt="клик для увеличения" title="Create .pycharmrc" />
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-4.png" class="fz__minimized" alt="клик для увеличения" title="main.py" />
+			</div>
+			<p>Только теперь переходим к созданию самого виртуального окружения и установки необходимых pip пакетов.</p>
+			<p class="codes">
+				$ source .bashrc</br>
+				$ lsvirtualenv</br>
+				$ mkvirtualenv project-env</br>
+				$ pip install numpy scipy matplotlib networkx altgraph pyinstaller pyinstaller-hooks-contrib PyQT5 PyQT5-sip PyQT5-QT PyQT5-QT5</br>
+				$ clear</br>
+				$ pip list
+			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/PyCharn_image/scr-5.png" class="fz__minimized" alt="клик для увеличения" title="pip command" />
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
