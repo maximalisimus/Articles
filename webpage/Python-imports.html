@@ -36,9 +36,7 @@
 				<li><a href="#part4">Импорт пакетов</a></li>
 				<li><a href="#part5">Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></a></li>
 				<li><a href="#part6">Библиотека <span style="color:Red;">&laquo;pathlib&raquo;</span>. Примеры</a></li>
-				<li><a href="#part7">Простой импорт</a></li>
-				<li><a href="#part8">Правильный импорт</a></li>
-				<li><a href="#part9">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
+				<li><a href="#part7">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -56,17 +54,17 @@
 			</ol>
 			<p><b>Допустим</b>, вы уже решили ту или иную объемную задачу на бумаге, создали не только алгоритм решения, но и создали собственный python-пакет для обработки подобных задач в будущем.</p>
 			<p><b>Идём дальше.</b> Теперь вам необходимо протестировать свой пакет не только на ошибки, но и на избыточность кода, а также соблюдение отступов, синтаксиса и многого другого.</p>
-			<p>Вы конечно можете создать отдельный файл скрипта, например &laquo;test.py&raquo; в конкретной директории вашего пакета и протестировать модуль или метод модуля отдельно, так сказать вручную. <b>Однако, это мягко говоря неудобно!</b></p>
+			<p>Вы конечно можете создать отдельный файл скрипта, например &laquo;test.py&raquo; в конкретной директории вашего пакета и протестировать модуль или метод модуля отдельно, так сказать, вручную. <b>Однако, это мягко говоря неудобно!</b></p>
 			<p>Для каждого модуля вам придётся мучиться не только с отдельными скриптами, но с импортом своих модулей в этих скриптах, а также ещё и пространством имен из этих <u>скриптов-тестов</u>, т.к. эти файлы будут лежать в директориях ваших пакетов.</p>
 			<p>Не говоря уже про попытку теста всего пакета в целом, ведь в этом случае - относительный импорт не работает и вам придется переместить ваш тест-скрипт на директорию выше.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.1.png" class="fz__minimized" alt="клик для увеличения" title="Test-1" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.2.png" class="fz__minimized" alt="клик для увеличения" title="Test-2" />
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.1.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №1" />
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.2.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №2" />
 			</div>
 			<p>В результате вам всё-таки придётся создать отдельную директорию для тестирования своего кода, в которой вы и будете хранить все <b>скрипты-тесты</b> вашего кода.</p>
 			<p>Вот тут то и начинается вся магия <b>&laquo;Абры-Кадабры&raquo;</b> с импортом, т.к. в этом случае <span style="color:Red;">относительный импорт - не работает!</span></p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.3.png" class="fz__minimized" alt="клик для увеличения" title="Tests Dir" />
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.3.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №3" />
 			</div>
 			<p>Что же тогда делать и как решить такую задачу?</p>
 			<p><span style="color:Green;">Всё решается буквально 1...2 строчками кода </span> <b>-</b> <span style="color:Red;">но их необходимо понимать, чтобы применять правильно.</span></p>
@@ -202,6 +200,7 @@ if __name__ == '__main__':
 		<div class="content">
 			<p><a name="part4"></a></p>
 			<h1>Импорт пакетов</h1>
+			<h2>Простой импорт.</h2>
 			<p>Обычно Python по команде <b>import</b> или <b>from</b> ищет указанные пакеты в каталогах, которые внесены в <b>sys.path</b> переменную среды.</p>
 			<p>У данного списка для добавления нового пути поиска пакетов существует 2 метода: append и insert. 
 			Работают они практически одинаково, за одним маленьким исключением - последний, вставляет строку по указанному индексу, например 0. Обе переменные нужны. <i>Мы к этому вернемся чуть позже.</i></p>
@@ -219,18 +218,86 @@ if __name__ == '__main__':
 				import sys</br>
 				sys.path.append('../')
 			</p>
+			<p>Есть.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.append" />
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №4" />
 			</div>
 			<p>Теперь попробуем импортировать наш модуль.</p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.5.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №5" />
+			</div>
+			<p>Хм, ошибка. Может неправильно указали относительную директорию? Давайте попробуем с помощью модуля <b>pathlib</b>.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.6.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №6" />
+			</div>
+			<p>Опять ошибка. Может опять относительность импорта указали не верно? Попробуем ещё раз.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.7.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №7" />
+			</div>
+			<p>Хм, снова ошибка.</p>
 			<p><u>Однако, здесь не всё так просто, как показалось на первый взгляд.</u></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>Давайте разбираться!</b></p>
+			<hr>
+			<h2>Абсолютные и относительные пути.</h2>
+			<p>Давайте сначала посмотрим как получить полную директорию из относительной при помощи того же модуля <b>pathlib</b>.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-3.png" class="fz__minimized" alt="клик для увеличения" title="Относительные и абсолютные пути" />
+			</div>
+			<p>Хорошо. С директориями разобрались.</p>
+			<p>Есть такая встроенная переменная как &laquo;<b>__file__</b>&raquo;. Она указавает на текущий скрипт.</p>
+			<p>Добавим новый путь поиска пакетов и попробуем импортировать наш пакет. Заодно посмотрим на пространстфо имен запускаемого скрипта, а также пространство имен импортируемого модуля. Если всё получится в консоль будут выведены все указанные значения.</p>
+			<div class="codeses">
+				<pre>
+import pathlib
+import sys
+
+sys.path.append(str(pathlib.Path(__file__).resolve().parent.parent))
+
+def main():
+	for i in sys.path:
+		print(i)
+	import compatible
+	print(dir(sys.modules[__name__]))
+	print(dir(compatible), '\n')
+	print(compatible.getPackageA())
+	print(compatible.getPackageB())
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<p>Смотрим на результат.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-7.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.append" />
+			</div>
+			<p><span style="color:Green;">Заработало!</span></p>
+			<p><span style="color:Brown;">Однако, такой способ добавления не совсем правильный!</span> Однако, вполне рабочий.</p>
+			<p>Обратите внимание на то, что необходимый путь поиска добавился в последнюю строку в &laquo;<b>sys.path</b>&raquo;.</p>
+			<p>Таким образом, Python сначала переберет все остальные пути поиска, и только в последнюю очередь будет обращаться к вашей заданной директории.</p>
+			<p>Лучшим решением, будет - добавление вашей директории на первое место. С этим как раз и поможет метод <b>insert</b>.</p>
+			<div class="codeses">
+				<pre>
+import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+
+def main():
+	for i in sys.path:
+		print(i)
+	import compatible
+	print(dir(sys.modules[__name__]))
+	print(dir(compatible), '\n')
+	print(compatible.getPackageA())
+	print(compatible.getPackageB())
+
+if __name__ == '__main__':
+	main()
+
+				</pre>
+			</div>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-8.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.insert" />
+			</div>
 			<br>
 			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
