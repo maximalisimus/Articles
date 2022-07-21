@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Python - исптория одного импорта</title>
+	<title>Python - история одного импорта</title>
 	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-favicon.png">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
@@ -15,7 +15,7 @@
 	<div class="site">
 		<div class="header">
 			<div id="logo">
-				<p style="margin:10px; padding:0px;">Python - исптория одного импорта</p>
+				<p style="margin:10px; padding:0px;">Python - история одного импорта</p>
 			</div>
 		</div>
 		<div class="content">
@@ -32,7 +32,7 @@
 			<ol>
 				<li><a href="#part1">Введение</a></li>
 				<li><a href="#part2">Структура &laquo;проекта-примера&raquo;</a></li>
-				<li><a href="#part3">Примерное содержимое файлов любого проекта</a></li>
+				<li><a href="#part3">Cодержимое файлов &laquo;проекта-примера&raquo;</a></li>
 				<li><a href="#part4">Каталог <span style="color:Red;">&laquo;tests&raquo;</span></a></li>
 				<li><a href="#part5">Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></a></li>
 				<li><a href="#part6">Библиотека <span style="color:Red;">&laquo;pathlib&raquo;</span>. Примеры</a></li>
@@ -77,6 +77,242 @@
 		<div class="content">
 			<p><a name="part2"></a></p>
 			<h1>Структура &laquo;проекта-примера&raquo;</h1>
+			<h2>Общая структура.</h2>
+			<p>Для примера пусть будет следующая структура проекта.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-1.png" class="fz__minimized" alt="клик для увеличения" title="Strukture Project" />
+			</div>
+			<div class="codeses">
+				<pre>
+.
+└── pkg
+    ├── compatible
+    │   ├── functions.py
+    │   ├── __init__.py
+    │   ├── subpackage_a
+    │   │   ├── a.py
+    │   │   └── __init__.py
+    │   ├── subpackage_b
+    │   │   ├── b.py
+    │   │   ├── __init__.py
+    │   │   └── test-pathlib-1.py
+    │   └── test.py
+    ├── test.py
+    └── tests
+        ├── __init__.py
+        ├── test-abs-path.py
+        ├── test-pathlib-1.py
+        ├── test-pathlib-2.py
+        ├── test-pkg-simple.py
+        ├── test.py
+        └── tmp.txt</pre>
+			</div>
+			<br>
+			<hr>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="part3"></a></p>
+			<h1>Cодержимое файлов &laquo;проекта-примера&raquo;</h1>
+			<p>Определим содержимое всех указанных файлов-проекта. Для примера, пусть будет следующим.</p>
+			<p>Пакет: <b>compatible</b></p>
+			<p>Файл: <b>pkg/compatible/__init__.py</b></p>
+			<p class="codes">
+				from .functions import *</br>
+				from .subpackage_a import *</br>
+				from .subpackage_b import *
+			</p>
+			<p>Файл: <b>pkg/compatible/functions.py</b></p>
+			<div class="codeses">
+				<pre>
+__all__ = ['getDateTimeStr']
+
+from datetime import datetime
+
+def getDateTimeStr(strFormat = "%d.%m.%Y-%H:%M:%S") -> str:
+	dateTime = datetime.now()
+	outDateTime = dateTime.strftime(strFormat)
+	return outDateTime</pre>
+			</div>
+			<p>Файл: <b>pkg/compatible/test.py</b></p>
+			<div class="codeses">
+				<pre>
+from . import *
+
+def main():
+	print(functions.getDateTimeStr())
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<br>
+			<hr>
+			<br>
+			<p>Под-пакет: <b>subpackage_a</b></p>
+			<p>Файл пакета <i>subpackage_a</i>: <b>pkg/compatible/subpackage_a/__init__.py</b></p>
+			<p class="codes">
+				from .a import *
+			</p>
+			<p>Файл пакета <i>subpackage_a</i>: <b>pkg/compatible/subpackage_a/a.py</b></p>
+			<div class="codeses">
+				<pre>
+__all__ = ['getPackageA']
+
+from ..functions import *
+
+def getPackageA():
+	return 'Package A:' + getDateTimeStr()</pre>
+			</div>
+			<br>
+			<hr>
+			<br>
+			<p>Под-пакет: <b>subpackage_b</b></p>
+			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/__init__.py</b></p>
+			<p class="codes">
+				from .b import *
+			</p>
+			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/b.py</b></p>
+			<div class="codeses">
+				<pre>
+__all__ = ['getPackageB']
+
+from ..functions import *
+
+def getPackageB():
+	return 'Package B:' + getDateTimeStr()</pre>
+			</div>
+			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/test-pathlib-1.py</b></p>
+			<div class="codeses">
+				<pre>
+import pathlib
+import sys
+
+def main():
+	print(pathlib.Path('./').resolve())
+	print(pathlib.Path(__file__).resolve())
+	print(pathlib.Path(__file__).resolve().parent.parent)
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<br>
+			<hr>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="part4"></a></p>
+			<h1>Каталог <span style="color:Red;">&laquo;tests&raquo;</span></h1>
+			<p>Под-пакет: <b>tests</b></p>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/__init__.py</b></p>
+			<p class="codes">
+				<br>
+			</p>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pkg-simple.py</b></p>
+			<div class="codeses">
+				<pre>
+import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+
+def main():
+	for i in sys.path:
+		print(i)
+	import compatible
+	print(dir(sys.modules[__name__]))
+	print(dir(compatible), '\n')
+	print(compatible.getPackageA())
+	print(compatible.getPackageB())
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-abs-path.py</b></p>
+			<div class="codeses">
+				<pre>
+import pathlib
+# Path and PurePath classes
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+
+import compatible
+
+def main():
+	print(dir(sys.modules[__name__]))
+	print(compatible.getPackageA())
+	print(compatible.getPackageB())
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pathlib-1.py</b></p>
+			<div class="codeses">
+				<pre>
+import pathlib
+import sys
+
+def main():
+	print(pathlib.Path('./').resolve())
+	print(pathlib.Path(__file__).resolve())
+	print(pathlib.Path(__file__).resolve().parent.parent)
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pathlib-2.py</b></p>
+			<div class="codeses">
+				<pre>
+import pathlib
+# Path and PurePath classes
+import sys
+
+def main():
+	for i in sys.path:
+		print(i)
+	print('\n','Pathlib name:', str(pathlib.Path(__file__).name))
+	print('Pathlib name extension:', str(pathlib.Path(__file__).suffix))
+	print('Pathlib parent:', str(pathlib.Path(__file__).parent))
+	print('Pathlib parent resolve:', str(pathlib.Path(__file__).resolve().parent))
+	print('Pathlib parent joinpath:', str(pathlib.Path(__file__).resolve().joinpath('__init__.py')))
+	print('\n','sys.path[0]:', sys.path[0])
+	print('sys.path[1]:', sys.path[1],'\n')
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test.py</b></p>
+			<div class="codeses">
+				<pre>
+from unittest import TestCase, main
+
+import pathlib
+import sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+import compatible
+from compatible.functions import *
+
+class TestCompatible(TestCase):
+	def test_getDateTimeStr(self):
+		self.assertEqual(type(getDateTimeStr()), str)
+	
+	def test_getPackageA(self):
+		self.assertEqual(type(compatible.getPackageA()), str)
+	
+	def test_getPackageB(self):
+		self.assertEqual(type(compatible.getPackageB()), str)
+	
+if __name__ == '__main__':
+	main()</pre>
+			</div>
+			<br>
+			<hr>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="part5"></a></p>
+			<h1>Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></h1>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -101,8 +337,7 @@
 			</p>
 			<div class="codeses">
 				<pre>
-def myfunc:
-	pass
+
 				</pre>
 			</div>
 			<div class="codeses">
