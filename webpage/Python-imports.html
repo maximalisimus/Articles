@@ -132,17 +132,6 @@ def getDateTimeStr(strFormat = "%d.%m.%Y-%H:%M:%S") -> str:
 	outDateTime = dateTime.strftime(strFormat)
 	return outDateTime</pre>
 			</div>
-			<p>Файл: <b>pkg/compatible/test.py</b></p>
-			<div class="codeses">
-				<pre>
-from . import *
-
-def main():
-	print(functions.getDateTimeStr())
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
 			<br>
 			<hr>
 			<br>
@@ -179,20 +168,6 @@ from ..functions import *
 def getPackageB():
 	return 'Package B:' + getDateTimeStr()</pre>
 			</div>
-			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/test-pathlib-1.py</b></p>
-			<div class="codeses">
-				<pre>
-import pathlib
-import sys
-
-def main():
-	print(pathlib.Path('./').resolve())
-	print(pathlib.Path(__file__).resolve())
-	print(pathlib.Path(__file__).resolve().parent.parent)
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
 			<br>
 			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
@@ -208,20 +183,20 @@ if __name__ == '__main__':
 			<p>Однако, как вы можете заметить - при относительном импорте мы обращаемся к заданному каталогу относительно текущего. Тогда почему мы всё равно не можем импортировать пакет или модуль пакета на уровень выше?</p>
 			<p><b>Это немного ошибочное мнение.</b></p>
 			<p>Дело в том, что внутри пакета, в модуле - по команде <i>import</i> или <i>from</i> обращение происходит относительно файла самого скрипта <b>из</b> которого происходит этот вызов, т.к. это модуль пакета.</p>
-			<p>При простом запуске скрипта, т.е. исполняемого файла, по команде <i>import</i> происходит обращение не по относительной директории, а к путям заданным в <b>sys.path</b> этого же скрипта.</p>
+			<p>При простом запуске скрипта, т.е. исполняемого файла, по команде <i>import</i> или <i>from</i> происходит обращение не по относительной директории, а к путям заданным в <b>sys.path</b> этого же скрипта.</p>
 			<p>В результате при обращении к несуществующему пакету, не найденому в <b>sys.path</b> мы получаем ошибку.</p>
-			<p>Хорошо. Оказывается, просто необходимо добавить директорию родителя в данную переменную среды.</p>
+			<p>Оказывается, просто, необходимо добавить директорию родителя в данную переменную среды.</p>
 			<p>Отлично. Однако, остаётся ещё один вопрос: А какой именно каталог необходимо импортировать?</p>
-			<p>А теперь давайте это всё проверим на практике.</p>
-			<p>Сначала добавим относительный путь и посмотрим - появился ли он в sys.path.</p>
+			<p>Давайте узнаем это на практике.</p>
+			<p>Сначала добавим относительный путь и посмотрим - появился ли он в <b>sys.path</b>.</p>
 			<p class="codes">
 				import sys</br>
 				sys.path.append('../')
 			</p>
-			<p>Есть.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №4" />
 			</div>
+			<p>Есть.</p>
 			<p>Теперь попробуем импортировать наш модуль.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.5.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №5" />
@@ -272,7 +247,7 @@ if __name__ == '__main__':
 			<p><span style="color:Green;">Ура! Заработало!</span></p>
 			<p><span style="color:Brown;">Однако, такой способ добавления не совсем правильный!</span> Однако, вполне рабочий.</p>
 			<p>Обратите внимание на то, что необходимый путь поиска добавился в последнюю строку в &laquo;<b>sys.path</b>&raquo;.</p>
-			<p>Таким образом, Python сначала переберет все остальные пути поиска, и только в последнюю очередь будет обращаться к вашей заданной директории.</p>
+			<p>Таким образом, <b>Python</b> сначала переберет все остальные пути поиска, и только в последнюю очередь будет обращаться к вашей заданной директории.</p>
 			<p>Лучшим решением, будет - добавление вашей директории на первое место. С этим как раз и поможет метод <b>insert</b>.</p>
 			<div class="codeses">
 				<pre>
