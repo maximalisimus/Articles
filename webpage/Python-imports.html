@@ -1,15 +1,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Python-Impotrs</title>
-	<link rel="icon" href="favicon.png">
-	<!--
-		<link rel="icon" href="https://maximalisimus.github.io/Articles/image/favicon.png">
-		<link rel="shortcut icon" href="js-css/404-2.ico" Type="image/x-icon">
-		type="image/png"
-		<link rel="shortcut icon" href="favicon.png" type="image/png">
-		<link rel="icon" href="https://www.webpupil.ru/favicon.svg" type=" image/svg+xml">
-	-->
+	<title>Python - исптория одного импорта</title>
+	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-favicon.png">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
 	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
@@ -29,25 +22,51 @@
 		<div class="content">
 			<center>
 				<div class="images">
-					<img src="https://maximalisimus.github.io/Articles/image/image-0.png" width="500px"/>
+					<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-logo.png" width="500px"/>
 				</div>
 				<div style="clear:both"></div>
 			</center>
 		</div>
 		<div class="content">
 			<p><a name="oglavlenie"></a></p>
-			<center>
-				<h1>Example H1</h1>
-			</center>
 			<h2>Оглавление</h2>
 			<ol>
-				<li><a href="#part1">Part-1</a></li>
-				<li><a href="#part2">Part-2</a></li>
-				<li><a href="#part3">Part-3</a></li>
+				<li><a href="#part1">Введение</a></li>
+				<li><a href="#part2">Структура любого проекта</a></li>
+				<li><a href="#part3">Примерное содержимое файлов любого проекта</a></li>
+				<li><a href="#part4">Каталог <span style="color:Red;">&laquo;tests&raquo;</span></a></li>
+				<li><a href="#part5">Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></a></li>
+				<li><a href="#part6">Библиотека <span style="color:Red;">&laquo;pathlib&raquo;</span>. Примеры</a></li>
+				<li><a href="#part7">Простой импорт</a></li>
+				<li><a href="#part8">Правильный импорт</a></li>
+				<li><a href="#part9">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
 			</ol>
 		</div>
 		<div class="content">
 			<p><a name="part1"></a></p>
+			<h1>Введение</h1>
+			<p>При создании любого <i>python-проекта</i> или одиночного скрипта с кодом мы часто пользуемся импортом, не совсем понимая или помня, как именно он работает. В связи с чем, иногда могут возникать казусы и непредвиденные ситуации, которые порой сложно решить даже с использованием <i>&laquo;Google&raquo;</i> поиска.</p>
+			<p>Сегодня моя задача объяснить почему возникают ошибки импорта пакетов или модулей, а также рассказать сложные темы простыми словами.
+			Темы нашего сегодняшнего разговора очень простые, не смотря на то, что кажутся жутко сложными на первый взгляд. Однако, даже не углубляясь глубоко в дебри языка можно легко прийти к выводу - что любая задача решается очень легко.</p>
+			<p>Даже если мы не знаем какая библиотека сможет решить ту или иную задачу, мы всегда должны понимать что способов решений может быть много, а может быть ни одного. В любом случае каждый раз вам придётся не только искать то или иное решение, но и искать его самостоятельно. Порою вы сможете найти сразу готовое решение и оно вам подойдет. <b>Однако, так будет не всегда.</b></p>
+			<p>В любом случае вам нужно опираться на несколько базовых понятий:</p>
+			<ol>
+				<li>Какой нужен результат ?</li>
+				<li>Решается ли задача, хотя бы на бумаге ?</li>
+				<li>Алгоритмизация решения.</li>
+			</ol>
+			<p>Допустим вы уже решили ту или иную объемную задачу на бумаге, создали не только алгоритм решения, но и создали собственный python-пакет для обработки подобных задач в будущем.</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<hr>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="partN"></a></p>
 			<h1>Part-1 H1</h1>
 			<p></p>
 			<p></p>
@@ -81,31 +100,14 @@ script
 				<li><span style="color:Yellow;">Yellow</span></li>
 				<li><span style="color:Green;">Green</span></li>
 			</ul>
+			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part2"></a></p>
-			<h1>Part-2 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part3"></a></p>
-			<h1>Part-3 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-						
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
