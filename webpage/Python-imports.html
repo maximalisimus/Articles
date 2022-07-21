@@ -33,7 +33,7 @@
 				<li><a href="#part1">Введение</a></li>
 				<li><a href="#part2">Структура &laquo;проекта-примера&raquo;</a></li>
 				<li><a href="#part3">Cодержимое файлов &laquo;проекта-примера&raquo;</a></li>
-				<li><a href="#part4">Каталог <span style="color:Red;">&laquo;tests&raquo;</span></a></li>
+				<li><a href="#part4">Импорт пакетов</a></li>
 				<li><a href="#part5">Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></a></li>
 				<li><a href="#part6">Библиотека <span style="color:Red;">&laquo;pathlib&raquo;</span>. Примеры</a></li>
 				<li><a href="#part7">Простой импорт</a></li>
@@ -201,110 +201,23 @@ if __name__ == '__main__':
 		</div>
 		<div class="content">
 			<p><a name="part4"></a></p>
-			<h1>Каталог <span style="color:Red;">&laquo;tests&raquo;</span></h1>
-			<p>Под-пакет: <b>tests</b></p>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/__init__.py</b></p>
-			<p class="codes">
-				<br>
-			</p>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pkg-simple.py</b></p>
-			<div class="codeses">
-				<pre>
-import pathlib
-import sys
-
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-
-def main():
-	for i in sys.path:
-		print(i)
-	import compatible
-	print(dir(sys.modules[__name__]))
-	print(dir(compatible), '\n')
-	print(compatible.getPackageA())
-	print(compatible.getPackageB())
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-abs-path.py</b></p>
-			<div class="codeses">
-				<pre>
-import pathlib
-# Path and PurePath classes
-import sys
-
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-
-import compatible
-
-def main():
-	print(dir(sys.modules[__name__]))
-	print(compatible.getPackageA())
-	print(compatible.getPackageB())
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pathlib-1.py</b></p>
-			<div class="codeses">
-				<pre>
-import pathlib
-import sys
-
-def main():
-	print(pathlib.Path('./').resolve())
-	print(pathlib.Path(__file__).resolve())
-	print(pathlib.Path(__file__).resolve().parent.parent)
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test-pathlib-2.py</b></p>
-			<div class="codeses">
-				<pre>
-import pathlib
-# Path and PurePath classes
-import sys
-
-def main():
-	for i in sys.path:
-		print(i)
-	print('\n','Pathlib name:', str(pathlib.Path(__file__).name))
-	print('Pathlib name extension:', str(pathlib.Path(__file__).suffix))
-	print('Pathlib parent:', str(pathlib.Path(__file__).parent))
-	print('Pathlib parent resolve:', str(pathlib.Path(__file__).resolve().parent))
-	print('Pathlib parent joinpath:', str(pathlib.Path(__file__).resolve().joinpath('__init__.py')))
-	print('\n','sys.path[0]:', sys.path[0])
-	print('sys.path[1]:', sys.path[1],'\n')
-
-if __name__ == '__main__':
-	main()</pre>
-			</div>
-			<p>Файл пакета <i>tests</i>: <b>pkg/tests/test.py</b></p>
-			<div class="codeses">
-				<pre>
-from unittest import TestCase, main
-
-import pathlib
-import sys
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-import compatible
-from compatible.functions import *
-
-class TestCompatible(TestCase):
-	def test_getDateTimeStr(self):
-		self.assertEqual(type(getDateTimeStr()), str)
-	
-	def test_getPackageA(self):
-		self.assertEqual(type(compatible.getPackageA()), str)
-	
-	def test_getPackageB(self):
-		self.assertEqual(type(compatible.getPackageB()), str)
-	
-if __name__ == '__main__':
-	main()</pre>
-			</div>
+			<h1>Импорт пакетов</h1>
+			<p>Обычно Python по команде <b>import</b> или <b>from</b> ищет указанные пакеты в каталогах, которые внесены в <b>sys.path</b> переменную среды.</p>
+			<p>У данного списка для добавления нового пути поиска пакетов существует 2 метода: append и insert. 
+			Работают они практически одинаково, за одним маленьким исключением - последний, вставляет строку по указанному индексу, например 0. Обе переменные нужны. <i>Мы к этому вернемся чуть позже.</i></p>
+			<p>Если пакет по путям в <b>sys.path</b> не будет найден, Python выдаст ошибку.</p>
+			<p>Однако, как вы можете заметить - при относительном импорте мы обращаемся к заданному каталогу относительно текущего. Тогда почему мы всё равно не можем импортировать пакет или модуль пакета на уровень выше?</p>
+			<p><b>Это немного ошибочное мнение.</b></p>
+			<p>Дело в том, что внутри пакета, в модуле - по команде <i>import</i> или <i>from</i> обращение происходит относительно файла самого скрипта <b>из</b> которого происходит этот вызов, т.к. это модуль пакета.</p>
+			<p>При простом запуске скрипта, т.е. исполняемого файла, по команде <i>import</i> происходит обращение не по относительной директории, а к путям заданным в <b>sys.path</b> этого же скрипта.</p>
+			<p>В результате при обращении к несуществующему пакету, не найденому в <b>sys.path</b> мы получаем ошибку.</p>
+			<p>Хорошо. Оказывается, просто необходимо добавить директорию родителя в данную переменную среды.</p>
+			<p>Отлично. Однако, остаётся ещё один вопрос.</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<br>
 			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
