@@ -1,0 +1,14 @@
+
+Blue-bold
+<span style="color:#069;">
+
+<span style="color:#069;"><b>from</b></span>
+
+<span style="color:#069;"><b>import</b></span>
+<span style="color:#069;"><b>import *</b></span>
+
+Pink
+<span style="color:#ff1493;">
+
+<span style="color:Blue;">
+
