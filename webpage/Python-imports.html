@@ -472,11 +472,12 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p>Расширение файла.</p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
 				<span style="color:#069;"><b>import</b></span> pathlib<br>
-				<span style="color:Red;"># os.path</span><br>
+				<span style="color:Green;"># os.path</span><br>
 				filename, file_extension = os.path.splitext(<span style="color:Blue;">'/path/to/somefile.txt'</span>)<br>
 				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(file_extension), <span style="color:Blue;">':'</span>, file_extension)<br>
-				<span style="color:Red;"># pathlib</span><br>
+				<span style="color:Green;"># pathlib</span><br>
 				file_extension = pathlib.Path(<span style="color:Blue;">'/path/to/somefile.txt'</span>).suffix<br>
 				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(file_extension), <span style="color:Blue;">':'</span>, file_extension)<br><br>
 				<b>$</b> python main.py<br>
@@ -485,14 +486,41 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 					&#8249;class 'str'&#8250; : .txt
 				</span>
 			</p>
-			<p><span style="color:Green;">Согласитесь - с pathlib код становится более элегантным, менее громоздким и более читабельным.</span></p>
 			<p>А теперь рассмотрим следующие методы библиотек: <b>полный путь, получение родительской директории и соединение путей.</b></p>
+			<p><b>Полный путь.</b></p>
 			<p class="codes">
-				<b>$</b> nano main.py<br>
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
 				<span style="color:#069;"><b>import</b></span> pathlib<br>
-
+				<span style="color:Green;"># os.path</span><br>
+				realdir = os.path.abspath(__file__)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(realdir), realdir)<br>
+				<span style="color:Green;"># pathlib.Path</span><br>
+				pathdir = pathlib.Path(__file__).resolve()<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(pathdir), pathdir)<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+					&#8249;class 'str'&#8250; /home/mikl/003/Primer/main.py<br>
+					&#8249;class 'pathlib.PosixPath'&#8250; /home/mikl/003/Primer/main.py
+				</span>
 			</p>
-			<p></p>
+			<p><b>получение родительской директории, например, на 2 уровня вверх.</b></p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				<span style="color:Green;"># os.path</span><br>
+				two_up = os.path.dirname(os.path.dirname(__file__))<br>
+				<span style="color:#ff1493;">print</span>(two_up)<br>
+				<span style="color:Green;"># pathlib.Path</span><br>
+				two_up = pathlib.Path(__file__).parent.parent<br>
+				<span style="color:#ff1493;">print</span>(two_up)<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				/home/mikl/003<br>
+				/home/mikl/003</span>
+			</p>
+			<p><span style="color:Green;">Согласитесь - с pathlib код становится более элегантным, менее громоздким и более читабельным.</span></p>
 			<p></p>
 			<p></p>
 			<p></p>
