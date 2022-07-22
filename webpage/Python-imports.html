@@ -280,13 +280,121 @@ if __name__ == '__main__':
 		<div class="content">
 			<p><a name="part5"></a></p>
 			<h1>Сравнение <span style="color:Red;">&laquo;pathlib&raquo;</span> с модулями <span style="color:Red;">&laquo;os&raquo;</span> и <span style="color:Red;">&laquo;os.path&raquo;</span></h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Не все пары функций/методов ниже эквивалентны. Некоторые из них частично совпадают, некоторые имеют разную семантику. К ним относятся <i>os.path.abspath()</i> и <i>Path.resolve()</i>, <i>os.path.relpath()</i> и <i>Path.relative_to()</i>.</p>
+			<p>Функция <i>os.path.abspath()</i> не разрешает символические ссылки, в то время как <i>Path.resolve()</i> это делает.</p>
+			<p>Метод <i>Path.relative_to()</i> требует, чтобы путь <i>pathlib.Path</i> был подпутем аргумента, однако, <i>os.path.relpath()</i> этого не требует.</p>
+			<p>Подробные примеры использования разберем в следующей главе.</p>
+			<table class="compare">
+				<caption>Эквивалентные функции модулей.</caption>
+				<tr>
+					<th>Функции модулей os и os.path</th>
+					<th>Функции модуля pathlib</th>
+				</tr>
+				<tr>
+					<td>os.path.abspath()</td>
+					<td>Path.resolve()</td>
+				</tr>
+				<tr>
+					<td>os.chmod()</td>
+					<td>Path.chmod()</td>
+				</tr>
+				<tr>
+					<td>os.mkdir()</td>
+					<td>Path.mkdir()</td>
+				</tr>
+				<tr>
+					<td>os.makedirs()</td>
+					<td>Path.mkdir()</td>
+				</tr>
+				<tr>
+					<td>os.rename()</td>
+					<td>Path.rename()</td>
+				</tr>
+				<tr>
+					<td>os.replace()</td>
+					<td>Path.replace()</td>
+				</tr>
+				<tr>
+					<td>os.rmdir()</td>
+					<td>Path.rmdir()</td>
+				</tr>
+				<tr>
+					<td>os.remove(), os.unlink()</td>
+					<td>Path.unlink()</td>
+				</tr>
+				<tr>
+					<td>os.getcwd()</td>
+					<td>Path.cwd()</td>
+				</tr>
+			    <tr>
+			        <td>os.path.exists()</td>
+			        <td>Path.exists()</td>
+			    </tr>
+				<tr>
+					<td>os.path.expanduser()</td>
+					<td>Path.expanduser() и Path.home()</td>
+				</tr>
+				<tr>
+					<td>os.listdir()</td>
+					<td>Path.iterdir()</td>
+				</tr>
+				<tr>
+					<td>os.path.isdir()</td>
+					<td>Path.is_dir()</td>
+				</tr>
+				<tr>
+					<td>os.path.isfile()</td>
+					<td>Path.is_file()</td>
+				</tr>
+				<tr>
+					<td>os.path.islink()</td>
+					<td>Path.is_symlink()</td>
+				</tr>
+				<tr>
+					<td>os.link()</td>
+					<td>Path.hardlink_to()</td>
+				</tr>
+				<tr>
+					<td>os.symlink()</td>
+					<td>Path.symlink_to()</td>
+				</tr>
+				<tr>
+					<td>os.readlink()</td>
+					<td>Path.readlink()</td>
+				</tr>
+				<tr>
+					<td>os.path.relpath()</td>
+					<td>Path.relative_to()</td>
+				</tr>
+				<tr>
+					<td>os.stat()</td>
+					<td>Path.stat(), Path.owner(), Path.group()</td>
+				</tr>
+				<tr>
+					<td>os.path.isabs()</td>
+					<td>PurePath.is_absolute()</td>
+				</tr>
+				<tr>
+					<td>os.path.join()</td>
+					<td>PurePath.joinpath()</td>
+				</tr>
+				<tr>
+					<td>os.path.basename()</td>
+					<td>PurePath.name</td>
+				</tr>
+				<tr>
+					<td>os.path.dirname()</td>
+					<td>PurePath.parent</td>
+				</tr>
+				<tr>
+					<td>os.path.samefile()</td>
+					<td>Path.samefile()</td>
+				</tr>
+				<tr>
+					<td>os.path.splitext()</td>
+					<td>PurePath.suffix</td>
+				</tr>
+			</table>
 			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
