@@ -1,0 +1,26 @@
+.imageClear {
+	display: inline-block;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+}
+.imageClear img {
+	display: inline-block;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+	margin-left: 10%;
+	border: none;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-o-border-radius: 0px;
+	-ms-border-radius: 0px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	-o-box-shadow: none;
+	-ms-box-shadow: none;
+	mix-blend-mode: normal;
+}
+
