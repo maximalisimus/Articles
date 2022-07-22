@@ -119,21 +119,21 @@
 			<p>Пакет: <b>compatible</b></p>
 			<p>Файл: <b>pkg/compatible/__init__.py</b></p>
 			<p class="codes">
-				from .functions import *</br>
-				from .subpackage_a import *</br>
-				from .subpackage_b import *
+				<span style="color:#069;"><b>from</b></span> .functions <span style="color:#069;"><b>import *</b></span></br>
+				<span style="color:#069;"><b>from</b></span> .subpackage_a <span style="color:#069;"><b>import *</b></span></br>
+				<span style="color:#069;"><b>from</b></span> .subpackage_b <span style="color:#069;"><b>import *</b></span>
 			</p>
 			<p>Файл: <b>pkg/compatible/functions.py</b></p>
 			<div class="codeses">
 				<pre>
-__all__ = ['getDateTimeStr']
+__all__ = [<span style="color:Blue;">'getDateTimeStr'</span>]
 
-from datetime import datetime
+<span style="color:#069;"><b>from</b></span> datetime <span style="color:#069;"><b>import</b></span> datetime
 
-def getDateTimeStr(strFormat = "%d.%m.%Y-%H:%M:%S") -> str:
+<span style="color:#069;"><b>def</b></span> getDateTimeStr(strFormat = <span style="color:Blue;">"%d.%m.%Y-%H:%M:%S"</span>) -> <span style="color:#ff1493;">str</span>:
 	dateTime = datetime.now()
 	outDateTime = dateTime.strftime(strFormat)
-	return outDateTime</pre>
+	<span style="color:#069;"><b>return</b></span> outDateTime</pre>
 			</div>
 			<br>
 			<hr>
@@ -141,17 +141,17 @@ def getDateTimeStr(strFormat = "%d.%m.%Y-%H:%M:%S") -> str:
 			<p>Под-пакет: <b>subpackage_a</b></p>
 			<p>Файл пакета <i>subpackage_a</i>: <b>pkg/compatible/subpackage_a/__init__.py</b></p>
 			<p class="codes">
-				from .a import *
+				<span style="color:#069;"><b>from</b></span> .a <span style="color:#069;"><b>import *</b></span>
 			</p>
 			<p>Файл пакета <i>subpackage_a</i>: <b>pkg/compatible/subpackage_a/a.py</b></p>
 			<div class="codeses">
 				<pre>
-__all__ = ['getPackageA']
+__all__ = [<span style="color:Blue;">'getPackageA'</span>]
 
-from ..functions import *
+<span style="color:#069;"><b>from</b></span> ..functions <span style="color:#069;"><b>import *</b></span>
 
-def getPackageA():
-	return 'Package A:' + getDateTimeStr()</pre>
+<span style="color:#069;"><b>def</b></span> getPackageA():
+	<span style="color:#069;"><b>return</b></span> <span style="color:Blue;">'Package A:'</span> + getDateTimeStr()</pre>
 			</div>
 			<br>
 			<hr>
@@ -159,17 +159,17 @@ def getPackageA():
 			<p>Под-пакет: <b>subpackage_b</b></p>
 			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/__init__.py</b></p>
 			<p class="codes">
-				from .b import *
+				<span style="color:#069;"><b>from</b></span> .b <span style="color:#069;"><b>import *</b></span>
 			</p>
 			<p>Файл пакета <i>subpackage_b</i>: <b>pkg/compatible/subpackage_b/b.py</b></p>
 			<div class="codeses">
 				<pre>
-__all__ = ['getPackageB']
+__all__ = [<span style="color:Blue;">'getPackageB'</span>]
 
-from ..functions import *
+<span style="color:#069;"><b>from</b></span> ..functions <span style="color:#069;"><b>import *</b></span>
 
-def getPackageB():
-	return 'Package B:' + getDateTimeStr()</pre>
+<span style="color:#069;"><b>def</b></span> getPackageB():
+	<span style="color:#069;"><b>return</b></span> <span style="color:Blue;">'Package B:'</span> + getDateTimeStr()</pre>
 			</div>
 			<br>
 			<hr>
@@ -483,8 +483,12 @@ if __name__ == '__main__':
 					&#8249;class 'str'&#8250; : .txt
 				</span>
 			</p>
-			<p>Согласитесь - код становится более элегантным, менее громоздким и более читабельным.</p>
-			<p>А теперь посмотрим на полный путь.</p>
+			<p>Согласитесь - код становится более элегантным, менее громоздким и более читабельным. А теперь посмотрим на следующие методы: полный путь, получение родительской директории и соединение путей.</p>
+			<p class="codes">
+				<b>$</b> nano main.py<br>
+				import pathlib<br>
+
+			</p>
 			<p></p>
 			<p></p>
 			<p></p>
