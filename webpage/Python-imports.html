@@ -191,8 +191,8 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 			<p>Давайте узнаем всё это на практике.</p>
 			<p>Сначала добавим относительный путь и посмотрим - появился ли он в <b>sys.path</b>.</p>
 			<p class="codes">
-				import sys</br>
-				sys.path.append('../')
+				<span style="color:#069;"><b>import</b></span> sys</br>
+				sys.path.append(<span style="color:Blue;">'../'</span>)
 			</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №4" />
@@ -224,21 +224,21 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 			<p>Добавим новый путь поиска пакетов и попробуем импортировать наш пакет. Заодно посмотрим на пространстфо имен запускаемого скрипта, а также пространство имен импортируемого модуля. Если всё получится в консоль будут выведены все указанные значения.</p>
 			<div class="codeses">
 				<pre>
-import pathlib
-import sys
+<span style="color:#069;"><b>import</b></span> pathlib
+<span style="color:#069;"><b>import</b></span> sys
 
-sys.path.append(str(pathlib.Path(__file__).resolve().parent.parent))
+sys.path.append(<span style="color:#ff1493;">str</span>(pathlib.Path(__file__).resolve().parent.parent))
 
-def main():
-	for i in sys.path:
-		print(i)
-	import compatible
-	print(dir(sys.modules[__name__]))
-	print(dir(compatible), '\n')
-	print(compatible.getPackageA())
-	print(compatible.getPackageB())
+<span style="color:#069;"><b>def</b></span> main():
+	<span style="color:#069;"><b>for</b></span> i <span style="color:#069;"><b>in</b></span> sys.path:
+		<span style="color:#ff1493;">print</span>(i)
+	<span style="color:#069;"><b>import</b></span> compatible
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">dir</span>(sys.modules[__name__]))
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">dir</span>(compatible), <span style="color:Blue;">'\n'</span>)
+	<span style="color:#ff1493;">print</span>(compatible.getPackageA())
+	<span style="color:#ff1493;">print</span>(compatible.getPackageB())
 
-if __name__ == '__main__':
+if __name__ == <span style="color:Blue;">'__main__'</span>:
 	main()</pre>
 			</div>
 			<p>Смотрим на результат.</p>
@@ -252,23 +252,22 @@ if __name__ == '__main__':
 			<p>Лучшим решением, будет - добавление вашей директории на первое место. С этим как раз и поможет метод <b>insert</b>.</p>
 			<div class="codeses">
 				<pre>
-import pathlib
-import sys
+<span style="color:#069;"><b>import</b></span> pathlib
+<span style="color:#069;"><b>import</b></span> sys
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
+sys.path.insert(<span style="color:Green;">0</span>, <span style="color:#ff1493;">str</span>(pathlib.Path(__file__).resolve().parent.parent))
 
-def main():
-	for i in sys.path:
-		print(i)
-	import compatible
-	print(dir(sys.modules[__name__]))
-	print(dir(compatible), '\n')
-	print(compatible.getPackageA())
-	print(compatible.getPackageB())
+<span style="color:#069;"><b>def</b></span> main():
+	<span style="color:#069;"><b>for</b></span> i <span style="color:#069;"><b>in</b></span> sys.path:
+		<span style="color:#ff1493;">print</span>(i)
+	<span style="color:#069;"><b>import</b></span> compatible
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">dir</span>(sys.modules[__name__]))
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">dir</span>(compatible), <span style="color:Blue;">'\n'</span>)
+	<span style="color:#ff1493;">print</span>(compatible.getPackageA())
+	<span style="color:#ff1493;">print</span>(compatible.getPackageB())
 
-if __name__ == '__main__':
+if __name__ == <span style="color:Blue;">'__main__'</span>:
 	main()
-
 				</pre>
 			</div>
 			<div id="page" class="clearfix">
@@ -408,9 +407,9 @@ if __name__ == '__main__':
 			<p>К счастью, если вы пишете на Python, модуль Pathlib выполняет тяжелую работу, позволяя вам убедиться, что ваши пути к файлам работают одинаково в разных операционных системах. Кроме того, он предоставляет функциональные возможности и операции, которые помогут вам сэкономить время при обработке и манипулировании путями.</p>
 			<p>Откройте файл, например main.py и введите следующее содержимое:</p>
 			<p class="codes">
-				import pathlib<br><br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br><br>
 				p = pathlib.Path(__file__)<br>
-				print(type(p), ':', p)
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(p), <span style="color:Blue;">':'</span>, p)
 			</p>
 			<p>Сохраните и запустите. У меня вывод получился следующий:</p>
 			<p class="codes">
@@ -430,9 +429,9 @@ if __name__ == '__main__':
 			<p>Модифицируем код представленный выше и одной командой получим на выходе прежний str.</p>
 			<p>main.py:</p>
 			<p class="codes">
-				import pathlib<br><br>
-				p = str(pathlib.Path(__file__))<br>
-				print(type(p), ':', p)
+				<span style="color:#069;"><b>import</b></span> pathlib<br><br>
+				p = <span style="color:#ff1493;">str</span>(pathlib.Path(__file__))<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(p), <span style="color:Blue;">':'</span>, p)
 			</p>
 			<p>Сохраните и запустите:</p>
 			<p class="codes">
@@ -447,9 +446,9 @@ if __name__ == '__main__':
 			<p><i>Добавим в вывод дополнительную информацию, чтобы понимать какой объект мы получаем и выводем содержимое на экран.</i></p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
-				import os<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
 				names = os.path.basename(__file__)<br>
-				print(type(names), ':', names)<br><br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(names), <span style="color:Blue;">':'</span>, names)<br><br>
 				<b>$</b> python main.py<br>
 				<span style="color:Blue;">
 					&#8249;class 'str'&#8250; : main.py
@@ -458,9 +457,9 @@ if __name__ == '__main__':
 			<p>А теперь тоже самое в pathlib.</p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
-				import pathlib<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
 				filename = pathlib.Path('/path/to/somefile.txt').name<br>
-				print(type(filename), ':', filename)<br><br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(filename), <span style="color:Blue;">':'</span>, filename)<br><br>
 				<b>$</b> python main.py<br>
 				<span style="color:Blue;">
 					&#8249;class 'str'&#8250; : somefile.txt
@@ -470,23 +469,24 @@ if __name__ == '__main__':
 			<p>Расширение файла.</p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
-				import pathlib<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
 				<span style="color:Red;"># os.path</span><br>
-				filename, file_extension = os.path.splitext('/path/to/somefile.txt')<br>
-				print(type(file_extension), ':', file_extension)<br>
+				filename, file_extension = os.path.splitext(<span style="color:Blue;">'/path/to/somefile.txt'</span>)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(file_extension), <span style="color:Blue;">':'</span>, file_extension)<br>
 				<span style="color:Red;"># pathlib</span><br>
-				file_extension = pathlib.Path('/path/to/somefile.txt').suffix<br>
-				print(type(file_extension), ':', file_extension)<br><br>
+				file_extension = pathlib.Path(<span style="color:Blue;">'/path/to/somefile.txt'</span>).suffix<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff1493;">type</span>(file_extension), <span style="color:Blue;">':'</span>, file_extension)<br><br>
 				<b>$</b> python main.py<br>
 				<span style="color:Blue;">
 					&#8249;class 'str'&#8250; : .txt<br>
 					&#8249;class 'str'&#8250; : .txt
 				</span>
 			</p>
-			<p>Согласитесь - код становится более элегантным, менее громоздким и более читабельным. А теперь посмотрим на следующие методы: полный путь, получение родительской директории и соединение путей.</p>
+			<p><span style="color:Green;">Согласитесь - код становится более элегантным, менее громоздким и более читабельным.</span></p>
+			<p>А теперь посмотрим на следующие методы: <b>полный путь, получение родительской директории и соединение путей.</b></p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
-				import pathlib<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
 
 			</p>
 			<p></p>
