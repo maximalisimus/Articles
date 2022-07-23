@@ -683,8 +683,10 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<span style="color:#069;"><b>import</b></span> os<br>
 				<span style="color:#069;"><b>import</b></span> pathlib<br>
 				<span style="color:#069;"><b>from</b></span> stat <span style="color:#069;"><b>import</b></span> S_IMODE, filemode<br>
+				<span style="color:Green;"># Pathlib.Path.stat</span><br>
 				p = pathlib.Path(<span style="color:Blue;">'./gpgtest'</span>)<br>
 				<span style="color:#ff1493;">print</span>(p.stat().st_mode, filemode(p.stat().st_mode), <span style="color:#ff9933;">oct</span>(S_IMODE(p.stat().st_mode)))<br>
+				<span style="color:Green;"># os.stat</span><br>
 				statinfo = os.stat(<span style="color:Blue;">'./gpgtest'</span>)<br>
 				<span style="color:#ff1493;">print</span>(statinfo.st_mode, filemode(statinfo.st_mode), <span style="color:#ff9933;">oct</span>(S_IMODE(statinfo.st_mode)))<br><br>
 				<b>mikl@mikl ~/0/Primer></b> python main.py<br>
@@ -693,9 +695,20 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				16832 drwx------ 0o700</span>
 			</p>
 			<p><b>Всё работает!</b></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Оставим только <b>pathlib.Path.stat</b>, и <b>oct</b> вывод прав доступа для одного из следующих примеров.</p>
+			<p>У нас имеется строка в виде последовательно записанных <b>нуля</b> и английской буквы <b>'o'</b>. Попробуем преобразовать заданные из ввода права доступа в правильный формат и обратно.</p>
+			<p>Введём, например 755 и посмотрим что получится.</p>
+			<p class="codes">
+				<b>mikl@mikl ~/0/Primer></b> nano main.py<br>
+				mode = <span style="color:Blue;">'0o'</span> + <span style="color:#ff1493;">str</span>(<span style="color:#ff1493;">int</span>(<span style="color:#ff9933;">input</span>(<span style="color:Blue;">'Введите права доступа: '</span>)))<br>
+				real_mode = int(mode, 8)<br>
+				<span style="color:#ff1493;">print</span>(mode, real_mode, <span style="color:#ff9933;">oct</span>(real_mode))<br><br>
+				<b>mikl@mikl ~/0/Primer></b> python main.py<br>
+				<span style="color:Blue;">
+				Введите права доступа: 755<br>
+				0o755 493 0o755<br></span>
+			</p>
+			<p>Отлично, теперь попробуем изменить права доступа к каталогу <b>gpgtest</b> и файлу <b>strukture.txt</b> разными библиотеками и посмотрим чем они отличаются.</p>
 			<p></p>
 			<p></p>
 			<p></p>
