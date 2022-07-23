@@ -62,7 +62,7 @@
 						<li><a href="#part6_2_5">Права доступа</a></li>
 						<li><a href="#part6_2_6">Создание файлов и папок</a></li>
 						<ol>
-							<li><a href="#part6_2_6_1">Чтение / Запись файлов</a></li>
+							<li><a href="#part6_2_6_1">Чтение и Запись файлов</a></li>
 							<li><a href="#part6_2_6_1">Работа с файлами папками</a></li>
 						</ol>
 						<li><a href="#part6_2_7">Переименование файлов и папок</a></li>
@@ -786,7 +786,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p><a name="part6_2_6"></a></p>
 			<h3>Создание файлов и папок</h3>
 			<p><a name="part6_2_6_1"></a></p>
-			<h4>Чтение / Запись файлов</h4>
+			<h4>Чтение и Запись файлов</h4>
 			<p>Прежде всего необходимо понять, что в библиотеке <b>OS</b> нет команды для создания файла. А в библиотеке <b>pathlib</b> есть.</p>
 			<p>При попытке прочитать или записать файла мы всегда путаемся - как правильно это сделать. Первым делом вы скорее всего будете обращаться к команде <b>open</b> - что-то вроде следующего:</p>
 			<p class="codes">
@@ -833,9 +833,109 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<li>ab - Откроет для добавления нового содержимого (бинарный). Создаст новый файл для записи, если не найдет с указанным именем.</li>
 				<li>ab+ - Откроет для добавления нового содержимого (бинарный). Создаст новый файл для чтения записи, если не найдет с указанным именем.</li>
 			</ul>
-			<p>Скорее всего вам понадобится пользовать только 4 режимами: <b>r</b>, <b>r+</b>, <b>rb</b> и <b>rb+</b>. Однако, это не всё что нужно знать для чтения и записи файлов.</p>
-			<p>Ещё вам нужно познакомится с таким методом как <b>file.seek(offset, whence)</b> и <b>file.tell()</b>.</p>
-			<p>Начнем с <b>file.tell()</b>.</p>
+			<p>Скорее всего вам понадобится пользовать только 4 режимами: <b>r</b>, <b>r+</b>, <b>rb</b> и <b>rb+</b>.</p>
+			<p>В режимах <b>'w'</b> и <b>wb'</b> происходит перезапись файла. В режимах <b>'w+'</b> и <b>'wb+'</b> файл в любом случае будет перезаписан. Однако, он также ведь открывается и для чтения. Поэтому для того, чтобы хоть что-то прочитать, сначала необходимо хоть что-то в него записать, иначе вы получите на выходе пустые данные!</p>
+			<p><b>Необходимо понимать, что в режимах 'w' и 'w+' добавление в файл данных не будет, будет происходить именно перезапись файла! Для добавления необходимо использовать другой режим.</b> Например, <b>'r+'</b>, <b>'a'</b>, <b>'a+'</b>.</p>
+			<p>Дело в том, что в режимах <b>'r+'</b>, <b>'a'</b> и <b>'a+'</b> вы можете как прочитать данные, так и дозаписать в файл какие-нибудь данные. Необходимо лишь устанавливать курсор в начало или конец файла.</p>
+			<p><b>Чтобы понимать как пользоваться всеми этими режимами, вам необходимо ознакомится ещё с несколькими важными понятиями.</b></p>
+			<p>И первое это метод <b>file.seek(offset, whence)</b> и переменная <b>file.tell()</b>.</p>
+			<p><b>file.tell()</b> получает текущую позицию указателя чтения/записи файла.</p>
+			<p class="codes">
+				>>> text = <span style="color:Blue;">'This is 1st line\nThis is 2nd line\nThis is 3rd line\n'</span><br>
+				>>> fp = <span style="color:Green;">open</span>(<span style="color:Blue;">'foo.txt'</span>, <span style="color:Blue;">'w+'</span>)<br>
+				>>> fp.write(text)<br>
+				# 51<br>
+				>>> fp.tell()<br>
+				# 51<br>
+				>>> fp.seek(0)<br>
+				# 0<br>
+				>>> fp.read(10)<br>
+				# 'This is 1s'<br>
+				>>> fp.tell()<br>
+				# 10<br>
+				>>> fp.read(15)<br>
+				# 't line\nThis is '<br>
+				>>> fp.tell()<br>
+				# 25<br>
+				>>> fp.close()
+			</p>
+			<p><b>file.seek</b>(<span style="color:Green;">offset</span>, <span style="color:#069;">whence</span>) перемещает указатель чтения/записи в файле.</p>
+			<ul>
+				<li><b>offset</b> - смещение указателя чтения/записи файла на <span style="color:#069;">int</span> байтов.</li>
+				<li><b>whence</b> - абсолютное позиционирование указателя в формате <span style="color:#069;">int</span>.</li>
+			</ul>
+			<p>Аргумент <b>whence</b> является необязательным и по умолчанию равен 0.</p>
+			<ul>
+				<li>0 - смещает указатель на <b>offset</b> относительно начала файла.</li>
+				<li>1 - смещает указатель на <b>offset</b> относительно относительно текущей позиции.</li>
+				<li>2 - смещает указатель на <b>offset</b> относительно конца файла.</li>
+			</ul>
+			<p><b>Использование whence имеет одну важную особенность. Значение 1 можно использовать только для бинарных файлов. Также и file.seek() использовать в обычных текстовых (не бинарных) файлах можно только следующими способами:</b></p>
+			<ul>
+				<li>file.seek(N, 0) - Где N &ge; 0.</li>
+				<li>file.seek(0, 2).</li>
+			</ul>
+			<p>Иначе вы рискуете получить 2 вида исключений: <b><span style="color:#ff9933;">io.UnsupportedOperation</span></b> и <b><span style="color:#ff9933;">ValueError</span></b>.</p>
+			<p><b>Ещё несколько важных моментов.</b></p>
+			<ul>
+				<li>Если файл открыт для добавления с помощью <b>'a'</b> или <b>'a+'</b>, все операции <b>file.seek()</b> будут отменены при следующей записи.</li>
+				<li>Если файл открыт только для записи в режиме добавления с использованием <b>'a'</b>, Этот метод по существу используется, но он остается полезным для файлов, открытых в режиме добавления с включенным чтением - режим <b>'a+'</b>.</li>
+				<li>Если файл открыт в текстовом режиме с помощью <b>'t'</b>, то допустимы только смещения, возвращаемые функцией <b>file.tell()</b>. Использование других смещений вызывает неопределенное поведение.</li>
+			</ul>
+			<p class="codes">
+				>>> text = b<span style="color:Blue;">'This is 1st line\nThis is 2nd line\nThis is 3rd line\n'</span><br>
+				>>> fp = <span style="color:Green;">open</span>(<span style="color:Blue;">'foo.txt'</span>, <span style="color:Blue;">'bw+'</span>)<br>
+				>>> fp.write(text)<br>
+				# 51<br>
+				>>> fp.seek(20, 0)<br>
+				# 20<br>
+				>>> fp.read(10)<br>
+				# b's is 2nd l'<br>
+				>>> fp.seek(10, 1)<br>
+				# 40<br>
+				>>> fp.read(10)<br>
+				# b's 3rd line'<br>
+				>>> fp.seek(-11, 2)<br>
+				# 40<br>
+				>>> fp.read(10)<br>
+				# b's 3rd line'<br>
+				>>> fp.close()
+			</p>
+			<p>Рассмотрим пример и чтения и дозаписи файла.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+str2 = <span style="color:Blue;">'Многие думают о Lorem Ipsum.\n'</span>
+lines = <span style="color:Blue;">''</span>
+<span style="color:#069;"><b>with</b></span> open(<span style="color:Blue;">'strukture.txt'</span>, <span style="color:Blue;">'r+'</span>) <span style="color:#069;"><b>as</b></span> my_file:
+	my_file.seek(0,0) <span style="color:Green;"># курсор может быть и не в начале, на всякий случай</span>
+	lines = my_file.read()
+	print(<span style="color:Blue;">'Позиция:'</span>, my_file.tell())
+	print(<span style="color:Blue;">'Прочитанная информация:'</span>, lines)
+	my_file.seek(0,2)
+	print(<span style="color:Blue;">'Позиция:'</span>, my_file.tell())
+	my_file.write(str2)
+	my_file.seek(0,0)
+	lines = my_file.read()
+	print(<span style="color:Blue;">'Позиция:'</span>, my_file.tell())
+	print(<span style="color:Blue;">'Файл был дозаписан:'</span>, lines)
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">Позиция: 31
+Прочитанная информация: It is a long established fact.
+
+Позиция: 31
+Позиция: 73
+Файл был дозаписан: It is a long established fact.
+Многие думают о Lorem Ipsum.</span></pre>
+			</div>
+			<p><b>Не забывайте, что  в строках, которые вы записываете в файлы, нужны переносы строк. Иначе у вас все строки будут слитыми вместе! Ну или можете вручную после каждой записи строки делать ещё одну запись одного переноса.</b></p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2_6">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_6_2"></a></p>
+			<h4>Работа с файлами папками</h4>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -847,8 +947,11 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p><a href="#part6_2_6">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<hr class="hr_chapter">
-			<p><a name="part6_2_6_1"></a></p>
-			<h4>Работа с файлами папками</h4>
+			<p><a name="part6_2_7"></a></p>
+			<h3>Переименование файлов и папок</h3>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -858,26 +961,70 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p></p>
 			<p></p>
 			<hr class="hr_chapter">
-			<p><a href="#part6_2_6">Перейти к Главе</a>.</p>
-			<hr class="hr_main">
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a href="#part6_2">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_8"></a></p>
+			<h3>Перемещение файлов и папок</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_9"></a></p>
+			<h3>Удаление файлов и папок</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_10"></a></p>
+			<h3>Рекурсивные операции</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p>Т.е. выходит, что pathlib объединяет в себе часто используемые функции двух стандартных модулей os и os.path, а так же стандартную функцию open() для чтения файла и записи в файл какой либо информации.</p>
 			<hr class="hr_main">
+			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
-			<p><a name="partN"></a></p>
-			<h1>Part-1 H1</h1>
+			<p><a name="part7"></a></p>
+			<h2>Немного <span style="color:Red;">&laquo;unittest&raquo;</span></h2>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
-			<hr class="hr_chapter">
 			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
