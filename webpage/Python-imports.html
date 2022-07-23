@@ -670,10 +670,10 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<hr class="hr_chapter">
 			<p><a name="part6_2_5"></a></p>
 			<h3>Права доступа</h3>
-			<p>Представьте себе ситуацию, в которой вам срочно понадобилось програмно создать папку и дать её определённые права доступа. Как же это правильно сделать?</p>
+			<p>Представьте себе ситуацию, в которой вам срочно понадобилось програмно создать папку, дать её определённые права доступа, а по окончании работы удалить её. Такое может понадобится при создании некой программы с уникальным шифрованием, или программы с шифрованием <b>GPG</b> для неких целей защиты того или иного доступа. Например, пакет <b>python-gnupg</b> поддерживает такой функционал.</p>
 			<p>Прежде, чем мы рассмотрим как раздавать права доступа, давайте посмотрим как их получить, а также как вывести на экран.</p>
 			<p>Для преобразования в нормальный и понятный для нас вид воспользуемся библиотекой <b>stat</b>, а именно, методами <b>filemode</b> и <b>S_IMODE</b>.</p>
-			<p>Я заранее создал каталог <b>gpgtest</b> и дал ему права <b>700</b> вручную.</p>
+			<p>Я заранее создал каталог <b>gpgtest</b> и дал ему права <b>700</b> вручную, т.е. полный доступ только владельцу каталога. Дело в том, что утилита <b>GNUPG</b> требует для рабочей директории именно такие права доступа.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
 			</div>
@@ -708,7 +708,68 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				Введите права доступа: 755<br>
 				0o755 493 0o755<br></span>
 			</p>
-			<p>Отлично, теперь попробуем изменить права доступа к каталогу <b>gpgtest</b> и файлу <b>strukture.txt</b> разными библиотеками и посмотрим чем они отличаются.</p>
+			<p>Работает. Попробуем изменить права доступа к каталогу <b>gpgtest</b> и файлу <b>strukture.txt</b> разными библиотеками и посмотрим чем они отличаются.</p>
+			<p><b>pathlib.Path.chmod</b>. Поменяем права с <b>700</b> на <b>755</b>.</p>
+			<p class="codes">
+				<b>mikl@mikl ~/0/Primer></b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				<span style="color:#069;"><b>from</b></span> stat <span style="color:#069;"><b>import</b></span> S_IMODE<br><br>
+				p = pathlib.Path(<span style="color:Blue;">'./gpgtest'</span>)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(p.stat().st_mode)))<br>
+				mode = <span style="color:Blue;">'0o755'</span><br>
+				real_mode = int(mode, 8)<br>
+				pathlib.Path(p).chmod(real_mode)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(p.stat().st_mode)))<br><br>
+				<b>mikl@mikl ~/0/Primer></b> python main.py<br>
+				<span style="color:Blue;">
+					0o700<br>
+					0o755
+				</span>
+			</p>
+			<p><b>os.chmod</b>. Поменяем права обратно на <b>700</b>.</p>
+			<p class="codes">
+				<b>mikl@mikl ~/0/Primer></b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>from</b></span> stat import S_IMODE<br><br>
+
+				my_dir = <span style="color:Blue;">'./gpgtest'</span><br>
+				statinfo = os.stat(my_dir)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(statinfo.st_mode)))<br>
+				mode = <span style="color:Blue;">'0o700'</span><br>
+				real_mode = int(mode, 8)<br>
+				os.chmod(my_dir, real_mode)<br>
+				<u>statinfo = os.stat(my_dir)</u><br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(statinfo.st_mode)))<br><br>
+				<b>mikl@mikl ~/0/Primer></b> python main.py<br>
+				<span style="color:Blue;">
+					0o755<br>
+					0o700
+				</span>
+			</p>
+			<p>
+				<b>Обратите внимание на подчеркнутую строку.</b> Для получения статуса в <b>OS</b> необходимо повторно запрашивать права доступа к файлу или папке. В <b>pathlib</b> запрос прав доступа происходит автоматически во время обращения к команде статуса файла или папки.
+			</p>
+			<p>Можно немного уменьшить количество кода вложенными запросами.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>from</b></span> stat import S_IMODE<br><br>
+
+				my_dir = <span style="color:Blue;">'./gpgtest'</span><br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(os.stat(my_dir).st_mode)))<br>
+				mode = <span style="color:Blue;">'0o700'</span><br>
+				real_mode = int(mode, 8)<br>
+				os.chmod(my_dir, real_mode)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">oct</span>(S_IMODE(os.stat(my_dir).st_mode)))
+			</p>
+			<p><b>Однако, помните, что для библиотеки OS запрашивать права доступа, т.е. обращаться к статусу состояния файла или папки необходимо повторно.</b></p>
+			<hr class="hr_chapter">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part6_2_6"></a></p>
+			<h3>Создание файлов и папок</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
