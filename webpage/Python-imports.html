@@ -670,6 +670,29 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<hr class="hr_chapter">
 			<p><a name="part6_2_5"></a></p>
 			<h3>Права доступа</h3>
+			<p>Представьте себе ситуацию, в которой вам срочно понадобилось програмно создать папку и дать её определённые права доступа. Как же это правильно сделать?</p>
+			<p>Прежде, чем мы рассмотрим как раздавать права доступа, давайте посмотрим как их получить, а также как вывести на экран.</p>
+			<p>Для преобразования в нормальный и понятный для нас вид воспользуемся библиотекой <b>stat</b>, а именно, методами <b>filemode</b> и <b>S_IMODE</b>.</p>
+			<p>Я заранее создал каталог <b>gpgtest</b> и дал ему права <b>700</b> вручную.</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<p>Посмотрим как получить права доступа при помощи библиотек <b>os</b> и <b>pathlib</b>.</p>
+			<p class="codes">
+				<b>mikl@mikl ~/0/Primer></b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				<span style="color:#069;"><b>from</b></span> stat <span style="color:#069;"><b>import</b></span> S_IMODE, filemode<br>
+				p = pathlib.Path(<span style="color:Blue;">'./gpgtest'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.stat().st_mode, filemode(p.stat().st_mode), <span style="color:#ff9933;">oct</span>(S_IMODE(p.stat().st_mode)))<br>
+				statinfo = os.stat(<span style="color:Blue;">'./gpgtest'</span>)<br>
+				<span style="color:#ff1493;">print</span>(statinfo.st_mode, filemode(statinfo.st_mode), <span style="color:#ff9933;">oct</span>(S_IMODE(statinfo.st_mode)))<br><br>
+				<b>mikl@mikl ~/0/Primer></b> python main.py<br>
+				<span style="color:Blue;">
+				16832 drwx------ 0o700<br>
+				16832 drwx------ 0o700</span>
+			</p>
+			<p><b>Всё работает!</b></p>
 			<p></p>
 			<p></p>
 			<p></p>
