@@ -210,14 +210,14 @@ BODY {
 	padding: 0px;
 	margin-left: 10%;
 }
-hr {
+.hr_main {
 	margin: 20px 0;
 	padding: 0;
 	height: 0;
 	border: none;
 	border-top: 1px solid #333;
 }
-.chapter {
+.hr_chapter {
 	margin: 20px 0;
 	padding: 0;
 	height: 1px;
