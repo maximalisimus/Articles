@@ -791,8 +791,8 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p>При попытке прочитать или записать файла мы всегда путаемся - как правильно это сделать. Первым делом вы скорее всего будете обращаться к команде <b>open</b> - что-то вроде следующего:</p>
 			<p class="codes">
 				handle = open(<span style="color:Blue;">"test.txt"</span>, <span style="color:Blue;">"r"</span>)<br>
-				data = handle.readline() # read just one line<br>
-				print(data)<br>
+				data = handle.readline() <span style="color:Green;"># read just one line</span><br>
+				<span style="color:#ff1493;">print</span>(data)<br>
 				handle.close()
 			</p>
 			<p><b>Обратите внимание!</b></p>
