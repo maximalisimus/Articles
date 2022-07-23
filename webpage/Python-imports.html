@@ -54,6 +54,11 @@
 				<ol>
 					<li><a href="#part6_1">Введение в pathlib.</a></li>
 					<li><a href="#part6_2">Примеры использования pathlib на практике.</a></li>
+					<ol>
+						<li><a href="#part6_2_1">Базовое имя пути - pathlib и os.path</a></li>
+						<li><a href="#part6_2_2">Расширение файла - os.path и pathlib</a></li>
+						<li><a href="#part6_2_3">Абсолютный и относительные пути - os.path и pathlib</a></li>
+					</ol>
 				</ol>
 				<li><a href="#part7">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
 			</ol>
@@ -67,7 +72,7 @@
 			<p><b>Fish</b> используется только для удобства - у него прекрасное автозавершение команд, а также их цветная подсветка.</p>
 			<p>Пользователь также использован временный.</p>
 			<p>Виртуальное окружение для подобных тестов не требуется.</p>
-			<hr>
+			<hr class="hr_chapter">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p><a name="part1_2"></a></p>
 			<h2>Введение.</h2>
@@ -99,7 +104,7 @@
 			<p>Что же тогда делать и как решить такую задачу?</p>
 			<p><span style="color:Green;">Всё решается буквально 1...2 строчками кода </span> <b>-</b> <span style="color:Red;">но их необходимо понимать, чтобы применять правильно.</span></p>
 			<p><b>Но - обо всём по порядку!</b></p>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -136,7 +141,7 @@
         └── tmp.txt</pre>
 			</div>
 			<br>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -163,7 +168,7 @@ __all__ = [<span style="color:Blue;">'getDateTimeStr'</span>]
 	outDateTime = dateTime.strftime(strFormat)
 	<span style="color:#069;"><b>return</b></span> outDateTime</pre>
 			</div>
-			<hr>
+			<hr class="hr_chapter">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p><a name="part3_2"></a></p>
 			<p>Под-пакет: <b>subpackage_a</b></p>
@@ -181,7 +186,7 @@ __all__ = [<span style="color:Blue;">'getPackageA'</span>]
 <span style="color:#069;"><b>def</b></span> getPackageA():
 	<span style="color:#069;"><b>return</b></span> <span style="color:Blue;">'Package A:'</span> + getDateTimeStr()</pre>
 			</div>
-			<hr>
+			<hr class="hr_chapter">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p><a name="part3_3"></a></p>
 			<p>Под-пакет: <b>subpackage_b</b></p>
@@ -199,7 +204,7 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 <span style="color:#069;"><b>def</b></span> getPackageB():
 	<span style="color:#069;"><b>return</b></span> <span style="color:Blue;">'Package B:'</span> + getDateTimeStr()</pre>
 			</div>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -241,7 +246,7 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 			<p>Хм, снова ошибка.</p>
 			<p><u>Однако, здесь не всё так просто, как показалось на первый взгляд.</u></p>
 			<p><b>Давайте разбираться!</b></p>
-			<hr>
+			<hr class="hr_chapter">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p><a name="part4_2"></a></p>
 			<h2>Абсолютные и относительные пути.</h2>
@@ -304,7 +309,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-8.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.insert" />
 			</div>
 			<br>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -472,12 +477,13 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				</span>
 			</p>
 			<p>Как видите преобразовать объекты типа <b>Path</b> в строку не так уж и сложно.</p>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p><a name="part6_2"></a></p>
 			<h2>Примеры использования pathlib на практике.</h2>
 			<p>А теперь давайте сравним &laquo;pathlib&raquo; с &laquo;os&raquo; и &laquo;os.path&raquo; на практике на наиболее часто используемых методах.</p>
-			<h3>Базовое имя пути pathlib и os.path.</h3>
+			<p><a name="part6_2_1"></a></p>
+			<h3>Базовое имя пути - os.path и pathlib.</h3>
 			<p><b>Базовое имя пути os.path, т.е. имя файла.</b></p>
 			<p><i>Добавим в вывод дополнительную информацию, чтобы понимать какой объект мы получаем и выводем содержимое на экран.</i></p>
 			<p class="codes">
@@ -502,6 +508,10 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				</span>
 			</p>
 			<p>Пока неясно какой модуль лучше. Результат у обоих абсолютно одинкавый.</p>
+			<hr class="hr_chapter">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part6_2_2"></a></p>
+			<h3>Расширение файла - os.path и pathlib.</h3>
 			<p><b>Получаем расширение файла.</b></p>
 			<p class="codes">
 				<b>$</b> nano main.py<br>
@@ -519,6 +529,10 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 					&#8249;class 'str'&#8250; : .txt
 				</span>
 			</p>
+			<hr class="hr_chapter">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part6_2_3"></a></p>
+			<h3>Абсолютный и относительные пути - os.path и pathlib.</h3>
 			<p>А теперь рассмотрим следующие методы библиотек: <b>полный путь, получение родительской директории и соединение путей.</b></p>
 			<p><b>Полный путь, т.е. абсолютный путь.</b></p>
 			<p class="codes">
@@ -555,6 +569,10 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			</p>
 			<p>В <b>os.path</b> без вложенных вызовов самой библиотеки не бойтись. А вот в <b>pathlib.Path</b> такой последовательный вызов команд вполне нормальное явление.</p>
 			<p><span style="color:Green;">Согласитесь - с <b>pathlib</b> код становится красивым, менее громоздким и более читабельным.</span></p>
+			<hr class="hr_chapter">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part6_2_4"></a></p>
+			<h3>Соединение путей - os.path и pathlib.</h3>
 			<p><b>Cоединение путей.</b></p>
 			<p class="codes">
 				<b>mikl ~/003/Primer $</b> nano main.py<br>
@@ -643,11 +661,13 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.2.png" class="fz__minimized" alt="клик для увеличения" title="pathlib.Path().relative_to()" />
 			</div>
+			<hr class="hr_chapter">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p>Т.е. выходит, что pathlib объединяет в себе часто используемые функции двух стандартных модулей os и os.path, а так же стандартную функцию open() для чтения файла и записи в файл какой либо информации.</p>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -659,7 +679,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p></p>
 			<p></p>
 			<p></p>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -697,11 +717,11 @@ script
 			</ul>
 			<hr>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
+			<hr class="hr_main">
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
 			</div>
-			<hr>
+			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
