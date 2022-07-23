@@ -587,10 +587,61 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.png" class="fz__minimized" alt="клик для увеличения" title="Код name, suffix, resolve, joinpath" />
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-5.png" class="fz__minimized" alt="клик для увеличения" title="Выполнение кода name, suffix, resolve, joinpath" />
 			</div>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>Канонический путь в os.path</b></p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				<span style="color:Green;"># os.path</span><br>
+				src = <span style="color:Blue;">'./pkg/test.py'</span><br>
+				dst = <span style="color:Blue;">'./test.py'</span><br>
+				<span style="color:Green;"># При наличии имеющейся символической ссылки на файл, необходимо её удалить</span><br>
+				<span style="color:Green;"># Чтобы создание символической ссылки не вызывало исключение</span> <span style="color:#ff9933;">FileExistsError</span><br>
+				os.remove(dst)<br>
+				os.symlink(src, dst)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os.symlink:'</span>, os.readlink(dst))<br>
+				link = os.path.realpath(dst)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os.path.realpath:'</span>, link)<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				os.symlink: ./pkg/test.py<br>
+				os.path.realpath: /home/mikl/003/Primer/pkg/test.py<br></span>
+			</p>
+			<p><b>Вычисление относительных путей в pathlib</b></p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				shark = pathlib.Path(<span style="color:Blue;">"ocean"</span>, <span style="color:Blue;">"animals"</span>, <span style="color:Blue;">"fish"</span>, <span style="color:Blue;">"shark.txt"</span>)<br>
+				below_ocean = shark.relative_to(pathlib.Path(<span style="color:Blue;">"ocean"</span>))<br>
+				below_animals = shark.relative_to(pathlib.Path(<span style="color:Blue;">"ocean"</span>, <span style="color:Blue;">"animals"</span>))<br>
+				<span style="color:#ff1493;">print</span>(shark)<br>
+				<span style="color:#ff1493;">print</span>(below_ocean)<br>
+				<span style="color:#ff1493;">print</span>(below_animals)<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				ocean/animals/fish/shark.txt<br>
+				animals/fish/shark.txt<br>
+				fish/shark.txt<br></span>
+			</p>
+			<p>Метод relative_to возвращает новый объект Path, относящийся к данному аргументу.</p>
+			<p><b>Если relative_to не сможет вычислить ответ, он выдаст ValueError.</b></p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				shark = pathlib.Path(<span style="color:Blue;">"ocean"</span>, <span style="color:Blue;">"animals"</span>, <span style="color:Blue;">"fish"</span>, <span style="color:Blue;">"shark.txt"</span>)<br>
+				shark.relative_to(pathlib.Path(<span style="color:Blue;">"unrelated"</span>, <span style="color:Blue;">"path"</span>))<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				Traceback (most recent call last):<br>
+				  File "/home/mikl/003/Primer/main.py", line 4, in &#8249;module&#8250;<br>
+				    shark.relative_to(pathlib.Path("unrelated", "path"))<br>
+				  File "/usr/lib/python3.10/pathlib.py", line 816, in relative_to<br>
+				    raise ValueError("{!r} is not in the subpath of {!r}"<br>
+				ValueError: 'ocean/animals/fish/shark.txt' is not in the subpath of 'unrelated/path' OR one path is relative and the other is absolute.</span>
+			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.2.png" class="fz__minimized" alt="клик для увеличения" title="pathlib.Path().relative_to()" />
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>

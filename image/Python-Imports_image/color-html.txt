@@ -10,5 +10,11 @@ Blue-bold
 Pink
 <span style="color:#ff1493;">
 
+Blue
 <span style="color:Blue;">
 
+Green
+<span style="color:Green;">
+
+Orange
+<span style="color:#ff9933;">
