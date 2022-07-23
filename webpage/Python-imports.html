@@ -63,7 +63,7 @@
 			<h1>Введение</h1>
 			<p><a name="part1_1"></a></p>
 			<h2>Предисловие.</h2>
-			<p>Для всех тестов и примеров я буду использовать виртуальную машину с <b>Debian 10</b>, и 2 мя <b>SHELL</b>-ами: <b>Fish (Default)</b> и <b>Bash</b>.</p>
+			<p>Для всех тестов и примеров для условий наиболее приближенных к реальным я буду использовать виртуальную машину с <b>Debian 10</b>, и 2 мя <b>SHELL</b>-ами: <b>Fish (Default)</b> и <b>Bash</b> и <b>Python 3.10</b>.</p>
 			<p><b>Fish</b> используется только для удобства - у него прекрасное автозавершение команд, а также их цветная подсветка.</p>
 			<p>Пользователь также использован временный.</p>
 			<p>Виртуальное окружение для подобных тестов не требуется.</p>
@@ -557,8 +557,36 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p><b>Cоединение путей.</b></p>
 			<p class="codes">
 				<b>mikl ~/003/Primer $</b> nano main.py<br>
-				
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br>
+				<span style="color:Green;"># os.path</span><br>
+				one = os.path.join(<span style="color:Blue;">'home'</span>, <span style="color:Blue;">'User'</span>, <span style="color:Blue;">'Desktop'</span>, <span style="color:Blue;">'file.txt'</span>)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os.path'</span>, one)<br>
+				<span style="color:Green;"># os.path для абсолютного пути</span><br>
+				asb_one = os.path.abspath(one)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os.path'</span>, asb_one)<br>
+				<span style="color:Green;"># pathlib.Path</span><br>
+				<span style="color:Green;"># Можно так</span><br>
+				two = pathlib.Path(<span style="color:Blue;">'home'</span>, <span style="color:Blue;">'User'</span>, <span style="color:Blue;">'Desktop'</span>, <span style="color:Blue;">'file.txt'</span>)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib'</span>, two)<br>
+				<span style="color:Green;"># Можно и так</span><br>
+				troyka = pathlib.Path(<span style="color:Blue;">'home'</span>).joinpath(<span style="color:Blue;">'User'</span>).joinpath(<span style="color:Blue;">'Desktop'</span>).joinpath(<span style="color:Blue;">'file.txt'</span>)<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib'</span>, troyka)<br>
+				<span style="color:Green;"># В pathlib для абсолюнтого пути не требуются вложенные вызовы</span><br>
+				four = troyka.resolve()<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib'</span>, four)<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				os.path home/User/Desktop/file.txt<br>
+				os.path /home/mikl/003/Primer/home/User/Desktop/file.txt<br>
+				pathlib home/User/Desktop/file.txt<br>
+				pathlib home/User/Desktop/file.txt<br>
+				pathlib /home/mikl/003/Primer/home/User/Desktop/file.txt<br></span>
 			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.png" class="fz__minimized" alt="клик для увеличения" title="Код name, suffix, resolve, joinpath" />
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-5.png" class="fz__minimized" alt="клик для увеличения" title="Выполнение кода name, suffix, resolve, joinpath" />
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
