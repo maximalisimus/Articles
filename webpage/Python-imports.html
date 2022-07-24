@@ -1160,7 +1160,7 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 			<p><a name="part6_2_6_3"></a></p>
 			<h4>Жесткие и символические ссылки</h4>
 			<p>Символьные ссылки <b>os.symlink</b>.</p>
-			<p>Синтаксис команды:</p>
+			<p>Синтаксис команды <b>os.symlink</b>:</p>
 			<p style="margin-left:20px;">os.symlink(src, dst, target_is_directory=False, *, dir_fd=None)</p>
 			<ul>
 				<li><b>src</b> - путь в файловой системе на который указывает ссылка</li>
@@ -1178,6 +1178,7 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 				os.unlink(dst)
 			</p>
 			<p>Жесткая ссылка <b>os.link</b>.</p>
+			<p>Синтаксис команды <b>os.link</b>:</p>
 			<p style="margin-left:20px;">os.link(src, dst, *, src_dir_fd=None, dst_dir_fd=None, follow_symlinks=True)</p>
 			<ul>
 				<li><b>src</b> - путь в файловой системе на который указывает ссылка</li>
@@ -1186,7 +1187,7 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 				<li><b>dst_dir_fd</b> - имя ссылки, дескрипторов каталогов</li>
 				<li><b>follow_symlinks</b> - переходить ли по ссылкам</li>
 			</ul>
-			<p>Пример использования:</p>
+			<p>Пример использования <b>os.link</b>:</p>
 			<p class="codes">
 				<span style="color:#069;"><b>import</b></span> os<br>
 				scr = <span style="color:Blue;">'test.txt'</span><br>
