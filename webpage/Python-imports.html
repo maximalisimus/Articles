@@ -1066,10 +1066,48 @@ lines = <span style="color:Blue;">''</span>
 			<hr class="hr_chapter">
 			<p><a name="part6_2_6_2"></a></p>
 			<h4>Работа с файлами папками</h4>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>Библиотека OS</b></p>
+			<p>создать пустой каталог (папку)</p>
+			<div class="codeses">
+				<pre>os.mkdir(<span style="color:Blue;">"folder"</span>)<span style="color:Green;">
+# повторный запуск mkdir с тем же именем вызывает FileExistsError,
+# вместо этого запустите:</span>
+<span style="color:#069;"><b>if</b></span> <span style="color:#ff9933;">not</span> os.path.isdir(<span style="color:Blue;">"folder"</span>):
+	os.mkdir(<span style="color:Blue;">"folder"</span>)</pre>
+			</div>
+			<p>Функция <i>os.path.isdir()</i> вернет <i>True</i>, если переданное имя ссылается на существующий каталог.</p>
+			<p>Изменение текущего каталога на 'folder'.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				os.chdir(<span style="color:Blue;">"folder"</span>)<br>
+				<span style="color:Green;"># вывод текущей папки</span><br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">"Текущая директория изменилась на folder:"</span>, os.getcwd())<br><br>
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">
+				Текущая директория изменилась на folder: /home/mikl/003/Primer/folder</span>
+			</p>		
+			<p>Предположим, вы хотите создать не только одну папку, но и несколько вложенных.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+<span style="color:Green;"># вернуться в предыдущую директорию</span>
+os.chdir(<span style="color:Blue;">".."</span>)<br>
+<span style="color:Green;"># сделать несколько вложенных папок</span>
+os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
+
+<b>mikl ~/003/Primer $</b> python main.py
+<b>mikl ~/003/Primer $</b> ls -lha | grep -Ei nested1
+<span style="color:Blue;">drwxr-xr-x 3 mikl users 4,0K июл 24 15:19 nested1</span>
+<b>mikl ~/003/Primer $</b> tree ./nested1
+<span style="color:Blue;">./nested1
+└── nested2
+    └── nested3
+
+2 directories, 0 files</span>
+				</pre>
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
