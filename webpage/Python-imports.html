@@ -1194,6 +1194,46 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 				dst = <span style="color:Blue;">'new.txt'</span><br>
 				os.link(scr, dst)
 			</p>
+			<p>Жесткая ссылка <b>pathlib.Path.hardlink_to</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left:20px;">Path.hardlink_to(target)</p>
+			<ul>
+				<li><b>target</b> - путь в файловой системе на который указывает ссылка. При этом путь куда сохранять ссылку вместе с именем ссылки берется из самого <b>Path</b>.</li>
+			</ul>
+			<p>Пример использования <b>pathlib.Path.hardlink_to</b>:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				<span style="color:Green;"># Путь куда сохранить ссылку + название ссылки</span><br>
+				<span style="color:Green;"># Ссылка сохранятеся в текущий каталог</span><br>
+				p = Path(<span style="color:Blue;">'mylink'</span>)<br>
+				<span style="color:Green;"># То, на что ссылается эта ссылка</span><br>
+				p.hardlink_to(<span style="color:Blue;">'./strukture.txt'</span>)
+			</p>
+			<p>Жесткая ссылка <b>Path.link_to</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left:20px;">Path.link_to(target)</p>
+			<ul>
+				<li><b>target</b> - название и место сохранения ссылки. При этом объект, на который должна ссылаться ссылка берется из самого <b>Path</b>.</li>
+			</ul>
+			<p>Пример использования команды <b>Path.link_to</b>:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				p = Path(<span style="color:Blue;">'./strukture.txt'</span>)<br>
+				p.link_to(<span style="color:Blue;">'mylink'</span>)
+			</p>
+			<p>Символьные ссылки <b>Path.symlink_to</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left:20px;">Path.symlink_to(target, target_is_directory=False)</p>
+			<ul>
+				<li><b>target</b> - путь в файловой системе на который указывает ссылка. При этом путь куда сохранять ссылку вместе с именем ссылки берется из самого <b>Path</b>.</li>
+			</ul>
+			<p><b>В Windows target_is_directory должен быть True (по умолчанию False), если целью ссылки является каталог. В POSIX значение target_is_directory игнорируется.</b></p>
+			<p>Пример использования команды:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
+				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)<br>
+			</p>
 			<p></p>
 			<p></p>
 			<p></p>
