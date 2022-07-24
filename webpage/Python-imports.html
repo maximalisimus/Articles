@@ -63,6 +63,7 @@
 						<ol>
 							<li><a href="#part6_2_5_1">Права доступа (chmod)</a></li>
 							<li><a href="#part6_2_5_2">Смена владельца (chown)</a></li>
+							<li><a href="#part6_2_5_3">shutil.chown</a></li>
 						</ol>
 						<li><a href="#part6_2_6">Создание файлов и папок</a></li>
 						<ol>
@@ -747,6 +748,8 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 					0o755
 				</span>
 			</p>
+			<p>У <b>pathlib</b> есть ещё один метод - <b>Path.lchmod(mode)</b>.</p>
+			<p><b>Path.lchmod()</b> не следует символическим ссылкам. Т.е. если путь <b>Path</b> указывает на символическую ссылку, изменяется режим <b>chmod</b> символической ссылки, а не целевого объекта, на который она указывает.</p>
 			<p><b>os.chmod</b>. Поменяем права обратно на <b>700</b>.</p>
 			<p class="codes">
 				<b>mikl@mikl ~/0/Primer></b> nano main.py<br>
@@ -792,15 +795,122 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<hr class="hr_chapter">
 			<p><a name="part6_2_5_2"></a></p>
 			<h4>Смена владельца (chown)</h4>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<hr class="hr_main">
+			<p>У <b>pathlib</b> нет методов chown. Поэтому здесь всё-таки придётся использовать библиотеку <b>os</b>.</p>
+			<p>Вообще у <b>os</b> есть два метода: <b>os.chown()</b> и <b>os.lchown()</b>.</p>
+			<p>Синтаксис у них следующий:</p>
+			<ul>
+				<li>os.chown(path, uid, gid, *, dir_fd=None, follow_symlinks=True)</li>
+				<li>os.lchown(path, uid, gid)</li>
+			</ul>
+			<p>Параметры означают следующее:</p>
+			<ul>
+				<li><b>path</b> - <span style="color:#069;">str</span> путь в файловой системе.</li>
+				<li><b>uid</b> - <span style="color:#069;">числовой</span> идентификатор пользователя</li>
+				<li><b>gid</b> - <span style="color:#069;">числовой</span> идентификатор группы</li>
+				<li><b>dir_fd</b> - <span style="color:#069;">дескрипторов каталога</span></li>
+				<li><b>follow_symlinks</b> - <span style="color:#069;">bool</span>, переходить ли по ссылкам.</li>
+			</ul>
+			<p><b>Данный метод не возвращает никаких значений!</b></p>
+			<p>Чтобы оставить один из идентификаторов без изменений, установите его на -1.</p>
+			<p>Функция <i>os.lchown()</i> эквивалентна вызову функции <i>os.chown()</i> с установленным аргументом <i>follow_symlinks=False</i>, например, <i>os.chown(path, uid, gid, follow_symlinks=False)</i>.</p>
+			<p>Аргумент <i>path</i> в обоих функциях можно вставить как <i>pathlib.PurePath</i>.</p>
+			<p>Пример использования.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				f = <span style="color:Blue;">'strukture.txt'</span><br>
+				os.stat(f).st_gid<br>
+				# 1000<br>
+				os.stat(f).st_uid<br>
+				# 1000<br><br>
+
+				os.chown(f, -1, 1001)<br>
+				os.stat(f).st_gid<br>
+				# 1001<br>
+				os.stat(f).st_uid<br><br>
+
+				<b>mikl ~/003/Primer $</b> sudo python main.py<br>
+				<b>[sudo] пароль для mikl:</b><br>
+				<span style="color:Blue;">
+				985<br>
+				1000<br>
+				1001<br>
+				1000<br></span>
+				<b>mikl ~/003/Primer $</b> ls -lha<br>
+				<span style="color:Blue;">
+				итого 32K<br>
+				drwxr-xr-x 3 mikl users 4,0K июл 24 09:12 .<br>
+				drwxr-xr-x 3 mikl users  16K июл 22 17:35 ..<br>
+				-rw-r--r-- 1 mikl users  234 июл 24 09:12 main.py<br>
+				drwxr-xr-x 4 mikl users 4,0K июл 22 00:04 pkg<br>
+				-rwxr-xr-x 1 mikl  1001   73 июл 24 00:28 strukture.txt</span>
+			</p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2_5">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_5_3"></a></p>
+			<h4>shutil.chown</h4>
+			<p>На самом деле это не столько правильный, сколько более понятный метод.</p>
+			<p>Синтаксис у него следующий:</p>
+			<ul>
+				<li>shutil.chown(path, user=None, group=None)</li>
+			</ul>
+			<p>Где параметры:</p>
+			<ul>
+				<li><b>path</b> - путь к файлу/каталогу</li>
+				<li><b>user</b> - пользователь</li>
+				<li><b>group</b> - группа</li>
+			</ul>
+			<p>Этот метод тоже не возвращает никаких значений.</p>
+			<p>Функция <i>chown()</i> модуля <i>shutil</i> меняет владельца пользователя и/или группы по указанному пути.</p>
+			<p>Рассмотрим пример.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+<span style="color:#069;"><b>import</b></span> shutil, pathlib
+<span style="color:#069;"><b>import</b></span> pwd
+
+username = os.getlogin()
+on_uid = pwd.getpwnam(username).pw_uid
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"username: {<span style="color:Black;">username</span>}, uid: {<span style="color:Black;">on_uid</span>}"</span>)
+
+my_dir = <span style="color:Blue;">'test_dir'</span>
+on_dir = pathlib.Path(my_dir)
+if not on_dir.exists():
+	on_dir.mkdir(parents=True, exist_ok=True)
+<span style="color:Green;"># пользователь с id 1000 и группа 'games' должны существовать
+#  а учетная запись должна иметь право на изменение прав  
+# доступа, иначе будет ошибка <span style="color:#ff9933;">'PermissionError'</span></span>
+
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f" Изменение прав доступа на папку: &#8249;{<span style="color:Black;">on_dir.resolve()</span>}&#8250;,\n \
+Папка создана:\n \
+	Владелец: {<span style="color:Black;">on_dir.owner()</span>},\n \
+	Группа: {<span style="color:Black;">on_dir.group()</span>}"</span>)
+
+shutil.chown(<span style="color:Blue;">'test_dir'</span>, user=on_uid, group=<span style="color:Blue;">'games'</span>)
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f" Папка: &#8249;{<span style="color:Black;">on_dir.resolve()</span>}&#8250;,\n \
+Изменение владельца:\n \
+	Владелец: '{<span style="color:Black;">on_dir.owner()</span>}',\n \
+	Группа: '{<span style="color:Black;">on_dir.group()</span>}'"</span>)
+
+<b>mikl@mikl ~/0/Primer></b> python main.py<span style="color:Blue;">
+username: mikl, uid: 1000
+ Изменение прав доступа на папку: &#8249;/home/mikl/003/Primer/test_dir&#8250;,
+ Папка создана:
+ 	Владелец: mikl,
+ 	Группа: users
+ Папка: &#8249;/home/mikl/003/Primer/test_dir&#8250;,
+ Изменение владельца:
+ 	Владелец: 'mikl',
+ 	Группа: 'games'</span></pre>
+			</div>
+			<p>Здесь, чтобы не искать и не думать о пресловутом <i>id</i> пользователя, мы сначала получаем имя пользователя запустившего терминал, а затем запрашиваем его <i>id</i> (<i>username = os.getlogin()</i> и <i>on_uid = pwd.getpwnam(username).pw_uid</i>). А затем выводим эти значения на экран, с помощью <i>f-строки</i>.</p>
+			<p>Далее вводим каталог, который нам необходимо создать. Перед созданием - на всякий случай проверяем - не создан ли он уже. Если нет  - создаем его, включая все вложенные директории.</p>
+			<p>Проверяем, точнее перед изменения выводим группу и пользователя этого каталога на экран. И только после этого меняем группу. Владелец остаётся прежним. Потому что при создании директорий владелец будет всегда тот, кто запустил терминал. А мы его запросили в самом начале. <b>Это была не обязательная операция.</b> Просто, чтобы вы знали как это можно сделать.</p>
+			<p>Далее строкой <b>shutil.chown</b> меняем группу, и затем выводим изменения на экран, также с помощью <i>f-строки</i>.</p>
+			<hr class="hr_chapter">
 			<p><a href="#part6_2_5">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<p><a name="part6_2_6"></a></p>
