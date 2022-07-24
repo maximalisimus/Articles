@@ -1266,17 +1266,41 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 			<p class="codes">
 				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
 				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
-				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)<br>
+				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)
 			</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Удаление символических ссылок <b>os.unlink</b>.</p>
+			<p style="margin-left: 20px">os.unlink(path, *, dir_fd = None)</p>
+			<ul>
+				<li><b>path</b> - путь к ссылке</li>
+				<li><b>dir_fd</b> - дескриптор каталога</li>
+			</ul>
+			<p>Пример использования <b>os.unlink</b>. Создадим ссылку и тут же удалим её.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				scr = <span style="color:Blue;">'test.txt'</span><br>
+				dst = <span style="color:Blue;">'new.txt'</span><br>
+				<span style="color:Green;"># Создаём ссылку</span><br>
+				os.link(scr, dst)<br>
+				<span style="color:Green;"># Тут же удаляем эту ссылку</span><br>
+				os.unlink(dst)
+			</p>
+			<p>Удаление символический ссылок <b>pathlib.Path.unlink</b>.</p>
+			<p style="margin-left: 20px">Path.unlink(missing_ok=False)</p>
+			<ul>
+				<li><b>missing_ok</b> - игнорирование ошибок при обнаружении существования пути.</li>
+			</ul>
+			<p>Если <i>missing_ok</i> = <i>False (по умолчанию)</i> и <u>путь не существует</u>, то вызывается исключение <span style="color:#ff9933;">FileNotFoundError</span>.</p>
+			<p>Если <i>missing_ok</i> = <i>True</i>, то исключение <span style="color:#ff9933;">FileNotFoundError</span> будет игнорироваться аналогично команде <b>POSIX rm -f</b>.</p>
+			<p>Пример использования <b>pathlib.Path.unlink</b>.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				<span style="color:Green;"># Путь к ссылке с указанием её имени</span><br>
+				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
+				<span style="color:Green;"># Создаём ссылку</span><br>
+				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)<br>
+				<span style="color:Green;"># И тут же удаляем эту ссылку</span><br>
+				p.unlink(missing_ok=True)
+			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_6">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
