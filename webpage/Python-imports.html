@@ -69,6 +69,7 @@
 						<ol>
 							<li><a href="#part6_2_6_1">Чтение и Запись файлов</a></li>
 							<li><a href="#part6_2_6_2">Работа с файлами папками</a></li>
+							<li><a href="#part6_2_6_3">Жесткие и символические ссылки</a></li>
 						</ol>
 						<li><a href="#part6_2_7">Переименование файлов и папок</a></li>
 						<li><a href="#part6_2_8">Перемещение файлов и папок</a></li>
@@ -1067,6 +1068,20 @@ lines = <span style="color:Blue;">''</span>
 			<p><a name="part6_2_6_2"></a></p>
 			<h4>Работа с файлами папками</h4>
 			<p><b>Библиотека OS</b></p>
+			<p>Синтаксис команды <b>os.mkdir</b>:</p>
+			<p style="margin-left:20px;">os.mkdir(path, mode=0o777, *, dir_fd=None)</p>
+			<ul>
+				<li><b>path</b> - имя каталога</li>
+				<li><b>mode</b> - режимом доступа к каталогу</li>
+				<li><b>dir_fd</b> - дескриптор каталога</li>
+			</ul>
+			<p>Например:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				a = <span style="color:Blue;">'test'</span><br>
+				os.mkdir(a, 0o755)<br>
+			</p>
+			<p><b>При создании нового каталога с помощью os.mkdir() все родительские каталоги должны уже существовать.</b></p>
 			<p>создать пустой каталог (папку)</p>
 			<div class="codeses">
 				<pre>os.mkdir(<span style="color:Blue;">"folder"</span>)<span style="color:Green;">
@@ -1108,6 +1123,43 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 2 directories, 0 files</span>
 				</pre>
 			</div>
+			<p><b>Библиотека pathlib</b></p>
+			<p>Синтаксис команды <b>Path.mkdir</b>:</p>
+			<p style="margin-left:20px;">Path.mkdir(mode=0o777, parents=False, exist_ok=False)</p>
+			<p>Если указан режим <b>mode</b>, он объединяется со значением <b>umask</b>, для определения режима файла и флагов доступа. Если путь уже существует, вызывается исключение <span style="color:#ff9933;">FileExistsError</span>.</p>
+			<ul>
+				<li><b>parents=True</b> - создание всех отсутствующих подкаталогов, без учета указанного режима <b>mode</b>, имитируя команду <i>POSIX</i> <b>mkdir -p</b>.</li>
+				<li><b>parents=False</b> - Отсутствующие каталоги будут вызывать исключение <span style="color:#ff9933;">FileNotFoundError</span>.</li>
+				<li><b>exist_ok=False</b> - Если такой каталог уже существует вызывается исключение <span style="color:#ff9933;">FileExistsError</span>.</li>
+				<li><b>exist_ok=True</b> - исключения <span style="color:#ff9933;">FileExistsError</span> будут игнорироваться, команду <b>mkdir -p</b>, если предложенный путь не является существующим файлом.</li>
+			</ul>
+			<p>Пример команды <b>Path.mkdir</b>.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				p = Path(<span style="color:Blue;">'folder1/folder2/folder3'</span>)<br>
+				p.mkdir(parents=True)<br>
+			</p>
+			<p>Синтаксис команды <b>Path.touch</b>:</p>
+			<p style="margin-left:20px;">Path.touch(mode=0o666, exist_ok=True)</p>
+			<ul>
+				<li>Если указан режим <b>mode</b>, он объединяется со значением umask процесса для определения режима файла и флагов доступа.</li>
+				<li>Если файл уже существует, функция завершается успешно.</li>
+				<li>Если аргумент <b>exist_ok</b> имеет значение <b>True</b>, то его время модификации обновляется до текущего времени, в противном случае вызывается исключение <span style="color:#ff9933;">FileExistsError</span>.</li>
+			</ul>
+			<p>Пример команды <b>Path.touch</b>.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				p = Path(<span style="color:Blue;">'test.txt'</span>)<br>
+				p.touch(mode=0o644)
+			</p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2_6">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<hr class="hr_chapter">
+			<p><a name="part6_2_6_3"></a></p>
+			<h4>Жесткие и символические ссылки</h4>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
