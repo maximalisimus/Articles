@@ -62,8 +62,8 @@
 						<li><a href="#part6_2_5">Права доступа</a></li>
 						<ol>
 							<li><a href="#part6_2_5_1">Права доступа (chmod)</a></li>
-							<li><a href="#part6_2_5_2">Смена владельца (chown)</a></li>
-							<li><a href="#part6_2_5_3">shutil.chown</a></li>
+							<li><a href="#part6_2_5_2">Смена владельца и/или группы (os.chown)</a></li>
+							<li><a href="#part6_2_5_3">Смена владельца и/или группы (shutil.chown)</a></li>
 						</ol>
 						<li><a href="#part6_2_6">Создание файлов и папок</a></li>
 						<ol>
@@ -794,7 +794,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<hr class="hr_chapter">
 			<p><a name="part6_2_5_2"></a></p>
-			<h4>Смена владельца (chown)</h4>
+			<h4>Смена владельца и/или группы (os.chown)</h4>
 			<p>У <b>pathlib</b> нет методов chown. Поэтому здесь всё-таки придётся использовать библиотеку <b>os</b>.</p>
 			<p>Вообще у <b>os</b> есть два метода: <b>os.chown()</b> и <b>os.lchown()</b>.</p>
 			<p>Синтаксис у них следующий:</p>
@@ -850,7 +850,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<hr class="hr_chapter">
 			<p><a name="part6_2_5_3"></a></p>
-			<h4>shutil.chown</h4>
+			<h4>Смена владельца и/или группы (shutil.chown)</h4>
 			<p>На самом деле это не столько правильный, сколько более понятный метод.</p>
 			<p>Синтаксис у него следующий:</p>
 			<ul>
