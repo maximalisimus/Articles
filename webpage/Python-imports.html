@@ -1068,6 +1068,7 @@ lines = <span style="color:Blue;">''</span>
 			<p><a name="part6_2_6_2"></a></p>
 			<h4>Работа с файлами папками</h4>
 			<p><b>Библиотека OS</b></p>
+			<p><b>Создание каталогов</b></p>
 			<p>Синтаксис команды <b>os.mkdir</b>:</p>
 			<p style="margin-left:20px;">os.mkdir(path, mode=0o777, *, dir_fd=None)</p>
 			<ul>
@@ -1158,6 +1159,43 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 			<hr class="hr_chapter">
 			<p><a name="part6_2_6_3"></a></p>
 			<h4>Жесткие и символические ссылки</h4>
+			<p>Символьные ссылки <b>os.symlink</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left:20px;">os.symlink(src, dst, target_is_directory=False, *, dir_fd=None)</p>
+			<ul>
+				<li><b>src</b> - путь в файловой системе на который указывает ссылка</li>
+				<li><b>dst</b> - имя ссылки</li>
+				<li><b>target_is_directory</b> - в Windows ссылка как каталог</li>
+				<li><b>dir_fd</b> - дескрипторов каталогов</li>
+			</ul>
+			<p>Пример каманды <b>os.symlink</b>:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				src = <span style="color:Blue;">'./strukture.txt'</span><br>
+				dst = <span style="color:Blue;">'./test.txt'</span><br>
+				os.symlink(src, dst)<br>
+				<span style="color:Green;"># Очистим</span><br>
+				os.unlink(dst)
+			</p>
+			<p>Жесткая ссылка <b>os.link</b>.</p>
+			<p style="margin-left:20px;">os.link(src, dst, *, src_dir_fd=None, dst_dir_fd=None, follow_symlinks=True)</p>
+			<ul>
+				<li><b>src</b> - путь в файловой системе на который указывает ссылка</li>
+				<li><b>dst</b> - имя ссылки</li>
+				<li><b>src_dir_fd</b> - дескрипторов каталогов на который указывает ссылка</li>
+				<li><b>dst_dir_fd</b> - имя ссылки, дескрипторов каталогов</li>
+				<li><b>follow_symlinks</b> - переходить ли по ссылкам</li>
+			</ul>
+			<p>Пример использования:</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				scr = <span style="color:Blue;">'test.txt'</span><br>
+				dst = <span style="color:Blue;">'new.txt'</span><br>
+				os.link(scr, dst)
+			</p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
