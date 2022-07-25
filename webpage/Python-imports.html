@@ -1361,10 +1361,49 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 			<hr class="hr_chapter">
 			<p><a name="part6_2_7"></a></p>
 			<h3>Переименование файлов и папок</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Переименование файлов <b>os.rename</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">os.rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)</p>
+			<ul>
+				<li><b>src</b> - исходное имя файла или каталога</li>
+				<li><b>dst</b> - новое имя файла или каталога</li>
+				<li><b>src_dir_fd</b> - исходный дескриптор каталога</li>
+				<li><b>dst_dir_fd</b> - новый дескриптор каталога</li>
+			</ul>
+			<p>В <i>Windows</i>, если <i>dst</i> уже существует, всегда возникает ошибка <span style="color:#ff9933;">FileExistsError</span>.</p>
+			<p>Если имя <b>dst</b> уже существует, то операция может завершится с подклассом исключения <span style="color:#ff9933;">OSError</span>.</p>
+			<p>В Unix, если <b>src</b> - это файл, а <b>dst</b> - это каталог или наоборот, то поднимаются исключения <span style="color:#ff9933;">IsADirectoryError</span> или <span style="color:#ff9933;">NotADirectoryError</span> соответственно.</p>
+			<p>Если оба являются каталогами и <i>dst</i> пуст, то <i>dst</i> будет заменен без уведомления. Если <i>dst</i> является непустым каталогом, возникает <span style="color:#ff9933;">OSError</span>. Если оба являются файлами, то <i>dst</i> будет заменен без уведомления.</p>
+			<p>Операция может завершиться с ошибкой на некоторых разновидностях <b>Unix</b>, если <b>src</b> и <b>dst</b> находятся на разных файловых системах.</p>
+			<p>Пример использования.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br><br>
+
+				<span style="color:Green;"># Задаём исходный файл и тот, в который хотим переименовать</span><br>
+				src, dst = <span style="color:Blue;">'strukture.txt'</span>, <span style="color:Blue;">'test.txt'</span><br>
+				<span style="color:Green;"># Переименовываем</span><br>
+				os.rename(src, dst)<br><br>
+
+				<span style="color:Green;"># Присваиваем исходное имя и будущее переименованное</span><br>
+				srcdir, dstdir = <span style="color:Blue;">'src_dir'</span>, <span style="color:Blue;">'dst_dir'</span><br>
+				<span style="color:Green;"># Создаем исходный каталог</span><br>
+				os.mkdir(srcdir)<br>
+				<span style="color:Green;"># Переименовываем</span><br>
+				os.rename(srcdir, dstdir)<br>
+				<span style="color:Green;"># Удаляем, если не нужен</span><br>
+				os.rmdir(dstdir)			
+			</p>
+			<p>Метод <b>Path.rename</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">Path.rename(target)</p>
+			<p>Метод <i>Path.rename()</i> переименует файл или каталог пути <i>path</i> в указанную цель <b>target</b>. Значение <i>target</i> может быть либо строкой, либо другим объектом пути.</p>
+			<p>Пример использования. С прошлого примера остался файл <i>test.txt</i>. Переименуем его обратно в <i>strukture.txt</i>.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				p = Path(<span style="color:Blue;">'test.txt'</span>)<br>
+				p.rename(<span style="color:Blue;">'strukture.txt'</span>)
+			</p>
 			<p></p>
 			<p></p>
 			<p></p>
