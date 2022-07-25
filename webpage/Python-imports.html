@@ -1094,7 +1094,60 @@ lines = <span style="color:Blue;">''</span>
 Файл был дозаписан: It is a long established fact.
 Многие думают о Lorem Ipsum.</span></pre>
 			</div>
-			<p><b>Не забывайте, что  в строках, которые вы записываете в файлы, нужны переносы строк. Иначе у вас все строки будут слитыми вместе! Ну или можете вручную после каждой записи строки делать ещё одну запись одного переноса.</b></p>
+			<p><b>Не забывайте, что  в строках, которые вы записываете в файлы, нужны переносы строк. Иначе у вас все строки будут слитыми вместе!</b><br> Ну или можете вручную после каждой записи строки делать ещё одну запись одного переноса.</p>
+			<p><b>Чтение и запись файлов средствами pathlib.</b></p>
+			<p>Метод <b>Path.open()</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">Path.open(mode='r', buffering=-1, encoding=None, errors=None, newline=None)</p>
+			<p>Метод открывает файл, на который указывает путь path, как это делает встроенная функция <span style="color:Blue;">open()</span>.</p>
+			<p>В моём файле <b>strukture.txt</b> с прошлых тестов остался некоторый текст. Часть на английском, часть на русском.</p>
+			<div class="codeses">
+				<pre>
+<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path
+
+p = Path(<span style="color:Blue;">'strukture.txt'</span>)
+<span style="color:#069;"><b>with</b></span> p.open(encoding=<span style="color:Blue;">'utf-8'</span>) <span style="color:#069;"><b>as</b></span> f:
+	<span style="color:#ff1493;">print</span>(f.readline())
+				</pre>
+			</div>
+			<p>Обратите внимание на то, что <b>pathlib</b> может некорректно или вообще не читать русский текст. Однако, файл читать будет!</p>
+			<p><b>Path.read_bytes()</b> - возвращает содержимое бинарного файла. Файл при этом открывается и тут же закрывается.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+				p = Path(<span style="color:Blue;">'test_binary_file'</span>)<br>
+				p.write_bytes(b<span style="color:Blue;">'Binary file contents'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.read_bytes())
+			</p>
+			<p>Метод <b>Path.read_text</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">Path.read_text(encoding=None, errors=None)</p>
+			<p>Возвращает декодированное содержимое файла в виде строки.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+				p = Path(<span style="color:Blue;">'test_file'</span>)<br>
+				p.write_text(b<span style="color:Blue;">'Binary file contents'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.read_text())
+			</p>
+			<p>Метод <b>Path.write_bytes()</b> открывает файл, записывает байтовые данные и тут же закрывает его.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">Path.write_bytes(data)</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				p = Path(<span style="color:Blue;">'test_binary_file'</span>)<br>
+				p.write_bytes(b<span style="color:Blue;">'Binary file contents'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.read_bytes())
+			</p>
+			<p>Метод <b>Path.write_text</b>.</p>
+			<p>Синтаксис команды:</p>
+			<p style="margin-left: 20px">Path.write_text(data, encoding=None, errors=None, newline=None)</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				p = Path(<span style="color:Blue;">'test_file'</span>)<br>
+				p.write_text(<span style="color:Blue;">'Text file contents'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.read_text())
+			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_6">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
