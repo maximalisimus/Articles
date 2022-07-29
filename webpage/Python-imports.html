@@ -574,7 +574,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				#!/bin/bash<br><br>
 
 				wine '/home/mikl/.wine/drive_c/windows/system32/cmd.exe'<br><br>
-				<b>mikl ~/003/Primer $</b> sudo ln -s /home/mikl/program/wine-cmd.sh /usr/bin/wine-cmd<br>
+				<b>mikl ~/003/Primer $</b> sudo ln -s /home/mikl/program/wine-cmd.sh /usr/bin/wine-cmd
 			</p>
 			<p>Осталось только создать <b>bat-файл</b> и готово - можно тестировать. Окончание строк файла удобнее и быстрее поменять на <b>CR/LF</b> с помщью <b>Geany</b> в следующем меню: Документ -> Установить окончание строк -> Заменить окончание строк на CR/LF (Windows).</p>
 			<p>Содержимое файла: <b>cmd.bat</b>.</p>
@@ -583,7 +583,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				@echo off<br>
 				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\;%PATH%<br>
 				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\Scripts\;%PATH%<br>
-				cmd.exe<br><br>
+				cmd.exe<br>
 			</p>
 			<p>Запустить всё можно следующей последовательностью комманд:</p>
 			<p class="codes">
@@ -591,7 +591,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<b>mikl ~/003/Primer $</b> cmd.bat<br>
 				<span style="color:Green;"># После этого должен появится текст о версии продукта. Если не появился - значит что-то сделали не так или что-нибудь пропустили - читайте заново</span><br>
 				<b>Z:\home\mikl\003\Primer></b> python --version<br>
-				<span style="color:Blue;">Python 3.8.9</span><br>
+				<span style="color:Blue;">Python 3.8.9</span>
 			</p>
 			<p>Теперь можно проверять <i>Windows-Python</i> код непосредственно в <b>wine</b>.</p>
 			<p>При необходимости - просто создайте <i>cmd.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
@@ -638,7 +638,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				['.txt', '.tar', '.gz']<br>
 				strukture.txt.tar<br>
 				Z:/home/mikl/003/Primer/strukture.txt.tar.gz<br>
-				file:///Z:/home/mikl/003/Primer/strukture.txt.tar.gz</span><br>
+				file:///Z:/home/mikl/003/Primer/strukture.txt.tar.gz</span>
 			</p>
 			<p>А вот так выполнение этого же кода выглядит в <b>Linux</b>.</p>
 			<p class="codes">
