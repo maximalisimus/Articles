@@ -795,6 +795,85 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p>Представьте себе ситуацию, в которой вам срочно понадобилось програмно создать папку, дать её определённые права доступа, а по окончании работы удалить её. Такое может понадобится при создании некой программы с уникальным шифрованием, или программы с шифрованием <b>GPG</b> для неких целей защиты того или иного доступа. Например, пакет <b>python-gnupg</b> поддерживает такой функционал.</p>
 			<p>Прежде, чем мы рассмотрим как раздавать права доступа, давайте посмотрим как их получить, а также как вывести на экран.</p>
 			<p>Для преобразования в нормальный и понятный для нас вид воспользуемся библиотекой <b>stat</b>, а именно, методами <b>filemode</b> и <b>S_IMODE</b>.</p>
+			<center>
+				<table style="width: 750px">
+					<caption>Права доступа в команда chmod</caption>
+					<tr>
+						<th width="250px"><center>Восьмеричное число</center></th>
+						<th width="250px"><center>Двоичное число</center></th>
+						<th width="250px"><center>Маска доступа</center></th>
+					</tr>
+					<tbody>
+						<tr>
+							<td width="250px"><center>0</center></td>
+							<td width="250px"><center>000</center></td>
+							<td width="250px"><center>---</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>1</center></td>
+							<td width="250px"><center>001</center></td>
+							<td width="250px"><center>--x</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>2</center></td>
+							<td width="250px"><center>010</center></td>
+							<td width="250px"><center>-w-</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>3</center></td>
+							<td width="250px"><center>011</center></td>
+							<td width="250px"><center>-wx</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>4</center></td>
+							<td width="250px"><center>100</center></td>
+							<td width="250px"><center>r--</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>5</center></td>
+							<td width="250px"><center>101</center></td>
+							<td width="250px"><center>r-x</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>6</center></td>
+							<td width="250px"><center>110</center></td>
+							<td width="250px"><center>rw-</center></td>
+						</tr>
+						<tr>
+							<td width="250px"><center>7</center></td>
+							<td width="250px"><center>111</center></td>
+							<td width="250px"><center>rwx</center></td>
+						</tr>
+					</tbody>
+				</table>
+			</center>
+			<p>Где восьмеричное число - это:</p>
+			<ul>
+				<li><b>0</b> - никаких прав</li>
+				<li><b>1</b> - только выполнение</li>
+				<li><b>2</b> - только запись</li>
+				<li><b>3</b> - выполнение и запись</li>
+				<li><b>4</b> - только чтение</li>
+				<li><b>5</b> - чтение и выполнение</li>
+				<li><b>6</b> - чтение и запись</li>
+				<li><b>7</b> - чтение запись и выполнение</li>
+			</ul>
+			<p>Права доступа складываются из 3 категорий:</p>
+			<ul>
+				<li><b>u</b> - владелец файла</li>
+				<li><b>g</b> - группа файла</li>
+				<li><b>o</b> - все остальные пользователи</li>
+			</ul>
+			<p>Например.</p>
+			<ul>
+				<li><b>u+x</b> - разрешить выполнение для владельца</li>
+				<li><b>ugo+x</b> - разрешить выполнение для всех</li>
+				<li><b>ug+w</b> - разрешить запись для владельца и группы</li>
+				<li><b>o-x</b> - запретить выполнение для остальных пользователей</li>
+				<li><b>ugo+rwx</b> - разрешить всё для всех</li>
+				<li><b>777</b> - Аналогично, разрешить всё для всех</li>
+				<li><b>755</b> - разрешить владельцу всё, а группе и остальным пользователям только читать и выполнять</li>
+			</ul>
 			<p>Я заранее создал каталог <b>gpgtest</b> и дал ему права <b>700</b> вручную, т.е. полный доступ только владельцу каталога. Дело в том, что утилита <b>GNUPG</b> требует для рабочей директории именно такие права доступа.</p>
 			<div id="page" class="clearfix">
 				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
@@ -1387,39 +1466,6 @@ os.makedirs(<span style="color:Blue;">"nested1/nested2/nested3"</span>)
 				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
 				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)
 			</p>
-			<p>Удаление символических ссылок <b>os.unlink</b>.</p>
-			<p style="margin-left: 20px">os.unlink(path, *, dir_fd = None)</p>
-			<ul>
-				<li><b>path</b> - путь к ссылке</li>
-				<li><b>dir_fd</b> - дескриптор каталога</li>
-			</ul>
-			<p>Пример использования <b>os.unlink</b>. Создадим ссылку и тут же удалим её.</p>
-			<p class="codes">
-				<span style="color:#069;"><b>import</b></span> os<br>
-				scr = <span style="color:Blue;">'test.txt'</span><br>
-				dst = <span style="color:Blue;">'new.txt'</span><br>
-				<span style="color:Green;"># Создаём ссылку</span><br>
-				os.link(scr, dst)<br>
-				<span style="color:Green;"># Тут же удаляем эту ссылку</span><br>
-				os.unlink(dst)
-			</p>
-			<h4>Удаление символических ссылок pathlib.Path.unlink.</h4>
-			<p style="margin-left: 20px">Path.unlink(missing_ok=False)</p>
-			<ul>
-				<li><b>missing_ok</b> - игнорирование ошибок при обнаружении существования пути.</li>
-			</ul>
-			<p>Если <i>missing_ok</i> = <i>False (по умолчанию)</i> и <u>путь не существует</u>, то вызывается исключение <span style="color:#ff9933;">FileNotFoundError</span>.</p>
-			<p>Если <i>missing_ok</i> = <i>True</i>, то исключение <span style="color:#ff9933;">FileNotFoundError</span> будет игнорироваться аналогично команде <b>POSIX rm -f</b>.</p>
-			<p>Пример использования <b>pathlib.Path.unlink</b>.</p>
-			<p class="codes">
-				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
-				<span style="color:Green;"># Путь к ссылке с указанием её имени</span><br>
-				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
-				<span style="color:Green;"># Создаём ссылку</span><br>
-				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)<br>
-				<span style="color:Green;"># И тут же удаляем эту ссылку</span><br>
-				p.unlink(missing_ok=True)
-			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_6">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
@@ -1566,35 +1612,206 @@ shutil.move(src, dst)</pre>
 			<hr class="hr_chapter">
 			<p><a name="part6_2_9"></a></p>
 			<h3>6.2.9. Удаление файлов и папок</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Удаление символических ссылок <b>os.unlink</b>.</p>
+			<p style="margin-left: 20px">os.unlink(path, *, dir_fd = None)</p>
+			<ul>
+				<li><b>path</b> - путь к ссылке</li>
+				<li><b>dir_fd</b> - дескриптор каталога</li>
+			</ul>
+			<p>Пример использования <b>os.unlink</b>. Создадим ссылку и тут же удалим её.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br>
+				scr = <span style="color:Blue;">'test.txt'</span><br>
+				dst = <span style="color:Blue;">'new.txt'</span><br>
+				<span style="color:Green;"># Создаём ссылку</span><br>
+				os.link(scr, dst)<br>
+				<span style="color:Green;"># Тут же удаляем эту ссылку</span><br>
+				os.unlink(dst)
+			</p>
+			<p>Удаление файлов или символических ссылок <b>pathlib.Path.unlink</b>.</p>
+			<p style="margin-left: 20px">Path.unlink(missing_ok=False) - удаляет файл или символическую ссылку, указанную в пути <i>path</i>. Файл или символическая ссылка должны иметь соответствующее разрешение.</p>
+			<ul>
+				<li><b>missing_ok</b> - игнорирование ошибок при обнаружении существования пути.</li>
+			</ul>
+			<p>Если <i>missing_ok</i> = <i>False (по умолчанию)</i> и <u>путь не существует</u>, то вызывается исключение <span style="color:#ff9933;">FileNotFoundError</span>.</p>
+			<p>Если <i>missing_ok</i> = <i>True</i>, то исключение <span style="color:#ff9933;">FileNotFoundError</span> будет игнорироваться аналогично команде <b>POSIX rm -f</b>.</p>
+			<p>Пример использования <b>Path.unlink</b>.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br>
+				<span style="color:Green;"># Путь к ссылке с указанием её имени</span><br>
+				p = Path(<span style="color:Blue;">'./mylink'</span>)<br>
+				<span style="color:Green;"># Создаём ссылку</span><br>
+				p.symlink_to(<span style="color:Blue;">'./strukture.txt'</span>)<br>
+				<span style="color:Green;"># И тут же удаляем эту ссылку</span><br>
+				p.unlink(missing_ok=True)
+			</p>
+			<p>Удаление файлов <b>os.remove</b>.</p>
+			<p>Синтаксис команды.</p>
+			<p style="margin-left: 20px">os.remove(path, *, dir_fd=None)</p>
+			<ul>
+				<li><b>path</b> - путь к файлу</li>
+				<li><b>dir_fd</b> - дескриптор каталога</li>
+			</ul>
+			<p>Функция remove() модуля os удаляет путь path к файлу. Если путь является каталогом, возникает исключение <span style="color:#ff9933;">IsADirectoryError</span>.</p>
+			<p>Пример использования.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl@mikl ~/0/Primer></b> cp strukture.txt strukture-copy.txt
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+f = <span style="color:Blue;">'strukture-copy.txt'</span>
+<span style="color:#069;"><b>if</b></span> os.path.isfile(f):
+	os.remove(f)
+
+<b>mikl@mikl ~/0/Primer></b> python main.py
+<b>mikl@mikl ~/0/Primer></b> ls strukture-copy.txt
+<span style="color:Blue;">ls: невозможно получить доступ к 'strukture-copy.txt': Нет такого файла или каталога</span></pre>
+			</div>
+			<p>Работает.</p>
+			<p>Удаление каталога <b>os.rmdir</b>.</p>
+			<p>Синтаксис команды</p>
+			<p style="margin-left: 20px">os.rmdir(path, *, dir_fd=None)</p>
+			<ul>
+				<li><b>path</b> - путь до каталога</li>
+				<li><b>dir_fd</b> - дескриптор каталога</li>
+			</ul>
+			<p>Если директория <b>path</b> не существует или не является пустым каталогом, соответственно возникает исключение <span style="color:#ff9933;">FileNotFoundError</span> или <span style="color:#ff9933;">OSError</span>.</p>
+			<p>Для удаления не пустых директорий, лучше использовать функцию <b>shutil.rmtree()</b>. Но, о ней чуть позже.</p>
+			<p>Пример использования.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+path = <span style="color:Blue;">'./pkg2'</span>
+os.mkdir(path, 0o777)
+
+<b>mikl@mikl ~/0/Primer></b> python main.py
+<b>mikl@mikl ~/0/Primer></b> ls -lha
+<span style="color:Blue;">итого 40K
+drwxr-xr-x 4 mikl users 4,0K июл 30 12:07 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  107 июл 30 12:07 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+<b>drwxr-xr-x 2 mikl users 4,0K июл 30 12:07 pkg2</b>
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span>
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+path = <span style="color:Blue;">'./pkg2'</span>
+<span style="color:#069;"><b>if</b></span> os.path.isdir(path):
+	os.rmdir(path)
+
+<b>mikl@mikl ~/0/Primer></b> python main.py
+<b>mikl@mikl ~/0/Primer></b> ls -lha
+<span style="color:Blue;">итого 36K
+drwxr-xr-x 3 mikl users 4,0K июл 30 12:08 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  125 июл 30 12:08 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span></pre>
+			</div>
+			<p>Удаление каталога <b>Path.rmdir()</b>.</p>
+			<p style="margin-left: 20px;">Метод <b>Path.rmdir()</b> удаляет каталог, указанный в пути <b>path</b>. Каталог должен быть пустым и иметь соответствующие разрешения.</p>
+			<p>Пример использования.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> pathlib
+
+dirs = <span style="color:Blue;">'./pkg2'</span>
+p = pathlib.Path(dirs)
+p.mkdir(mode=0o755, parents=True, exist_ok=True)
+
+<b>mikl@mikl ~/0/Primer></b> python main.py
+<b>mikl@mikl ~/0/Primer></b> ls -lha
+<span style="color:Blue;">итого 40K
+drwxr-xr-x 4 mikl users 4,0K июл 30 12:14 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  163 июл 30 12:14 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+<b>drwxr-xr-x 2 mikl users 4,0K июл 30 12:14 pkg2</b>
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span>
+<b>mikl@mikl ~/0/Primer></b> nano main.py
+<span style="color:#069;"><b>import</b></span> pathlib
+
+dirs = <span style="color:Blue;">'./pkg2'</span>
+p = pathlib.Path(dirs)
+<span style="color:#069;"><b>if</b></span> p.is_dir():
+	p.rmdir()
+
+<b>mikl@mikl ~/0/Primer></b> python main.py
+<b>mikl@mikl ~/0/Primer></b> ls -lha
+<span style="color:Blue;">итого 36K
+drwxr-xr-x 3 mikl users 4,0K июл 30 12:17 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  140 июл 30 12:17 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span></pre>
+			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<hr class="hr_chapter">
 			<p><a name="part6_2_10"></a></p>
 			<h3>6.2.10. Рекурсивные операции</h3>
+			<p>Такие операции начнём с рекурсивного удаления папки/каталога при помощи <b>shutil.rmtree</b>.</p>
+			<p>Синтаксис команды.</p>
+			<p style="margin-left: 20px;">shutil.rmtree(path, ignore_errors=False, onerror=None)</p>
+			<ul>
+				<li><b>path</b> - каталог для удаления</li>
+				<li><b>ignore_errors</b> - игнорирование ошибок во время удаления</li>
+				<li><b>onerror</b> - обработчик ошибок, возникающих в процессе удаления</li>
+			</ul>
+			<p>Путь path должен указывать на каталог, но не символическую ссылку на каталог.</p>
+			<p>Если <b>ignore_errors=True</b>, то возникшие ошибки в результате неудачного удаления, будут игнорироваться. Если <b>False</b> или пропущено, такие ошибки обрабатываются путем вызова обработчика, указанного в <b>onerror</b> или, если он пропущен, они вызывают исключение.</p>
+			<p>Пример удаления директории с правами доступа <i>&laquo;только для чтения&raquo;</i> и использованием <i>pathlib</i>.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> cp -R pkg pkg2
+<b>mikl ~/003/Primer $</b> sudo chmod -R 444 ./pkg2
+<b>mikl ~/003/Primer $</b> ls -lha
+<span style="color:Blue;">итого 40K
+drwxr-xr-x 4 mikl users 4,0K июл 30 12:46 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  261 июл 30 12:32 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+<b>dr--r--r-- 4 mikl users 4,0K июл 30 12:46 pkg2</b>
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> pathlib, stat
+<span style="color:#069;"><b>import</b></span> shutil
+
+<span style="color:#069;"><b>def</b></span> remove_readonly(func, path, _):
+    pathlib.Path(path).cmod(stat.S_IWRITE)
+    func(path)
+
+directory = <span style="color:Blue;">'./pkg2'</span>
+shutil.rmtree(directory, onerror=remove_readonly)
+
+<b>mikl ~/003/Primer $</b> sudo python main.py
+<b>mikl ~/003/Primer $</b> ls -lha
+<span style="color:Blue;">итого 36K
+drwxr-xr-x 3 mikl users 4,0K июл 30 12:48 .
+drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
+-rw-r--r-- 1 mikl users  142 июл 29 18:29 cmd.bat
+-rw-r--r-- 1 mikl users  261 июл 30 12:32 main.py
+drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
+-rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span></pre>
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p>Т.е. выходит, что pathlib объединяет в себе часто используемые функции двух стандартных модулей os и os.path, а так же стандартную функцию open() для чтения файла и записи в файл какой либо информации.</p>
+			<hr class="hr_main">
+			<p><b>Вывод:</b> выходит, что pathlib объединяет в себе часто используемые функции двух стандартных модулей <b>os</b> и <b>os.path</b>, а так же стандартную функцию <b>open()</b> для чтения и записи файлов.</p>
 			<hr class="hr_main">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>			
