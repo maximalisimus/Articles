@@ -7,6 +7,9 @@ Blue-bold
 <span style="color:#069;"><b>import</b></span>
 <span style="color:#069;"><b>import *</b></span>
 
+<span style="color:#069;"><b>for</b></span>
+<span style="color:#069;"><b>in</b></span>
+
 Pink
 <span style="color:#ff1493;">
 

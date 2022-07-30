@@ -1995,13 +1995,16 @@ Dir count = 5</span></pre>
 				<li><b>&laquo; *.* &raquo;</b> - поиск только всех файлов</li>
 			</ul>
 			<p>Шаблоны поиска могут использовать простые регулярные выражения, как в <b>bash</b>. Однако, не все конструкции могут работать. Применительно только как к наименованиям.</p>
+			<p>В папке <b>&laquo;./pkg/&raquo;</b> я создал директорию <b>&laquo;search&raquo;</b> и несколько файлов, а также расположил в одном из под-каталогов <b>.png</b> изображение.</p>
+			<p>Примеры работы с данными методами вы можете увидеть в конце этой главы. А сейчас продолжим разговор о шабонах поиска.</p>
 			<p>В <b>Path.glob</b> шаблоны поиска могут выглядеть следующим образом.</p>
 			<ul>
-				<li><b></b></li>
-				<li><b></b></li>
-				<li><b></b></li>
-				<li><b></b></li>
-				<li><b></b></li>
+				<li>Path('pkg/search/').glob('*.py')</li>
+				<li>Path('pkg/').rglob('*.png')</li>
+				<li>Path('pkg/').rglob('[0-9]*.txt')</li>
+				<li>Path('pkg/').rglob('[0-9].txt')</li>
+				<li>Path('pkg/').rglob('[0-9]?.txt')</li>
+				<li>И многие другие варианты.</li>
 			</ul>
 			<p>Первый на очереди <b>Path.glob(pattern)</b>.</p>
 			<p>Метод <b>Path.glob()</b> возвращает список всех файлов любого типа, соответствующий заданному шаблону <b>pattern</b>, расположенных в каталоге, указанном в пути <b>path</b>.</p>
@@ -2080,6 +2083,70 @@ Dir count = 5</span>
 				Красиво и коротко. Не правда ли ?<br>
 				К сожалению, с <b>os</b> и <b>os.path</b> такой трюк не пройдёт, т.к. там чаще всего возвращаются не списки, а кортежи, причём по очереди.
 			</p>
+			<p>А теперь рассмотрим примеры работы с шаблонами поиска <b>Path.glob()</b> и <b>Path.rglob()</b>.</p>
+			<p>Структура добавленного каталога выглядит следующим образом.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> tree ./pkg/search/
+<span style="color:Blue;">./pkg/search/
+├── 1.txt
+├── 22.txt
+├── 3a.txt
+├── test.py
+├── text1.txt
+└── text.txt
+
+0 directories, 6 files</span></pre>
+			</div>
+			<p>Обратите внимание на наименования файлов. Это сделано специально для демонстрации.</p>
+			<p>Откроем <b>main.py</b> файл и запишем в него знакомые шаблоны поиска с небольшой модификацией для красивого вывода результата и более быстрой его обработки.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:Red;">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-</span>
+
+<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path
+
+paths = list(<span style="color:Red;">map</span>(str, <span style="color:Red;">sorted</span>(Path(<span style="color:Blue;">'pkg/search/'</span>).glob(<span style="color:Blue;">'*.py'</span>))))
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">"Path('pkg/search/').glob('*.py'):"</span>, end=<span style="color:Blue;">' '</span>)
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> paths: <span style="color:#ff1493;">print</span>(x, end=<span style="color:Blue;">' '</span>)
+
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">"\nPath('pkg/').glob('**/*.png'):"</span>,end=<span style="color:Blue;">' '</span>)
+
+paths = list(<span style="color:Red;">map</span>(str, <span style="color:Red;">sorted</span>(Path(<span style="color:Blue;">'pkg/'</span>).rglob(<span style="color:Blue;">'*.png'</span>))))
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> paths: <span style="color:#ff1493;">print</span>(x, end=<span style="color:Blue;">' '</span>)
+
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">"\nPath('pkg/').glob('**/[0-9]*.txt'):"</span>, end=<span style="color:Blue;">' '</span>)
+
+paths = list(<span style="color:Red;">map</span>(Path, <span style="color:Red;">sorted</span>(Path(<span style="color:Blue;">'pkg/'</span>).rglob(<span style="color:Blue;">'[0-9]*.txt'</span>))))
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> paths: <span style="color:#ff1493;">print</span>(x.name, end=<span style="color:Blue;">' '</span>)
+
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">"\nPath('pkg/').rglob('[0-9].txt'):"</span>, end=<span style="color:Blue;">' '</span>)
+
+paths = list(<span style="color:Red;">map</span>(Path, <span style="color:Red;">sorted</span>(Path(<span style="color:Blue;">'pkg/'</span>).rglob(<span style="color:Blue;">'[0-9].txt'</span>))))
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> paths: <span style="color:#ff1493;">print</span>(x.name, end=<span style="color:Blue;">' '</span>)
+
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">"\nPath('pkg/').rglob('[0-9]?.txt'):"</span>, end=<span style="color:Blue;">' '</span>)
+
+paths = list(<span style="color:Red;">map</span>(Path, <span style="color:Red;">sorted</span>(Path(<span style="color:Blue;">'pkg/'</span>).rglob(<span style="color:Blue;">'[0-9]?.txt'</span>))))
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> paths: <span style="color:#ff1493;">print</span>(x.name, end=<span style="color:Blue;">' '</span>)
+
+<span style="color:#ff1493;">print</span>(<span style="color:Blue;">''</span>)
+				</pre>
+			</div>
+			<p>После запуска изменённого <b>main.py</b> файла мы увидим следующий результат.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">Path('pkg/search/').glob('*.py'): pkg/search/test.py<br>
+				Path('pkg/').glob('**/*.png'): pkg/compatible/py-imports-logo.png<br>
+				Path('pkg/').glob('**/[0-9]*.txt'): 1.txt 22.txt 3a.txt<br>
+				Path('pkg/').rglob('[0-9].txt'): 1.txt<br>
+				Path('pkg/').rglob('[0-9]?.txt'): 22.txt 3a.txt</span>
+			</p>
+			<div id="page" class="clearfix">
+				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-16.png" class="fz__minimized" alt="клик для увеличения" title="Path.glob() и Path.rglob()" />
+			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
