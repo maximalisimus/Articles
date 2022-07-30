@@ -1925,6 +1925,39 @@ drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
 				Чтобы получить полный путь, который начинается с <b>top</b>, необходимо к файлу или каталогу в <b>dirpath</b>, выполнить <b>os.path.join(dirpath, name)</b>.
 			</p>
 			<p>Пример использования. Раздельно подсчитаем общее количество файлов и общее количество папок которые набрались на данный момент в <b>./pkg</b></p>
+			<p>Но сначала проверим а сколько там действительно файлов и папок. И тут есть одно маленькое замечание.</p>
+			<p>Вы скорее всего уже по-<b>Googl</b>-лили и нашли несколько примеров с утилитой <b>ls</b>. Это не совсем правильный подход и результаты будут скорее всего ошибочны. Возьмите для примера маленькую вложенную директорию, всмысле с малым числом файлов и папок и посчитайте вручную, а затем предложенным <b>Googl</b>-ом вариантами. Уверен что результаты будут не совпадать.</p>
+			<p>Дело в том, что утилита <b>ls</b> смотрит на все файлы без исключений, включая <b>'.'</b> и '..' и многие скрытые файлы и папки. Например у <i>Python</i>-скриптов после выполнения может появлятся директория <b>__pycache__</b> и даже автоматически удаляться.</p>
+			<p>Что тогда делать?</p>
+			<p>Проблема решается элементарно.</p>
+			<p>Воспользуемся конвеером 2 комманд: <b>find</b> и <b>wc</b>.</p> 
+			<p>
+				<b>Find</b> предназначена для поиска файлов и каталогов на основе специальных условий. Её можно использовать в различных обстоятельствах, например, для поиска файлов по разрешениям, владельцам, группам, типу, размеру и другим подобным критериям.<br>
+				Если грубо - то она пропускает такие вещи как <b>'.'</b> и <b>'..'</b>.<br>
+				В ней легко задать критерий пропуска скрытых файлов или скрытых папок.
+			</p>
+			<p>
+				<b>WC</b> - это утитита для подсчета количества строк, слов, символов и байтов.
+			</p>
+			<p>У <i>find</i> имеется такой параметр как <i>type</i> - тип результатов поиска</p>
+			<ul>
+				<li><b>f</b> - файлы</li>
+				<li><b>d</b>  - директории</li>
+			</ul>
+			<p>Ещё есть <i>iname</i> - наименование поиска. Однако, мы будем искать все файлы или директории без исключений.</p>
+			<p>Команда возвращает путь к полученному объеку.</p>
+			<p>У команды <i>wc</i> есть такой параметр как <i>&laquo; l &raquo;</i> - подсчет количества строк.</p>
+			<p>Этого будет вполне достаточно.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> <span style="color:Green;"># Подсчитаем количество файлов в этой директории</span><br>
+				<b>mikl ~/003/Primer $</b> find ./ -type f | wc -l<br>
+				<span style="color:Blue;">23</span><br>
+				<b>mikl ~/003/Primer $</b> <span style="color:Green;"># Подсчитаем количество вложенных директорий</span><br>
+				<b>mikl ~/003/Primer $</b> find ./ -type d | wc -l<br>
+				<span style="color:Blue;">6</span><br>
+				<b>mikl ~/003/Primer $</b> <span style="color:Green;"># Включая текущую директорию - действительно +1 директория</span>
+			</p><br>
+			<p>А теперь испытаем <i>Python</i> скрипт.</p>
 			<div class="codeses">
 				<pre>
 <b>mikl ~/003/Primer $</b> nano main.py
@@ -1942,6 +1975,7 @@ on_dir = <span style="color:Blue;">'./'</span>
 <span style="color:Blue;">Files count = 23,
 Dir count = 5</span></pre>
 			</div>
+			<p><b>Как видите - результаты совпадают.</b></p>
 			<p>Либо мы можем тоже самое записать в тернарных операторах.</p>
 			<p class="codes">
 				<span style="color:#069;"><b>import</b></span> os<br><br>
@@ -1951,10 +1985,64 @@ Dir count = 5</span></pre>
 				dir_count = <span style="color:Red;">sum</span>([len(x) for _, x, _ in os.walk(on_dir, topdown=False)])<br>
 				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
 			</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>А теперь рассмотрим как выглядят рекурсивные операции в <b>pathllib</b>.</p>
+			<p>Первый на очереди <b>Path.glob(pattern)</b>.</p>
+			<p>Метод <b>Path.glob()</b> возвращает список всех файлов любого типа, соответствующий заданному шаблону <b>pattern</b>, расположенных в каталоге, указанном в пути <b>path</b>.</p>
+			<p>Шаблон <b>'**'</b> указывает на рекурсивный обход в глубину каталога, указанного в пути <b>path</b>, и всех его подкаталогов.</p>
+			<p>Например найдём все <b>&laquo;.py&raquo;</b>-файлы нешего <b>&laquo;./pkg/tests&raquo;</b> каталога и выведем их на экран. Ну а чтобы не запутаться что где находится, сделаем вывод построчно.</p>
+			<p>Для более краткого вывода я вручную удалил несколько скриптов, так что общее количество файлов теперь изменилось.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				paths = list(map(str, sorted(Path(<span style="color:Blue;">'.'</span>).glob(<span style="color:Blue;">'**/*.py'</span>))))<br>
+				for x in paths: <span style="color:#ff1493;">print</span>(x)<br><br>
+
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">pkg/tests/__init__.py<br>
+				pkg/tests/status.py<br>
+				pkg/tests/test-abs-path.py<br>
+				pkg/tests/test-pathlib-1.py<br>
+				pkg/tests/test-pathlib-2.py<br>
+				pkg/tests/test.py</span>
+			</p>
+			<p>Метод <b>Path.rglob(pattern)</b> - работает подобно вызову метода <b>Path.glob()</b> с добавлением конструкции <b>'**/'</b> перед заданным относительным шаблоном <b>pattern</b>, тем самым по умолчанию производит рекурсивный поиск файлов, соответствующего шаблона.</p>
+			<p>Т.е. тот же поиск <b>&laquo;.py&raquo;</b> файлов, например в той же директории <b>&laquo;./pkg/tests&raquo;</b> каталога будет выглядеть на пару символов меньше.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				paths = list(map(str, sorted(Path(<span style="color:Blue;">'.'</span>).rglob(<span style="color:Blue;">'*.py'</span>))))<br>
+				for x in paths: <span style="color:#ff1493;">print</span>(x)<br><br>
+
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">pkg/tests/__init__.py<br>
+				pkg/tests/status.py<br>
+				pkg/tests/test-abs-path.py<br>
+				pkg/tests/test-pathlib-1.py<br>
+				pkg/tests/test-pathlib-2.py<br>
+				pkg/tests/test.py</span>
+			</p>
+			<p>А теперь посмотрим как рекурсивно раздельно подсчитать количество файлов и количество папок в заданной директории и сравним с результатом конвеера с <b>find</b> и <b>wc</b>.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path
+
+on_dir = <span style="color:Blue;">'./'</span>
+file_count = sum([1 for x in list(Path(on_dir).rglob(<span style="color:Blue;">'*'</span>)) if x.is_file()])
+dir_count = sum([1 for x in list(Path(on_dir).rglob(<span style="color:Blue;">'*'</span>)) if x.is_dir()])
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
+
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">Files count = 18,
+Dir count = 5</span>
+<b>mikl ~/003/Primer $</b> find ./ -type f | wc -l
+<span style="color:Blue;">18</span>
+<b>mikl ~/003/Primer $</b> find ./ -type d | wc -l
+<span style="color:Blue;">6</span></pre>
+			</div>
+			<p>В последней строке количество директорий, включая текущую - поэтому -1. <b>Результаты совпадают.</b></p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
