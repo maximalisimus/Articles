@@ -79,8 +79,10 @@
 						<li><a href="#part6_2_7">Переименование файлов и папок</a></li>
 						<li><a href="#part6_2_8">Перемещение файлов и папок</a></li>
 						<li><a href="#part6_2_9">Удаление файлов и папок</a></li>
-						<li><a href="#part6_2_10">Рекурсивные операции</a></li>
+						<li><a href="#part6_2_10">Cписок файлов и директорий в папке</a></li>
+						<li><a href="#part6_2_11">Рекурсивные операции</a></li>
 					</ol>
+					<li><a href="#part6_3">Вывод</a></li>
 				</ol>
 				<li><a href="#part7">Задачи с решениями</a></li>
 				<li><a href="#part8">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
@@ -1757,9 +1759,75 @@ drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
-			<hr class="hr_chapter">
 			<p><a name="part6_2_10"></a></p>
-			<h3>6.2.10. Рекурсивные операции</h3>
+			<h3>6.2.10. Cписок файлов и директорий в папке</h3>
+			<p>Первым будет <b>os.listdir</b>.</p>
+			<p>Синтаксис относительно простой.</p>
+			<p style="margin-left: 20px;">os.listdir(path=".")</p>
+			<ul>
+				<li><b>path</b> - путь в виде строки или дескриптор каталога</li>
+			</ul>
+			<p>Данный метод возвращает список имен файлов в каталоге</p>
+			<p>Пример использования.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+dirs = <span style="color:Blue;">'.'</span>
+output = os.listdir(dirs)
+<span style="color:#069;"><b>for</b></span> count, item <span style="color:#069;"><b>in</b></span> <span style="color:Red;">enumerate</span>(output):
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"{</span>count+1<span style="color:#ff9933;">} {</span>item<span style="color:#ff9933;">}</span>")
+<span style="color:#ff1493;">print</span>(<span style="color:Blue;">''</span>)
+
+dirs = <span style="color:Blue;">'./pkg'</span>
+output = os.listdir(dirs)
+<span style="color:#069;"><b>for</b></span> count, item <span style="color:#069;"><b>in</b></span> <span style="color:Red;">enumerate</span>(output):
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"{</span>count+1<span style="color:#ff9933;">} {</span>item<span style="color:#ff9933;">}</span>")
+
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">1 main.py
+2 cmd.bat
+3 strukture.txt
+4 pkg
+
+1 test.py
+2 compatible
+3 tests</span></pre>
+			</div>
+			<p>Повторим результат с помощью <b>Path.iterdir()</b>.</p>
+			<p>Метод <b>Path.iterdir()</b> вернет итератор объектов пути содержимого каталога, если путь <b>path</b> указывает на каталог.</p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> pathlib
+
+dirs = <span style="color:Blue;">'.'</span>
+p = pathlib.Path(dirs)
+<span style="color:#069;"><b>for</b></span> count, item <span style="color:#069;"><b>in</b></span> <span style="color:Red;">enumerate</span>(p.iterdir()):
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"{</span>count+1<span style="color:#ff9933;">} {</span>item.name<span style="color:#ff9933;">}"</span>)
+
+dirs = <span style="color:Blue;">'./pkg'</span>
+print(<span style="color:Blue;">''</span>)
+p = pathlib.Path(dirs)
+<span style="color:#069;"><b>for</b></span> count, item <span style="color:#069;"><b>in</b></span> <span style="color:Red;">enumerate</span>(p.iterdir()):
+	<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"{</span>count+1<span style="color:#ff9933;">} {</span>item.name<span style="color:#ff9933;">}"</span>)
+
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">1 main.py
+2 cmd.bat
+3 strukture.txt
+4 pkg
+
+1 test.py
+2 compatible
+3 tests</span></pre>
+			</div>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
+			<p><a name="part6_2_11"></a></p>
+			<h3>6.2.11. Рекурсивные операции</h3>
 			<p>Такие операции начнём с рекурсивного удаления папки/каталога при помощи <b>shutil.rmtree</b>.</p>
 			<p>Синтаксис команды.</p>
 			<p style="margin-left: 20px;">shutil.rmtree(path, ignore_errors=False, onerror=None)</p>
@@ -1810,8 +1878,12 @@ drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
 			<p></p>
 			<p></p>
 			<p></p>
+			<hr class="hr_chapter">
+			<p><a href="#part6_2">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr class="hr_main">
-			<h2>Вывод.</h2>
+			<p><a name="part6_3"></a></p>
+			<h2>6.3. Вывод.</h2>
 			<p>Исходя из приведенных сравнений библиотек - мы получаем, что <b>pathlib</b> объединяет в себе часто используемые функции двух стандартных модулей <b>os</b> и <b>os.path</b>, а так же стандартную функцию <b>open()</b> для чтения и записи файлов. Этот модуль гораздо компактнее, быстрее и эффективнее, а главное в нём значительно больше различных методов и операций над файлами и папками. Использовать его намного легче, чем модули <b>os</b> и <b>os.path</b>. Последовательное выполнение комманд через точку друг за дружкой намного упрощают взаимодействие с модулем, по сравнению с вложенными вызовами <b>os</b> и <b>os.path</b>.</p>
 			<hr class="hr_main">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
