@@ -84,7 +84,7 @@
 				</ol>
 				<li><a href="#part7">Задачи с решениями</a></li>
 				<li><a href="#part8">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
-				<li><a href="#part9">О Python в Windows и WINE</a></li>
+				<li><a href="#part9">О Python в Windows 7, 10 и выше, а также WINE</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -1667,17 +1667,28 @@ script
 		</div>
 		<div class="content">
 			<p><a name="part9"></a></p>
-			<h2>9. Немного о Python в Windows и WINE.</h2>
+			<h2>9. О Python в Windows 7, 10 и выше, а также WINE.</h2>
 			<p>Для того, чтобы получить доступ к <b>Windows</b> путям библиотеки <b>pathlib</b> я воспользуюсь следующим методом внутри <b>Linux</b>.</p>
 			<p><b>Помните, что такой метод позволит лишь попробовать запустить какой либо код, так сказать испытать его в действии без загрузки самой ОС, напрямую в <i>Linux</i>. При этом он будет работать в <i>Windows</i>, но компиляция этого кода при помощи библиотек: <i>nuitka</i>, <i>pyinstaller</i>, <i>Cython</i>, <i>py2exe</i> и других - в <i>wine</i> не даёт гарантии работоспособности таких <i>exe</i> файлов в <b>Windows</b>.</b></p>
 			<p><b>Помните, что не всякий код можно будет проверить на работоспособность таким быстрым способом в Linux.</b></p>
 			<p>Для того, чтобы получить доступ к <i>Windows</i> путям библиотеки <i>pathlib</i> в <i>Linux</i>, я скачаю портативную версию <i>Python</i> с сайта <a href="https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/">sourceforge.net</a>. Версии 3.8.9 будет достаточно. Версию выше для <i>wine</i> скачивать не рекомендую. Возможны проблемы с запуском и использованием.</p>
-			<p>Нам нужен только сам <b>Python</b>. Остальные встроенные утилиты нас не интересуют. Поэтому скачаем эту <i>Portable</i> версию и распакуем только сам <i>Python</i>, а затем переместить распакованную папку по наиболее правильному, т.е. выгодному пути, с точки зрения управления переменными окружения <b>PATH</b>.</p>
+			<p>На этом ресурсе все <i>exe</i> файлы является <i>SFX</i> архивами, т.е. что в <i>Windows</i>, что в <i>Linux</i> его можно распаковать как просто запустив, так и с помощью консольной утилиты <i>7z</i>.</p>
+			<p>Из скачанного <i>SFX</i> архива нам нужен только сам <b>Python</b>. Остальные встроенные утилиты нас не интересуют. Поэтому, из скачанной версии распакуем только сам <i>Python</i>, а затем переместить эту папку по наиболее правильному, т.е. выгодному, пути с точки зрения управления переменными окружения <b>PATH</b>.</p>
+			<p>
+				<span style="color:Green;">Все указанные ниже операции проделываются только для того, чтобы командная строка <b>CMD</b> или <b>PowerShell</b> могли видеть все <b>EXE</b> файлы внутри распакованной директории. Иначе вы не сможете ни запустить <b>Python</b>, ни управлять его <b>PIP</b>-ом.</span><br>
+				Кстати, многие операции ниже можете проделать и вручную. Например, распаковку с помощью <i>7z-менеджера</i>.
+			</p>
 			<p class="codes">
+				<span style="color:Green;"># Скачиваем портативную версию Python. Можете скачать с помощью браузера</span><br>
 				<b>mikl ~/003/Primer $</b> wget -O Portable-Python-3.8.9-x64.exe https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/Portable%20Python-3.8.9%20x64.exe/download<br>
+				<span style="color:Green;"># Создаем необходимые директории</span><br>
 				<b>mikl ~/003/Primer $</b> mkdir -p ~/.wine/drive_c/wsl-win-7/<br>
+				<span style="color:Green;"># распаковываем из SFX архива только нужную папку с Python-ом</span><br>
 				<b>mikl ~/003/Primer $</b> 7z x Portable-Python-3.8.9-x64.exe -r "Portable Python-3.8.9 x64/App/Python/"<br>
+				<span style="color:Green;"># Перемещаем папку с Python-ом без вложенных путей в нужную нам папку wsl-win-7 с переименованием</span><br>
+				<span style="color:Green;"># Назвать все директории можете как угодно, главное без пробелов</span><br>
 				<b>mikl ~/003/Primer $</b> mv "./Portable Python-3.8.9 x64/App/Python/" ~/.wine/drive_c/wsl-win-7/Portable-Python-3.8.9-x64<br>
+				<span style="color:Green;"># Удаляем ненужные полу-пустые директории</span><br>
 				<b>mikl ~/003/Primer $</b> rm -rf "./Portable Python-3.8.9 x64/"
 			</p>
 			<p>Обратите внимание на создание пути <b>&laquo;~/.wine/drive_c/wsl-win-7/&raquo;</b>. <br><b>&laquo;~/.wine/drive_c/&raquo;</b>- это как раз и есть диск <b>C:</b> для <i>wine</i>.</p>
@@ -1711,8 +1722,10 @@ script
 				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe">Python 3.10.5 Windows installer (64-bit)</a></li>
 			</ul>
 			<p>
-				Лучше заменить вот этими версиями. Да, сложнее ставить, зато <b>pip</b> точно будет работать.<br>
-				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ).
+				Лучше заменить вот этими версиями. Да, сложнее ставить, зато <b>pip</b> точно будет работать.
+			</p>
+			<p>
+				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ), распаковав или установив их все точно также, как и портативные версии выше по путям без пробелов и спец символов, а также прописав в запускаемом <b>bat</b> файле <b>&laquo;SET PATH=;%PATH%&raquo;</b> пути к этим <b>EXE</b>-ам на разных строках, как и путь к исходному коду скачанной версии <b>Python</b>.
 			</p>
 			<ul>
 				<li><a href="https://sourceforge.net/projects/portable-python/files/">Portable-Python</a></li>
@@ -1731,7 +1744,7 @@ script
 				wine '/home/mikl/.wine/drive_c/windows/system32/cmd.exe'<br><br>
 				<b>mikl ~/003/Primer $</b> sudo ln -s /home/mikl/program/wine-cmd.sh /usr/bin/wine-cmd
 			</p>
-			<p>Осталось только создать <b>bat-файл</b> и готово - можно тестировать. Окончание строк файла удобнее и быстрее поменять на <b>CR/LF</b> с помщью <b>Geany</b> в следующем меню: Документ -> Установить окончание строк -> Заменить окончание строк на CR/LF (Windows).</p>
+			<p>Осталось только создать <b>bat-файл</b> и готово - можно тестировать. Окончание строк файла удобнее и быстрее поменять на <b>CR/LF</b> с помщью <b>Geany</b> в следующем меню: <i>Документ &#9658; Установить окончание строк &#9658; Заменить окончание строк на CR/LF (Windows)</i>.</p>
 			<p>Содержимое файла: <b>cmd.bat</b>.</p>
 			<p class="codes">
 				<b>mikl ~/003/Primer $</b> nano cmd.bat<br>
@@ -1749,7 +1762,8 @@ script
 				<span style="color:Blue;">Python 3.8.9</span>
 			</p>
 			<p>Теперь можно проверять <i>Windows-Python</i> код непосредственно в <b>wine</b>.</p>
-			<p>При необходимости - просто создайте <i>cmd.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
+			<p>При необходимости - просто создавайте <i>.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
+			<p>В <i>Windows</i> похожие <i>.bat</i> файлы используются для доступа либо к портативным версиям каких либо консольных программ, либо для того, чтобы не прописывать доступ к этим программам в переменные окружения самой системы.</p>
 			<p>Вам необходимо также знать, что в <i>Windows 10</i> использование командной строки или <i>PowerShell</i> в режиме администратора несёт за собой несколько неприяных последствий. Рекомендуется запускать только от имени пользователя, т.е. двойным щелчком мыши по <b>bat</b>-файлу и всё.</p>
 			<p>При запуске в режиме администратора:</p>
 			<ul>
@@ -1759,6 +1773,32 @@ script
 				<li><b>SET PATH=C:\my-dir\;%PATH%</b> - не работает. <b>SET PATH...</b> вообще не работает</li>
 			</ul>
 			<p>Ну а в <b>PowerShell</b> соответственно не работают: <b>$env:Path+=</b>...</p>
+			<p>Т.е. для режима администратора все пути к вашим <b>EXE</b> программам всё-таки придётся записывать в переменные окружения самой системы.</p>
+			<p>В <i>&laquo;Windows 7&raquo;</i> изменение переменных окружения делается так.</p>
+			<p style="margin-left: 20px">
+				<span style="color:Green;">Мой компьютер &#9658; Свойства &#9658; Дополнительные параметры системы &#9658; Переменные среды &#9658; <b>PATH</b> &#9658; Изменить</span>.<br>
+				Затем через точку с запятой &laquo;<b>;</b>&raquo; прописываете любой необходимый вам путь.<br>
+				Чтобы применить настройки - ОК, ОК, ОК...
+			</p>
+			<p>
+				Однако, более правильным будет немного другой подход.<br>
+				В том же окне <i>&laquo;Переменные среды&raquo;</i> в разделе <i>&laquo;Переменные среды пользователя для ...&raquo;</i> Нажмите кнопку <i>&laquo;Создать&raquo;</i>. Затем в поле <i>Имя переменной</i> дайте какое-нибудь имя без пробелов и знаков препинаний только латиницей. А в поле <i>Значение</i> укажите путь к нужному каталогу.<br>
+				Нажмите <i>ОК</i>.<br>
+				Затем <i>&laquo;Path&raquo;</i> &#9658; Изменить &#9658; и в открывшемся окне прописываете наименование только что созданной переменной.
+			</p>
+			<p>В <i>&laquo;Windows 10&raquo;</i> это делается немного по другому.</p>
+			<p style="margin-left: 20px">
+				<span style="color:Green;"><i>WIN + R</i> &#9658; <i>&laquo;control.exe&raquo;</i> &#9658; ОК &#9658; (Просмотр &#9658; Крупные значки. Не обязательно.) Система &#9658; Дополнительные параметры системы &#9658; Переменные среды &#9658; <b>PATH</b> &#9658; Изменить</span><br>
+				Затем создайте необходимые вам пути.<br>
+				Чтобы применить настройки - ОК, ОК, ОК...
+			</p>
+			<p>
+				Здесь тоже будет более правильным немного другой подход.<br>
+				В том же окне <i>&laquo;Переменные среды&raquo;</i> в разделе <i>&laquo;Переменные среды пользователя для ...&raquo;</i> Нажмите кнопку <i>&laquo;Создать&raquo;</i>. Затем в поле <i>Имя переменной</i> дайте какое-нибудь имя без пробелов и знаков препинаний только латиницей. А в поле <i>Значение</i> укажите путь к нужному каталогу.<br>
+				Нажмите <i>ОК</i>.<br>
+				Затем <i>&laquo;Path&raquo;</i> &#9658; Изменить &#9658; и в открывшемся окне создайте ещё один путь, указывая наименование только что созданной переменной.<br>
+				Чтобы применить настройки - ОК, ОК, ОК...
+			</p>
 			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
