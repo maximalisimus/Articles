@@ -1795,6 +1795,38 @@ output = os.listdir(dirs)
 2 compatible
 3 tests</span></pre>
 			</div>
+			<p>Рассмотрим ещё один метод - <b>os.scandir</b>.</p>
+			<p>Функция <b>os.scandir()</b> модуля <b>os</b> возвращает итератор <b>entry_it</b> объектов <b>os.DirEntry</b>, соответствующих записям в каталоге, заданный путем <b>path</b>. Записи приводятся в произвольном порядке, а специальные символы <b>'.'</b> и <b>'..'</b> не включены.</p>
+			<p>Использование <i>os.scandir()</i> вместо <i>os.listdir()</i> может значительно повысить производительность кода, который нуждается в информации о типе файла или атрибуте файла, поскольку объекты <i>os.DirEntry</i> предоставляют эту информацию, если операционная система предоставляет ее при сканировании каталога.</p>
+			<p>
+				Все методы объекта <i>os.DirEntry</i> могут выполнять системный вызов, но для методов <i>os.DirEntry.is_dir()</i> и <i>os.DirEntry.is_file()</i> обычно требуется только системный вызов для символических ссылок. <i>os.DirEntry.stat()</i> всегда требует системного вызова в <i>Unix</i>, в <i>Windows</i> требуется только один системный вызов для символических ссылок.
+			</p>
+			<p>
+				<b>Как только открыли итератор os.scandir() - обязательно его закрывайте - os.scandir.close(), чтобы закрыть итератор и освободить полученные ресурсы.</b>
+			</p>
+			<p>Для данного оператор можно всопользоваться оператором <b>with</b>, чтобы автоматически его закрыть по окончании работы.</p>
+			<p>Синтаксис команды.</p>
+			<p style="margin-left: 20px;">os.scandir(path='.')</p>
+			<ul>
+				<li><b>path</b> - путь к каталогу, может принимать <span style="color:Blue;">str</span> или <span style="color:Blue;">bytes</span></li>
+			</ul>
+			<p>Попробуем провести операцию аналогичную - <b>os.listdir</b>.</p>
+			<dir class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+dirs = <span style="color:Blue;">'./'</span>
+<span style="color:#069;"><b>with</b></span> os.scandir(dirs) <span style="color:#069;"><b>as</b></span> scan_dir:
+	<span style="color:#069;"><b>for</b></span> count, entry <span style="color:#069;"><b>in</b></span> <span style="color:Red;">enumerate</span>(scan_dir):
+		<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"{</span>count+1<span style="color:#ff9933;">} {</span>entry.name<span style="color:#ff9933;">}"</span>)
+
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">1 main.py
+2 cmd.bat
+3 strukture.txt
+4 pkg</span></pre>
+			</dir>
 			<p>Повторим результат с помощью <b>Path.iterdir()</b>.</p>
 			<p>Метод <b>Path.iterdir()</b> вернет итератор объектов пути содержимого каталога, если путь <b>path</b> указывает на каталог.</p>
 			<div class="codeses">
