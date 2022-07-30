@@ -1905,6 +1905,43 @@ drwxr-xr-x 3 mikl users  16K июл 25 18:42 ..
 drwxr-xr-x 4 mikl users 4,0K июл 25 23:17 pkg
 -rwxr-xr-x 1 mikl users   73 июл 24 00:28 strukture.txt</span></pre>
 			</div>
+			<p>Функция <b>os.walk</b> - Рекурсивное получение имен файлов в дереве каталогов.</p>
+			<p>Синтаксис команды.</p>
+			<p style="margin-left: 20px;">os.walk(top, topdown=True, onerror=None, followlinks=False)</p>
+			<ul>
+				<li><b>top</b> - Верхний каталог для перебора.</li>
+				<li><b>topdown</b> - Направление обхода</li>
+				<li><b>onerror</b> - функция, которая сообщает об ошибке</li>
+				<li><b>followlinks</b> - переходить ли по символическим ссылкам</li>
+			</ul>
+			<p>Возвращаемые значения: тройной кортеж:</p>
+			<ul>
+				<li><b>dirpath</b> - путь к каталогу</li>
+				<li><b>dirnames</b> - список имен подкаталогов, кроме '.' и '..'</li>
+				<li><b>filenames</b> - список имен файлов</li>
+			</ul>
+			<p><b>Имена в списках не содержат компонентов пути!</b></p>
+			<p>
+				Чтобы получить полный путь, который начинается с <b>top</b>, необходимо к файлу или каталогу в <b>dirpath</b>, выполнить <b>os.path.join(dirpath, name)</b>.
+			</p>
+			<p>Пример использования. Раздельно подсчитаем общее количество файлов и общее количество папок которые набрались на данный момент в <b>./pkg</b></p>
+			<div class="codeses">
+				<pre>
+<b>mikl ~/003/Primer $</b> nano main.py
+<span style="color:#069;"><b>import</b></span> os
+
+dir_count = 0
+file_count = 0
+on_dir = <span style="color:Blue;">'./'</span>
+<span style="color:#069;"><b>for</b></span> root, dirs, files <span style="color:#069;"><b>in</b></span> os.walk(on_dir, topdown=False):
+	<span style="color:#069;"><b>for</b></span> name <span style="color:#069;"><b>in</b></span> files: file_count+=1
+	<span style="color:#069;"><b>for</b></span> name <span style="color:#069;"><b>in</b></span> dirs: dir_count+=1
+<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
+
+<b>mikl ~/003/Primer $</b> python main.py
+<span style="color:Blue;">Files count = 23,
+Dir count = 5</span></pre>
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
