@@ -1934,15 +1934,23 @@ dir_count = 0
 file_count = 0
 on_dir = <span style="color:Blue;">'./'</span>
 <span style="color:#069;"><b>for</b></span> root, dirs, files <span style="color:#069;"><b>in</b></span> os.walk(on_dir, topdown=False):
-	<span style="color:#069;"><b>for</b></span> name <span style="color:#069;"><b>in</b></span> files: file_count+=1
-	<span style="color:#069;"><b>for</b></span> name <span style="color:#069;"><b>in</b></span> dirs: dir_count+=1
+	file_count+=len(files)
+	dir_count+=len(dirs)
 <span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
 
 <b>mikl ~/003/Primer $</b> python main.py
 <span style="color:Blue;">Files count = 23,
 Dir count = 5</span></pre>
 			</div>
-			<p></p>
+			<p>Либо мы можем тоже самое записать в тернарных операторах.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>import</b></span> os<br><br>
+
+				on_dir = <span style="color:Blue;">'./'</span><br>
+				file_count = <span style="color:Red;">sum</span>([len(x) for _, _, x in os.walk(on_dir, topdown=False)])<br>
+				dir_count = <span style="color:Red;">sum</span>([len(x) for _, x, _ in os.walk(on_dir, topdown=False)])<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
+			</p>
 			<p></p>
 			<p></p>
 			<p></p>
