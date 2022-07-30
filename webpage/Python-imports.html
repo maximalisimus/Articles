@@ -1716,22 +1716,23 @@ script
 				<li>Учитывайте, что командная строка в <i>Windows 10</i> практически изжыла себя и работает не совсем адекватно. Её практически заменил <i>Power Shell</i>.</li>
 				<li>В <b>Windows 10</b> и старше не рекомендую скачивать и использовать и установочный и портативный вариант <i>Python</i>-а с официального сайта <b>python.org</b> - у них не работает <b>pip</b> как таковой. Почему не ясно. Лучше использовать с сайта <b>sourceforge.net</b>.</li>
 			</ul>
+			<p>По крайней мере, мне запустить <i>PIP</i> так и не удалось. Даже с использованием и <a href="https://bootstrap.pypa.io/get-pip.py">bootstrap-get-pip.py</a> и <a href="https://github.com/pypa/get-pip/blob/main/public/get-pip.py">github-get-pip.py</a>.</p>
 			<p><b>Например, вот эти не рекомендуется скачивать и использовать.</b></p>
 			<ul>
 				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-embed-amd64.zip">Python 3.10.5 Windows embeddable package (64-bit)</a></li>
 				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe">Python 3.10.5 Windows installer (64-bit)</a></li>
 			</ul>
 			<p>
-				Лучше заменить вот этими версиями. Да, сложнее ставить, зато <b>pip</b> точно будет работать.
+				Лучше заменить вот этими версиями. <span style="color:Green;">Да, сложнее ставить, зато <b>pip</b> точно будет работать</span>.
 			</p>
 			<p>
-				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ), распаковав или установив их все точно также, как и портативные версии выше по путям без пробелов и спец символов, а также прописав в запускаемом <b>bat</b> файле <b>&laquo;SET PATH=;%PATH%&raquo;</b> пути к этим <b>EXE</b>-ам на разных строках, как и путь к исходному коду скачанной версии <b>Python</b>.
+				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ), распаковав или установив их все точно также, как и портативные версии выше по путям без пробелов и спец символов, а также прописав в запускаемом <b>bat</b> файле <b>&laquo;SET PATH=;%PATH%&raquo;</b> все пути к этим <b>EXE</b>-ам на разных строках, как и путь к исходному коду скачанной версии <b>Python</b>.
 			</p>
 			<ul>
 				<li><a href="https://sourceforge.net/projects/portable-python/files/">Portable-Python</a></li>
 			</ul>
 			<p>Для использования в <b>Windows 10</b> всё что нужно, это заменить одну единственную строку в <b>bat-файле</b>.</p>
-			<p style="margin-left: 20px"><b>cmd.exe</b> на <b>powershell.exe</b>. Чуть ниже, вы это увидете.</p>
+			<p style="margin-left: 20px"><b>cmd.exe</b> на <b>powershell.exe</b>. Чуть ниже, вы это всё увидете.</p>
 			<p></p>
 			<p>После этого необходимо создать <b>sh</b> скрипт и расположить его в любом удобном для вас месте, а затем создать ссылку на него в <b>/usr/bin/</b>.</p>
 			<p>Создам отдельную директорию для всех скриптов: <b>~/programs/</b>.</p>
@@ -1753,6 +1754,14 @@ script
 				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\Scripts\;%PATH%<br>
 				cmd.exe<br>
 			</p>
+			<p>
+				Команда <i>&laquo;@echo off&raquo;</i> не обязательна. Но с ней у вас не будет постоянно маячить перед глазами каждая выполняемая строка этого <i>BAT</i>-файла.
+			</p>
+			<p>
+				Команда <i>&laquo;SET PATH=&raquo;</i> обязательна. После равно обязательно через точку с запятой <i>&laquo;<b>;</b>&raquo;</i> указываем все необходимые пути. <b>Заканчивать каждую такую строку обязательно <i>&laquo;%PATH%&raquo;</i>.</b><br>
+				Иначе вы потеряете доступ к <i>CMD</i> или <i>PowerShell</i>, а последний будет выдавать только ОШИБКИ вместо выполнения любой команды.
+			</p>
+			<p>Вообще все пути <i>&laquo;SET PATH=&raquo;</i> можно расположить вообще в одной строке. Просто последовательно записать все пути через точку с запятой. Такой подход, как выше, реализован только для красоты и понимания что где находится. Просто вам же будет понятнее где какой путь находится и проще будет его подредактировать при необходимости, чтобы не искать в супер-длинной и не особо понятной строке.</p>
 			<p>Запустить всё можно следующей последовательностью комманд:</p>
 			<p class="codes">
 				<b>mikl ~/003/Primer $</b> wine-cmd<br>
