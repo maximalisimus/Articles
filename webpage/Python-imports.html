@@ -60,7 +60,6 @@
 							<li><a href="#part6_2_1_1">Имя файла</a></li>
 							<ol>
 								<li><a href="#part6_2_1_1_1">Немного о Python в Windows</a></li>
-								<li><a href="#part6_2_1_1_2">Продолжение</a></li>
 							</ol>
 							<li><a href="#part6_2_1_2">Базовые директории</a></li>
 						</ol>
@@ -86,7 +85,8 @@
 						<li><a href="#part6_2_10">Рекурсивные операции</a></li>
 					</ol>
 				</ol>
-				<li><a href="#part7">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
+				<li><a href="#part7">Задачи с решениями</a></li>
+				<li><a href="#part8">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -632,8 +632,32 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_1_1">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
-			<p><a name="part6_2_1_1_2"></a></p>
-			<h4>6.2.1.1.2. Продолжение.</h4>
+			<p><a name="part6_2_1_2"></a></p>
+			<h4>6.2.1.2. Базовые директории</h4>
+			<p>Как получить пути к основным директориям системы? Например, к текущей, из которой запущен скрипт и к домашнему каталогу.</p>
+			<p>Рассмотрим пример 3 библиотек: <b>os</b>, <b>os.path</b> и <b>pathlib</b>.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>import</b></span> os<br>
+				<span style="color:#069;"><b>import</b></span> os.path<br>
+				<span style="color:#069;"><b>import</b></span> pathlib<br><br>
+
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib:'</span>)<br>
+				<span style="color:#ff1493;">print</span>(pathlib.Path.cwd())<br>
+				<span style="color:#ff1493;">print</span>(pathlib.Path.home())<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os and os.path:'</span>)<br><br>
+
+				<span style="color:#ff1493;">print</span>(os.getcwd())<br>
+				<span style="color:#ff1493;">print</span>(os.path.expanduser(<span style="color:Blue;">"~"</span>))<br><br>
+
+				<b>mikl ~/003/Primer $</b> python main.py<br><span style="color:Blue;">
+				pathlib:<br>
+				/home/mikl/003/Primer<br>
+				/home/mikl<br>
+				os and os.path:<br>
+				/home/mikl/003/Primer<br>
+				/home/mikl</span>
+			</p>
 			<p>На самом деле следующие методы чатично работают и в <b>Linux</b>.</p>
 			<p><b>PurePath.parts</b> - возвращает кортеж, последовательность сегментов пути, проанализированных на основе значения разделителя пути.</p>
 			<p><b>PurePath.drive</b> - возвращает строку, представляющую букву или имя диска, если она есть.</p>
@@ -693,35 +717,6 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				strukture.txt.tar<br>
 				/home/mikl/003/Primer/strukture.txt.tar.gz<br>
 				file:///home/mikl/003/Primer/strukture.txt.tar.gz</span>
-			</p>
-			<hr class="hr_chapter">
-			<p><a href="#part6_2">Перейти к Главе</a></p>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
-			<p><a name="part6_2_1_2"></a></p>
-			<h4>6.2.1.2. Базовые директории</h4>
-			<p>Как получить пути к основным директориям системы? Например, к текущей, из которой запущен скрипт и к домашнему каталогу.</p>
-			<p>Рассмотрим пример 3 библиотек: <b>os</b>, <b>os.path</b> и <b>pathlib</b>.</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> nano main.py<br>
-				<span style="color:#069;"><b>import</b></span> os<br>
-				<span style="color:#069;"><b>import</b></span> os.path<br>
-				<span style="color:#069;"><b>import</b></span> pathlib<br><br>
-
-				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib:'</span>)<br>
-				<span style="color:#ff1493;">print</span>(pathlib.Path.cwd())<br>
-				<span style="color:#ff1493;">print</span>(pathlib.Path.home())<br>
-				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os and os.path:'</span>)<br><br>
-
-				<span style="color:#ff1493;">print</span>(os.getcwd())<br>
-				<span style="color:#ff1493;">print</span>(os.path.expanduser(<span style="color:Blue;">"~"</span>))<br><br>
-
-				<b>mikl ~/003/Primer $</b> python main.py<br><span style="color:Blue;">
-				pathlib:<br>
-				/home/mikl/003/Primer<br>
-				/home/mikl<br>
-				os and os.path:<br>
-				/home/mikl/003/Primer<br>
-				/home/mikl</span>
 			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
@@ -1694,7 +1689,19 @@ shutil.move(src, dst)</pre>
 		</div>
 		<div class="content">
 			<p><a name="part7"></a></p>
-			<h2>7. Немного <span style="color:Red;">&laquo;unittest&raquo;</span></h2>
+			<h2>7. Задачи с решениями</h2>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<hr class="hr_main">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="part8"></a></p>
+			<h2>8. Немного <span style="color:Red;">&laquo;unittest&raquo;</span></h2>
 			<p></p>
 			<p></p>
 			<p></p>
