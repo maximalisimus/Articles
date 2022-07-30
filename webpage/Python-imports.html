@@ -2024,14 +2024,20 @@ Dir count = 5</span></pre>
 				pkg/tests/test.py</span>
 			</p>
 			<p>А теперь посмотрим как рекурсивно раздельно подсчитать количество файлов и количество папок в заданной директории и сравним с результатом конвеера с <b>find</b> и <b>wc</b>.</p>
+			<p>Ниже приведённый пример конструкций тернарных операторов можно значительно упростить. Обычно делают гораздо более простые конструкции или используют <b>list</b> и <b>map</b>.<br> 
+			Такие конструкции приведены строго в учебных целях - чтобы показать как ими пользоваться в случае использования внутри списка.</p>
 			<div class="codeses">
 				<pre>
 <b>mikl ~/003/Primer $</b> nano main.py
 <span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path
 
 on_dir = <span style="color:Blue;">'./'</span>
+<span style="color:Green;"># Вообще условие положено ставить вместе с else перед циклом, но так тоже будет работать. Однако, else уже нельзя ставить в конце</span>
 file_count = sum([1 for x in list(Path(on_dir).rglob(<span style="color:Blue;">'*'</span>)) if x.is_file()])
 dir_count = sum([1 for x in list(Path(on_dir).rglob(<span style="color:Blue;">'*'</span>)) if x.is_dir()])
+<span style="color:Green;"># Лучше если эти 2 строки будут выглядеть так:</span>
+<span style="color:Green;"># file_count = sum([ 1 if x.is_file() else 0 for x in list(Path(on_dir).rglob('*')) ])</span>
+<span style="color:Green;"># dir_count = sum([ 1 if x.is_dir() else 0 for x in list(Path(on_dir).rglob('*')) ])</span>
 <span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
 
 <b>mikl ~/003/Primer $</b> python main.py
@@ -2043,6 +2049,20 @@ Dir count = 5</span>
 <span style="color:Blue;">6</span></pre>
 			</div>
 			<p>В последней строке количество директорий, включая текущую - поэтому -1. <b>Результаты совпадают.</b></p>
+			<p>А вот так можно все эти конструкции тернарных операторов значительно упростить.</p>
+			<p class="codes">
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				on_dir = <span style="color:Blue;">'./'</span><br>
+				file_count = len(list(Path(on_dir).rglob(<span style="color:Blue;">'*.*'</span>)))<br>
+				dir_count = len(list(Path(on_dir).rglob(<span style="color:Blue;">'.'</span>)))-1<br>
+				<span style="color:#ff1493;">print</span>(<span style="color:#ff9933;">f"Files count = {</span>file_count<span style="color:#ff9933;">},\nDir count = {</span>dir_count<span style="color:#ff9933;">}"</span>)
+			</p>
+			<p>
+				Результат будет тот же.<br>
+				Красиво и коротко. Не правда ли ?<br>
+				К сожалению, с <b>os</b> и <b>os.path</b> такой трюк не пройдёт, т.к. там чаще всего возвращаются не списки, а кортежи, причём по очереди.
+			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
