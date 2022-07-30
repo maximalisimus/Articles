@@ -58,9 +58,6 @@
 						<li><a href="#part6_2_1">Базовое имя пути</a></li>
 						<ol>
 							<li><a href="#part6_2_1_1">Имя файла</a></li>
-							<ol>
-								<li><a href="#part6_2_1_1_1">Немного о Python в Windows</a></li>
-							</ol>
 							<li><a href="#part6_2_1_2">Базовые директории</a></li>
 						</ol>
 						<li><a href="#part6_2_2">Расширение файла</a></li>
@@ -87,6 +84,7 @@
 				</ol>
 				<li><a href="#part7">Задачи с решениями</a></li>
 				<li><a href="#part8">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
+				<li><a href="#part9">О Python в Windows</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -545,93 +543,6 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_1_1">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
-			<p><a name="part6_2_1_1_1"></a></p>
-			<h4>6.2.1.1.1. Немного о Python в Windows.</h4>
-			<p>Для того, чтобы получить доступ к <b>Windows</b> путям библиотеки <b>pathlib</b> я воспользуюсь следующим методом внутри <b>Linux</b>.</p>
-			<p><b>Помните, что такой метод позволит лишь попробовать запустить какой либо код, так сказать испытать его в действии без загрузки самой ОС, напрямую в <i>Linux</i>. При этом он будет работать в <i>Windows</i>, но компиляция этого кода при помощи библиотек: <i>nuitka</i>, <i>pyinstaller</i>, <i>Cython</i>, <i>py2exe</i> и других - в <i>wine</i> не даёт гарантии работоспособности таких <i>exe</i> файлов в <b>Windows</b>.</b></p>
-			<p><b>Помните, что не всякий код можно будет проверить на работоспособность таким быстрым способом в Linux.</b></p>
-			<p>Для того, чтобы получить доступ к <i>Windows</i> путям библиотеки <i>pathlib</i> в <i>Linux</i>, я скачаю портативную версию <i>Python</i> с сайта <a href="https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/">sourceforge.net</a>. Версии 3.8.9 будет достаточно. Версию выше для <i>wine</i> скачивать не рекомендую. Возможны проблемы с запуском и использованием.</p>
-			<p>Нам нужен только сам <b>Python</b>. Остальные встроенные утилиты нас не интересуют. Поэтому скачаем эту <i>Portable</i> версию и распакуем только сам <i>Python</i>, а затем переместить распакованную папку по наиболее правильному, т.е. выгодному пути, с точки зрения управления переменными окружения <b>PATH</b>.</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> wget -O Portable-Python-3.8.9-x64.exe https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/Portable%20Python-3.8.9%20x64.exe/download<br>
-				<b>mikl ~/003/Primer $</b> mkdir -p ~/.wine/drive_c/wsl-win-7/<br>
-				<b>mikl ~/003/Primer $</b> 7z x Portable-Python-3.8.9-x64.exe -r "Portable Python-3.8.9 x64/App/Python/"<br>
-				<b>mikl ~/003/Primer $</b> mv "./Portable Python-3.8.9 x64/App/Python/" ~/.wine/drive_c/wsl-win-7/Portable-Python-3.8.9-x64<br>
-				<b>mikl ~/003/Primer $</b> rm -rf "./Portable Python-3.8.9 x64/"
-			</p>
-			<p>Обратите внимание на создание пути <b>&laquo;~/.wine/drive_c/wsl-win-7/&raquo;</b>. <br><b>&laquo;~/.wine/drive_c/&raquo;</b>- это как раз и есть диск <b>C:</b> для <i>wine</i>.</p>
-			<p><b>В этом полном пути не должно быть никаких пробелов и символов запрещенных в именовании файлов и папок Windows.</b></p>
-			<p>Для себя я прописал дополнительную под-директорию по следующей причине. Вдруг мне понадобится вместо скачанной 64-битной версии ещё и 32-битная. И чтобы не загромождать диск <b>C:</b> папками и не разбираться потом что и зачем было скачано - я просто создам отдельную директорию. Если мне вдруг понадобится не только <i>Python</i>, но и например: make, cmake, mingw. Я просто также буду скачивать их и распаковывать по путям без пробелов в эту отдельную директорию.</p>
-			<p><b>Например:</b></p>
-			<ul>
-				<li>~/.wine/drive_c/wsl-win-7/golang/golang-x86</li>
-				<li>~/.wine/drive_c/wsl-win-7/golang/golang-x64</li>
-				<li>~/.wine/drive_c/wsl-win-7/mingw/mingw-4.8.2-x86</li>
-				<li>~/.wine/drive_c/wsl-win-7/mingw/mingw-4.8.2-x64</li>
-			</ul>
-			<p>При необходимости я просто удалю одну эту директорию и всё!</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> rm -rf ~/.wine/drive_c/wsl-win-7/
-			</p>
-			<p><b>Сейчас так делать не будем. Это просто пример.</b></p>
-			<p>
-				Самое интересное здесь в том, что данный подход к использованию портативной версии <i>Python</i> работает не только в <i>wine</i>, но и в <i>ОС Windows</i><br>
-				Однако есть и ещё несколько нюансов использования любой ОС и любой версии <i>Python-а</i>.<br>
-				В любом случае <b>bat</b>-файл будет служить в качестве запуска командной строки или <i>PowerShell</i> из текущей директории с добавлением путей к <b>pip</b>-у и самому <b>Python</b>-у в переменную <b>PATH</b>. И здесь необходимо обратить внимание на несколько моментов.
-			</p>
-			<ul>
-				<li>Не все версии <i>Python</i>-а будут работать в ОС младше <i>Windows 10</i></li>
-				<li>Учитывайте, что командная строка в <i>Windows 10</i> практически изжыла себя и работает не совсем адекватно. Её практически заменил <i>Power Shell</i>.</li>
-				<li>В <b>Windows 10</b> и старше не рекомендую скачивать и использовать и установочный и портативный вариант <i>Python</i>-а с официального сайта <b>python.org</b> - у них не работает <b>pip</b> как таковой. Почему не ясно. Лучше использовать с сайта <b>sourceforge.net</b>.</li>
-			</ul>
-			<p><b>Например, вот эти не рекомендуется скачивать и использовать.</b></p>
-			<ul>
-				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-embed-amd64.zip">Python 3.10.5 Windows embeddable package (64-bit)</a></li>
-				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe">Python 3.10.5 Windows installer (64-bit)</a></li>
-			</ul>
-			<p>
-				Лучше заменить вот этими версиями. Да, сложнее ставить, зато <b>pip</b> точно будет работать.<br>
-				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ).
-			</p>
-			<ul>
-				<li><a href="https://sourceforge.net/projects/portable-python/files/">Portable-Python</a></li>
-			</ul>
-			<p>Для использования в <b>Windows 10</b> всё что нужно, это заменить одну единственную строку в <b>bat-файле</b>.</p>
-			<p style="margin-left: 20px"><b>cmd.exe</b> на <b>powershell.exe</b>. Чуть ниже, вы это увидете.</p>
-			<p></p>
-			<p>После этого необходимо создать <b>sh</b> скрипт и расположить его в любом удобном для вас месте, а затем создать ссылку на него в <b>/usr/bin/</b>.</p>
-			<p>Создам отдельную директорию для всех скриптов: <b>~/programs/</b>.</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> mkdir -p ~/programs/<br>
-				<b>mikl ~/003/Primer $</b> touch ~/program/wine-cmd.sh && chmod +x ~/program/wine-cmd.sh<br>
-				<b>mikl ~/003/Primer $</b> nano ~/program/wine-cmd.sh<br>
-				#!/bin/bash<br><br>
-
-				wine '/home/mikl/.wine/drive_c/windows/system32/cmd.exe'<br><br>
-				<b>mikl ~/003/Primer $</b> sudo ln -s /home/mikl/program/wine-cmd.sh /usr/bin/wine-cmd
-			</p>
-			<p>Осталось только создать <b>bat-файл</b> и готово - можно тестировать. Окончание строк файла удобнее и быстрее поменять на <b>CR/LF</b> с помщью <b>Geany</b> в следующем меню: Документ -> Установить окончание строк -> Заменить окончание строк на CR/LF (Windows).</p>
-			<p>Содержимое файла: <b>cmd.bat</b>.</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> nano cmd.bat<br>
-				@echo off<br>
-				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\;%PATH%<br>
-				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\Scripts\;%PATH%<br>
-				cmd.exe<br>
-			</p>
-			<p>Запустить всё можно следующей последовательностью комманд:</p>
-			<p class="codes">
-				<b>mikl ~/003/Primer $</b> wine-cmd<br>
-				<b>mikl ~/003/Primer $</b> cmd.bat<br>
-				<span style="color:Green;"># После этого должен появится текст о версии продукта. Если не появился - значит что-то сделали не так или что-нибудь пропустили - читайте заново</span><br>
-				<b>Z:\home\mikl\003\Primer></b> python --version<br>
-				<span style="color:Blue;">Python 3.8.9</span>
-			</p>
-			<p>Теперь можно проверять <i>Windows-Python</i> код непосредственно в <b>wine</b>.</p>
-			<p>При необходимости - просто создайте <i>cmd.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
-			<hr class="hr_chapter">
-			<p><a href="#part6_2_1_1">Перейти к Главе</a></p>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
 			<p><a name="part6_2_1_2"></a></p>
 			<h4>6.2.1.2. Базовые директории</h4>
 			<p>Как получить пути к основным директориям системы? Например, к текущей, из которой запущен скрипт и к домашнему каталогу.</p>
@@ -718,6 +629,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				/home/mikl/003/Primer/strukture.txt.tar.gz<br>
 				file:///home/mikl/003/Primer/strukture.txt.tar.gz</span>
 			</p>
+			<p>Непонятные для вас команды уточняйте в <a href="#part9">пункте-9</a> данной статьи.</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
@@ -1708,6 +1620,94 @@ shutil.move(src, dst)</pre>
 			<p></p>
 			<p></p>
 			<p></p>
+			<hr class="hr_main">
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p><a name="part9"></a></p>
+			<h2>9. Немного о Python в Windows.</h2>
+			<p>Для того, чтобы получить доступ к <b>Windows</b> путям библиотеки <b>pathlib</b> я воспользуюсь следующим методом внутри <b>Linux</b>.</p>
+			<p><b>Помните, что такой метод позволит лишь попробовать запустить какой либо код, так сказать испытать его в действии без загрузки самой ОС, напрямую в <i>Linux</i>. При этом он будет работать в <i>Windows</i>, но компиляция этого кода при помощи библиотек: <i>nuitka</i>, <i>pyinstaller</i>, <i>Cython</i>, <i>py2exe</i> и других - в <i>wine</i> не даёт гарантии работоспособности таких <i>exe</i> файлов в <b>Windows</b>.</b></p>
+			<p><b>Помните, что не всякий код можно будет проверить на работоспособность таким быстрым способом в Linux.</b></p>
+			<p>Для того, чтобы получить доступ к <i>Windows</i> путям библиотеки <i>pathlib</i> в <i>Linux</i>, я скачаю портативную версию <i>Python</i> с сайта <a href="https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/">sourceforge.net</a>. Версии 3.8.9 будет достаточно. Версию выше для <i>wine</i> скачивать не рекомендую. Возможны проблемы с запуском и использованием.</p>
+			<p>Нам нужен только сам <b>Python</b>. Остальные встроенные утилиты нас не интересуют. Поэтому скачаем эту <i>Portable</i> версию и распакуем только сам <i>Python</i>, а затем переместить распакованную папку по наиболее правильному, т.е. выгодному пути, с точки зрения управления переменными окружения <b>PATH</b>.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> wget -O Portable-Python-3.8.9-x64.exe https://sourceforge.net/projects/portable-python/files/Portable%20Python%203.8/Portable%20Python-3.8.9%20x64.exe/download<br>
+				<b>mikl ~/003/Primer $</b> mkdir -p ~/.wine/drive_c/wsl-win-7/<br>
+				<b>mikl ~/003/Primer $</b> 7z x Portable-Python-3.8.9-x64.exe -r "Portable Python-3.8.9 x64/App/Python/"<br>
+				<b>mikl ~/003/Primer $</b> mv "./Portable Python-3.8.9 x64/App/Python/" ~/.wine/drive_c/wsl-win-7/Portable-Python-3.8.9-x64<br>
+				<b>mikl ~/003/Primer $</b> rm -rf "./Portable Python-3.8.9 x64/"
+			</p>
+			<p>Обратите внимание на создание пути <b>&laquo;~/.wine/drive_c/wsl-win-7/&raquo;</b>. <br><b>&laquo;~/.wine/drive_c/&raquo;</b>- это как раз и есть диск <b>C:</b> для <i>wine</i>.</p>
+			<p><b>В этом полном пути не должно быть никаких пробелов и символов запрещенных в именовании файлов и папок Windows.</b></p>
+			<p>Для себя я прописал дополнительную под-директорию по следующей причине. Вдруг мне понадобится вместо скачанной 64-битной версии ещё и 32-битная. И чтобы не загромождать диск <b>C:</b> папками и не разбираться потом что и зачем было скачано - я просто создам отдельную директорию. Если мне вдруг понадобится не только <i>Python</i>, но и например: make, cmake, mingw. Я просто также буду скачивать их и распаковывать по путям без пробелов в эту отдельную директорию.</p>
+			<p><b>Например:</b></p>
+			<ul>
+				<li>~/.wine/drive_c/wsl-win-7/golang/golang-x86</li>
+				<li>~/.wine/drive_c/wsl-win-7/golang/golang-x64</li>
+				<li>~/.wine/drive_c/wsl-win-7/mingw/mingw-4.8.2-x86</li>
+				<li>~/.wine/drive_c/wsl-win-7/mingw/mingw-4.8.2-x64</li>
+			</ul>
+			<p>При необходимости я просто удалю одну эту директорию и всё!</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> rm -rf ~/.wine/drive_c/wsl-win-7/
+			</p>
+			<p><b>Сейчас так делать не будем. Это просто пример.</b></p>
+			<p>
+				Самое интересное здесь в том, что данный подход к использованию портативной версии <i>Python</i> работает не только в <i>wine</i>, но и в <i>ОС Windows</i><br>
+				Однако есть и ещё несколько нюансов использования любой ОС и любой версии <i>Python-а</i>.<br>
+				В любом случае <b>bat</b>-файл будет служить в качестве запуска командной строки или <i>PowerShell</i> из текущей директории с добавлением путей к <b>pip</b>-у и самому <b>Python</b>-у в переменную <b>PATH</b>. И здесь необходимо обратить внимание на несколько моментов.
+			</p>
+			<ul>
+				<li>Не все версии <i>Python</i>-а будут работать в ОС младше <i>Windows 10</i></li>
+				<li>Учитывайте, что командная строка в <i>Windows 10</i> практически изжыла себя и работает не совсем адекватно. Её практически заменил <i>Power Shell</i>.</li>
+				<li>В <b>Windows 10</b> и старше не рекомендую скачивать и использовать и установочный и портативный вариант <i>Python</i>-а с официального сайта <b>python.org</b> - у них не работает <b>pip</b> как таковой. Почему не ясно. Лучше использовать с сайта <b>sourceforge.net</b>.</li>
+			</ul>
+			<p><b>Например, вот эти не рекомендуется скачивать и использовать.</b></p>
+			<ul>
+				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-embed-amd64.zip">Python 3.10.5 Windows embeddable package (64-bit)</a></li>
+				<li><a href="https://www.python.org/ftp/python/3.10.5/python-3.10.5-amd64.exe">Python 3.10.5 Windows installer (64-bit)</a></li>
+			</ul>
+			<p>
+				Лучше заменить вот этими версиями. Да, сложнее ставить, зато <b>pip</b> точно будет работать.<br>
+				Или вы можете собрать <a href="https://github.com/python/cpython.git">CPython</a> вручную, используя <i>mingw</i> ( <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win32</a>, <a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/">MinGW Toolchains targetting Win64</a> ), <a href="http://gnuwin32.sourceforge.net/packages/make.htm">make</a> и / или <a href="https://sourceforge.net/projects/cmake.mirror/files/">cmake sourceforge.net</a> ( или <a href="https://cmake.org/download/">cmake oficial</a> ).
+			</p>
+			<ul>
+				<li><a href="https://sourceforge.net/projects/portable-python/files/">Portable-Python</a></li>
+			</ul>
+			<p>Для использования в <b>Windows 10</b> всё что нужно, это заменить одну единственную строку в <b>bat-файле</b>.</p>
+			<p style="margin-left: 20px"><b>cmd.exe</b> на <b>powershell.exe</b>. Чуть ниже, вы это увидете.</p>
+			<p></p>
+			<p>После этого необходимо создать <b>sh</b> скрипт и расположить его в любом удобном для вас месте, а затем создать ссылку на него в <b>/usr/bin/</b>.</p>
+			<p>Создам отдельную директорию для всех скриптов: <b>~/programs/</b>.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> mkdir -p ~/programs/<br>
+				<b>mikl ~/003/Primer $</b> touch ~/program/wine-cmd.sh && chmod +x ~/program/wine-cmd.sh<br>
+				<b>mikl ~/003/Primer $</b> nano ~/program/wine-cmd.sh<br>
+				#!/bin/bash<br><br>
+
+				wine '/home/mikl/.wine/drive_c/windows/system32/cmd.exe'<br><br>
+				<b>mikl ~/003/Primer $</b> sudo ln -s /home/mikl/program/wine-cmd.sh /usr/bin/wine-cmd
+			</p>
+			<p>Осталось только создать <b>bat-файл</b> и готово - можно тестировать. Окончание строк файла удобнее и быстрее поменять на <b>CR/LF</b> с помщью <b>Geany</b> в следующем меню: Документ -> Установить окончание строк -> Заменить окончание строк на CR/LF (Windows).</p>
+			<p>Содержимое файла: <b>cmd.bat</b>.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano cmd.bat<br>
+				@echo off<br>
+				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\;%PATH%<br>
+				SET PATH=C:\wsl-win-7\Portable-Python-3.8.9-x64\Scripts\;%PATH%<br>
+				cmd.exe<br>
+			</p>
+			<p>Запустить всё можно следующей последовательностью комманд:</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> wine-cmd<br>
+				<b>mikl ~/003/Primer $</b> cmd.bat<br>
+				<span style="color:Green;"># После этого должен появится текст о версии продукта. Если не появился - значит что-то сделали не так или что-нибудь пропустили - читайте заново</span><br>
+				<b>Z:\home\mikl\003\Primer></b> python --version<br>
+				<span style="color:Blue;">Python 3.8.9</span>
+			</p>
+			<p>Теперь можно проверять <i>Windows-Python</i> код непосредственно в <b>wine</b>.</p>
+			<p>При необходимости - просто создайте <i>cmd.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
 			<hr class="hr_main">
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
