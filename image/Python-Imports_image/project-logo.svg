@@ -10,6 +10,127 @@
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:svg="http://www.w3.org/2000/svg"
 >
+	<style type="text/css" media="screen">
+		<![CDATA[
+		#outerpetals {
+			opacity: .55;
+		}
+
+		#neon {
+			font-weight: bold;
+			color: #ff4d00;
+			text-shadow: 00px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black, 
+						0px 0px 2px #ff845c, 
+						0px 0px 3px #ff845c,
+						0px 0px 5px white,
+						0px 0px 10px #ff845c,
+						0px 0px 20px #F7531D,
+						0px 0px 30px #F7531D,
+						0px 0px 40px #F7531D,
+						0px 0px 50px #F7531D;
+			-moz-text-shadow: 00px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black, 
+						0px 0px 2px #ff845c, 
+						0px 0px 3px #ff845c,
+						0px 0px 5px white,
+						0px 0px 10px #ff845c,
+						0px 0px 20px #F7531D,
+						0px 0px 30px #F7531D,
+						0px 0px 40px #F7531D,
+						0px 0px 50px #F7531D;
+			-webkit-text-shadow: 00px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black, 
+						0px 0px 2px #ff845c, 
+						0px 0px 3px #ff845c,
+						0px 0px 5px white,
+						0px 0px 10px #ff845c,
+						0px 0px 20px #F7531D,
+						0px 0px 30px #F7531D,
+						0px 0px 40px #F7531D,
+						0px 0px 50px #F7531D;
+			-o-text-shadow: 00px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black, 
+						0px 0px 2px #ff845c, 
+						0px 0px 3px #ff845c,
+						0px 0px 5px white,
+						0px 0px 10px #ff845c,
+						0px 0px 20px #F7531D,
+						0px 0px 30px #F7531D,
+						0px 0px 40px #F7531D,
+						0px 0px 50px #F7531D;
+			-ms-text-shadow: 00px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black, 
+						0px 0px 2px #ff845c, 
+						0px 0px 3px #ff845c,
+						0px 0px 5px white,
+						0px 0px 10px #ff845c,
+						0px 0px 20px #F7531D,
+						0px 0px 30px #F7531D,
+						0px 0px 40px #F7531D,
+						0px 0px 50px #F7531D;
+		}
+		#python {
+			font-weight: bold;
+			color: #ffa500;
+			text-shadow: 0px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black,
+						0px 0px 5px white,
+						0px 0px 10px #ffa500,
+						0px 0px 50px #ffa500;
+			-moz-text-shadow: 0px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black,
+						0px 0px 5px white,
+						0px 0px 10px #ffa500,
+						0px 0px 50px #ffa500;
+			-webkit-text-shadow: 0px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black,
+						0px 0px 5px white,
+						0px 0px 10px #ffa500,
+						0px 0px 50px #ffa500;
+			-o-text-shadow: 0px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black,
+						0px 0px 5px white,
+						0px 0px 10px #ffa500,
+						0px 0px 50px #ffa500;
+			-ms-text-shadow: 0px 0px 1px black,
+						1px 0px 1px black,
+						0px 1px 1px black,
+						-1px 0px 1px black,
+						0px -1px 1px black,
+						0px 0px 5px white,
+						0px 0px 10px #ffa500,
+						0px 0px 50px #ffa500;
+		}
+		]]>
+	</style>
 	<defs id="defs6" />
 	<g id="background">
 		<rect
@@ -27,53 +148,53 @@
 			id="world" />
 	</g>
 	<g id="text">
-		<text x="0" y="10" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			<tspan fill="#1b3d53">HQIM</tspan>AYRUF<tspan style="font-weight: bold;" fill="#ff0000">IMPORT</tspan>AQ9G<tspan fill="#1b3d53">5PRA</tspan>YG5W<tspan fill="#63FDE6">5TJQHZ67OYRKQPU</tspan>OX<tspan fill="#1b3d53">VFNVZ</tspan>AFY<tspan fill="#63FDE6">UVY6DYR</tspan>NI0Z<tspan fill="#1b3d53">9EQN3N7H1L</tspan>BTBRL<tspan style="font-weight: bold;" fill="#ff0000">FROM IMPORT</tspan>
+		<text x="0" y="10" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			HQIM<tspan id="outerpetals" fill="#8a84e2">AYRUF</tspan><tspan id="neon" fill="#ff4d00">IMPORT</tspan><tspan id="outerpetals" fill="#8a84e2">AQ9G</tspan>5PRAY<tspan id="outerpetals" fill="#8a84e2">G5W</tspan><tspan id="outerpetals" fill="#63FDE6">5TJQHZ67OYRKQPU</tspan><tspan id="outerpetals" fill="#8a84e2">OX</tspan>VFNVZ<tspan id="outerpetals" fill="#8a84e2">AFY</tspan><tspan id="outerpetals" fill="#63FDE6">UVY6DYR</tspan><tspan id="outerpetals" fill="#8a84e2">NI0Z</tspan>9EQN3N7H1L<tspan id="outerpetals" fill="#8a84e2">BTBRL</tspan><tspan id="neon" fill="#ff4d00">FROM IMPORT</tspan>
 		</text>
-		<text x="0" y="25" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			<tspan style="font-weight: bold;" fill="#ff0000">AS</tspan>GI<tspan fill="#1b3d53">FZV7QA</tspan>LUTJ<tspan style="font-weight: bold;" fill="#ff4d00">OS</tspan>M5J2<tspan fill="#1b3d53">NKXLF</tspan>LI84<tspan style="font-weight: bold;" fill="#ff4d00">OS.PATH</tspan>1ME2<tspan fill="#1b3d53">F8EJB</tspan>I6J<tspan fill="#63FDE6">SZ8IYWJKQZY</tspan>ROIR<tspan fill="#1b3d53">A0PMFX1</tspan>KOIX9OY<tspan fill="#63FDE6">QVT6W</tspan>AAGFBIG
+		<text x="0" y="25" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			<tspan id="neon" fill="#ff4d00">AS</tspan><tspan id="outerpetals" fill="#8a84e2">GI</tspan>FZV7QA<tspan id="outerpetals" fill="#8a84e2">LUTJ</tspan><tspan id="neon" fill="#ff4d00">OS</tspan><tspan id="outerpetals" fill="#8a84e2">M5J2</tspan>NKXLF<tspan id="outerpetals" fill="#8a84e2">LI84</tspan><tspan id="neon" fill="#ff4d00">OS.PATH</tspan><tspan id="outerpetals" fill="#8a84e2">1ME2</tspan>F8EJB<tspan id="outerpetals" fill="#8a84e2">I6J</tspan><tspan id="outerpetals" fill="#63FDE6">SZ8IYWJKQZY</tspan><tspan id="outerpetals" fill="#8a84e2">ROIR</tspan>A0PMFX1<tspan id="outerpetals" fill="#8a84e2">KOIX9OY</tspan><tspan id="outerpetals" fill="#63FDE6">QVT6W</tspan>AAGFBIG
 		</text>
-		<text x="0" y="40" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			ISQ<tspan fill="#63FDE6">RBWIACU</tspan>U7D4<tspan fill="#1b3d53">PL8TELYU</tspan>ZGPMV<tspan fill="#63FDE6">1KZERCFCGC</tspan>QG4MNH3Q<tspan style="font-weight: bold;" fill="#ff4d00">PATHLIB</tspan>BY<tspan fill="#1b3d53">SPCG</tspan>ZSE0<tspan fill="#63FDE6">H7FLZB0TIIGLT</tspan>YIU<tspan fill="#1b3d53">4O6UAI</tspan>ETXYL
+		<text x="0" y="40" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			<tspan id="outerpetals" fill="#8a84e2">ISQ</tspan><tspan id="outerpetals" fill="#63FDE6">RBWIACU</tspan><tspan id="outerpetals" fill="#8a84e2">U7D4</tspan>PL8TELYU<tspan id="outerpetals" fill="#8a84e2">ZGPMV</tspan><tspan id="outerpetals" fill="#63FDE6">1KZERCFCGC</tspan><tspan id="outerpetals" fill="#8a84e2">QG4MNH3Q</tspan><tspan id="neon" fill="#ff4d00">PATHLIB</tspan><tspan id="outerpetals" fill="#8a84e2">BY</tspan>SPCG<tspan id="outerpetals" fill="#8a84e2">ZSE0</tspan><tspan id="outerpetals" fill="#63FDE6">H7FLZB0TIIGLT</tspan><tspan id="outerpetals" fill="#8a84e2">YIU</tspan>4O6UAI<tspan id="outerpetals" fill="#8a84e2">ETXYL</tspan>
 		</text>
-		<text x="0" y="55" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			UJ5<tspan fill="#1b3d53">XA2GF</tspan>CHI<tspan style="font-weight: bold;" fill="#ff4d00">SHUTIL</tspan>0XX<tspan fill="#1b3d53">LGG</tspan><tspan style="font-weight: bold;" fill="#ff4d00">CLASS</tspan><tspan fill="#1b3d53">FFH</tspan><tspan fill="#63FDE6">12NUHHW5EHQ9</tspan>KUB1<tspan fill="#1b3d53">HNW</tspan>ADW3X<tspan style="font-weight: bold;" fill="#ff4d00">GLOB</tspan>OGW<tspan fill="#1b3d53">7QE</tspan>MASBGY7<tspan fill="#63FDE6">CYOBGKNYZ4PH</tspan>U60LB
+		<text x="0" y="55" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			<tspan id="outerpetals" fill="#8a84e2">UJ5</tspan>XA2GF<tspan id="outerpetals" fill="#8a84e2">CHI</tspan><tspan id="neon" fill="#ff4d00">SHUTIL</tspan><tspan id="outerpetals" fill="#8a84e2">0XX</tspan>LGG<tspan id="neon" fill="#ff4d00">CLASS</tspan>FFH<tspan id="outerpetals" fill="#63FDE6">12NUHHW5EHQ9</tspan><tspan id="outerpetals" fill="#8a84e2">KUB1</tspan>HNW<tspan id="outerpetals" fill="#8a84e2">ADW3X</tspan><tspan id="neon" fill="#ff4d00">GLOB</tspan><tspan id="outerpetals" fill="#8a84e2">OGW</tspan>7QE<tspan id="outerpetals" fill="#8a84e2">MASBGY7</tspan><tspan id="outerpetals" fill="#63FDE6">CYOBGKNYZ4PH</tspan>U60LB
 		</text>
 		<text x="0" y="70" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
 			800WNGXZQAR9SIJJUC8S9QVNG9XKYTXQYRNVYCL1Q8YHCUPO8AXRNLGKZAQTWMTWBDFCUVDWVPEQOIV5V47KGMV60
 		</text>
 		<text x="0" y="85" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			SXT43KA7A1Z<tspan style="font-weight: bold;" fill="#ffa500">EQLELB</tspan>QPV1<tspan style="font-weight: bold;" fill="#ffa500">PZ</tspan>JQHF<tspan style="font-weight: bold;" fill="#ffa500">JV</tspan>3D<tspan style="font-weight: bold;" fill="#ffa500">YK9RAWQ7J</tspan>YD<tspan style="font-weight: bold;" fill="#ffa500">FW3</tspan>4609<tspan style="font-weight: bold;" fill="#ffa500">DGI</tspan>WJWCN<tspan style="font-weight: bold;" fill="#ffa500">SKGSND</tspan>WJGVE<tspan style="font-weight: bold;" fill="#ffa500">OQ</tspan>LHNYQU<tspan style="font-weight: bold;" fill="#ffa500">HX</tspan>KKRHRKCU8GA
+			SXT43KA7A1Z<tspan id="python" fill="#ffa500">EQLELB</tspan>QPV1<tspan id="python" fill="#ffa500">PZ</tspan>JQHF<tspan id="python" fill="#ffa500">JV</tspan>3D<tspan id="python" fill="#ffa500">YK9RAWQ7J</tspan>YD<tspan id="python" fill="#ffa500">FW3</tspan>4609<tspan id="python" fill="#ffa500">DGI</tspan>WJWCN<tspan id="python" fill="#ffa500">SKGSND</tspan>WJGVE<tspan id="python" fill="#ffa500">OQ</tspan>LHNYQU<tspan id="python" fill="#ffa500">HX</tspan>KKRHRKCU8GA
 		</text>
 		<text x="0" y="100" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			SUA1JB16FCF<tspan style="font-weight: bold;" fill="#ffa500">GU</tspan>5TC<tspan style="font-weight: bold;" fill="#ffa500">D6N</tspan>QF<tspan style="font-weight: bold;" fill="#ffa500">TM</tspan>VDAR<tspan style="font-weight: bold;" fill="#ffa500">GS</tspan>KF<tspan style="font-weight: bold;" fill="#ffa500">A</tspan>BA<tspan style="font-weight: bold;" fill="#ffa500">FHO</tspan>IV<tspan style="font-weight: bold;" fill="#ffa500">C</tspan>HN<tspan style="font-weight: bold;" fill="#ffa500">HP</tspan>TGJ3HW<tspan style="font-weight: bold;" fill="#ffa500">IL</tspan>HGI8<tspan style="font-weight: bold;" fill="#ffa500">NS</tspan>GXJD<tspan style="font-weight: bold;" fill="#ffa500">O2</tspan>UIEU<tspan style="font-weight: bold;" fill="#ffa500">JJP</tspan>NNCGT<tspan style="font-weight: bold;" fill="#ffa500">1S</tspan>XKK4RKDMGOV
+			SUA1JB16FCF<tspan id="python" fill="#ffa500">GU</tspan>5TC<tspan id="python" fill="#ffa500">D6N</tspan>QF<tspan id="python" fill="#ffa500">TM</tspan>VDAR<tspan id="python" fill="#ffa500">GS</tspan>KF<tspan id="python" fill="#ffa500">A</tspan>BA<tspan id="python" fill="#ffa500">FHO</tspan>IV<tspan id="python" fill="#ffa500">C</tspan>HN<tspan id="python" fill="#ffa500">HP</tspan>TGJ3HW<tspan id="python" fill="#ffa500">IL</tspan>HGI8<tspan id="python" fill="#ffa500">NS</tspan>GXJD<tspan id="python" fill="#ffa500">O2</tspan>UIEU<tspan id="python" fill="#ffa500">JJP</tspan>NNCGT<tspan id="python" fill="#ffa500">1S</tspan>XKK4RKDMGOV
 		</text>
 		<text x="0" y="115" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			3KNN4KUULDM<tspan style="font-weight: bold;" fill="#ffa500">MN</tspan>XWA<tspan style="font-weight: bold;" fill="#ffa500">DLR</tspan>PSZ<tspan style="font-weight: bold;" fill="#ffa500">8G</tspan>IN<tspan style="font-weight: bold;" fill="#ffa500">Z6</tspan>3UGOH6<tspan style="font-weight: bold;" fill="#ffa500">COB</tspan>U8GXC<tspan style="font-weight: bold;" fill="#ffa500">D4</tspan>ZL<tspan style="font-weight: bold;" fill="#ffa500">P6</tspan>HV<tspan style="font-weight: bold;" fill="#ffa500">2L</tspan>QHQ<tspan style="font-weight: bold;" fill="#ffa500">QK</tspan>F4MGHR<tspan style="font-weight: bold;" fill="#ffa500">IL</tspan>WJK<tspan style="font-weight: bold;" fill="#ffa500">7S7Q</tspan>FE0M<tspan style="font-weight: bold;" fill="#ffa500">6E</tspan>RBBDL0CPO35
+			3KNN4KUULDM<tspan id="python" fill="#ffa500">MN</tspan>XWA<tspan id="python" fill="#ffa500">DLR</tspan>PSZ<tspan id="python" fill="#ffa500">8G</tspan>IN<tspan id="python" fill="#ffa500">Z6</tspan>3UGOH6<tspan id="python" fill="#ffa500">COB</tspan>U8GXC<tspan id="python" fill="#ffa500">D4</tspan>ZL<tspan id="python" fill="#ffa500">P6</tspan>HV<tspan id="python" fill="#ffa500">2L</tspan>QHQ<tspan id="python" fill="#ffa500">QK</tspan>F4MGHR<tspan id="python" fill="#ffa500">IL</tspan>WJK<tspan id="python" fill="#ffa500">7S7Q</tspan>FE0M<tspan id="python" fill="#ffa500">6E</tspan>RBBDL0CPO35
 		</text>
 		<text x="0" y="130" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			X45IUG4H7CZ<tspan style="font-weight: bold;" fill="#ffa500">1QS7O3</tspan>H6HMUW<tspan style="font-weight: bold;" fill="#ffa500">UWAY</tspan>CIHMRVL<tspan style="font-weight: bold;" fill="#ffa500">4KA</tspan>J1DTH<tspan style="font-weight: bold;" fill="#ffa500">UDXMH9PMCY</tspan>GT<tspan style="font-weight: bold;" fill="#ffa500">PA</tspan>0AH<tspan style="font-weight: bold;" fill="#ffa500">3T</tspan>D3Z<tspan style="font-weight: bold;" fill="#ffa500">SH</tspan>VA<tspan style="font-weight: bold;" fill="#ffa500">TR</tspan>ME<tspan style="font-weight: bold;" fill="#ffa500">M7</tspan>B2<tspan style="font-weight: bold;" fill="#ffa500">RT</tspan>L9EVGCYLSV3
+			X45IUG4H7CZ<tspan id="python" fill="#ffa500">1QS7O3</tspan>H6HMUW<tspan id="python" fill="#ffa500">UWAY</tspan>CIHMRVL<tspan id="python" fill="#ffa500">4KA</tspan>J1DTH<tspan id="python" fill="#ffa500">UDXMH9PMCY</tspan>GT<tspan id="python" fill="#ffa500">PA</tspan>0AH<tspan id="python" fill="#ffa500">3T</tspan>D3Z<tspan id="python" fill="#ffa500">SH</tspan>VA<tspan id="python" fill="#ffa500">TR</tspan>ME<tspan id="python" fill="#ffa500">M7</tspan>B2<tspan id="python" fill="#ffa500">RT</tspan>L9EVGCYLSV3
 		</text>
 		<text x="0" y="145" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			X45IUG4HVGC<tspan style="font-weight: bold;" fill="#ffa500">TR</tspan>OCEZ0KKHCED<tspan style="font-weight: bold;" fill="#ffa500">23</tspan>Q2JZBLHQ<tspan style="font-weight: bold;" fill="#ffa500">SK2</tspan>JWS3S<tspan style="font-weight: bold;" fill="#ffa500">5K</tspan>0C<tspan style="font-weight: bold;" fill="#ffa500">CL</tspan>YX<tspan style="font-weight: bold;" fill="#ffa500">OG</tspan>NA5<tspan style="font-weight: bold;" fill="#ffa500">VD</tspan>COAJS6<tspan style="font-weight: bold;" fill="#ffa500">KJ</tspan>NXY<tspan style="font-weight: bold;" fill="#ffa500">8M</tspan>TJZ3<tspan style="font-weight: bold;" fill="#ffa500">RSK6</tspan>CSPBF6B1XOL
+			X45IUG4HVGC<tspan id="python" fill="#ffa500">TR</tspan>OCEZ0KKHCED<tspan id="python" fill="#ffa500">23</tspan>Q2JZBLHQ<tspan id="python" fill="#ffa500">SK2</tspan>JWS3S<tspan id="python" fill="#ffa500">5K</tspan>0C<tspan id="python" fill="#ffa500">CL</tspan>YX<tspan id="python" fill="#ffa500">OG</tspan>NA5<tspan id="python" fill="#ffa500">VD</tspan>COAJS6<tspan id="python" fill="#ffa500">KJ</tspan>NXY<tspan id="python" fill="#ffa500">8M</tspan>TJZ3<tspan id="python" fill="#ffa500">RSK6</tspan>CSPBF6B1XOL
 		</text>
 		<text x="0" y="160" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			9TDJLD8T5DW<tspan style="font-weight: bold;" fill="#ffa500">II</tspan>LZUFX5TKJAZ<tspan style="font-weight: bold;" fill="#ffa500">7V</tspan>DQV1RXEP<tspan style="font-weight: bold;" fill="#ffa500">BVU</tspan>LLWEG<tspan style="font-weight: bold;" fill="#ffa500">FF</tspan>ZTMNA4<tspan style="font-weight: bold;" fill="#ffa500">XL</tspan>TGNV<tspan style="font-weight: bold;" fill="#ffa500">73</tspan>RKHE<tspan style="font-weight: bold;" fill="#ffa500">FC</tspan>BURQ<tspan style="font-weight: bold;" fill="#ffa500">MM</tspan>COFQG<tspan style="font-weight: bold;" fill="#ffa500">BLW</tspan>BGGYLS5WHQJ
+			9TDJLD8T5DW<tspan id="python" fill="#ffa500">II</tspan>LZUFX5TKJAZ<tspan id="python" fill="#ffa500">7V</tspan>DQV1RXEP<tspan id="python" fill="#ffa500">BVU</tspan>LLWEG<tspan id="python" fill="#ffa500">FF</tspan>ZTMNA4<tspan id="python" fill="#ffa500">XL</tspan>TGNV<tspan id="python" fill="#ffa500">73</tspan>RKHE<tspan id="python" fill="#ffa500">FC</tspan>BURQ<tspan id="python" fill="#ffa500">MM</tspan>COFQG<tspan id="python" fill="#ffa500">BLW</tspan>BGGYLS5WHQJ
 		</text>
 		<text x="0" y="175" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			QSGPXB7XODM<tspan style="font-weight: bold;" fill="#ffa500">CM</tspan>Q3BHEASN3QL<tspan style="font-weight: bold;" fill="#ffa500">O8</tspan>HPAQVEQK<tspan style="font-weight: bold;" fill="#ffa500">JQB</tspan>NOCJO<tspan style="font-weight: bold;" fill="#ffa500">UGJ</tspan>DGZZ<tspan style="font-weight: bold;" fill="#ffa500">VDV</tspan>HAT2S<tspan style="font-weight: bold;" fill="#ffa500">QK7U0D</tspan>VUCKR<tspan style="font-weight: bold;" fill="#ffa500">M4</tspan>QTORMB<tspan style="font-weight: bold;" fill="#ffa500">ME</tspan>GA1FBADCXTW
+			QSGPXB7XODM<tspan id="python" fill="#ffa500">CM</tspan>Q3BHEASN3QL<tspan id="python" fill="#ffa500">O8</tspan>HPAQVEQK<tspan id="python" fill="#ffa500">JQB</tspan>NOCJO<tspan id="python" fill="#ffa500">UGJ</tspan>DGZZ<tspan id="python" fill="#ffa500">VDV</tspan>HAT2S<tspan id="python" fill="#ffa500">QK7U0D</tspan>VUCKR<tspan id="python" fill="#ffa500">M4</tspan>QTORMB<tspan id="python" fill="#ffa500">ME</tspan>GA1FBADCXTW
 		</text>
 		<text x="0" y="190" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
 			RPX0MGMJUDSENXQE2BAOMFIQHQUP1BQ6WYGCBLEKLBLQ4UCMDTULCFQ7DFNZXDLEMWVXZB921KRQAEUP27S6OHJWY
 		</text>
-		<text x="0" y="205" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			<tspan fill="#1b3d53">SZ8</tspan>A63RY<tspan fill="#63FDE6">BOJA3RYY3MQ</tspan>1TLD<tspan fill="#1b3d53">26G</tspan><tspan style="font-weight: bold;" fill="#ff4d00">WITH</tspan><tspan fill="#1b3d53">TYT5</tspan>YU1VDRCYQO0<tspan fill="#63FDE6">2OHQEVXEGJER</tspan>KNCBC<tspan fill="#1b3d53">9D</tspan><tspan style="font-weight: bold;" fill="#ff4d00">AS</tspan><tspan fill="#1b3d53">ZCW</tspan>9J0L1L<tspan fill="#63FDE6">ZNH</tspan>NO1JR<tspan fill="#1b3d53">11WVWW</tspan>
+		<text x="0" y="205" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			SZ8<tspan id="outerpetals" fill="#8a84e2">A63RY</tspan><tspan id="outerpetals" fill="#63FDE6">BOJA3RYY3MQ</tspan><tspan id="outerpetals" fill="#8a84e2">1TLD</tspan>26G<tspan id="neon" fill="#ff4d00">WITH</tspan>TYT5<tspan id="outerpetals" fill="#8a84e2">YU1VDRCYQO0</tspan><tspan id="outerpetals" fill="#63FDE6">2OHQEVXEGJER</tspan><tspan id="outerpetals" fill="#8a84e2">KNCBC</tspan>9D<tspan id="neon" fill="#ff4d00">AS</tspan>ZCW<tspan id="outerpetals" fill="#8a84e2">9J0L1L</tspan><tspan id="outerpetals" fill="#63FDE6">ZNH</tspan><tspan id="outerpetals" fill="#8a84e2">NO1JR</tspan>11WVWW
 		</text>
-		<text x="0" y="220" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			<tspan fill="#1b3d53"></tspan><tspan style="font-weight: bold;" fill="#ff4d00">DEF</tspan><tspan fill="#1b3d53">PTP</tspan>1JPQA14ERRW<tspan fill="#63FDE6">W1IWEXBT3H</tspan>1VZNH<tspan fill="#1b3d53">346DE</tspan><tspan style="font-weight: bold;" fill="#ff4d00">FOR</tspan><tspan fill="#1b3d53">RWHB</tspan>S0RQ6M<tspan fill="#63FDE6">T4LUHCTRP1</tspan>OLO9P<tspan fill="#1b3d53">KM</tspan><tspan style="font-weight: bold;" fill="#ff4d00">IN</tspan><tspan fill="#1b3d53">I</tspan>ONH2<tspan fill="#63FDE6">MRJI</tspan>7I8V<tspan fill="#1b3d53">TRVJ</tspan>FZ1
+		<text x="0" y="220" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			<tspan id="neon" fill="#ff4d00">DEF</tspan>PTP<tspan id="outerpetals" fill="#8a84e2">1JPQA14ERRW</tspan><tspan id="outerpetals" fill="#63FDE6">W1IWEXBT3H</tspan><tspan id="outerpetals" fill="#8a84e2">1VZNH</tspan>346DE<tspan id="neon" fill="#ff4d00">FOR</tspan>RWHB<tspan id="outerpetals" fill="#8a84e2">S0RQ6M</tspan><tspan id="outerpetals" fill="#63FDE6">T4LUHCTRP1</tspan><tspan id="outerpetals" fill="#8a84e2">OLO9P</tspan>KM<tspan id="neon" fill="#ff4d00">IN</tspan>I<tspan id="outerpetals" fill="#8a84e2">ONH2</tspan><tspan id="outerpetals" fill="#63FDE6">MRJI</tspan><tspan id="outerpetals" fill="#8a84e2">7I8V</tspan>TRVJ<tspan id="outerpetals" fill="#8a84e2">FZ1</tspan>
 		</text>
-		<text x="0" y="235" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#8a84e2">
-			<tspan fill="#1b3d53">I8</tspan>SEZ<tspan fill="#63FDE6">091R79</tspan>ELIT<tspan fill="#1b3d53">PC</tspan><tspan style="font-weight: bold;" fill="#ff4d00">PRINT</tspan><tspan fill="#1b3d53">F</tspan>TWEHWZR5<tspan fill="#63FDE6">8HP4YX7S</tspan>33QYR3<tspan fill="#1b3d53">CF</tspan><tspan style="font-weight: bold;" fill="#ff4d00">RETURN</tspan><tspan fill="#1b3d53">LT</tspan>AWCKMOH<tspan fill="#63FDE6">XSZ0WN</tspan>Y3KXB<tspan fill="#1b3d53">ZBH6S</tspan>EOXS<tspan fill="#63FDE6">RHB</tspan>LR2W
+		<text x="0" y="235" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
+			I8<tspan id="outerpetals" fill="#8a84e2">SEZ</tspan><tspan id="outerpetals" fill="#63FDE6">091R79</tspan><tspan id="outerpetals" fill="#8a84e2">ELIT</tspan>PC<tspan id="neon" fill="#ff4d00">PRINT</tspan>FTWEH<tspan id="outerpetals" fill="#8a84e2">WZR5</tspan><tspan id="outerpetals" fill="#63FDE6">8HP4YX7S</tspan><tspan id="outerpetals" fill="#8a84e2">33QYR3</tspan>CF<tspan id="neon" fill="#ff4d00">RETURN</tspan>LTAWC<tspan id="outerpetals" fill="#8a84e2">KMOH</tspan><tspan id="outerpetals" fill="#63FDE6">XSZ0WN</tspan><tspan id="outerpetals" fill="#8a84e2">Y3KXB</tspan>ZBH6S<tspan id="outerpetals" fill="#8a84e2">EOXS</tspan><tspan id="outerpetals" fill="#63FDE6">RHB</tspan>LR2W
 		</text>
 	</g>
 </svg>
