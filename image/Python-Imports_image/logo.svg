@@ -27,14 +27,16 @@
 						0 0 40px orange,
 						0 0 50px orange;
 		}
-		#text {
+		#texts {
 			font-weight: normal;
 			fill: #6fb7c2ff;
+			text-shadow: 0px 0px 0px #42aaff;
 		}
 		#else {
 			font-weight: normal;
-			fill: #8a84e2;
-			opacity: 0.75;
+			fill: #56769aff;
+			opacity: 1.0;
+			text-shadow: 0px 0px 1px #002137;
 		}
 		#python {
 			font-weight: normal;
@@ -71,10 +73,10 @@
 	</g>
 	<g id="text">
 		<text x="0" y="12" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
-			<tspan id="else">HQIMAY</tspan><tspan id="neon">DATA BREACH</tspan><tspan id="text">Q9G5PRAY</tspan><tspan id="else">G5W5</tspan><tspan id="text">TJQH</tspan><tspan id="else">Z67OY</tspan>RKQPUOXV<tspan id="else">FNVZAFYU</tspan>VY6DYRNI0Z9EQN3N7H1LBTBR
+			<tspan id="else">HQIMAY</tspan><tspan id="neon">DATA BREACH</tspan><tspan id="texts">Q9G5PRAY</tspan><tspan id="else">G5W5</tspan><tspan id="texts">TJQH</tspan><tspan id="else">Z67OY</tspan>RKQPUOXV<tspan id="else">FNVZAFYU</tspan>VY6DYRNI0Z9EQN3N7H1LBTBR
 		</text>
 		<text x="0" y="28" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
-			<tspan id="text">AFG</tspan><tspan id="else">IFZV7QAL</tspan>UTJO4M<tspan id="else">5J2NKXLFL</tspan><tspan id="text">I84O45</tspan><tspan id="else">P6</tspan><tspan id="neon">CYBER ATTACK</tspan><tspan id="else">6JSZ8I</tspan><tspan id="text">YWJKQZYR</tspan><tspan id="else">OIRA0P</tspan>MFX1KOIX9OY
+			<tspan id="texts">AFG</tspan><tspan id="else">IFZV7QAL</tspan>UTJO4M<tspan id="else">5J2NKXLFL</tspan><tspan id="texts">I84O45</tspan><tspan id="else">P6</tspan><tspan id="neon">CYBER ATTACK</tspan><tspan id="else">6JSZ8I</tspan><tspan id="texts">YWJKQZYR</tspan><tspan id="else">OIRA0P</tspan>MFX1KOIX9OY
 		</text>
 		<text x="0" y="44" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
 			ISQRBWIACUU7D4PL8TELYUZGPMV1KZERCFCGCQG4MNH3Q7A7HB93BYSPCGZSE0H7FLZB0TIIGLTYI
