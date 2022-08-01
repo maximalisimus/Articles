@@ -12,122 +12,44 @@
 >
 	<style type="text/css" media="screen">
 		<![CDATA[
-		#outerpetals {
-			opacity: .55;
-		}
-
+		
 		#neon {
-			font-weight: bold;
-			color: #ff4d00;
-			text-shadow: 00px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black, 
-						0px 0px 2px #ff845c, 
-						0px 0px 3px #ff845c,
-						0px 0px 5px white,
-						0px 0px 10px #ff845c,
-						0px 0px 20px #F7531D,
-						0px 0px 30px #F7531D,
-						0px 0px 40px #F7531D,
-						0px 0px 50px #F7531D;
-			-moz-text-shadow: 00px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black, 
-						0px 0px 2px #ff845c, 
-						0px 0px 3px #ff845c,
-						0px 0px 5px white,
-						0px 0px 10px #ff845c,
-						0px 0px 20px #F7531D,
-						0px 0px 30px #F7531D,
-						0px 0px 40px #F7531D,
-						0px 0px 50px #F7531D;
-			-webkit-text-shadow: 00px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black, 
-						0px 0px 2px #ff845c, 
-						0px 0px 3px #ff845c,
-						0px 0px 5px white,
-						0px 0px 10px #ff845c,
-						0px 0px 20px #F7531D,
-						0px 0px 30px #F7531D,
-						0px 0px 40px #F7531D,
-						0px 0px 50px #F7531D;
-			-o-text-shadow: 00px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black, 
-						0px 0px 2px #ff845c, 
-						0px 0px 3px #ff845c,
-						0px 0px 5px white,
-						0px 0px 10px #ff845c,
-						0px 0px 20px #F7531D,
-						0px 0px 30px #F7531D,
-						0px 0px 40px #F7531D,
-						0px 0px 50px #F7531D;
-			-ms-text-shadow: 00px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black, 
-						0px 0px 2px #ff845c, 
-						0px 0px 3px #ff845c,
-						0px 0px 5px white,
-						0px 0px 10px #ff845c,
-						0px 0px 20px #F7531D,
-						0px 0px 30px #F7531D,
-						0px 0px 40px #F7531D,
-						0px 0px 50px #F7531D;
+			font-weight: normal;
+			fill: #feef8fff;
+			text-shadow: 0 0 1px red,
+						-1px 0 5px red,
+						0px -1px 5px red, 
+						-1px -1px 5px #e43808ff,
+						1px 1px 5px #e43808ff,
+						0 0 0.5em white,
+						0 0 20px red,
+						0 0 30px orange,
+						0 0 40px orange,
+						0 0 50px orange;
+		}
+		#text {
+			font-weight: normal;
+			fill: #6fb7c2ff;
+		}
+		#else {
+			font-weight: normal;
+			fill: #8a84e2;
+			opacity: 0.75;
 		}
 		#python {
-			font-weight: bold;
-			color: #ffa500;
-			text-shadow: 0px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black,
-						0px 0px 5px white,
-						0px 0px 10px #ffa500,
-						0px 0px 50px #ffa500;
-			-moz-text-shadow: 0px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black,
-						0px 0px 5px white,
-						0px 0px 10px #ffa500,
-						0px 0px 50px #ffa500;
-			-webkit-text-shadow: 0px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black,
-						0px 0px 5px white,
-						0px 0px 10px #ffa500,
-						0px 0px 50px #ffa500;
-			-o-text-shadow: 0px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black,
-						0px 0px 5px white,
-						0px 0px 10px #ffa500,
-						0px 0px 50px #ffa500;
-			-ms-text-shadow: 0px 0px 1px black,
-						1px 0px 1px black,
-						0px 1px 1px black,
-						-1px 0px 1px black,
-						0px -1px 1px black,
-						0px 0px 5px white,
-						0px 0px 10px #ffa500,
-						0px 0px 50px #ffa500;
+			font-weight: normal;
+			fill: orange;
+			text-shadow: 
+						0 0 1px #cc6c00ff,
+						0 1px 1px #cc6c00ff,
+						1px 0 1px #cc6c00ff,
+						0px 0px 1px red,
+						1px 1px 1px red,
+						-1px 0 3px #333333,
+						0px -1px 3px #333333, 
+						-1px -1px 3px #333333,
+						1px 1px 5px orange,
+						0px 0px 0.8em orange;
 		}
 		]]>
 	</style>
@@ -148,53 +70,50 @@
 			id="world" />
 	</g>
 	<g id="text">
-		<text x="0" y="10" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			HQIM<tspan id="outerpetals" fill="#8a84e2">AYRUF</tspan><tspan id="neon" fill="#ff4d00">IMPORT</tspan><tspan id="outerpetals" fill="#8a84e2">AQ9G</tspan>5PRAY<tspan id="outerpetals" fill="#8a84e2">G5W</tspan><tspan id="outerpetals" fill="#63FDE6">5TJQHZ67OYRKQPU</tspan><tspan id="outerpetals" fill="#8a84e2">OX</tspan>VFNVZ<tspan id="outerpetals" fill="#8a84e2">AFY</tspan><tspan id="outerpetals" fill="#63FDE6">UVY6DYR</tspan><tspan id="outerpetals" fill="#8a84e2">NI0Z</tspan>9EQN3N7H1L<tspan id="outerpetals" fill="#8a84e2">BTBRL</tspan><tspan id="neon" fill="#ff4d00">FROM IMPORT</tspan>
+		<text x="0" y="12" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			<tspan id="else">HQIMAY</tspan><tspan id="neon">DATA BREACH</tspan><tspan id="text">Q9G5PRAY</tspan><tspan id="else">G5W5</tspan><tspan id="text">TJQH</tspan><tspan id="else">Z67OY</tspan>RKQPUOXV<tspan id="else">FNVZAFYU</tspan>VY6DYRNI0Z9EQN3N7H1LBTBR
 		</text>
-		<text x="0" y="25" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			<tspan id="neon" fill="#ff4d00">AS</tspan><tspan id="outerpetals" fill="#8a84e2">GI</tspan>FZV7QA<tspan id="outerpetals" fill="#8a84e2">LUTJ</tspan><tspan id="neon" fill="#ff4d00">OS</tspan><tspan id="outerpetals" fill="#8a84e2">M5J2</tspan>NKXLF<tspan id="outerpetals" fill="#8a84e2">LI84</tspan><tspan id="neon" fill="#ff4d00">OS.PATH</tspan><tspan id="outerpetals" fill="#8a84e2">1ME2</tspan>F8EJB<tspan id="outerpetals" fill="#8a84e2">I6J</tspan><tspan id="outerpetals" fill="#63FDE6">SZ8IYWJKQZY</tspan><tspan id="outerpetals" fill="#8a84e2">ROIR</tspan>A0PMFX1<tspan id="outerpetals" fill="#8a84e2">KOIX9OY</tspan><tspan id="outerpetals" fill="#63FDE6">QVT6W</tspan>AAGFBIG
+		<text x="0" y="28" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			<tspan id="text">AFG</tspan><tspan id="else">IFZV7QAL</tspan>UTJO4M<tspan id="else">5J2NKXLFL</tspan><tspan id="text">I84O45</tspan><tspan id="else">P6</tspan><tspan id="neon">CYBER ATTACK</tspan><tspan id="else">6JSZ8I</tspan><tspan id="text">YWJKQZYR</tspan><tspan id="else">OIRA0P</tspan>MFX1KOIX9OY
 		</text>
-		<text x="0" y="40" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			<tspan id="outerpetals" fill="#8a84e2">ISQ</tspan><tspan id="outerpetals" fill="#63FDE6">RBWIACU</tspan><tspan id="outerpetals" fill="#8a84e2">U7D4</tspan>PL8TELYU<tspan id="outerpetals" fill="#8a84e2">ZGPMV</tspan><tspan id="outerpetals" fill="#63FDE6">1KZERCFCGC</tspan><tspan id="outerpetals" fill="#8a84e2">QG4MNH3Q</tspan><tspan id="neon" fill="#ff4d00">PATHLIB</tspan><tspan id="outerpetals" fill="#8a84e2">BY</tspan>SPCG<tspan id="outerpetals" fill="#8a84e2">ZSE0</tspan><tspan id="outerpetals" fill="#63FDE6">H7FLZB0TIIGLT</tspan><tspan id="outerpetals" fill="#8a84e2">YIU</tspan>4O6UAI<tspan id="outerpetals" fill="#8a84e2">ETXYL</tspan>
+		<text x="0" y="44" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			ISQRBWIACUU7D4PL8TELYUZGPMV1KZERCFCGCQG4MNH3Q7A7HB93BYSPCGZSE0H7FLZB0TIIGLTYI
 		</text>
-		<text x="0" y="55" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			<tspan id="outerpetals" fill="#8a84e2">UJ5</tspan>XA2GF<tspan id="outerpetals" fill="#8a84e2">CHI</tspan><tspan id="neon" fill="#ff4d00">SHUTIL</tspan><tspan id="outerpetals" fill="#8a84e2">0XX</tspan>LGG<tspan id="neon" fill="#ff4d00">CLASS</tspan>FFH<tspan id="outerpetals" fill="#63FDE6">12NUHHW5EHQ9</tspan><tspan id="outerpetals" fill="#8a84e2">KUB1</tspan>HNW<tspan id="outerpetals" fill="#8a84e2">ADW3X</tspan><tspan id="neon" fill="#ff4d00">GLOB</tspan><tspan id="outerpetals" fill="#8a84e2">OGW</tspan>7QE<tspan id="outerpetals" fill="#8a84e2">MASBGY7</tspan><tspan id="outerpetals" fill="#63FDE6">CYOBGKNYZ4PH</tspan>U60LB
+		<text x="0" y="60" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			UJ5XA2GFCHIS65T1L0XXLGGCLZ7SFFH12NUHHW5EHQ9KUB1HNWADW3XG88BOGW7QEMASBGY7CYOBG
 		</text>
-		<text x="0" y="70" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			800WNGXZQAR9SIJJUC8S9QVNG9XKYTXQYRNVYCL1Q8YHCUPO8AXRNLGKZAQTWMTWBDFCUVDWVPEQOIV5V47KGMV60
+		<text x="0" y="76" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			WVPE080<tspan id="python">0WNGXZ</tspan>QAR9<tspan id="python">SI</tspan>JJUC<tspan id="python">8S</tspan>9Q<tspan id="python">VNG9XKYT</tspan>XQY<tspan id="python">RN</tspan>VYCL<tspan id="python">1Q</tspan>R8YHC<tspan id="python">UPO8AX</tspan>RNLGK<tspan id="python">ZA</tspan>QTWM<tspan id="python">TW</tspan>BDFCUVD
 		</text>
-		<text x="0" y="85" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			SXT43KA7A1Z<tspan id="python" fill="#ffa500">EQLELB</tspan>QPV1<tspan id="python" fill="#ffa500">PZ</tspan>JQHF<tspan id="python" fill="#ffa500">JV</tspan>3D<tspan id="python" fill="#ffa500">YK9RAWQ7J</tspan>YD<tspan id="python" fill="#ffa500">FW3</tspan>4609<tspan id="python" fill="#ffa500">DGI</tspan>WJWCN<tspan id="python" fill="#ffa500">SKGSND</tspan>WJGVE<tspan id="python" fill="#ffa500">OQ</tspan>LHNYQU<tspan id="python" fill="#ffa500">HX</tspan>KKRHRKCU8GA
+		<text x="0" y="92" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			NYQUASX<tspan id="python">T4</tspan>3KA<tspan id="python">7A1</tspan>ZE<tspan id="python">QL</tspan>ELBQ<tspan id="python">PV</tspan>1PZJQ<tspan id="python">HF</tspan>JV3DYK<tspan id="python">9R</tspan>AWQ7<tspan id="python">JY</tspan>3DFW<tspan id="python">34</tspan>609D<tspan id="python">GI</tspan>WJWC<tspan id="python">NSK</tspan>GSN<tspan id="python">DW</tspan>JGVEOQLH
 		</text>
-		<text x="0" y="100" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			SUA1JB16FCF<tspan id="python" fill="#ffa500">GU</tspan>5TC<tspan id="python" fill="#ffa500">D6N</tspan>QF<tspan id="python" fill="#ffa500">TM</tspan>VDAR<tspan id="python" fill="#ffa500">GS</tspan>KF<tspan id="python" fill="#ffa500">A</tspan>BA<tspan id="python" fill="#ffa500">FHO</tspan>IV<tspan id="python" fill="#ffa500">C</tspan>HN<tspan id="python" fill="#ffa500">HP</tspan>TGJ3HW<tspan id="python" fill="#ffa500">IL</tspan>HGI8<tspan id="python" fill="#ffa500">NS</tspan>GXJD<tspan id="python" fill="#ffa500">O2</tspan>UIEU<tspan id="python" fill="#ffa500">JJP</tspan>NNCGT<tspan id="python" fill="#ffa500">1S</tspan>XKK4RKDMGOV
+		<text x="0" y="108" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			NNCGVSU<tspan id="python">A1</tspan>JB1<tspan id="python">6FC</tspan>FGU<tspan id="python">5T</tspan>CD<tspan id="python">6N</tspan>QFTMVD<tspan id="python">AR</tspan>GSKFAB<tspan id="python">AF</tspan>HOIV<tspan id="python">CH</tspan>5NH<tspan id="python">PT</tspan>GJ3HWI<tspan id="python">LH</tspan>GI8<tspan id="python">NSGX</tspan>JD<tspan id="python">O2</tspan>UIEUJJP
 		</text>
-		<text x="0" y="115" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			3KNN4KUULDM<tspan id="python" fill="#ffa500">MN</tspan>XWA<tspan id="python" fill="#ffa500">DLR</tspan>PSZ<tspan id="python" fill="#ffa500">8G</tspan>IN<tspan id="python" fill="#ffa500">Z6</tspan>3UGOH6<tspan id="python" fill="#ffa500">COB</tspan>U8GXC<tspan id="python" fill="#ffa500">D4</tspan>ZL<tspan id="python" fill="#ffa500">P6</tspan>HV<tspan id="python" fill="#ffa500">2L</tspan>QHQ<tspan id="python" fill="#ffa500">QK</tspan>F4MGHR<tspan id="python" fill="#ffa500">IL</tspan>WJK<tspan id="python" fill="#ffa500">7S7Q</tspan>FE0M<tspan id="python" fill="#ffa500">6E</tspan>RBBDL0CPO35
+		<text x="0" y="124" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			QFE053K<tspan id="python">NN4KUU</tspan>LDMMNX<tspan id="python">WADL</tspan>RPSZ8GI<tspan id="python">NZ</tspan>63UGOH<tspan id="python">6COBU8GX</tspan>8CD<tspan id="python">4Z</tspan>LP6HV2<tspan id="python">LQ</tspan>HQQ<tspan id="python">KF</tspan>4<tspan id="python">MG</tspan>H<tspan id="python">RI</tspan>LWJK7S7
 		</text>
-		<text x="0" y="130" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			X45IUG4H7CZ<tspan id="python" fill="#ffa500">1QS7O3</tspan>H6HMUW<tspan id="python" fill="#ffa500">UWAY</tspan>CIHMRVL<tspan id="python" fill="#ffa500">4KA</tspan>J1DTH<tspan id="python" fill="#ffa500">UDXMH9PMCY</tspan>GT<tspan id="python" fill="#ffa500">PA</tspan>0AH<tspan id="python" fill="#ffa500">3T</tspan>D3Z<tspan id="python" fill="#ffa500">SH</tspan>VA<tspan id="python" fill="#ffa500">TR</tspan>ME<tspan id="python" fill="#ffa500">M7</tspan>B2<tspan id="python" fill="#ffa500">RT</tspan>L9EVGCYLSV3
+		<text x="0" y="140" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			M7B23X4<tspan id="python">5I</tspan>UG4H7CZ1QS7<tspan id="python">O3</tspan>H6HMUWUW<tspan id="python">AY</tspan>CIHMRV<tspan id="python">L4</tspan>KAJ1<tspan id="python">DT</tspan>SHU<tspan id="python">DX</tspan>MH9PMC<tspan id="python">YG</tspan>TPA<tspan id="python">0A</tspan>H3<tspan id="python">TD3Z</tspan>SHVATRME
 		</text>
-		<text x="0" y="145" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			X45IUG4HVGC<tspan id="python" fill="#ffa500">TR</tspan>OCEZ0KKHCED<tspan id="python" fill="#ffa500">23</tspan>Q2JZBLHQ<tspan id="python" fill="#ffa500">SK2</tspan>JWS3S<tspan id="python" fill="#ffa500">5K</tspan>0C<tspan id="python" fill="#ffa500">CL</tspan>YX<tspan id="python" fill="#ffa500">OG</tspan>NA5<tspan id="python" fill="#ffa500">VD</tspan>COAJS6<tspan id="python" fill="#ffa500">KJ</tspan>NXY<tspan id="python" fill="#ffa500">8M</tspan>TJZ3<tspan id="python" fill="#ffa500">RSK6</tspan>CSPBF6B1XOL
+		<text x="0" y="156" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			JZ3RLX4<tspan id="python">5I</tspan>UG4HVGCTROC<tspan id="python">EZ</tspan>0KKHCED2<tspan id="python">3Q</tspan>2JZBLH<tspan id="python">QS</tspan>K2JW<tspan id="python">S3</tspan>3S5K<tspan id="python">0C</tspan>CLYX<tspan id="python">OG</tspan>NA5V<tspan id="python">DC</tspan>OAJ<tspan id="python">S6K</tspan>JNXY8MT
 		</text>
-		<text x="0" y="160" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			9TDJLD8T5DW<tspan id="python" fill="#ffa500">II</tspan>LZUFX5TKJAZ<tspan id="python" fill="#ffa500">7V</tspan>DQV1RXEP<tspan id="python" fill="#ffa500">BVU</tspan>LLWEG<tspan id="python" fill="#ffa500">FF</tspan>ZTMNA4<tspan id="python" fill="#ffa500">XL</tspan>TGNV<tspan id="python" fill="#ffa500">73</tspan>RKHE<tspan id="python" fill="#ffa500">FC</tspan>BURQ<tspan id="python" fill="#ffa500">MM</tspan>COFQG<tspan id="python" fill="#ffa500">BLW</tspan>BGGYLS5WHQJ
+		<text x="0" y="172" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			FQGBJ9T<tspan id="python">DJ</tspan>LD8T5DWIILZ<tspan id="python">UF</tspan>X5TKJAZ7<tspan id="python">VD</tspan>QV1RXE<tspan id="python">PB</tspan>VULL<tspan id="python">WE</tspan>EGFFZ<tspan id="python">TMNA4X</tspan>LTGNV<tspan id="python">73</tspan>RKHE<tspan id="python">FC</tspan>BURQMMCO
 		</text>
-		<text x="0" y="175" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			QSGPXB7XODM<tspan id="python" fill="#ffa500">CM</tspan>Q3BHEASN3QL<tspan id="python" fill="#ffa500">O8</tspan>HPAQVEQK<tspan id="python" fill="#ffa500">JQB</tspan>NOCJO<tspan id="python" fill="#ffa500">UGJ</tspan>DGZZ<tspan id="python" fill="#ffa500">VDV</tspan>HAT2S<tspan id="python" fill="#ffa500">QK7U0D</tspan>VUCKR<tspan id="python" fill="#ffa500">M4</tspan>QTORMB<tspan id="python" fill="#ffa500">ME</tspan>GA1FBADCXTW
+		<text x="0" y="188" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			QSGPXB7XODMCMQ3BHEASN3QLO8HPAQVEQKJQBNOCJOUGJDGZZVDVHAT2SQK7U0DVUCKRM4QTORMBM
 		</text>
-		<text x="0" y="190" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			RPX0MGMJUDSENXQE2BAOMFIQHQUP1BQ6WYGCBLEKLBLQ4UCMDTULCFQ7DFNZXDLEMWVXZB921KRQAEUP27S6OHJWY
+		<text x="0" y="204" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			RPX0MGMJUDSENXQE2BAOMFIQHQUP1BQ6WYGCBLEKLBLQ4UCMDTULCFQ7DFNZXDLEMWVXZB921KRQA
 		</text>
-		<text x="0" y="205" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			SZ8<tspan id="outerpetals" fill="#8a84e2">A63RY</tspan><tspan id="outerpetals" fill="#63FDE6">BOJA3RYY3MQ</tspan><tspan id="outerpetals" fill="#8a84e2">1TLD</tspan>26G<tspan id="neon" fill="#ff4d00">WITH</tspan>TYT5<tspan id="outerpetals" fill="#8a84e2">YU1VDRCYQO0</tspan><tspan id="outerpetals" fill="#63FDE6">2OHQEVXEGJER</tspan><tspan id="outerpetals" fill="#8a84e2">KNCBC</tspan>9D<tspan id="neon" fill="#ff4d00">AS</tspan>ZCW<tspan id="outerpetals" fill="#8a84e2">9J0L1L</tspan><tspan id="outerpetals" fill="#63FDE6">ZNH</tspan><tspan id="outerpetals" fill="#8a84e2">NO1JR</tspan>11WVWW
+		<text x="0" y="220" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			SZ8A63RYBOJA3RYY3MQ1TLD26GW2T2TYT5YU1VDRCYQO02OHQEVXEGJERKNCBC9DASZCW9J0L1LZN
 		</text>
-		<text x="0" y="220" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			<tspan id="neon" fill="#ff4d00">DEF</tspan>PTP<tspan id="outerpetals" fill="#8a84e2">1JPQA14ERRW</tspan><tspan id="outerpetals" fill="#63FDE6">W1IWEXBT3H</tspan><tspan id="outerpetals" fill="#8a84e2">1VZNH</tspan>346DE<tspan id="neon" fill="#ff4d00">FOR</tspan>RWHB<tspan id="outerpetals" fill="#8a84e2">S0RQ6M</tspan><tspan id="outerpetals" fill="#63FDE6">T4LUHCTRP1</tspan><tspan id="outerpetals" fill="#8a84e2">OLO9P</tspan>KM<tspan id="neon" fill="#ff4d00">IN</tspan>I<tspan id="outerpetals" fill="#8a84e2">ONH2</tspan><tspan id="outerpetals" fill="#63FDE6">MRJI</tspan><tspan id="outerpetals" fill="#8a84e2">7I8V</tspan>TRVJ<tspan id="outerpetals" fill="#8a84e2">FZ1</tspan>
-		</text>
-		<text x="0" y="235" font-family="monospace" font-size="10" style="font-weight: normal;" fill="#1b3d53">
-			I8<tspan id="outerpetals" fill="#8a84e2">SEZ</tspan><tspan id="outerpetals" fill="#63FDE6">091R79</tspan><tspan id="outerpetals" fill="#8a84e2">ELIT</tspan>PC<tspan id="neon" fill="#ff4d00">PRINT</tspan>FTWEH<tspan id="outerpetals" fill="#8a84e2">WZR5</tspan><tspan id="outerpetals" fill="#63FDE6">8HP4YX7S</tspan><tspan id="outerpetals" fill="#8a84e2">33QYR3</tspan>CF<tspan id="neon" fill="#ff4d00">RETURN</tspan>LTAWC<tspan id="outerpetals" fill="#8a84e2">KMOH</tspan><tspan id="outerpetals" fill="#63FDE6">XSZ0WN</tspan><tspan id="outerpetals" fill="#8a84e2">Y3KXB</tspan>ZBH6S<tspan id="outerpetals" fill="#8a84e2">EOXS</tspan><tspan id="outerpetals" fill="#63FDE6">RHB</tspan>LR2W
+		<text x="0" y="236" font-family="monospace" font-size="10" style="font-weight: normal;letter-spacing: 0.1em;" fill="#1d3243ff">
+			D9FPTP1JPQA14ERRWW1IWEXBT3H1VZNH346DEF01RWHBS0RQ6MT4LUHCTRP1OLO9PKM73IONH2MRJ
 		</text>
 	</g>
 </svg>
