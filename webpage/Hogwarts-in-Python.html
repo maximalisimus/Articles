@@ -85,6 +85,11 @@
 					<li><a href="#part6_3">Вывод</a></li>
 				</ol>
 				<li><a href="#part7">Задачи с решениями</a></li>
+				<ol>
+					<li><a href="#part7_1">Задача №1</a></li>
+					<li><a href="#part7_2">Задача №2</a></li>
+					<li><a href="#part7_3">Задача №3</a></li>
+				</ol>
 				<li><a href="#part8">Немного <span style="color:Red;">&laquo;unittest&raquo;</span></a></li>
 				<li><a href="#part9">О Python в Windows 7, 10 и выше, а также WINE</a></li>
 			</ol>
@@ -558,6 +563,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'pathlib:'</span>)<br>
 				<span style="color:#ff1493;">print</span>(pathlib.Path.cwd())<br>
 				<span style="color:#ff1493;">print</span>(pathlib.Path.home())<br>
+				<span style="color:#ff1493;">print</span>(pathlib.Path(<span style="color:Blue;">'~/Downloads'</span>).expanduser())<br>
 				<span style="color:#ff1493;">print</span>(<span style="color:Blue;">'os and os.path:'</span>)<br><br>
 
 				<span style="color:#ff1493;">print</span>(os.getcwd())<br>
@@ -567,6 +573,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				pathlib:<br>
 				/home/mikl/003/Primer<br>
 				/home/mikl<br>
+				/home/mikl/Downloads<br>
 				os and os.path:<br>
 				/home/mikl/003/Primer<br>
 				/home/mikl</span>
@@ -632,6 +639,25 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				file:///home/mikl/003/Primer/strukture.txt.tar.gz</span>
 			</p>
 			<p>Непонятные для вас команды уточняйте в <a href="#part9">пункте-9</a> данной статьи.</p>
+			<p>Стоит отдельно выделить метод <b>Path.samefile(other_path)</b>.</p>
+			<p>
+				Этот метод вернет <i>True</i>, если путь <i>path</i> указывает на тот же файл, что и аргумент <i>other_path</i>, который может быть либо объектом <i>pathlib.Path</i>, либо <i>строкой</i>.<br>
+				Семантика похожа на функции <b>os.path.samefile()</b> и <b>os.path.samestat()</b>.
+			</p>
+			<p>Вот так выглядит использование этого метода.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				p = Path(<span style="color:Blue;">'cmd.bat'</span>)<br>
+				q = Path(<span style="color:Blue;">'strukture.txt'</span>)<br>
+				<span style="color:#ff1493;">print</span>(p.samefile(q))<br>
+				<span style="color:#ff1493;">print</span>(p.samefile(<span style="color:Blue;">'cmd.bat'</span>))<br><br>
+
+				<b>mikl ~/003/Primer $</b> python main.py<br>
+				<span style="color:Blue;">False<br>
+				True</span>
+			</p>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a></p>
@@ -2188,12 +2214,13 @@ paths = list(<span style="color:Red;">map</span>(Path, <span style="color:Red;">
 			<p><a name="part7"></a></p>
 			<h2>7. Задачи с решениями</h2>
 			<p>Рассмотрим несколько задач с решениям. Решения будут не сразу - а с объяснениями, чтобы вам была понятна - причина того или иного решения или подхода.</p>
+			<p><a name="part7_1"></a></p>
 			<h3>Задача №1.</h3>
 			<p><b>Задача для Windows.</b></p>
 			<ul>
 				<li>
 					<b>Получить список доступных дисков в системе.</b><br>
-					К сожалению определить тип диска без дополнительных <b>pip</b> библиотек не удасться. Точнее удасться, но работать такой способ будет либо только в <b>Win 7</b>, либо только в <b>Win 10</b>. Поэтому ограничимся только списком доступных дисков.
+					К сожалению, определить тип диска без дополнительных <b>pip</b> библиотек не удасться. Точнее удасться, но работать такой способ будет либо только в <b>Win 7</b>, либо только в <b>Win 10</b>. Поэтому ограничимся только списком доступных дисков.
 				</li>
 			</ul>
 			<p>
@@ -2249,7 +2276,119 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 	main()
 				</pre>
 			</div>
+			<p>
+				Как видите - <b>alphabet1</b> и <b>alphabet2</b> ничем друг от друга не отличаются. Здесь вполне можно применить <b>map</b>.<br>
+				А вот что касается <b>drives</b>, то <b>map</b> и <b>filter</b> неизбежно увеличат громоздкость кода и значительно снизят его эффективность. Поэтому применён только цикл.
+			</p>
+			<hr class="hr_chapter">
+			<p><a href="#part7">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr class="hr_chapter">
+			<p><a name="part7_2"></a></p>
 			<h3>Задача №2.</h3>
+			<p>Я заранее поместил в каталог &laquo;<b>./pkg</b>&raquo; файл &laquo;<b>cmd.bat</b>&raquo; несколько раз в разные случайные под-папки.</p>
+			<ul>
+				<li>
+					Найти в папке &laquo;<b>./pkg</b>&raquo; все файлы с расширением &laquo;<b>cmd.bat</b>&raquo; и удалить их.<br>
+					<u>Усложнение: не использовать циклы.</u>.<br>
+				</li>
+			</ul>
+			<p>Если вы думаете, что сможете сделать последовательный вызов, что-то вроде: &laquo;<b>pathlib.Path().rglob('*.bat').unlink()</b>&raquo;, то вы глубоко заблуждаетесь.</p>
+			<p>У вас просто выйдет исключение <span style="color:#ff9933;">AttributeError</span>.</p>
+			<p>Это исключение говорит о том, что и метод <b>glob</b> и <b>rglob</b> библиотеки <i>pathlib</i> возвращают генератор, а не список найденных путей.</p>
+			<p>
+				Допустим, вы обернули генератор в список <b>list</b> - например, так: &laquo;<b>p = list(Path('./pkg').rglob('*.bat')).unlink(missing_ok=True)</b>&raquo;.<br> 
+				Однако, вам всё равно не удасться применить метод <b>unlink()</b> к полученному списку. У вас опять возникнет тоже самое исключение <span style="color:#ff9933;">AttributeError</span>.
+			</p>
+			<p>Последнее исключение как раз и говорит вам о том, что оъект типа <b>'list'</b> не не имеет аттрибута <b>unlink()</b>.</p>
+			<p>На самом деле задача решается буквально в 2 строки. Однако, для наглядности мы с вами рассмотрим каждый этап по отдельности и в отдельных строках для понимания каждой команды.</p>
+			<p>Сначала убедимся, что <b>rglob</b> возвращает именно генератор, а не результат.</p>
+			<p>Откроем консоль и запустим python.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> python<br>
+				>>> from pathlib import Path<br>
+				>>> p = Path('./pkg').rglob('*.bat')<br>
+				>>> print(p)<br>
+				&#8249;generator object Path.rglob at 0x7fbf24835850&#8250;
+			</p>
+			<p>Теперь обернем переменную &laquo;<b>p</b>&raquo; в список и посмотрим, что у нас получилось на выходе. Продолжаем ввод.</p>
+			<p class="codes">
+				>>> p = list(p)<br>
+				>>> print(p)<br>
+				[PosixPath('pkg/cmd.bat'), PosixPath('pkg/compatible/subpackage_b/cmd.bat'), PosixPath('pkg/search/cmd.bat'), PosixPath('pkg/tests/cmd.bat')]
+			</p>
+			<p>Нашли необходимые файлы. Теперь, чтобы решить задачу необходимо понимать 2 вещи: что такое лямба функции и что такое <b>map</b>.</p>
+			<p>Лямбда-функция — это небольшая анонимная функция, которая принимает любое количество аргументов, но имеет только одно выражение. Лямбда-функции возвращают объект, который назначен переменной или используется как часть других функций.</p>
+			<p>Т.е. лямбда функция - это буквально короткая однострочная функция - вроде тернарного оператора, т.е. упрощения, но для функций.</p>
+			<p>Функция <b>map</b> применяет заданную в неё функцию по её наименованию к каждому элементу итерируемой последовательности, которая задана 2 аргументом.</p>
+			<p>Например, применить к списку типа <b>list</b> метод <b>int</b>.</p>
+			<p>Допустим у меня есть список значений, но в строковом виде. Необходимо их быстро привести к целочисленному типу <b>int</b>.</p>
+			<p class="codes">
+				a = [<span style="color:Blue;">'1'</span>, <span style="color:Blue;">'2'</span>, <span style="color:Blue;">'3'</span>, <span style="color:Blue;">'4'</span>, <span style="color:Blue;">'5</span>']<br>
+				b = <span style="color:#ff9933;">list</span>(<span style="color:Red;">map</span>(int, a))<br>
+				<span style="color:#ff1493;">print</span>(a)<br>
+				<span style="color:#ff1493;">print</span>(b)<br>
+				x = <span style="color:#ff9933;">list</span>(<span style="color:Red;">map</span>(<span style="color:#ff9933;">type</span>, a))<br>
+				y = <span style="color:#ff9933;">list</span>(<span style="color:Red;">map</span>(<span style="color:#ff9933;">type</span>, b))<br>
+				<span style="color:#ff1493;">print</span>(x)<br>
+				<span style="color:#ff1493;">print</span>(y)
+			</p>
+			<p>При выполнении скрипта с этим кодом, мы увидим следующий результат.</p>
+			<p class="codes">
+				['1', '2', '3', '4', '5']<br>
+				[1, 2, 3, 4, 5]<br>
+				[&#8249;class 'str'&#8250;, &#8249;class 'str'&#8250;, &#8249;class 'str'&#8250;, &#8249;class 'str'&#8250;, &#8249;class 'str'&#8250;]<br>
+				[&#8249;class 'int'&#8250;, &#8249;class 'int'&#8250;, &#8249;class 'int'&#8250;, &#8249;class 'int'&#8250;, &#8249;class 'int'&#8250;]
+			</p>
+			<p>Теперь поговорим о сочетании <b>map</b> и лямбда функций.</p>
+			<p>Если вы помните <b>map</b> выполняет заданную функцию. Лямбда же функция по сути сначала возвращает не результат и ссылку на функцию. Таким образом её вполне можно вставлять в качестве первого аргумента.</p>
+			<p>Например, просто возвести список знаений в квадрат.</p>
+			<p>Да, мы могли бы поступить следующим образом.</p>
+			<div class="codeses">
+				<pre>
+a = [1, 2, 3]
+b = []
+<span style="color:#069;"><b>for</b></span> x <span style="color:#069;"><b>in</b></span> a:
+	b.append(x*x)	
+				</pre>
+			</div>
+			<p>Мы даже вполне могли бы упростить до одного терарного оператора.</p>
+			<p class="codes">
+				a = [1, 2, 3]<br>
+				c = [x*x for x in a]
+			</p>
+			<p>А могли бы сделать и так.</p>
+			<p class="codes">
+				a = [1, 2, 3]<br>
+				d = list(map(lambda x: x*x, a))
+			</p>
+			<p>Результат во всех случаях будет абсолютно одинаковый.</p>
+			<p>Теперь когда вам понятно как использовать сочетния <b>map</b> и <b>lambda</b> стоит подчеркнуть ещё один нюанс.</p>
+			<p>При вызове метода <b>Path.unlink()</b> нам ничего не будет возвращено, т.е. конечный список должен быть пустым. Т.е. можно этот список не присваивать никакой переменной, а просто вызвать и всё.</p>
+			<p>Итак, полный код решения.</p>
+			<p class="codes">
+				<b>mikl ~/003/Primer $</b> nano main.py<br>
+				<span style="color:#069;"><b>from</b></span> pathlib <span style="color:#069;"><b>import</b></span> Path<br><br>
+
+				p = list(Path(<span style="color:Blue;">'./pkg'</span>).rglob(<span style="color:Blue;">'*.bat'</span>))<br>
+				list(<span style="color:Red;">map</span>(<span style="color:#069;"><b>lambda</b></span> x: x.unlink(<span style="color:#ff9933;">missing_ok</span>=True), p))<br>
+				
+				<span style="color:Green;"># Не обязательно - проверяем результат повторным поиском</span><br>
+				p = list(Path(<span style="color:Blue;">'./pkg'</span>).rglob(<span style="color:Blue;">'*.bat'</span>))<br>
+				<span style="color:Green;"># Просто выведем результат повторного поиска на экран, он должен быть пустым</span><br>
+				<span style="color:#ff1493;">print</span>(p)<br><br>
+
+				<b>mikl ~/003/Primer $</b> python main.py<br><span style="color:Blue;">
+				&#8249;generator object Path.rglob at 0x7fbf24835850&#8250;<br>
+				[PosixPath('pkg/cmd.bat'), PosixPath('pkg/compatible/subpackage_b/cmd.bat'), PosixPath('pkg/search/cmd.bat'), PosixPath('pkg/tests/cmd.bat')]<br>
+				[]</span>
+			</p>
+			<hr class="hr_chapter">
+			<p><a href="#part7">Перейти к Главе</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr class="hr_chapter">
+			<p><a name="part7_3"></a></p>
+			<h3>Задача №3.</h3>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -2257,6 +2396,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			<p></p>
 			<p></p>
 			<hr class="hr_main">
+			<p><a href="#part7">Перейти к Главе</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
