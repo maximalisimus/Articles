@@ -10,9 +10,18 @@ Blue-bold
 <span style="color:#069;"><b>for</b></span>
 <span style="color:#069;"><b>in</b></span>
 <span style="color:#069;"><b>if</b></span>
+<span style="color:#069;"><b>def</b></span>
+<span style="color:#069;"><b>global</b></span>
+<span style="color:#069;"><b>lambda</b></span>
+
 
 Pink
 <span style="color:#ff1493;">
+<span style="color:#ff1493;">print</span>
+
+Red
+<span style="color:red;">
+<span style="color:red;">map</span>
 
 Blue
 <span style="color:Blue;">
@@ -22,3 +31,4 @@ Green
 
 Orange
 <span style="color:#ff9933;">
+<span style="color:#ff9933;">list</span>
