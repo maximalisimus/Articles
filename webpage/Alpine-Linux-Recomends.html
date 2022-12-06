@@ -52,6 +52,7 @@
 				<li><a href="#part11">Docker, docker-compose.</a></li>
 				<li><a href="#part12">Docker изоляция контейнеров.</a></li>
 				<li><a href="#part13">Принтеры. Archlinux recomends.</a></li>
+				<li><a href="#part14">Flatpak.</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -543,6 +544,22 @@ iface wg0 inet static</br>
 				system-config-printer
 			</p>
 			<p>Настройки сервера CUPS находятся в <b>/etc/cups/cupsd.conf</b> и <b>/etc/cups/cups-files.conf</b>.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part14"></a></p>
+			<h2>Flatpak.</h2>
+			<p>Установка Flatpak.</p>
+			<p class="codes">
+				apk add flatpak
+			</p>
+			<p>Рекомендовано добавить пользователя в группу.</p>
+			<p class="codes">
+				adduser &lt;YourUsername&gt; flatpak
+			</p>
+			<p>Добавление репозитория.</p>
+			<p class="codes">
+				flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
