@@ -68,6 +68,7 @@
 				<li><a href="#part28">Users.</a></li>
 				<li><a href="#part29">Локализация.</a></li>
 				<li><a href="#part30">Wireguard.</a></li>
+				<li><a href="#part31">Flatpak.</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -689,6 +690,22 @@
 			<p></p>
 			<p class="codes">
 				wireguard-tools wireguard-tools-wg
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part31"></a></p>
+			<h2>Flatpak.</h2>
+			<p>Установка Flatpak.</p>
+			<p class="codes">
+				apk add flatpak
+			</p>
+			<p>Рекомендовано добавить пользователя в группу.</p>
+			<p class="codes">
+				adduser &lt;YourUsername&gt; flatpak
+			</p>
+			<p>Добавление репозитория.</p>
+			<p class="codes">
+				flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
