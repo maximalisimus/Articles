@@ -39,10 +39,6 @@
 				<li><a href="#part2">Настройка роутеров и маршрутизаторв</a></li>
 				<li><a href="#part3">Настройка безопасности ssh соединений</a></li>
 				<li><a href="#part4">Фаервол</a></li>
-				<ol>
-					<li><a href="#part4.1">Фаервол UFW</a></li>
-					<li><a href="#part4.2">Фаервол Firewalld</a></li>
-				</ol>
 				<li><a href="#part5.0">Fail2ban</a></li>
 				<ol>
 					<li><a href="#part5.1">Установка и запуск</a></li>
@@ -234,8 +230,6 @@
 			<hr>
 			<p><a name="part4"></a></p>
 			<h2>Фаервол</h2>
-			<p><a name="part4.1"></a></p>
-			<h3>Фаервол UFW</h3>
 			<p>Наливайте ещё немного чая, осталось совсем немного.</p>
 			<p>Ну а я пока расскажу про команды и настройки фаервола.</p>
 			<p>Не во всех ОС в репозиториях имеется графическая оболочка к консольной версии утилиты, но с консольной версией работается намного быстрее и удобнее. Установка выполняется следующей командой:</p>
@@ -270,169 +264,6 @@
 				$: sudo ufw enable</br>
 				$: sudo systemctl enable ufw
 			</p>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part4.2"></a></p>
-			<h3>Фаервол Firewalld</h3>
-			<p>Установка:</p>
-			<p class="codes">
-				$ sudo apt install firewalld firewall-config -y<br>
-				$ sudo systemctl start firewalld<br>
-				$ sudo systemctl enable firewalld<br>
-				$ sudo systemctl status firewalld
-			</p>
-			<p>Firewalld  работает на основе зон, поэтому необходимо проверить все зоны и сервисы, даже учитывая, что мы еще не сделали никакой настройки.</p>
-			<h4>Для зон:</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --get-active-zones <br>
-				# или <br>
-				$ sudo firewall-cmd --get-zones
-			</p>
-			<p>Чтобы узнать зону по умолчанию, выполните команду:</p>
-			<p class="codes">
-				$ sudo firewall-cmd --get-default-zone
-			</p>
-			<h4>Для служб:</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --get-services
-			</p>
-			<p><b>Важно отметить, что после каждой модификации вам нужно перезагрузить Firewalld, чтобы изменения вступили в силу.</b></p>
-			<p class="codes">
-				$ sudo firewall-cmd --reload
-			</p>
-			<p>Чтобы становить зону по умолчанию, выполните следующую команду:</p>
-			<p class="codes">
-				sudo firewall-cmd --set-default-zone=internal <br>
-				# или <br>
-				sudo firewall-cmd --set-default-zone=public
-			</p>
-			<p>После изменения зоны проверьте, изменилась ли она или нет.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --get-default-zone
-			</p>
-			<h4>Добавление порта в общественной зоне.</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
-			</p>
-			<p>После проверьте статус, чтобы узнать, был ли добавлен порт tcp 80 или нет.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --list-ports <br>
-				# или <br>
-				$ sudo firewall-cmd --zone=public --list-all
-			</p>
-			<h4>Удаление порта из общественной зоны.</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --remove-port=80/tcp
-			</p>
-			<h4>Добавление служб в Firewalld.</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --add-service=ftp <br>
-				$ sudo firewall-cmd --zone=public --add-service=smtp
-			</p>
-			<h4>Удаление служб из Firewalld.</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --remove-service=ftp <br>
-				$ sudo firewall-cmd --zone=public --remove-service=smtp
-			</p>
-			<h4>Блокировка любых входящих и исходящих пакетов.</h4>
-			<p>Можно заблокировать любые входящие или исходящие пакеты / соединения, используя Firewalld. Это известно как “panic-on” Firewalld.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --panic-on
-			</p>
-			<p>В вашем терминале будет отображаться текст «success».</p>
-			<p>После этого вы не сможете выполнить ping или просмотреть любой веб-сайт.</p>
-			<p>Чтобы отключить этот запрет, выполните команду.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --panic-off
-			</p>
-			<h4>Добавление IP-адреса в Firewalld.</h4>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.1.4" accept'
-			</p>
-			<p>Таким образом, Firewalld будет принимать пакеты IPv4 от источника IP 192.168.1.4.</p>
-			<h4>Блокировка IP-адреса от Firewalld.</h4>
-			<p>Аналогично, чтобы заблокировать любой IP-адрес.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.1.4" reject'
-			</p>
-			<p>При этом Firewalld будет удалять / отбрасывать все пакеты IPv4 из исходного IP 192.168.1.4.</p>
-			<h4>Настройка совместно с <b>Wireguard</b>.</h4>
-			<p>Для начала проверим активные зоны.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --get-active-zones
-			</p>
-			<p>Создайте новую зону mysite для управления локальным интерфейсом Ethernet конечной точки A и новую зону mywg для ее интерфейса WireGuard. Если вы также собираетесь подключаться к этому хосту по SSH для администрирования, также создайте для этого специальную зону myadmin (если нет, то можете ее пропустить).</p>
-			<p><b>Не забудьте по окончании перезагрузить фаервол.</b></p>
-			<p class="codes">
-				$ sudo firewall-cmd --permanent --new-zone=myadmin <br>
-				$ sudo firewall-cmd --permanent --new-zone=mysite <br>
-				$ sudo firewall-cmd --permanent --new-zone=mywg <br>
-				<b>$ sudo firewall-cmd --reload</b>
-			</p>
-			<p><b>Зона «myadmin».</b></p>
-			<p>Если вы подключены через SSH, первое, что вам нужно сделать, это настроить зону (в данном примере myadmin), чтобы разрешить дальнейшее использование этого соединения с вашей локальной рабочей станции.</p>
-			<p class="codes">
-				$ ss -tn | grep :22 <br>
-				ESTAB  0        0           192.168.1.11:22       192.168.1.2:33312
-			</p>
-			<p>В этом случае 192.168.1.11 — это IP-адрес конечной точки A в ее собственной локальной сети (запуск SSH на TCP-порту 22); 192.168.1.2 — это хост, с которого я подключился по SSH. Поэтому выполните следующие команды, чтобы продолжить разрешать это соединение после того, как мы запустим зону брандмауэра для локального интерфейса Ethernet.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=myadmin --add-service=ssh <br>
-				$ sudo firewall-cmd --zone=myadmin --add-source=192.168.1.2
-			</p>
-			<p>Если вы хотите, чтобы любой хост в локальной сети мог подключаться по SSH к конечной точке A (не ограничиваясь только хостом, с которого вы в данный момент используете SSH), вместо 192.168.1.2 вы можете указать 192.168.1.0/24 ( диапазон, который включает 192.168.1.0-192.168.1.255) для вышеуказанного.</p>
-			<p>Теперь зона myadmin должна быть активной и фильтровать все подключения от вашего SSH-клиента (192.168.1.2). Вы можете проверить это с помощью следующей командой.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --info-zone=myadmin
-			</p>
-			<p><b>Зона «mysite».</b></p>
-			<p>Теперь мы настроим основную зону для локального интерфейса Ethernet. Для этой зоны (mysite) настройте firewalld так, чтобы разрешить доступ к вашему порту WireGuard (51821 например).</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=mysite --add-port=51821/udp
-			</p>
-			<p>Если вы настроили специальную зону для администрирования, например зону myadmin выше, сделайте то же самое и для этой зоны.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=myadmin --add-port=51821/udp
-			</p>
-			<p>Теперь привяжите локальный интерфейс Ethernet к зоне mysite. Если вы не знаете, как называется этот интерфейс, выполните следующую команду на конечной точке A, чтобы отобразить список интерфейсов.</p>
-			<p class="codes">
-				$ ip -brief address show
-			</p>
-			<p>В данном случае имя интерфейса — eth0. Если вы используете NetworkManager для управления этим интерфейсом, используйте nmcli для привязки eth0 к mysite.</p>
-			<p class="codes">
-				$ nmcli connection show
-			</p>
-			<p>Если вы не используете NetworkManager, выполните следующую команду, чтобы связать локальный интерфейс Ethernet конечной точки A с зоной mysite.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=mysite --add-interface=eth0
-			</p>
-			<p>Теперь зона mysite должна быть активной и фильтровать подключения к интерфейсу eth0 конечной точки A. Вы можете проверить это с помощью следующей команды.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --info-zone=mysite
-			</p>
-			<p><b>Зона «mywg».</b></p>
-			<p>Теперь настроим зону mywg. Поскольку мы не хотим принимать какие-либо новые входящие соединения через интерфейс WireGuard, нам не нужно ничего делать, кроме как просто привязать зону к интерфейсу WireGuard. Если вы используете NetworkManager для управления интерфейсом WireGuard, используйте nmcli.</p>
-			<p class="codes">
-				$ nmcli connection show
-			</p>
-			<p>Если вы не используете NetworkManager для WireGuard, выполните следующую команду, чтобы привязать интерфейс WireGuard конечной точки A к зоне mywg.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --zone=mywg --add-interface=wg0
-			</p>
-			<p>Теперь зона mywg должна быть активной и фильтровать подключения к интерфейсу wg0. Вы можете проверить это с помощью следующей команды.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --info-zone=mywg
-			</p>
-			<p>И теперь команда --get-active-zones должна сообщить следующее.</p>
-			<div class="codeses">
-				<pre>$ sudo firewall-cmd --get-active-zones
-myadmin
-  sources: 192.168.1.2
-mysite
-  interfaces: eth0
-mywg
-  interfaces: wg0</pre>
-			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.0"></a></p>
