@@ -49,9 +49,16 @@
 					<li><a href="#part5.2">Базовая настройка</a></li>
 					<li><a href="#part5.3">Настройка правил</a></li>
 					<li><a href="#part5.4">NGINX DDoS (req limit)</a></li>
-					<li><a href="#part5.5">Работа со списком заблокированных адресов</a></li>
-					<li><a href="#part5.6">Примеры правил</a></li>
-					<li><a href="#part5.7">Удаление</a></li>
+					<li><a href="#part5.5">NGINX files</a></li>
+					<li><a href="#part5.6">NGINX GZIP</a></li>
+					<li><a href="#part5.7">NGINX X-XSS-Protection</a></li>
+					<li><a href="#part5.8">NGINX X-Frame-Options</a></li>
+					<li><a href="#part5.9">NGINX X-Permitted-Cross-Domain-Policies</a></li>
+					<li><a href="#part5.10">NGINX Strict-Transport-Security</a></li>
+					<li><a href="#part5.11">NGINX X-Content-Type-Options</a></li>
+					<li><a href="#part5.12">Работа со списком заблокированных адресов</a></li>
+					<li><a href="#part5.13">Примеры правил</a></li>
+					<li><a href="#part5.14">Удаление</a></li>
 				</ol>
 			</ol>
 		</div>
@@ -711,6 +718,173 @@ mywg
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.5"></a></p>
+			<h3>NGINX files</h3>
+			<p>Настройка <b>upload</b> файлов.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+
+
+http {
+	client_max_body_size 100M;
+	client_body_buffer_size 256k;
+	proxy_max_temp_file_size 0;
+
+...
+
+}</pre>
+			</div>
+			<p>Эти строки устанавливают максимальный размер тела запроса, размер буфера тела запроса клиента и размер временного файла, создаваемого nginx при передаче данных.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.6"></a></p>
+			<h3>NGINX GZIP</h3>
+			<p>Создайте файл <b>&laquo;/etc/nginx/site_gzip.conf&raquo;</b> со следующим содержимым</p>
+			<div class="codeses">
+				<pre>
+gzip on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied    any;
+gzip_vary       on;
+gzip_types
+application/atom+xml
+application/javascript
+application/json
+application/ld+json
+application/manifest+json
+application/rss+xml
+application/vnd.geo+json
+application/vnd.ms-fontobject
+application/x-font-ttf
+application/x-web-app-manifest+json
+application/xhtml+xml
+application/xml
+font/opentype
+image/bmp
+image/svg+xml
+image/x-icon
+text/cache-manifest
+text/css
+text/plain
+text/vcard
+text/vnd.rim.location.xloc
+text/vtt
+text/x-component
+text/x-cross-domain-policy;
+# text/html is always compressed by gzip module</pre>
+			</div>
+			<p>Теперь подключите этот файл с помощью соответствующей директивы в конфигурации вашего сервиса в самом низу, обязательно в блоке <b>&laquo;server&raquo;</b>.</p>
+			<p class="codes">
+				# gzip content<br>
+				include /etc/nginx/site_gzip.conf;
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.7"></a></p>
+			<h3>NGINX X-XSS-Protection</h3>
+			<p>Заголовок X-XSS-Protection может предотвратить некоторые XSS-атаки.</p>
+			<p>Вы можете реализовать защиту XSS, используя три варианта в зависимости от конкретной потребности.</p>
+			<ul>
+				<li><b>X-XSS-Protection: 0;</b> - олностью отключить фильтр.</li>
+				<li><b>X-XSS-Protection: 1;</b> - включить фильтр, но очистить только потенциально вредоносные скрипты.</li>
+				<li><b>X-XSS-Protection: 1; mode = block;</b> - ключает фильтр и полностью блокирует страницу.</li>
+			</ul>
+			<p>Вообще настройка добавляет в блок <b>&laquo;server&raquo;</b>, но в принципе можно и в блок <b>&laquo;http&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+http {
+  ...
+
+  add_header X-XSS-Protection "1; mode=block";
+
+  ...
+}</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.8"></a></p>
+			<h3>NGINX X-Frame-Options</h3>
+			<p>Заголовок X-Frame-Options позволяет снизить уязвимость вашего сайта для clickjacking-атак. Этот заголовок служит инструкцией для браузера не загружать вашу страницу в frame/iframe. Не все браузеры поддерживают этот вариант.</p>
+			<p>Настроить X-Frame-Options можно тремя способами:</p>
+			<ul>
+				<li><b>DENY</b> - полностью отключаетт функции iframe.</li>
+				<li><b>SAMEORIGIN</b> - iframe может использоваться только кем-то из того же источника.</li>
+				<li><b>ALLOW-FROM</b> - позволяет размещать страницы в окнах iframe только с определенных URL-адресов.</li>
+			</ul>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+http {
+  ...
+
+  add_header X-Frame-Options "DENY";
+
+  ...
+}</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.9"></a></p>
+			<h3>NGINX X-Permitted-Cross-Domain-Policies</h3>
+			<p>Аналогично механизму браузеров блокировки стороннего контента Adobe Flash имеет свой. Он регулируется файлами crossdomain.xml сайта, начиная с корневого каталога. Проблема с механизмом в том, что на любом уровне вложенности корневой регулирующий файл (политика безопасности) может быть переопределен. Чтобы избежать таких ситуаций, необходимо задать этот HTTP-заголовок.</p>
+			<p>Доступно несколько вариантов настройки:</p>
+			<ul>
+				<li><b>none</b> - Никакая политика не допускается.</li>
+				<li><b>master-only</b> - Разрешить только главную политику.</li>
+				<li><b>all</b> - Все позволено.</li>
+				<li><b>by-content-only</b> - Разрешить только определенный тип контента.</li>
+				<li><b>by-ftp-only</b> - Применимо только для FTP-сервера.</li>
+			</ul>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+http {
+  ...
+
+  add_header X-Permitted-Cross-Domain-Policies master-only;
+
+  ...
+}</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.10"></a></p>
+			<h3>NGINX Strict-Transport-Security</h3>
+			<p>Заголовок Strict-Transport-Security запрещает использование незащищенного HTTP соединения на сайте, если есть защищенное HTTPS.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+http {
+  ...
+
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+  ...
+}</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.11"></a></p>
+			<h3>NGINX X-Content-Type-Options</h3>
+			<p>Рейтинг наиболее опасных к использованию возможностей браузера возглавляет возможность Internet Explorer «угадывать» тип файла, игнорируя его MIME-тип.</p>
+			<p>При передаче от сервера к браузеру все файлы имеют тот или иной тип, который прямо указывает на суть содержимого файла. Однако, Internet Explorer имеет встроенный механизм, который позволяет по-содержимому файла переопределить его тип.</p>
+			<p>Таким образом, обычные текстовые файлы могут быть интерпретированы как JavaScript со всеми вытекающими последствиями. Например, если у вас на сайте запрещена загрузка текстовых файлов с расширениями .js пользователями, то они могут загрузить в виде картинок текстовый файл, содержащий JavaScript-код, который может быть исполнен браузером.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/nginx.conf</b>
+http {
+  ...
+
+  add_header X-Content-Type-Options nosniff;
+
+  ...
+}</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.12"></a></p>
 			<h3>Работа со списком заблокированных адресов</h3>
 			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
 			<p class="codes">
