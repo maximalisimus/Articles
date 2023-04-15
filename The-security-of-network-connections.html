@@ -442,7 +442,7 @@ WantedBy=timers.target
 				$ sudo firewall-cmd --info-zone=internal
 			</p>
 			<p>Теперь можно создавать зоны фаервола с нужным нам доступом. Создадим зоны, например, <b>&laquo;mysite&raquo;</b> и <b>&laquo;mywg&raquo;</b>. Пока поработаем надо зоной <b>&laquo;mysite&raquo;</b>.</p>
-			<p>Добавим в эту зону <i>&laquo;DHCP&raquo;</i> и <i>&laquo;SSH&raquo;</i>, несколько портов, включая <i>&laquo;wireguard&raquo;</i>, а также включим <b>&laquo;NAT&raquo;</b>, чтобы при подключении к <i>&laquo;wireguard&raquo;</i> у нас были свои <i>IP</i> адреса, заданные в <i>&laquo;.conf&raquo;</i>.</p>
+			<p>Добавим в эту зону <i>&laquo;DHCP&raquo;</i> и <i>&laquo;SSH&raquo;</i>, несколько портов, включая <i>&laquo;wireguard&raquo;</i>, а также включим <b>&laquo;NAT&raquo;</b>, чтобы при подключении к <i>&laquo;wireguard&raquo;</i> у нас были свои <i>IP</i> адреса, заданные в <i>&laquo;.conf&raquo;</i>-файле.</p>
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --new-zone=mysite</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcpv6-client</br>
