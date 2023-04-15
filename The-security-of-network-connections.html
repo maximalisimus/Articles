@@ -56,9 +56,10 @@
 					<li><a href="#part5.9">NGINX X-Permitted-Cross-Domain-Policies</a></li>
 					<li><a href="#part5.10">NGINX Strict-Transport-Security</a></li>
 					<li><a href="#part5.11">NGINX X-Content-Type-Options</a></li>
-					<li><a href="#part5.12">Работа со списком заблокированных адресов</a></li>
-					<li><a href="#part5.13">Примеры правил</a></li>
-					<li><a href="#part5.14">Удаление</a></li>
+					<li><a href="#part5.12">NGINX SSL</a></li>
+					<li><a href="#part5.13">Работа со списком заблокированных адресов</a></li>
+					<li><a href="#part5.14">Примеры правил</a></li>
+					<li><a href="#part5.15">Удаление</a></li>
 				</ol>
 			</ol>
 		</div>
@@ -885,6 +886,62 @@ http {
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.12"></a></p>
+			<h3>NGINX SSL</h3>
+			<p>SSL 90%</p>
+			<p>Отредактируйте файл вашей конфигурации сервера. Например такой.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/sites-available/example</b>
+server {
+	...
+	listen 443 ssl http2; # Включить http2
+    server_name example.com;
+    ssl on;
+    ssl_stapling_verify on;
+	...
+}
+				</pre>
+			</div>
+			<p>Теперь отредактируйте файл созданный <b>certbot</b>-ом.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/letsencrypt/options-ssl-nginx.conf</b>
+<span style="color:blue;"># HSTS</span>
+<span style="color:blue;">#add_header Strict-Transport-Security "max-age=604800; includeSubDomains" always;</span>
+add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
+<span style="color:blue;">#add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;" preload;</span>
+
+<span style="color:blue;">#ssl_session_cache shared:le_nginx_SSL:10m;</span>
+ssl_session_cache shared:SSL:50m;
+ssl_session_timeout 1440m;
+ssl_session_tickets off;
+
+<span style="color:blue;">#ssl_protocols TLSv1.2 TLSv1.3;</span>
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+ssl_prefer_server_ciphers on;
+
+<span style="color:blue;">#ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
+#ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA !RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS";
+#ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES256-SHA384;
+#ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256: ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES256-GCM-SHA384;</span>
+ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_AES_128_CCM_8_SHA256:TLS_AES_128_CCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+ssl_ecdh_curve secp384r1;
+
+<span style="color:blue;"># OCSP Stapling</span>
+ssl_stapling on;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+
+<span style="color:blue;"># gzip content</span>
+include /etc/nginx/site_gzip.conf;
+
+<span style="color:blue;"># Expect CT (Optional)</span>
+add_header Expect-CT "max-age=0";</pre>
+			</div>
+			<p>Наш <b>GZIP</b>, описанный выше, в принципе, можно подключить здесь.</p>
+			<p>Здесь, важны все строки, включая <b>&laquo;Expect CT&raquo;</b>.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.13"></a></p>
 			<h3>Работа со списком заблокированных адресов</h3>
 			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
 			<p class="codes">
@@ -910,7 +967,7 @@ http {
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.6"></a></p>
+			<p><a name="part5.14"></a></p>
 			<h3>Примеры правил</h3>
 			<p>CentOS</p>
 			<p class="codes">
@@ -953,7 +1010,7 @@ http {
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.7"></a></p>
+			<p><a name="part5.15"></a></p>
 			<h3>Удаление</h3>
 			<p class="pbold">Средствами fail2ban:</p>
 			<p>Для удаление адреса из списка вводим:</p>
