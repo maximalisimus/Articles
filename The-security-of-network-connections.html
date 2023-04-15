@@ -865,6 +865,7 @@ http {
   ...
 }</pre>
 			</div>
+			<p>Лучше включить его в <b>&laquo;/etc/letsencrypt/options-ssl-nginx.conf&raquo;</b>. Ниже этот вариант тоже описан.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.11"></a></p>
@@ -906,7 +907,7 @@ server {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/letsencrypt/options-ssl-nginx.conf</b>
-<span style="color:blue;"># HSTS</span>
+<span style="color:blue;"># HSTS. Лучше включить здесь, а не в http.</span>
 <span style="color:blue;">#add_header Strict-Transport-Security "max-age=604800; includeSubDomains" always;</span>
 add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
 <span style="color:blue;">#add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;" preload;</span>
