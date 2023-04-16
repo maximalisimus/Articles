@@ -486,7 +486,7 @@ mysite (active)
   icmp-block-inversion: no
   interfaces: enp0s3
   sources: 
-  services: dhcpv6-client ssh
+  services: dhcp dhcpv6-client ssh
   ports: 80/tcp 443/tcp 51820/udp
   protocols: 
   forward: no
@@ -501,7 +501,7 @@ public
   icmp-block-inversion: no
   interfaces: 
   sources: 
-  services: dhcpv6-client ssh
+  services: dhcp dhcpv6-client ssh
   ports: 
   protocols: 
   forward: no
@@ -521,7 +521,7 @@ mysite (active)
   icmp-block-inversion: no
   interfaces: enp0s3
   sources: 
-  services: dhcpv6-client ssh
+  services: dhcp dhcpv6-client ssh
   ports: 80/tcp 443/tcp 51820/udp
   protocols: 
   forward: no
