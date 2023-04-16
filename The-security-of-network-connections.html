@@ -554,9 +554,10 @@ mysite (active)
 				$ sudo firewall-cmd --permanent --zone=mywg --add-interface=wg0</br></br>
 				<span style="color:blue;"># Перезагружаем правила</span></br>
 				$ sudo firewall-cmd --reload</br></br>
-				<span style="color:red;"># Для финта ушами следующие 3 команды также не выполняем</span></br>
+				<span style="color:red;"># Для финта ушами следующую команду также не выполняем</span></br>
 				<span style="color:blue;"># Добавляем в iptables NAT преобразования адресов</span></br>
-				$ sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o enp0s3 -j MASQUERADE</br>
+				$ sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o enp0s3 -j MASQUERADE</br></br>
+				<span style="color:red;"># А вот таблицу FORWARD между входным и wireguard интерфейсами лучше заполнить во избежание проблем с маршрутизацией трафика</span></br>
 				<span style="color:blue;"># Добавляем в iptables в таблицу FORWARD разрешение на пропуск трафика из одной сети в другую</span></br>
 				$ sudo firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i enp0s3 -o wg0 -j ACCEPT</br>
 				$ sudo firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i wg0 -o enp0s3 -m state --state RELATED,ESTABLISHED -j ACCEPT</br></br>
