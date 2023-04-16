@@ -403,7 +403,7 @@
 			<p><span style="color:red;">Теперь, перед тем, как продолжать необходимо понять несколько важных аспектов, т.к. без этих настроек у вас могут возникнуть <span style="color:blue;">БОЛЬШИЕ ПРОБЛЕМЫ</span>.</span></p>
 			<p>Дело в том, что <i>firewalld</i> сервис стартует сразу после запуска сети. А <i>docker</i> сервис несколько позже. И также несколько позже стартует <i>wireguard</i>. Поэтому если вы просто добавить сети <i>docker</i>-а куда-либо, то после перезагрузки сервера мало того, что фаервол не запуститься, тык ещё и <i>docker</i>-сервис также не сможет запуститься.</p>
 			<p>Если вы попытаетесь добавить строку вида: <b>&laquo;After=docker.service&raquo;</b> в службу <b>firewalld.service</b>, то после перезагрузки сервера вы также получите те же ошибки и проблемы запуска.</p>
-			<p>Поэтому лучше всего будет <b>firewalld.service</b> запускать по таймеру <b>systemd</b>, что решит все проблемы.</p>
+			<p>Поэтому лучше всего будет <b>firewalld.service</b> запускать по таймеру <b>systemd</b>, что решит все проблемы. И сюда обязательно надо вставить строку <b>&laquo;After=docker.service&raquo;</b>, чтобы запускать только после запуска <b>&laquo;docker.service&raquo;</b>.</p>
 			<p>Единственное но - при большом количестве контейнеров - время запуска надо будет слегка отрегулировать. Чем больше контейнеров, тем больше время, через которое будете запускать фаервол. Чтобы сети контейнеров стали доступны. Тогда ошибок никаких не будет.</p>
 			<div class="codeses">
 				<pre>
@@ -413,7 +413,9 @@
 <b>$ sudo nano /etc/systemd/system/firewalld.timer</b>
 
 [Unit]
-Description=Starting Firewalld on after services
+Description=Starting Firewalld on after services docker
+Wants=docker.service
+After=docker.service
 
 [Timer]
 Unit=firewalld.service
@@ -588,14 +590,41 @@ mywg
 			<p>Описывая <b>Fail2ban</b> в двух словах, можно сказать, что он позволяет на основе анализа логов блокировать тех, кто злоупотребляет доступностью сервера по сети. Например, защитить почтовые ящики от взлома путем перебора паролей или многократного запроса какого-либо ресурса.</p>
 			<p>Установка производится следующей командой:</p>
 			<p class="codes">
-				$: sudo yum install fail2ban</br>
-				$: sudo apt-get install fail2ban</br>
-				$: sudo pacman -S fail2ban
+				$ sudo yum install fail2ban</br>
+				$ sudo apt-get install fail2ban</br>
+				$ sudo pacman -S fail2ban
 			</p>
-			<p>Для запуска службы вводим следующие команды:</p>
+			<p>Для запуска службы вводим команду:</p>
 			<p class="codes">
-				$: systemctl enable fail2ban</br>
-				$: systemctl start fail2ban
+				$ sudo systemctl enable fail2ban
+			</p>
+			<p>А вот сразу добавлять <i>fail2ban</i> в автозапуск - не рекомендую.</p>
+			<p class="codes">
+				<s>$ sudo systemctl start fail2ban</s>
+			</p>
+			<p><b>Объясню небольшую проблему запуска <i>fail2ban-а</i></b>. Дело в том, что он запускается раньше всех, даже раньше <i>firewalld</i> и значительно раньше <i>docker</i>-а. В результате правила просто не действуют. А вот если бы он стартовал позже нашего фаервола, который уже настроен на запуск позже <i>docker-сервиса</i> - это было бы идеально. Поэтому создаём таймер аналогичный запуску фаервола, за исключением того, что указываем запуск после него.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/systemd/system/fail2ban.timer</b>
+
+[Unit]
+Description=Starting Fail2Ban on after services Firewalld
+Wants=firewalld.service
+After=firewalld.service
+
+[Timer]
+Unit=fail2ban.service
+OnBootSec=15s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
+				</pre>
+			</div>
+			<p>Вот теперь тартуем.</p>
+			<p class="codes">
+				$ sudo systemctl enable fail2ban.timer<br>
+				$ sudo systemctl start fail2ban.timer
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -646,6 +675,7 @@ mywg
 				[sshd]</br>
 				enabled = true</br>
 				port = ssh</br>
+				<span style="color:blue;"># action = iptables-ipset[name=sshd, port=ssh, protocol=tcp]</span><br>
 				action = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
 				logpath = /var/log/sshd.log</br>
 			</p>
