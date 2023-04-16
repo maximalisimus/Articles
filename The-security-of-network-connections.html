@@ -595,8 +595,9 @@ mywg
 			<p><a name="part5.2"></a></p>
 			<h3>Базовая настройка</h3>
 			<p>Процесс настройки fail2ban не зависит от дистрибутива Linux. Основной конфигурационный файл находится по пути <b>&laquo;/etc/fail2ban/jail.conf&raquo;</b>. Однако, его не рекомендуется менять и для настройки используют подключаемые файлы из каталога <b>&laquo;/etc/fail2ban/jail.d&raquo;</b>.</p>
-			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию: <b>&laquo;/etc/fail2ban/jail.d/default.conf&raquo;</b></p>
+			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию.</p>
 			<p class="codes">
+				<b>$ sudo nano /etc/fail2ban/jail.d/default.conf</b></br></br>
 				[DEFAULT]</br>
 				maxretry = 5</br>
 				findtime = 15s</br>
@@ -626,8 +627,9 @@ mywg
 				$ sudo chown root:adm /var/log/sshd.log</br>
 				$ sudo chmod 640 /var/log/sshd.log
 			</p>
-			<p>Теперь создаем файл конфигурации: <b>&laquo;/etc/fail2ban/jail.d/ssh.conf&raquo;</b>.</p>
+			<p>Теперь создаем файл конфигурации: <b>&laquo;ssh.conf&raquo;</b>.</p>
 			<p class="codes">
+				<b>$ sudo nano /etc/fail2ban/jail.d/ssh.conf</b><br><br>
 				[sshd]</br>
 				enabled = true</br>
 				port = ssh</br>
@@ -644,7 +646,7 @@ mywg
 			</ul>
 			<p>Чтобы изменения вступили в силу, перезапускаем сервис и проверяем.</p>
 			<div class="codeses">
-				<pre><b>$: systemctl restart fail2ban</b>
+				<pre><b>$ sudo systemctl restart fail2ban</b>
 <b>$ sudo fail2ban-client restart</b>
 <span style="color:blue;"># Этот вариант, в отличие от предыдущего, показывает ошибки при перезапуске, но не перезапускает свой сервис</span>
 <b>$ sudo fail2ban-client status</b>
@@ -654,25 +656,26 @@ Status
 `- Jail list:	sshd</pre>
 			</div>
 			<p>Для гарантии, что fail2ban не заблокирут компьютер администратора или другой важный узел, предусмотрена настройка исключений с помощью опции ignoreip. Опция может быть применена как на глобальном уровне (default), так и для конкретного правила.</p>
-			<p>Для того, чтобы задать общую настроку, откроем наш файл <b>&laquo;/etc/fail2ban/jail.d/default.conf&raquo;</b>:</p>
+			<p>Для того, чтобы задать общую настроку, откроем наш файл <b>&laquo;default.conf&raquo;</b>:</p>
 			<p class="codes">
+				<b>$ sudo nano /etc/fail2ban/jail.d/default.conf</b><br><br>
 				[DEFAULT]</br>
 				...</br>
 				ignoreip = 192.168.0.0/24 95.95.95.95
 			</p>
 			<p>* в данном примере под фильтры не будут попадать адреса с 192.168.0.1 по 192.168.0.255 и адрес 95.95.95.95.</p>
-			<p>Файлы с настройкой действий находятся в каталоге /etc/fail2ban/action.d. Чтобы блокировать адрес, Fail2ban создает правило в брандмауэре netfilter. Для этого, чаще всего, используются утилиты iptables или firewall-cmd. Последняя применяется в последних версиях CentOS / Red Hat / Fedora. iptables более универсальная и может использоваться, почти, во всех системах Linux.</p>
-			<p>Остановимся на описании самых используемых действий:</p>
+			<p>Файлы с настройкой действий находятся в каталоге <b>&laquo;/etc/fail2ban/action.d&raquo;</b>. Чтобы блокировать адрес, <b>Fail2ban</b> создает правило в брандмауэре <b>netfilter</b>. Для этого, чаще всего, используются утилиты <b>iptables</b> или <b>firewall-cmd</b>. Последняя применяется в последних версиях <b>CentOS / Red Hat / Fedora</b>. <b>Iptables</b> более универсальная и может использоваться, почти, во всех системах <b>Linux</b>.</p>
+			<p>Остановимся на описании выше используемых действиях:</p>
 			<ul>
-				<li>iptables — создание простого правила в netfilter с помощью одноименной утилиты;</li>
-				<li>iptables-multiport — использование модуля multiports, позволяющий добавлять диапазоны портов для блокировки;</li>
-				<li>iptables-ipset — использование ipset для придания более лаконичного вида правилам;</li>
-				<li>iptables-allports — блокирует для адреса все порты;</li>
-				<li>firewallcmd-new — создание простого правила в netfilter с помощью firewall-cmd;</li>
-				<li>firewallcmd-ipset — добавляет правила с помощью утилиты firewall-cmd, используя ipset;</li>
-				<li>firewallcmd-rich-rules — создает rich-rules при помощи firewall-cmd.</li>
+				<li><b>iptables</b> — создание простого правила в netfilter с помощью одноименной утилиты;</li>
+				<li><b>iptables-multiport</b> — использование модуля multiports, позволяющий добавлять диапазоны портов для блокировки;</li>
+				<li><b>iptables-ipset</b> — использование ipset для придания более лаконичного вида правилам;</li>
+				<li><b>iptables-allports</b> — блокирует для адреса все порты;</li>
+				<li><b>firewallcmd-new</b> — создание простого правила в netfilter с помощью firewall-cmd;</li>
+				<li><b>firewallcmd-ipset</b> — добавляет правила с помощью утилиты firewall-cmd, используя ipset;</li>
+				<li><b>firewallcmd-rich-rules</b> — создает rich-rules при помощи firewall-cmd.</li>
 			</ul>
-			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге /etc/fail2ban/filter.d.</p>
+			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге <b>&laquo;/etc/fail2ban/filter.d&raquo;</b>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.4"></a></p>
@@ -680,7 +683,7 @@ Status
 			<p>Данное правило поможет защитить веб-сервер nginx от DDoS-атак. В некоторых сборках, для данного правило может не оказаться готового фильтра, поэтому в данном примере, мы его создадим вручную.</p>
 			<p>Для начала, необходимо настроить NGINX:</p>
 			<p class="codes">
-				$: vi /etc/nginx/nginx.conf
+				$ sudo nano /etc/nginx/nginx.conf
 			</p>
 			<p>В раздел http добавим:</p>
 			<p class="codes">
@@ -702,8 +705,8 @@ Status
 			<p>* данная настройка вместе с предыдущей зоной, созданной в секции http, позволит лимитировать запросы — 1 запрос в секунду при всплеске 5 запросов.</p>
 			<p>Проверяем конфигурационный файл nginx и перезапускаем сервис:</p>
 			<p class="codes">
-				$: nginx -t</br>
-				$: systemctl reload nginx
+				$ sudo nginx -t</br>
+				$ sudo systemctl reload nginx
 			</p>
 			<p>В лог-файле /var/log/nginx/error.log мы должны увидеть запись на подобие:</p>
 			<p class="codes">
@@ -730,7 +733,7 @@ Status
 			</p>
 			<p>После настройки не забываем перезапустить fail2ban:</p>
 			<p class="codes">
-				$: systemctl restart fail2ban
+				$ systemctl restart fail2ban
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -756,9 +759,11 @@ http {
 			<hr>
 			<p><a name="part5.6"></a></p>
 			<h3>NGINX GZIP</h3>
-			<p>Создайте файл <b>&laquo;/etc/nginx/site_gzip.conf&raquo;</b> со следующим содержимым</p>
+			<p>Создайте файл <b>&laquo;site_gzip.conf&raquo;</b> со следующим содержимым</p>
 			<div class="codeses">
 				<pre>
+<b>$ sudo nano /etc/nginx/site_gzip.conf</b>
+
 gzip on;
 gzip_comp_level 5;
 gzip_min_length 256;
@@ -811,6 +816,7 @@ text/x-cross-domain-policy;
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/nginx.conf</b>
+
 http {
   ...
 
@@ -833,6 +839,7 @@ http {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/nginx.conf</b>
+
 http {
   ...
 
@@ -857,6 +864,7 @@ http {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/nginx.conf</b>
+
 http {
   ...
 
@@ -873,6 +881,7 @@ http {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/nginx.conf</b>
+
 http {
   ...
 
@@ -892,6 +901,7 @@ http {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/nginx.conf</b>
+
 http {
   ...
 
@@ -909,6 +919,7 @@ http {
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/sites-available/example</b>
+
 server {
 	...
 	listen 443 ssl http2; # Включить http2
@@ -944,12 +955,14 @@ ssl_prefer_server_ciphers on;
 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA !RC4 !aNULL !eNULL !LOW 
 	!3DES !MD5 !EXP !PSK !SRP !DSS";
 #ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES256-SHA384;
-#ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256: ECDHE-ECDSA-AES256-GCM-SHA384:
-	ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES256-GCM-SHA384;</span>
+#ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:
+	ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:
+	DHE-RSA-AES256-GCM-SHA384;</span>
 ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:
 	TLS_AES_128_CCM_8_SHA256:TLS_AES_128_CCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:
 	ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:
-	ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+	ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:
+	DHE-RSA-AES256-GCM-SHA384;
 ssl_ecdh_curve secp384r1;
 
 <span style="color:blue;"># OCSP Stapling</span>
@@ -970,11 +983,11 @@ add_header Expect-CT "max-age=0";</pre>
 			<h3>Fail2ban. Работа со списком заблокированных адресов</h3>
 			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
 			<p class="codes">
-				$: fail2ban-client status <имя правила>
+				$ sudo fail2ban-client status <имя правила>
 			</p>
 			<p>Получить список правил можно командой:</p>
 			<p class="codes">
-				$: fail2ban-client status
+				$ sudo fail2ban-client status
 			</p>
 			<p>При наличие заблокированных IP-адресов мы увидим, примерно, следующее:</p>
 			<p class="codes">
@@ -984,11 +997,11 @@ add_header Expect-CT "max-age=0";</pre>
 			</p>
 			<p>С помощью iptables:</p>
 			<p class="codes">
-				$: iptables -L -n --line
+				$ sudo iptables -L -n --line
 			</p>
 			<p>С помощью firewall-cmd:</p>
 			<p class="codes">
-				$: firewall-cmd --direct --get-all-rules
+				$ sudo firewall-cmd --direct --get-all-rules
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -1041,31 +1054,31 @@ add_header Expect-CT "max-age=0";</pre>
 			<p class="pbold">Средствами fail2ban:</p>
 			<p>Для удаление адреса из списка вводим:</p>
 			<p class="codes">
-				$: fail2ban-client set <имя правила> unbanip <IP-адрес>
+				$ sudo fail2ban-client set <имя правила> unbanip <IP-адрес>
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$: fail2ban-client set ssh unbanip 31.207.47.55
+				$ sudo fail2ban-client set ssh unbanip 31.207.47.55
 			</p>
 			<p class="pbold">С помощью iptables:</p>
 			<p class="codes">
-				$: iptables -D <цепочка правил> -s IP-адрес
+				$ sudo iptables -D <цепочка правил> -s IP-адрес
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$: iptables -D fail2ban-ssh -s 10.212.245.29
+				$ sudo iptables -D fail2ban-ssh -s 10.212.245.29
 			</p>
 			<p class="pbold">С помощью firewall-cmd:</p>
 			<p class="codes">
-				$: firewall-cmd --direct --permanent --remove-rule <правило>
+				$ sudo firewall-cmd --direct --permanent --remove-rule <правило>
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$: firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
+				$ sudo firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
 			</p>
 			<p>После необходимо перечитать правила:</p>
 			<p class="codes">
-				$: firewall-cmd --reload
+				$ sudo firewall-cmd --reload
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
