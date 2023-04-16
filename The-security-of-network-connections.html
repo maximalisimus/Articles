@@ -465,6 +465,7 @@ WantedBy=timers.target
 			</p>
 			<p>Теперь можно создавать зоны фаервола с нужным нам доступом. Создадим зоны, например, <b>&laquo;mysite&raquo;</b> и <b>&laquo;mywg&raquo;</b>. Пока поработаем надо зоной <b>&laquo;mysite&raquo;</b>.</p>
 			<p>Добавим в эту зону <i>&laquo;DHCP&raquo;</i> и <i>&laquo;SSH&raquo;</i>, несколько портов, включая <i>&laquo;wireguard&raquo;</i>, а также включим <b>&laquo;NAT&raquo;</b>, чтобы при подключении к <i>&laquo;wireguard&raquo;</i> у нас были свои <i>IP</i> адреса, заданные в <i>&laquo;.conf&raquo;</i>-файле. У меня порт <i>&laquo;SSH&raquo;</i> остался в виртуальной машине по умолчанию. Лучше так не делать и менять его на другой. Тогда вместо добавления сервиса надо будет добавлять конкретно порт, а не менять его в конфигурационных файлах, что будет более наглядно для вас самих и работать будет абсолютно также, но не правильнее.</p>
+			<p><b>А вообще можно сделать финт ушами, о котором в интернете вообще никто не пишет - использовать <b>NAT</b> - так, как это изначально задумано для <b>wireguard</b> и в принципе рекомендовано.</b> <u>Поэтому одну из команд выполнять не будем.</u> Но вообще такое вполне имеет место быть. Так обычно рекомендуется на большинстве сайтов. Однако, если решитесь выполнить - помните, что она позже значительно нагрузит вашу систему и + вам придётся выполнить все остальные такие же команды. Иначе <b>NAT</b> для вашего <b>wireguard</b> работать не будет.</p>
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --new-zone=mysite</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcp</br>
@@ -472,8 +473,9 @@ WantedBy=timers.target
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=ssh</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-port=80/tcp</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-port=443/tcp</br>
-				$ sudo firewall-cmd --permanent --zone=mysite --add-port=51820/udp</br>
-				$ sudo firewall-cmd --permanent --zone=mysite --add-masquerade</br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-port=51820/udp</br></br>
+				<span style="color:blue;"># Следующую команду можно не выполнять, в конце настроек объясню почему</span></br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-masquerade</br></br>
 				$ sudo firewall-cmd --reload
 			</p>
 			<p>Мы ешё не закончили с этой зоной. Это только подготовительная часть - чтобы в процессе не потерять доступ.</p>
@@ -552,8 +554,9 @@ mysite (active)
 				$ sudo firewall-cmd --permanent --zone=mywg --add-interface=wg0</br></br>
 				<span style="color:blue;"># Перезагружаем правила</span></br>
 				$ sudo firewall-cmd --reload</br></br>
+				<span style="color:red;"># Для финта ушами следующие 3 команды также не выполняем</span></br>
 				<span style="color:blue;"># Добавляем в iptables NAT преобразования адресов</span></br>
-				$ sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o enp0s3 -j MASQUERADE</br></br>
+				$ sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -o enp0s3 -j MASQUERADE</br>
 				<span style="color:blue;"># Добавляем в iptables в таблицу FORWARD разрешение на пропуск трафика из одной сети в другую</span></br>
 				$ sudo firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i enp0s3 -o wg0 -j ACCEPT</br>
 				$ sudo firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i wg0 -o enp0s3 -m state --state RELATED,ESTABLISHED -j ACCEPT</br></br>
@@ -581,7 +584,19 @@ mysite
 mywg
   interfaces: wg0</pre>
 			</div>
-			<p>Всё! На этом настройки данного фаервола завершены. Можно переходить к тестированию в браузере, консоли - везде где вам необходимо.</p>
+			<p>Всё! На этом настройки данного фаервола завершены. Можно переходить к тестированию в браузере, консоли - везде где вам необходимо.</p></br>
+			<h3>Переходим к финту ушами.</h3>
+			<p>Самое интересное, что для него вообще не нужны никакие команды! Я серьёзно!</p>
+			<p>Просто включите в настройках вашего <b>wireguard</b>-сервера строки с маршрутизацией и перезапустите этот сервис. Всё! Нет, правда всё!</p>
+			<p class="codes">
+				<b>$ sudo nano /etc/wireguard/wg0.conf</b></br></br>
+				[Interface]</br>
+				... </br>
+				PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE</br></br>
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE</br></br>
+				... </br></br>
+				<b>$ sudo systemctl restart wg-quick@wg0</b></br>
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.0"></a></p>
