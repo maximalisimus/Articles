@@ -593,10 +593,13 @@ mywg
 				[Interface]</br>
 				... </br>
 				PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE; ip6tables -A FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE</br></br>
-PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE</br>
+				PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; ip6tables -D FORWARD -i wg0 -j ACCEPT; ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE</br>
 				... </br></br>
 				<b>$ sudo systemctl restart wg-quick@wg0</b></br>
 			</p>
+			<p>Дело в том, что у нас нет <i>&laquo;iptables.service&raquo;</i>-а, а не самого <i>&laquo;iptables&raquo;</i> как такового. Поэтому пользоваться самим <i>&laquo;iptables&raquo;</i> мы вполне можем как и раньше. Ведь по сути <i>&laquo;iptables.service&raquo;</i> - это не что иное, как сервис, в основе которого лежит скрипт, который следит за тем, чтобы сохранять и восстанавливать правила, записанные в таблицы маршрутизации в автоматическом режиме. И всё что нам нужно делать - это сохранять введеные правила или сбрасывать их. Без этого сервиса все введеные правила будут автоматически сброшены после перезагрузки ПК.</p>
+			<p>Именно поэтому во всех конфигурациях серверов <i>wireguard</i>-а всегда указывают 2 строки - <i>&laquo;PostUp&raquo;</i> и <i>&laquo;PostDown&raquo;</i> - при подключении и при отключении сервера. После перезагрузки ПК, сервис <i>wireguard</i>-а автоматически восстановит все эти записи не зависимо от наличия или отсутствия <i>&laquo;iptables.service&raquo;</i>-а.</p>
+			<p>Т.е. выходит, что фаервол остаётся фаерволом, не смотря на его громадные возможности, мы по сути не перегружаем систему и остаёмся в рамках базовых настроек, что значительно ускорит прохождение и фильтрацию трафика, а значит и надежность системы.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.0"></a></p>
