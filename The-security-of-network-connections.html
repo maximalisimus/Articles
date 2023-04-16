@@ -578,7 +578,7 @@ mywg
 			<h2>Fail2ban</h2>
 			<p><a name="part5.1"></a></p>
 			<h3>Установка и запуск</h3>
-			<p>Описывая Fail2ban в двух словах, можно сказать, что он позволяет на основе анализа логов блокировать тех, кто злоупотребляет доступностью сервера по сети. Например, защитить почтовые ящики от взлома путем перебора паролей или многократного запроса какого-либо ресурса.</p>
+			<p>Описывая <b>Fail2ban</b> в двух словах, можно сказать, что он позволяет на основе анализа логов блокировать тех, кто злоупотребляет доступностью сервера по сети. Например, защитить почтовые ящики от взлома путем перебора паролей или многократного запроса какого-либо ресурса.</p>
 			<p>Установка производится следующей командой:</p>
 			<p class="codes">
 				$: sudo yum install fail2ban</br>
@@ -594,23 +594,23 @@ mywg
 			<hr>
 			<p><a name="part5.2"></a></p>
 			<h3>Базовая настройка</h3>
-			<p>Процесс настройки fail2ban не зависит от дистрибутива Linux. Основной конфигурационный файл находится по пути /etc/fail2ban/jail.conf. Однако, его не рекомендуется менять и для настройки используют подключаемые файлы из каталога /etc/fail2ban/jail.d.</p>
-			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию: /etc/fail2ban/jail.d/default.conf</p>
+			<p>Процесс настройки fail2ban не зависит от дистрибутива Linux. Основной конфигурационный файл находится по пути <b>&laquo;/etc/fail2ban/jail.conf&raquo;</b>. Однако, его не рекомендуется менять и для настройки используют подключаемые файлы из каталога <b>&laquo;/etc/fail2ban/jail.d&raquo;</b>.</p>
+			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию: <b>&laquo;/etc/fail2ban/jail.d/default.conf&raquo;</b></p>
 			<p class="codes">
 				[DEFAULT]</br>
-				maxretry = 3</br>
-				findtime = 10s</br>
+				maxretry = 5</br>
+				findtime = 15s</br>
 				bantime = 10m</br>
 				action = firewallcmd-ipset</br>
 				ignoreip = 127.0.0.1/8 192.168.0.100</br>
 			</p>
 			<p>* где:</p>
 			<ul>
-				<li>maxretry &nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;количество действий, которые разрешено совершить до бана</li>
-				<li>findtime &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, в течение которого учитывается maxretry;</li>
-				<li>bantime &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, на которое будет блокироваться IP-адрес;</li>
-				<li>action &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;действия, которое будет выполняться, если Fail2ban обнаружит активность, соответствующую критериям поиска;</li>
-				<li>ignoreip &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;игнорировать защиту, если запросы приходят с перечисленных адресов.</li>
+				<li><b>maxretry</b> &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;количество действий, которые разрешено совершить до бана</li>
+				<li><b>findtime</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, в течение которого учитывается maxretry;</li>
+				<li><b>bantime</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, на которое будет блокироваться IP-адрес;</li>
+				<li><b>action</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;действие, которое будет выполняться, если Fail2ban обнаружит активность, соответствующую критериям поиска;</li>
+				<li><b>ignoreip</b> &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;игнорировать защиту, если запросы приходят с перечисленных адресов.</li>
 			</ul>
 			<p>* В данном примере, если в течение 10 секунд будет найдено 3 строки (maxretry = 3), содержащих критерий фильтра, Fail2ban заблокирует IP-адрес, с которого идет подключение на 10 минут;</p>
 			<p>* В секции [DEFAULT] хранятся общие настройки для всех правил. Каждую из настроек можно переопределить при конфигурировании самого правила.</p>
@@ -618,28 +618,43 @@ mywg
 			<hr>
 			<p><a name="part5.3"></a></p>
 			<h3>Настройка правил</h3>
-			<p>В <b>Debian</b> по умолчанию вместо стандартной настройки есть такой файл: /etc/fail2ban/jail.d/defaults-debian.conf</p>
-			<p>Обычно в нём заданы настройки SSH-ловушки по умолчанию. Сейчас она не работает. Поменяем настройки.</p>
+			<p>В <b>Debian</b> по умолчанию вместо стандартной настройки есть такой файл: <b>&laquo;/etc/fail2ban/jail.d/defaults-debian.conf&raquo;</b>.</p>
+			<p>Обычно в нём заданы настройки SSH-ловушки по умолчанию. Сейчас она не работает. Мы её перезапишем в новой конфигурации: <b>&laquo;/etc/fail2ban/jail.d/ssh.conf&raquo;</b>.</p>
+			<p>Не забудьте перед этим создать нужный файл лога и дать ему соответствующие права доступа. Иначе при перезапуске <b>&laquo;fail2ban-сервиса&raquo;</b> получите ошибку.</p>
+			<p class="codes">
+				$ sudo touch /var/log/sshd.log</br>
+				$ sudo chown root:adm /var/log/sshd.log</br>
+				$ sudo chmod 640 /var/log/sshd.log
+			</p>
+			<p>Теперь создаем файл конфигурации: <b>&laquo;/etc/fail2ban/jail.d/ssh.conf&raquo;</b>.</p>
 			<p class="codes">
 				[sshd]</br>
 				enabled = true</br>
 				port = ssh</br>
-				action=firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
-				logpath = /var/log/auth.log</br>
+				action = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
+				logpath = /var/log/sshd.log</br>
 			</p>
 			<p>* где:</p>
 			<ul>
-				<li>sshd — название для правила;</li>
-				<li>enabled позволяет быстро включать (true) или отключать (false) правило;</li>
-				<li>port — порт целевого сервиса. Принимается буквенное или цифирное обозначение;</li>
-				<li>action — действие, совершаемое в случае срабатывания правила. В квадратных скобках указаны название для правила, сетевой порт и протокол для блокирования;</li>
+				<li><b>sshd</b> — название для правила;</li>
+				<li><b>enabled</b> - позволяет быстро включать (true) или отключать (false) правило;</li>
+				<li><b>port</b> — порт целевого сервиса. Принимается буквенное или цифирное обозначение;</li>
+				<li><b>action</b> — действие, совершаемое в случае срабатывания правила. В квадратных скобках указаны название для правила, сетевой порт и протокол для блокировки;</li>
+				<li><b>logpath</b> - файл лога.</li>
 			</ul>
-			<p>Чтобы изменения вступили в силу, перезапускаем сервис:</p>
-			<p class="codes">
-				$: systemctl restart fail2ban
-			</p>
+			<p>Чтобы изменения вступили в силу, перезапускаем сервис и проверяем.</p>
+			<div class="codeses">
+				<pre><b>$: systemctl restart fail2ban</b>
+<b>$ sudo fail2ban-client restart</b>
+<span style="color:blue;"># Этот вариант, в отличие от предыдущего, показывает ошибки при перезапуске, но не перезапускает свой сервис</span>
+<b>$ sudo fail2ban-client status</b>
+<span style="color:blue;"># Если всё нормально должен показать следующее</span>
+Status
+|- Number of jail:	1
+`- Jail list:	sshd</pre>
+			</div>
 			<p>Для гарантии, что fail2ban не заблокирут компьютер администратора или другой важный узел, предусмотрена настройка исключений с помощью опции ignoreip. Опция может быть применена как на глобальном уровне (default), так и для конкретного правила.</p>
-			<p>Для того, чтобы задать общую настроку, откроем наш файл default:</p>
+			<p>Для того, чтобы задать общую настроку, откроем наш файл <b>&laquo;/etc/fail2ban/jail.d/default.conf&raquo;</b>:</p>
 			<p class="codes">
 				[DEFAULT]</br>
 				...</br>
@@ -694,9 +709,9 @@ mywg
 			<p class="codes">
 				2020/11/16 19:11:08 [error] 1330844#1330844: *16640836 limiting requests, excess: 10.520 by zone "one", client: xxx.xxx.xxx.xxx, server: dmosk.ru, request: "GET / HTTP/1.1", host: "dmosk.ru", referrer: "https://dmosk.ru/page1"
 			</p>
-			<p>Теперь можно приступать к настройке fail2ban. Создаем фильтр:</p>
+			<p>Теперь можно приступать к настройке fail2ban. Создаем фильтр. Вообще в <b>&laquo;Fail2Ban&raquo;</b> уже есть встроенный фильтр для <b>&laquo;Nginx&raquo;</b> и он вполне нормальный, да и отрабатывает вполне неплохо. Но, на всякий случай, вот рабочая конфигурация строк, которые надо изменять.</p>
 			<p class="codes">
-				$: vi /etc/fail2ban/filter.d/nginx-limit-req.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/filter.d/nginx-limit-req.conf</b></br></br>
 				[Definition]</br>
 				ngx_limit_req_zones = [^"]+</br>
 				failregex = ^\s*\[[a-z]+\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "(?:%(ngx_limit_req_zones)s)", client: &lt;HOST&gt;,</br>
@@ -704,7 +719,7 @@ mywg
 			</p>
 			<p>Создаем правило в fail2ban:</p>
 			<p class="codes">
-				$ sudo nano /etc/fail2ban/jail.d/nginx-ddos.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/jail.d/nginx-ddos.conf</b></br></br>
 				[nginx-ddos]</br>
 				enabled = true</br>
 				port = http,https</br>
@@ -981,7 +996,7 @@ add_header Expect-CT "max-age=0";</pre>
 			<h3>Fail2ban. Примеры правил</h3>
 			<p>CentOS</p>
 			<p class="codes">
-				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/jail.d/ssh.conf</b></br></br>
 				[ssh]</br>
 				enabled = true</br>
 				port = ssh</br>
@@ -991,7 +1006,7 @@ add_header Expect-CT "max-age=0";</pre>
 			</p>
 			<p>Ubuntu</p>
 			<p class="codes">
-				/etc/fail2ban/jail.d/ssh.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/jail.d/ssh.conf</b></br></br>
 				[ssh]</br>
 				enabled = true</br>
 				port = ssh</br>
@@ -1001,7 +1016,7 @@ add_header Expect-CT "max-age=0";</pre>
 			</p>
 			<p>Asterisk</p>
 			<p class="codes">
-				/etc/fail2ban/jail.d/asterisk.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/jail.d/asterisk.conf</b></br></br>
 				[asterisk]</br>
 				enabled = true</br>
 				filter = asterisk</br>
@@ -1010,12 +1025,13 @@ add_header Expect-CT "max-age=0";</pre>
 			</p>
 			<p>NGINX</p>
 			<p class="codes">
-				/etc/fail2ban/jail.d/nginx.conf</br></br>
+				<b>$ sudo nano /etc/fail2ban/jail.d/nginx.conf</b></br></br>
 				[nginx]</br>
 				enabled = true</br>
 				port = http,https</br>
 				filter = nginx-http-auth</br>
-				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
+				<span style="color:blue;"># action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</span></br>
+				action = firewallcmd-multiport[name=nginx, port="http,https", protocol=tcp]</br>
 				logpath = /var/log/nginx/error.log
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
