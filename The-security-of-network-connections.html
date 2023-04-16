@@ -333,6 +333,10 @@
 			</table>
 			<p>В <i>firewalld</i> используется два набора правил — постоянные и временные. Временные правила работают до перезагрузки сервера. По умолчанию при добавлении правил в firewalld, правила считаются временными <b>&laquo;runtime&raquo;</b>. Чтобы добавить правило на постоянной основе нужно использовать флаг <u>&laquo;--permanent&raquo;</u>. Такие правила будут применяться после перезагрузки сервера.</p>
 			<p>Итак, прежде чем установить этот фаервол, необходимо выключить и убрать всё что будет с ним конфликтовать. А именно - <u>ufw</u> и <u>iptables</u>.</p>
+			<h3><span style="color:red;"><b>Обратите внимание!</b></span></h3>
+			<p><span style="color:red;">Маскировать или полностью удалять <span style="color:blue;">&laquo;iptables.service&raquo;</span>, как рекомендуют большинство источников интернета - не рекомендуется во избежание проблем не только с самим &laquo;Firewalld&raquo;, но и с &laquo;Fail2Ban&raquo;.</span> <span style="color:blue;">&laquo;iptables.service&raquo;, если он вообще есть, необходимо только выключить!</span></p>
+			<p>Дело в том, что <b>&laquo;IPTABLES&raquo;</b> и <b>&laquo;Firewalld&raquo;</b> взаимодействуют с системой следующим образом.</p>
+			
 			<p class="codes">
 				$ sudo ufw disable</br>
 				$ sudo systemctl stop ufw</br>
