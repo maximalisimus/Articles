@@ -337,10 +337,9 @@
 				$ sudo ufw disable</br>
 				$ sudo systemctl stop ufw</br>
 				$ sudo systemctl disable ufw</br>
-				$ sudo apt remove ufw</br>
 				</br>
 				$ sudo systemctl stop iptables</br>
-				$ sudo systemctl mask iptables</br>
+				$ sudo systemctl disable iptables</br>
 				<span style="color:blue;"># Проверяем</span><br>
 				$ sudo systemctl status iptables
 			</p>
@@ -599,47 +598,42 @@ mywg
 			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию: /etc/fail2ban/jail.d/default.conf</p>
 			<p class="codes">
 				[DEFAULT]</br>
-				maxretry = 4</br>
-				findtime = 480</br>
-				bantime = 720</br>
+				maxretry = 3</br>
+				findtime = 10s</br>
+				bantime = 10m</br>
 				action = firewallcmd-ipset</br>
-				ignoreip = 127.0.0.1/8</br>
+				ignoreip = 127.0.0.1/8 192.168.0.100</br>
 			</p>
 			<p>* где:</p>
 			<ul>
 				<li>maxretry &nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;количество действий, которые разрешено совершить до бана</li>
-				<li>findtime &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время в секундах, в течение которого учитывается maxretry;</li>
+				<li>findtime &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, в течение которого учитывается maxretry;</li>
 				<li>bantime &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;время, на которое будет блокироваться IP-адрес;</li>
 				<li>action &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;действия, которое будет выполняться, если Fail2ban обнаружит активность, соответствующую критериям поиска;</li>
 				<li>ignoreip &nbsp;&nbsp;&nbsp;&nbsp;— &nbsp;&nbsp;игнорировать защиту, если запросы приходят с перечисленных адресов.</li>
 			</ul>
-			<p>* В данном примере, если в течение 8 минут (480) будет найдено 5 строк (maxretry = 4), содержащих критерий фильтра, Fail2ban заблокирует IP-адрес, с которого идет подключение на 12 минут (720);</p>
+			<p>* В данном примере, если в течение 10 секунд будет найдено 3 строки (maxretry = 3), содержащих критерий фильтра, Fail2ban заблокирует IP-адрес, с которого идет подключение на 10 минут;</p>
 			<p>* В секции [DEFAULT] хранятся общие настройки для всех правил. Каждую из настроек можно переопределить при конфигурировании самого правила.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.3"></a></p>
 			<h3>Настройка правил</h3>
-			<p>Для нового правила необходимо создать конфигурационный файл в каталоге /etc/fail2ban/jail.d, например: /etc/fail2ban/jail.d/service.conf</p>
+			<p>В <b>Debian</b> по умолчанию вместо стандартной настройки есть такой файл: /etc/fail2ban/jail.d/defaults-debian.conf</p>
+			<p>Обычно в нём заданы настройки SSH-ловушки по умолчанию. Сейчас она не работает. Поменяем настройки.</p>
 			<p class="codes">
-				[ssh]</br>
+				[sshd]</br>
 				enabled = true</br>
 				port = ssh</br>
-				filter = sshd</br>
-				action = iptables[name=sshd, port=ssh, protocol=tcp]</br>
+				aaction=firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
 				logpath = /var/log/auth.log</br>
-				maxretry = 10</br>
-				findtime = 600
 			</p>
 			<p>* где:</p>
 			<ul>
-				<li>ssh — название для правила;</li>
+				<li>sshd — название для правила;</li>
 				<li>enabled позволяет быстро включать (true) или отключать (false) правило;</li>
 				<li>port — порт целевого сервиса. Принимается буквенное или цифирное обозначение;</li>
-				<li>filter — фильтр (критерий поиска), который будет использоваться для поиска подозрительных действий. По сути, это имя файла из каталога /etc/fail2ban/filter.d без .conf на конце;</li>
 				<li>action — действие, совершаемое в случае срабатывания правила. В квадратных скобках указаны название для правила, сетевой порт и протокол для блокирования;</li>
-				<li>logpath — расположение лог-файла, в котором фильтр будет искать подозрительную активность на основе описанных критериев.</li>
 			</ul>
-			<p>* обратите внимание, что мы переопределили параметры по умолчанию maxretry, findtime и action.</p>
 			<p>Чтобы изменения вступили в силу, перезапускаем сервис:</p>
 			<p class="codes">
 				$: systemctl restart fail2ban
@@ -710,12 +704,13 @@ mywg
 			</p>
 			<p>Создаем правило в fail2ban:</p>
 			<p class="codes">
-				$: vi /etc/fail2ban/jail.d/nginx-ddos.conf</br></br>
+				$ sudo nano /etc/fail2ban/jail.d/nginx-ddos.conf</br></br>
 				[nginx-ddos]</br>
 				enabled = true</br>
 				port = http,https</br>
 				filter = nginx-limit-req</br>
-				action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
+				<span style="color:blue;"># action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</span></br>
+				action = firewallcmd-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
 				logpath = /var/log/nginx/error.log
 			</p>
 			<p>После настройки не забываем перезапустить fail2ban:</p>
