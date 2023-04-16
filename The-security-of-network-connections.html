@@ -763,15 +763,22 @@ Status
 				failregex = ^\s*\[[a-z]+\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "(?:%(ngx_limit_req_zones)s)", client: &lt;HOST&gt;,</br>
 				ignoreregex =
 			</p>
-			<p>Создаем правило в fail2ban:</p>
+			<p><span style="color:red;"><b>Обратите внимание!</b></span> Перед настройкой конфигураций необходимо понимать ещё один важный момент.</p>
+			<p>Дело в том, что стандартный <b>&laquo;action=firewallcmd...&raquo;</b>, т.е. через firewald не всегда хорошо отрабатывает. В процессе всесторонней проверке на виртуальной машине выяснилась одна проблема.</p>
+			<p>IP-адреса блокирует только один раз. В таблице маршрутизации фаервола адрес, который блокирован находится не по порядку, из-за чего - он по сути не блокируется.</p>
+			<p>Исправляет этот момент только перезапуск и фаервола и fail2ban-а. Чтобы такого не происходило - <b>action</b> вполне можно взять другой, пусть даже с <b>iptables</b>. Таким образом один бан другому мешать никак не будет. И разбан будет работать адекватно.</p>
+			<p>Поэтому в дальнейших конфигурациях я буду комментировать один из <b>action-ов</b>. Таким образом он никак в управлении участвовать не будет. Но останется в качестве напоминания, о том, что такая конфигурация может и не функионировать, но имеет место быть.</p>
+			<p>Вообще-то то, что закоментировано как раз и предлагают страницы интернета, не думая, о том, будет ли это нормально работать в комплексе с другими утилитами.</p>
+			<p></p>
+			<p>Вот теперь создаем правило для fail2ban:</p>
 			<p class="codes">
 				<b>$ sudo nano /etc/fail2ban/jail.d/nginx-ddos.conf</b></br></br>
 				[nginx-ddos]</br>
 				enabled = true</br>
 				port = http,https</br>
 				filter = nginx-limit-req</br>
-				<span style="color:blue;"># action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</span></br>
-				action = firewallcmd-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
+				action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
+				<span style="color:blue;"># action = firewallcmd-multiport[name=nginxddos, port="http,https", protocol=tcp]</span></br>
 				logpath = /var/log/nginx/error.log
 			</p>
 			<p>После настройки не забываем перезапустить fail2ban:</p>
@@ -1086,8 +1093,8 @@ add_header Expect-CT "max-age=0";</pre>
 				enabled = true</br>
 				port = http,https</br>
 				filter = nginx-http-auth</br>
-				<span style="color:blue;"># action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</span></br>
-				action = firewallcmd-multiport[name=nginx, port="http,https", protocol=tcp]</br>
+				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
+				<span style="color:blue;"># action = firewallcmd-multiport[name=nginx, port="http,https", protocol=tcp]</span></br>
 				logpath = /var/log/nginx/error.log
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
