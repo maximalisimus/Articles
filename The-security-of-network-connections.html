@@ -699,7 +699,7 @@ mywg
 				$: vi /etc/fail2ban/filter.d/nginx-limit-req.conf</br></br>
 				[Definition]</br>
 				ngx_limit_req_zones = [^"]+</br>
-				failregex = ^\s*\[error\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "(?:%(ngx_limit_req_zones)s)", client: <HOST></br>
+				failregex = ^\s*\[[a-z]+\] \d+#\d+: \*\d+ limiting requests, excess: [\d\.]+ by zone "(?:%(ngx_limit_req_zones)s)", client: &lt;HOST&gt;,</br>
 				ignoreregex =
 			</p>
 			<p>Создаем правило в fail2ban:</p>
