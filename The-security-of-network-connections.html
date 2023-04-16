@@ -358,11 +358,15 @@
 				<span style="color:blue;"># Покажет в активной зоне все настройки</span></br>
 				<span style="color:blue;"># и</span></br>
 				$ sudo firewall-cmd --get-active-zones</br>
-				<span style="color:blue;"># покажет все активные зоны</span>
+				<span style="color:blue;"># покажет все активные зоны</span><br>
+				$ sudo firewall-cmd --get-services<br>
+				<span style="color:blue;"># Список всех сервисов доступных firewalld</span>
 			</p>
-			<p><b>Обязательно выполните эти 2 команды сверху, чтобы убедиться, что в данный момент у вас в активной зоне по умолчанию (а это скорее всего <u>public</u>) имеется сервис <b>ssh</b> или порт этого сервиса. Иначе вы можете потерять доступ к своему серверу. Это важно!</b></p>
+			<p><b>Обязательно выполните эти 2 команды сверху, чтобы убедиться, что в данный момент у вас в активной зоне по умолчанию (а это скорее всего <u>public</u>) имеется сервис <b>ssh</b> или порт этого сервиса (если он у вас изменен). Иначе вы можете потерять доступ к своему серверу. Это важно!</b></p>
 			<p>Если <i>ssh</i> сервиса там нет, его можно добавить 2-мя следующими командами:</p>
 			<p class="codes">
+				$ sudo firewall-cmd --permanent --zone=public --add-service=dhcp<br>
+				<span style="color:blue;"># Сначала DHCP-IPV4, т.к. по умолчанию там только DHCP-IPV6 (dhcpv6-client)</span></br>
 				$ sudo firewall-cmd --permanent --zone=public --add-service=ssh</br>
 				<span style="color:blue;"># Если порт отличается можно заменить эту команду на следующую</span></br>
 				$ sudo firewall-cmd --permanent --zone=public --add-port=2222/tcp</br>
@@ -450,9 +454,10 @@ WantedBy=timers.target
 				$ sudo firewall-cmd --info-zone=internal
 			</p>
 			<p>Теперь можно создавать зоны фаервола с нужным нам доступом. Создадим зоны, например, <b>&laquo;mysite&raquo;</b> и <b>&laquo;mywg&raquo;</b>. Пока поработаем надо зоной <b>&laquo;mysite&raquo;</b>.</p>
-			<p>Добавим в эту зону <i>&laquo;DHCP&raquo;</i> и <i>&laquo;SSH&raquo;</i>, несколько портов, включая <i>&laquo;wireguard&raquo;</i>, а также включим <b>&laquo;NAT&raquo;</b>, чтобы при подключении к <i>&laquo;wireguard&raquo;</i> у нас были свои <i>IP</i> адреса, заданные в <i>&laquo;.conf&raquo;</i>-файле.</p>
+			<p>Добавим в эту зону <i>&laquo;DHCP&raquo;</i> и <i>&laquo;SSH&raquo;</i>, несколько портов, включая <i>&laquo;wireguard&raquo;</i>, а также включим <b>&laquo;NAT&raquo;</b>, чтобы при подключении к <i>&laquo;wireguard&raquo;</i> у нас были свои <i>IP</i> адреса, заданные в <i>&laquo;.conf&raquo;</i>-файле. У меня порт <i>&laquo;SSH&raquo;</i> остался в виртуальной машине по умолчанию. Лучше так не делать и менять его на другой. Тогда вместо добавления сервиса надо будет добавлять конкретно порт, а не менять его в конфигурационных файлах, что будет более наглядно для вас самих и работать будет абсолютно также, но не правильнее.</p>
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --new-zone=mysite</br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcp</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcpv6-client</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=ssh</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-port=80/tcp</br>
