@@ -405,6 +405,59 @@
 			<p>Если вы попытаетесь добавить строку вида: <b>&laquo;After=docker.service&raquo;</b> в службу <b>firewalld.service</b>, то после перезагрузки сервера вы также получите те же ошибки и проблемы запуска.</p>
 			<p>Поэтому лучше всего будет <b>firewalld.service</b> запускать по таймеру <b>systemd</b>, что решит все проблемы. И сюда обязательно надо вставить строку <b>&laquo;After=docker.service&raquo;</b>, чтобы запускать только после запуска <b>&laquo;docker.service&raquo;</b>.</p>
 			<p>Единственное но - при большом количестве контейнеров - время запуска надо будет слегка отрегулировать. Чем больше контейнеров, тем больше время, через которое будете запускать фаервол. Чтобы сети контейнеров стали доступны. Тогда ошибок никаких не будет.</p>
+			<p>Ещё один момент в том, что чтобы отрабатывал <i>nginx</i> - ему нужны сети, которые есть в <i>docker</i>-контейнерах. Сервису <i>firewalld</i> нужны все сети - и те что в <i>docker-ах</i>, и от <i>wireguard-а</i>. Ну а чтобы он правильно маршрутизировал трафик ему нужен запущенный <i>nginx</i>. И последний <i>fail2ban-у</i> нужен в первую очередь <i>firewalld-сервис</i>, чтобы правильно отрабатывали все ловушки.</p>
+			<p>Поэтому, чтобы всё правильно запускалось, в правильной последовательности и не вызывало ошибок - уберем из автозагрузки <b>docker</b> и <b>nginx</b> сервисы и создадим для них <b>systemd-таймеры</b>. Таким образом, сначала будет запускаться <i>wireguard</i>, затем <i>docker</i>, <i>nginx</i>, <i>firewalld</i> и только после этого <i>fail2ban</i>.</p>
+			<p>Убираем nginx и docker из автозагрузки.</p>
+			<p class="codes">
+				$ sudo systemctl disable nginx</br>
+				$ sudo systemctl disable docker</br>
+			</p>
+			<p>Создадим таймеры <i>docker</i> и <i>nginx</i>, добавим в автозагрузки и запустим их.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/systemd/system/docker.timer</b>
+
+[Unit]
+Description=Starting Docker on after services wireguard
+Wants=wg-quick.target
+After=wg-quick.target
+
+[Timer]
+Unit=docker.service
+OnBootSec=5s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
+
+<span style="color:blue;"># Сохранение настроек, выход</span>
+<b>CTRL + o</b>
+<b>CTRL + x</b>
+
+<b>$ sudo nano /etc/systemd/system/nginx.timer</b>
+
+[Unit]
+Description=Starting Nginx on after services docker
+Wants=docker.service
+After=docker.service
+
+[Timer]
+Unit=nginx.service
+OnBootSec=10s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
+
+<span style="color:blue;"># Сохранение настроек, выход</span>
+<b>CTRL + o</b>
+<b>CTRL + x</b>
+<b>$ sudo systemctl start docker.timer</b>
+<b>$ sudo systemctl enable docker.timer</b>
+<b>$ sudo systemctl start nginx.timer</b>
+<b>$ sudo systemctl enable nginx.timer</b></pre>
+			</div>
+			<p>Вот теперь переходим к таймеру <b>firewalld</b>.</p>
 			<div class="codeses">
 				<pre>
 <span style="color:blue;"># <span style="color:red;">Выключим</span> стандартный способ включения фаервола</span>
@@ -413,9 +466,9 @@
 <b>$ sudo nano /etc/systemd/system/firewalld.timer</b>
 
 [Unit]
-Description=Starting Firewalld on after services docker
-Wants=docker.service
-After=docker.service
+Description=Starting Firewalld on after services nginx
+Wants=nginx.service
+After=nginx.service
 
 [Timer]
 Unit=firewalld.service
@@ -627,7 +680,7 @@ After=firewalld.service
 
 [Timer]
 Unit=fail2ban.service
-OnBootSec=15s
+OnBootSec=20s
 AccuracySec=1s
 
 [Install]
