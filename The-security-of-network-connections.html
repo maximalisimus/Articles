@@ -372,6 +372,7 @@
 			<p>Если <i>ssh</i> сервиса там нет, его можно добавить 2-мя следующими командами:</p>
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --zone=public --add-service=dhcp<br>
+				$ sudo firewall-cmd --permanent --zone=public --add-service=dhcpv6<br>
 				<span style="color:blue;"># Сначала DHCP-IPV4, т.к. по умолчанию там только DHCP-IPV6 (dhcpv6-client)</span></br>
 				$ sudo firewall-cmd --permanent --zone=public --add-service=ssh</br>
 				<span style="color:blue;"># Если порт отличается можно заменить эту команду на следующую</span></br>
@@ -379,6 +380,45 @@
 				<span style="color:blue;"># Обязательно указывайте протокол для порта - иначе получите ошибку добавления</span></br></br>
 				$ sudo firewall-cmd --reload</br>
 				<span style="color:blue;"># Обязательно перезагружаем правила</span></br>
+			</p>
+			<p>К сожалению сервиса <b>&laquo;dhclient&raquo;</b> в <b>Firewalld</b> нет, т.е. <b>&laquo;.xml&raquo;</b>-файла с указанными портами и протоколами. Имеется введу конкретно сервис для клиента, чтобы сервер мог отдать клиенту заданные в настройках порты.</p>
+			<p>Такой сервис можно создать самостоятельно.</p>
+			<div class="codeses">
+				<pre>
+<span style="color:blue;"># Создаем сервис для firewalld в виде xml-файла</span></br>
+<b>$ sudo nano /usr/lib/firewalld/services/dhclient.xml</b>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;service&gt;
+  &lt;short&gt;dhclient&lt;/short&gt;
+  &lt;description&gt;This allows a DHCLIENT to accept messages from DHCP server and relay agents.&lt;/description&gt;
+  &lt;port protocol="udp" port="67"/&gt;
+  &lt;port protocol="udp" port="68"/&gt;
+&lt;/service&gt;
+
+
+<span style="color:blue;"># Сохраняем и выходим</span>
+<b>CTRL + o</b>
+<b>CTRL + x</b>
+<span style="color:blue;"># Обязательно перезагружаем правила</span>
+<b>$ sudo firewall-cmd --reload</b>
+<b>$ sudo firewall-cmd --info-service=dhclient</b>
+dhclient
+  ports: 67/udp 68/udp
+  protocols:
+  source-ports:
+  modules:
+  destination:
+  includes:
+  helpers:</pre>
+			</div>
+			<p>После чего добавляем в нужную зону.</p>
+			<p class="codes">
+				$ sudo firewall-cmd --permanent --zone=public --add-service=dhclient</br>
+				<span style="color:blue;"># Обязательно перезагружаем правила</span></br>
+				$ sudo firewall-cmd --reload</br>
+				<span style="color:blue;"># Проверяем</span></br>
+				$ sudo firewall-cmd --info-zone=public
 			</p>
 			<p>В случае, если вы не меняли настройки сетевых карт сервера по умолчанию на ручные (<i>&laquo;/etc/network/interfaces&raquo;</i>), то добавлять <i>DHCP-сервисы</i> обязательная процедура, чтобы сервер смог получить свой адрес. Если у вас ручные настройки сетевых карт, можно не добавлять ни один <i>DHCP-сервис</i>. Но, обычно в любой <b>VPS</b> или <b>VDS</b> не рекомендуется ставить ручные настройки сетевых карт, хотя это вполне возможно и нормально. Ручные настройки чаще всего прописывают на своих собственных серверах, на которых как раз и установлен <i>DHCP-сервер</i>, который как раз и раздаёт всем ПК в локальной сети IP адреса. Однако, в таком случае, все <i>DHCP-сервисы</i> необходимо добавлять в нужные зоны. Иначе ПК в сети не смогут получить свои адреса, а сервер раздать их.</p>
 			<p>И ещё раз убедитесь, что <i>ssh</i> или порт появились в зоне <i>public</i>.</p>
