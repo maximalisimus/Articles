@@ -385,7 +385,7 @@
 			<p>Такой сервис можно создать самостоятельно.</p>
 			<div class="codeses">
 				<pre>
-<span style="color:blue;"># Создаем сервис для firewalld в виде xml-файла</span></br>
+<span style="color:blue;"># Создаем сервис для firewalld в виде xml-файла</span>
 <b>$ sudo nano /usr/lib/firewalld/services/dhclient.xml</b>
 
 &lt;?xml version="1.0" encoding="utf-8"?&gt;
@@ -402,6 +402,7 @@
 <b>CTRL + x</b>
 <span style="color:blue;"># Обязательно перезагружаем правила</span>
 <b>$ sudo firewall-cmd --reload</b>
+<span style="color:blue;"># Проверяем, что у нас получилось</span>
 <b>$ sudo firewall-cmd --info-service=dhclient</b>
 dhclient
   ports: 67/udp 68/udp
