@@ -88,7 +88,7 @@
 			<p class="codes">
 				<span style="color:blue;"># Устанавливаем sudo</span></br>
 				$ apt install sudo -y</br></br>
-				<span style="color:blue;"># Добавляем группу. Там уже в принципе есть нужная группа (&laquo;sudo&raquo;), но мне, например, понятнее со своей группой, а не системной. Хотя это и не обязательно.</span></br>
+				<span style="color:blue;"># Добавляем группу. Там уже в принципе есть нужная группа (&laquo;sudo&raquo;), но мне, например, понятнее со своей группой, а не системной.</span></br>
 				$ /usr/sbin/groupadd wheel</br></br>
 				<span style="color:blue;"># Создаем пользователя и сразу добавляем в созданную группу</span></br>
 				$ /usr/sbin/useradd myuser -m -g users -G wheel,users -s /bin/bash</br></br>
