@@ -180,7 +180,8 @@
 				<span style="color:blue;"># Если не работает, возможно дополнительные параметры просто не нужны. Например, в Debian 11 не нужны.</span></br>
 				$ ssh-copy-id user@host_ip<br><br>
 				<span style="color:blue;"># Порт указывается через -p.</span></br>
-				$ ssh-copy-id user@host_ip -p 2222
+				$ ssh-copy-id user@host_ip -p 2222</br>
+				<span style="color:blue;"># Соответственно вставте свой порт, который вы настроили в sshd_config</span>
 			</p>
 			<p>В первое подключение у вас скорее всего будет суперпользователь (root). И после того как вы создадите пользователя, отправлять на сервер свой публичный ssh-ключ обязательно необходимо обоим пользователям, чтобы не потерять доступ.</p>
 			<p class="codes">
@@ -188,7 +189,8 @@
 				$ ssh-copy-id user@host_ip<br><br>
 				<span style="color:blue;"># Или так, если вдруг поменяли порт по умолчанию.</span></br>
 				$ ssh-copy-id root@host_ip -p 2222<br>
-				$ ssh-copy-id user@host_ip -p 2222
+				$ ssh-copy-id user@host_ip -p 2222</br>
+				<span style="color:blue;"># Соответственно вставте свой порт, который вы настроили в sshd_config</span>
 			</p>
 			<p>Или вручную, с помощью флеш-карты, если это ваш домашний сервер или в организации.</p>
 			<p class="codes">
@@ -250,6 +252,13 @@
 			<p>Сохраните файл и перезапустите sshd сервис:</p>
 			<p class="codes">
 				$: sudo systemctl restart sshd
+			</p>
+			<p>Подключиться к серверу теперь можно по ssh-ключу. Обязательно согласитесь на обмен fingerprint ключей.</p>
+			<p class="codes">
+				$ ssh user@host_ip<br><br>
+				<span style="color:blue;"># Или так, если вы меняли порт по умолчанию</span></br>
+				$ ssh user@host_ip -p 2222</br>
+				<span style="color:blue;"># Соответственно вставте свой порт, который вы настроили в sshd_config</span>
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
