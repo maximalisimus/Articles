@@ -391,14 +391,14 @@
 				$ sudo firewall-cmd --get-services<br>
 				<span style="color:blue;"># Список всех сервисов доступных firewalld</span>
 			</p>
-			<p><b>Обязательно выполните эти 2 команды сверху, чтобы убедиться, что в данный момент у вас в активной зоне по умолчанию (а это скорее всего <u>public</u>) имеется сервис <b>ssh</b> или порт этого сервиса (если он у вас изменен). Иначе вы можете потерять доступ к своему серверу. Это важно!</b></p>
+			<p><b>Обязательно выполните эти 2 команды сверху, чтобы убедиться, что в данный момент у вас в активной зоне по умолчанию (а это скорее всего <u>public</u>) имеется сервис <b>ssh</b> или порт сервиса (если порт изменен). Иначе вы можете потерять доступ к своему серверу. Это важно!</b></p>
 			<p>Если <i>ssh</i> сервиса там нет, его можно добавить 2-мя следующими командами:</p>
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --zone=public --add-service=dhcp<br>
 				$ sudo firewall-cmd --permanent --zone=public --add-service=dhcpv6<br>
 				<span style="color:blue;"># Сначала DHCP-IPV4, т.к. по умолчанию там только DHCP-IPV6 (dhcpv6-client)</span></br>
 				$ sudo firewall-cmd --permanent --zone=public --add-service=ssh</br>
-				<span style="color:blue;"># Если порт отличается можно заменить эту команду на следующую</span></br>
+				<span style="color:blue;"># Если порт отличается нужно заменить эту команду на следующую</span></br>
 				$ sudo firewall-cmd --permanent --zone=public --add-port=2222/tcp</br>
 				<span style="color:blue;"># Обязательно указывайте протокол для порта - иначе получите ошибку добавления</span></br></br>
 				$ sudo firewall-cmd --reload</br>
@@ -585,14 +585,13 @@ WantedBy=timers.target
 			<p class="codes">
 				$ sudo firewall-cmd --permanent --new-zone=mysite</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcp</br>
-				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcpv6-client</br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-service=dhcpv6</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=ssh</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=http</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-service=https</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-port=51820/udp</br>
 				$ sudo firewall-cmd --permanent --zone=mysite --add-masquerade</br></br>
-				$ sudo firewall-cmd --reload</br>
-				<span style="color:blue;"># Для DNS тоже есть сервисы - dns, dns-over-tls, mdns.</span>
+				$ sudo firewall-cmd --reload
 			</p>
 			<p>Мы ешё не закончили с этой зоной. Это только подготовительная часть - чтобы в процессе не потерять доступ.</p>
 			<p>Теперь добавим к этой зоне интерфейс и убедимся, что всё правильно работает. Вот теперь у нас есть доступ к нашим контейнерам по 80 и 443 портам по именам доменов + доступ к vpn сервису.</p>
@@ -690,9 +689,8 @@ mysite (active)
 <b>$ sudo firewall-cmd --permanent --zone=mywg --add-service=ssh</b>
 <b>$ sudo firewall-cmd --permanent --zone=mywg --add-service=http</b>
 <b>$ sudo firewall-cmd --permanent --zone=mywg --add-service=https</b>
-<span style="color:blue;"># Для DNS тоже есть сервисы - dns, dns-over-tls, mdns.</span>
 <b>$ sudo firewall-cmd --permanent --zone=mywg --add-port=9000/tcp</b>
-<span style="color:blue;"># Для Portainer-а, визуального контроля контейнеров.</span>
+<span style="color:blue;"># Для Portainer-а, визуального контроля контейнеров, 9000 порт.</span>
 <b>$ sudo firewall-cmd --reload</b>
 
 <span style="color:blue;"># Всё проверяем</span>
@@ -706,7 +704,7 @@ mysite
 mywg
   interfaces: wg0</pre>
 			</div>
-			<p>Всё! На этом настройки данного фаервола завершены. Можно переходить к тестированию в браузере, консоли - везде где вам необходимо.</p></br>
+			<p>Всё! На этом настройки данного фаервола завершены.</p>
 			<h3>Переходим к настройкам wireguard-а.</h3>
 			<p>Настроим конфигурацию сервера. Закоментируем строки с маршрутизацией и перезапустим сервис.</p>
 			<p class="codes">
@@ -718,7 +716,7 @@ mywg
 				... </br></br>
 				<b>$ sudo systemctl restart wg-quick@wg0</b></br>
 			</p>
-			<p>К сожалению, совместить как-то по другому, увы, нельзя.</p>
+			<p>К сожалению, совместить как-то по другому, увы, нельзя. Ну а на этом настройки фаервола и wireguard для совместной работы завершены.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.0"></a></p>
