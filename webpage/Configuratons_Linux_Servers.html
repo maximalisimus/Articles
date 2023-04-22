@@ -801,12 +801,12 @@ capability setuid,
 			<p>В Linux-е очистить кеш-dns немного сложнее, чем в Windows-е.</p>
 			<p>Сначала необходимо определить кто занимается кешированием. Например, посмотрим на systemd-resolved. Он бывает гораздо удобнее, чем встроеный резолвер в Network Manager.</p>
 			<p class="codes">
-				$ sudo systemd-resolve —statistics
+				$ sudo systemd-resolve --statistics
 			</p>
 			<p>Команда вернет ошибку, если резолвер не используется.</p>
 			<p>Если всё-таки используется для его очистки и перезапуска можно воспользоваться следующими командами.</p>
 			<p class="codes">
-				$ sudo systemd-resolve —flush-caches<br>
+				$ sudo systemd-resolve --flush-caches<br>
 				$ sudo systemctl enable systemd-resolved.servic
 			</p>
 			<p>Не забудьте про службу кеширования запросов службы имён &laquo;nscd&raquo;.</p>
