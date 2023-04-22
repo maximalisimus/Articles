@@ -770,25 +770,96 @@ capability setuid,
 			<hr>
 			<p><a name="part9.1"></a></p>
 			<h3>10.1. Порядок источников имен NSSWITCH.</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>NSSWITCH</b> - это файл конфигурации Linux, который определяет, как система должна переключаться между различными поставщиками услуг имен.</p>
+			<p>Этот файл можно использовать для настройки того, какие службы следует использовать для поиска имени хоста, поиска паролей и т.д.</p>
+			<p>Файл /etc/nsswitch.conf считывается библиотекой Name Service Switch (NSS) при запуске системы. Затем библиотека NSS использует информацию в файле /etc/nsswitch.conf, чтобы определить, какие поставщики услуг имен должны использоваться для каждого типа поиска.</p>
+			<p><b>/etc/nsswitch.conf является важной частью операционной системы Linux, и любые изменения в этом файле могут привести к серьезным проблемам. Поэтому важно понимать, как работает /etc/nsswitch.conf, прежде чем вносить какие-либо изменения в этот файл.</b></p>
+			<p>В операционных системах Windows и Linux имеется файл hosts, в котором можно установить IP адреса для любых имён — хостов и доменных имён. По умолчанию операционные системы работают так.</p>
+			<ul>
+				<li>Если запрашиваемое имя присутствует в файле hosts, то его IP берётся из этого файла и запрос к DNS серверу не делается.</li>
+				<li>Если в файле hosts имя хоста не найдено, то выполняется запрос к DNS серверу.</li>
+			</ul>
+			<p>В операционной системе Linux можно поменять приоритет источников для получения IP адреса или вовсе отключить некоторые из них. Для этого используется файл &laquo;/etc/nsswitch.conf&raquo;.</p>
+			<p>Строка, которая отвечает за преобразование имён хостов начинается на &laquo;hosts&raquo;.</p>
+			<p class="codes">
+				hosts: files dns
+			</p>
+			<p>В старых или более новых системах она может быть такой.</p>
+			<p class="codes">
+				hosts: files mymachines myhostname resolve [!UNAVAIL=return] dns
+			</p>
+			<ul>
+				<li><b>hosts</b> — это указание на службу, для которой предназначена строка.</li>
+				<li><b>files</b> означает файл, относящийся к этой службе. У каждой службы в системе свой файл, в данном случае имеется ввиду &laquo;/etc/hosts&raquo;.</li>
+				<li><b>mymachines</b> — судя по названию, означает имя машины.</li>
+				<li><b>myhostname</b> - hostname, логично.</li>
+				<li><b>resolve</b> — это системная служба резолва.</li>
+				<li><b>Строка &laquo;[!UNAVAIL=return]&raquo;</b> - означает, что если предыдущая служба недоступна, то немедленно будет возвращён результат без запроса в следующем источнике.</li>
+			</ul>
+			<p>Файлы других служб.</p>
+			<ul>
+				<li>aliases /etc/aliases</li>
+				<li>ethers /etc/ethers</li>
+				<li>group /etc/group</li>
+				<li>hosts /etc/hosts</li>
+				<li>initgroups /etc/group</li>
+				<li>netgroup /etc/netgroup</li>
+				<li>networks /etc/networks</li>
+				<li>passwd /etc/passwd</li>
+				<li>protocols /etc/protocols</li>
+				<li>publickey /etc/publickey</li>
+				<li>rpc /etc/rpc</li>
+				<li>services /etc/services</li>
+				<li>shadow /etc/shadow</li>
+			</ul>
+			<p>Чтобы отключить файл &laquo;/etc/hosts&raquo; просто уберите слово &laquo;files&raquo;.</p>
+			<p>Чтобы сделать приоретет dns выше файла &laquo;/etc/hosts&raquo; поставте это слово перед словом &laquo;files&raquo;.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part9.2"></a></p>
 			<h3>10.2. DNS-Кеш.</h3>
-			<p></p>
-			<p></p>
+			<p>Иногда вам может понадобится очистить кеш dns. Например, вам в организации для вашего выделенного белого ip адреса предоставлен доступ к какой-нибудь базе данных. И частенько бывает что у кого-нибудь что-нибудь не грузится, или возникают проблемы с dns-сервером.</p>
+			<p>Обычно очистка dns-кеша помогает временно решить проблему. Чтобы постоянно не чистить кеш dns стоит внести в файл &laquo;hosts&raquo; вашей системы сопоставление доменного имени и ip-адреса этой базы данных.</p>
+			<p>В Linux-е очистить кеш-dns немного сложнее, чем в Windows-е.</p>
+			<p>Сначала необходимо определить кто занимается кешированием. Например, посмотрим на systemd-resolved. Он бывает гораздо удобнее, чем встроеный резолвер в Network Manager.</p>
+			<p class="codes">
+				$ sudo systemd-resolve —statistics
+			</p>
+			<p>Команда вернет ошибку, если резолвер не используется.</p>
+			<p>Если всё-таки используется для его очистки и перезапуска можно воспользоваться следующими командами.</p>
+			<p class="codes">
+				$ sudo systemd-resolve —flush-caches<br>
+				$ sudo systemctl enable systemd-resolved.servic
+			</p>
+			<p>Не забудьте про службу кеширования запросов службы имён &laquo;nscd&raquo;.</p>
+			<p class="codes">
+				$ sudo systemctl restart nscd<br>
+				$ nscd -K; nscd
+			</p>
+			<p>Для её установки и настройки в Debian выполните следующие команды</p>
+			<p class="codes">
+				$ sudo apt install nscd<br>
+				$ sudo systemctl restart nscd<br>
+				$ sudo ncsd -g<br>
+				$ sudo strings /var/cache/nscd/hosts
+			</p>
+			<p>В Archlinux она есть только в <a href="https://vk.com/away.php?to=https%3A%2F%2Faur.archlinux.org%2Fpackages%2Funscd&cc_key=">&laquo;AUR&raquo;</a>.</p>
+			<p>При использовании &laquo;Network Manager&raquo;, его просто необходимо перезапустить.</p>
+			<p class="codes">
+				$ sudo service networking restart</br>
+				<span style="color:blue;"># или</span></br>
+				$ sudo systemctl restart NetworkManager
+			</p>
 			<p></p>
 			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part9.3"></a></p>
 			<h3>10.3. DNS-резолвер.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -801,10 +872,18 @@ capability setuid,
 			<p></p>
 			<p></p>
 			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part10"></a></p>
 			<h2>11. Docker, docker-compose.</h2>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -819,67 +898,12 @@ capability setuid,
 			<p></p>
 			<p></p>
 			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part0"></a></p>
-			<h2>Part-1 H1</h2>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p><b>&laquo;&raquo;</b></p>
-			<p class="codes">
-				$ Codes</br>
-				<span style="color:blue;"># </span></br>
-			</p>
-			<div class="codeses">
-				<pre>
-def myfunc:
-	pass
-				</pre>
-			</div>
-			<div class="codeses">
-				<pre>
-<span style="color:blue;">#!/bin/bash</span>
-...
-script
-...
-<span style="color:blue;"># echo "result"</span>
-				</pre>
-			</div>
-			<ul>
-				<li><span style="color:Blue;">Blue</span></li>
-				<li>Black</li>
-				<li><span style="color:Red;">Reed</span></li>
-				<li><span style="color:Yellow;">Yellow</span></li>
-				<li><span style="color:Green;">Green</span></li>
-			</ul>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part0"></a></p>
-			<h1>Part-2 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
-			</div>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part3"></a></p>
-			<h1>Part-3 H1</h1>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-						
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
