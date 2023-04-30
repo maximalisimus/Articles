@@ -81,6 +81,10 @@
 					<li><a href="#part13.4">DNS-сервер.</a></li>
 				</ol>
 				<li><a href="#part14">Установка и настройка wireguard.</a></li>
+				<ol>
+					<li><a href="#part14.1">Настройки сервера.</a></li>
+					<li><a href="#part14.2">Настройки клиентов.</a></li>
+				</ol>
 				<li><a href="#part15">Docker, docker-compose.</a></li>
 				<li><a href="#part16">Nginx VS Nginx Proxy Manager</a></li>
 			</ol>
@@ -1206,6 +1210,8 @@ options {
 			<p>Наступило время, когда VPN уже не является каким-то экзотическим инструментом бородатых сисадминов. Задачи у пользователей разные, но факт в том, что VPN стал нужен вообще всем.</p>
 			<p>Проблема текущих VPN решений в том, что их тяжело правильно настроить, дорого обслуживать, а так же в них полно legacy кода сомнительного качества.</p>
 			<p><b>WireGuard</b> — это современный протокол для организации <b>VPN</b>, написанный с нуля, бесплатный и с открытыми исходными кодами. В отличие от &laquo;мастодонтов&raquo; вроде <b>OpenVPN</b> или <b>IPSec</b>, он намного проще и легче. Это касается и скорости (пере)подключения, и производительности, и требований к ресурсам, и процесса настройки, и объёма кода. Недавно было объявлено, что <b>WireGuard</b> войдёт в состав будущих ядер <b>Linux</b>, а впоследствии попадёт и во все популярные дистрибутивы, что косвенно указывает на зрелость этого решения.</p>
+			<p><a name="part14.1"></a></p>
+			<h3>14.1. Настройки сервера.</h3>
 			<p>Итак, начнем с того что чтобы интернет заработал через ваш VPN-тунель - обязетельно перед его установкой и настройкой надо сделать разрешение на пересыл пакетов ipv4, т.е. настроить <a href="#part7"><b>&laquo;forwarding&raquo;</b></a> из пункта по его настройке.</p>
 			<p>Перейдём к установке.</p>
 			<p class="codes">
@@ -1216,7 +1222,187 @@ options {
 				<span style="color:blue;"># Fedora/CentOS</span></br>
 				$ sudo dnf install wireguard-tools qrencode
 			</p>
-			<p></p>
+			<p>Теперь создадим отдельную папку для ключей <b>wireguard</b>-а для сервера и для клиентов.</p>
+			<p class="codes">
+				$ cd ~<br>
+				$ mkdir -p ./wg/{wg-server,wg-clients}
+			</p>
+			<p>Сгенерируем ключи для сервера и также сгенерируем ключи для первого клиента.</p>
+			<p class="codes">
+				$ cd ~<br>
+				$ wg genkey | sudo tee ./wg/wg-server/server_private.key | wg pubkey | sudo tee ./wg/wg-server/server_public.key && clear<br>
+				$ wg genkey | sudo tee ./wg/wg-clients/client_private.key | wg pubkey | sudo tee ./wg/wg-clients/client_public.key && clear
+			</p>
+			<p>Теперь последовательно посмотрим на ключи сервера и клиента - сначала секретный, потом публичный. Они дальше понадобятся в настройке конфигурации подключения к серверу.</p>
+			<p class="codes">
+				<span style="color:blue;"># Секретный ключ сервера</span></br>
+				<b>$ sudo cat ./wg/wg-server/server_private.key</b></br>
+				OFCMMpdPYUTndTkTuCDCZDg6uYrzGcjcL6Tg4aAp5kU=</br></br>
+				<span style="color:blue;"># Публичный ключ сервера</span></br>
+				<b>$ sudo cat ./wg/wg-server/server_public.key</b></br>
+				xxIV2fvMp7J2H1GxVuQcfVi2TJ0lQ/2K8UXSKC/byhM=<br></br>
+				<span style="color:blue;"># Секретный ключ первого клиента</span></br>
+				<b>$ sudo cat ./wg/wg-clients/client_private.key<</b><br>
+				GMJXo+phyNS/kodizn353D2MN8bPNOSqJEhQ83caKkY=</br></br>
+				<span style="color:blue;"># Публичный ключ первого клиента</span></br>
+				<b>$ sudo cat ./wg/wg-clients/client_public.key</b></br>
+				2g8MWhxN1QGLAfGwEnxHG38/krdcPbgjo87zSKurP1g=
+			</p>
+			<p>Создадим настройку wireguard сервера. Настройке нужно дать правильные права доступа, иначе сервис wireguard-а будет ругаться по этому поводу.</p>
+			<p class="codes">
+				$ sudo touch /etc/wireguard/wg0.conf</br>
+				$ sudo chmod u=rwx,go= /etc/wireguard/wg0.conf
+			</p>
+			<p>Перейдём к содержиму этого файла (<b>&laquo;/etc/wireguard/wg0.conf&raquo;</b>). Обычная, простейшая конфигурация, предлагаемые интернетом и документацией выглядет так.</p>
+			<p><b>В некоторых строках ниже (PostUp, PostDown) сделаны переносы на новую строку - это только для красоты отображения конфигурации здесь, чтобы всё было видно. В реальной конфигурации никаких переносов в строках PostUp и PostDown не должно быть.</b></p>
+			<div class="codeses">
+				<pre><b>$ sudo nano /etc/wireguard/wg0.conf</b>
+
+[Interface]
+Address = ip/mask
+ListenPort = port
+PrivateKey = private-key-server
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; 
+	iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE; 
+	ip6tables -A FORWARD -i wg0 -j ACCEPT; 
+	ip6tables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; 
+	iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; 
+	ip6tables -D FORWARD -i wg0 -j ACCEPT; 
+	ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE
+
+[Peer]
+PublicKey = public-key-clients
+AllowedIPs = ip-clients/mask-client
+PersistentKeepAlive = 25
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p><b>Ну или тогда сделать вот так. Лучше когда в одну строку - меньше проблем. Однако, вполне можно сделать и так.</b></p>
+			<div class="codeses">
+				<pre><b>$ sudo nano /etc/wireguard/wg0.conf</b>
+
+[Interface]
+Address = ip/mask
+ListenPort = port
+PrivateKey = private-key-server
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; 
+PostUp = iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE; 
+PostUp = ip6tables -A FORWARD -i wg0 -j ACCEPT; 
+PostUp = ip6tables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; 
+PostDown = iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; 
+PostDown = ip6tables -D FORWARD -i wg0 -j ACCEPT; 
+PostDown = ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE
+
+[Peer]
+PublicKey = public-key-clients
+AllowedIPs = ip-clients/mask-client
+PersistentKeepAlive = 25
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Разберем значения каждого параметра. И не забудьте заменить сетевые интерфейсы на свои.</p>
+			<ul>
+				<li><b>Interface</b> - Настройка сервера.</li>
+				<li><b>Peer</b> - Настройка клиентов.</li>
+				<li><b>Address</b> - Адрес сервера в сети VPN.</li>
+				<li><b>ListenPort</b> - Порт, на котором будет ожидать подключения WireGuard.</li>
+				<li><b>PrivateKey</b> - Приватный ключ сервера, сгенерированный ранее.</li>
+				<li><b>PostUp</b> - команда, которая выполняется после запуска сервера. В данном случае включается поддержка MASQUERADE для интерфейса enp0s3,  также разрешается прием пакетов на интерфейсе wg0.</li>
+				<li><b>PostDown</b> - Выполняется после завершения работы WireGuard, в данном случае удаляет все правила, добавленные в PostUp.</li>
+			</ul>
+			<p>Секции <b>Peer</b> содержат настройки клиентов, которые могут подключится к серверу. Таких секций может быть сколько угодно. Главное, чтобы ключи и адреса отличались друг от друга.</p>
+			<ul>
+				<li><b>PublicKey</b> - Публичный ключ клиента, сгенерированный ранее.</li>
+				<li><b>AllowedIPs</b> - IP адрес, который может взять клиент. Обратите внимание, маска для IPv4 должна быть 32, если вы хотите, чтобы клиенты не видели друг друга. Если же вам наоборот, надо чтобы они видели друг-друга, установите маску 24.</li>
+				<li><b>PersistentKeepAlive</b> - Это количество секунд, между которыми WireGuard будет отправлять пакеты поддержки активности от конечной точки A к хосту B.</li>
+			</ul>
+			<p><b>PersistentKeepAlive</b> параметр обязателен как на сервере для клиентов, так и на самих клиентах. Дело в том, что если <b>wireguard</b> не будет регулярно поддерживать активность <b>VPN-тунеля</b>, то он перестанет быть активность в целях безопасности. И тогда все попытки отправить любые запросы на сервер будут обрываться, т.е. сервер просто не будет видеть клиента. Т.е. по сути <b>VPN</b> оборвётся и вам придётся переподключаться к серверу. Это не приятно.</p>
+			<p>Приведу пример конфигурации из виртуальной машины. Обратите внимания, что пул-адресов для VPN-тунеля я взял самый простой. Лучше, когда и пул таких адресов будет изменен и будет измененм порт подключения по умолчанию. Однако, для виртуальной машины в качестве примера - сойдёт.</p>
+			<p>Все ключи - и на сервере и на клиенте у вас будут свои. Здесь приводится только пример использования.</p>
+			<p><b>При использовании Firewalld - строки с PostUp и PostDown - обязательно закоментировать!</b></p>
+			<div class="codeses">
+				<pre><b>$ sudo touch /etc/wireguard/wg0.conf</b>
+<b>$ sudo chmod u=rwx,go= /etc/wireguard/wg0.conf</b>
+<b>$ sudo nano /etc/wireguard/wg0.conf</b>
+
+[Interface]
+Address = 10.10.10.1/24
+ListenPort = 51820
+PrivateKey = OFCMMpdPYUTndTkTuCDCZDg6uYrzGcjcL6Tg4aAp5kU=
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; 
+	iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE; 
+	ip6tables -A FORWARD -i wg0 -j ACCEPT; 
+	ip6tables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; 
+	iptables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE; 
+	ip6tables -D FORWARD -i wg0 -j ACCEPT; 
+	ip6tables -t nat -D POSTROUTING -o enp0s3 -j MASQUERADE
+
+[Peer]
+PublicKey = 2g8MWhxN1QGLAfGwEnxHG38/krdcPbgjo87zSKurP1g=
+AllowedIPs = 10.10.10.2/32
+PersistentKeepAlive = 25
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Теперь необходимо запустить сервер и разрешить автозапуск после перезагрузки системы.</p>
+			<p class="codes">
+				<span style="color:blue;"># Запускаем по названию конфигурации без расширения</span></br>
+				$ sudo systemctl start wg-quick@wg0</br>
+				$ sudo systemctl enable wg-quick@wg0</br><br>
+				<span style="color:blue;"># И проверяем, что получилось</span></br>
+				$ sudo wg show
+			</p>
+			<p>Теперь немного ответственности. Разрешаем порт подключения в фаерволе, иначе вы не подключитесь и при использовании Firewalld включаем маскарадинг.</p>
+			<p class="codes">
+				<span style="color:blue;"># При использовании UFW</span></br>
+				$ sudo ufw allow 51820/udp<br><br>
+				<span style="color:blue;"># При использовании Firewalld, если ещё не делали этих настроек - то делаем, иначе пропускайте.</span></br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-port=51820/udp<br>
+				$ sudo firewall-cmd --permanent --zone=mysite --add-masquerade<br>
+				$ sudo firewall-cmd --reload
+			</p>
+			<p>Само собой зона <b>&laquo;mysite&raquo;</b> - это отдельно созданная зона для подключения внешний соединений по типу <b>&laquo;public&raquo;</b>, но с правильно настроенным <b>NAT</b> преобразованием адресов.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part14.2"></a></p>
+			<h3>14.2. Настройки клиентов.</h3>
+			<p>На клиенте также обязательно необходимо настроить <a href="#part7"><b>&laquo;forwarding&raquo;</b></a> из пункта по его настройке.</p>
+			<p>Настройка клиента создаётся точно также. Содержимое, естественно, будет другим. Сразу приведу пример такой конфигурации из виртуальной машины. Чуть ниже разберем все параметры подробнее и по порядку.</p>
+			<div class="codeses">
+				<pre><b>$ sudo touch /etc/wireguard/home.conf</b>
+<b>$ sudo chmod u=rwx,go= /etc/wireguard/home.conf</b>
+<b>$ sudo nano /etc/wireguard/home.conf</b>
+
+[Interface]
+PrivateKey = GMJXo+phyNS/kodizn353D2MN8bPNOSqJEhQ83caKkY=
+Address = 10.10.10.2/24
+DNS = 10.10.10.1
+
+[Peer]
+PublicKey = xxIV2fvMp7J2H1GxVuQcfVi2TJ0lQ/2K8UXSKC/byhM=
+Endpoint = 192.168.0.110:51820
+<span style="color:blue;"># AllowedIPs = 0.0.0.0/0,::/0</span>
+AllowedIPs = 0.0.0.0/0
+PersistentKeepAlive = 25
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Также запускаем клиента. Я специально не ставлю его в принудительную автозагрузку при перезапуске системы - на случай возникновения проблем. Лучше запускать по необходимости и вручную. И также вручную отключать.</p>
+			<p class="codes">
+				<span style="color:blue;"># Запускаем по названию конфигурации без расширения</span></br>
+				$ sudo systemctl start wg-quick@home</br>
+				$ sudo systemctl enable wg-quick@home</br><br>
+				<span style="color:blue;"># И проверяем, что получилось</span></br>
+				$ sudo wg show
+			</p>
+			<p>Рассмотрим настройки клиентов подробнее.</p>
 			<p></p>
 			<p></p>
 			<p></p>
