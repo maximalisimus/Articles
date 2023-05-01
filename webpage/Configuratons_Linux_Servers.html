@@ -1557,7 +1557,7 @@ echo \
 			</p>
 			<h4>Подготовительные работы.</h4>
 			<p>Давайте введем несколько файлов-параметров, которые позже нам пригодятся.</p>
-			<p>Первым из них будет <b>&laquo;custom-error-page.conf&raquo;</b>.</p>
+			<p>Первым из них будет <b>&laquo;custom-error-page.conf&raquo;</b> - свои страницы ошибок.</p>
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/snippets/custom-error-page.conf</b>
@@ -1580,7 +1580,7 @@ location = /error-page.html {
 			<p>Исходный код каждой страницы ошибок вы можете посмотреть здесь: <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/404-page.html" target="_blank">404-page.html</a> и <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/error-page.html" target="_blank">error-page.html</a>.</p>
 			<p>По идее вы можете указать в этой конфигурации одинаковые страницы ошибок - <b>error-page.html</b>, если вам не нравится моя шуточная <b>404-page.html</b>. Для моей шуточной страницы иконка находится здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-favicon.ico"><b>&laquo;404-favicon.ico&raquo;</b></a>. Если интересно, пример этой шуточной страницы здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-page.html"><b>&laquo;404-page.html&raquo;</b></a>. А здесь пример обычной нормальной страницы ошибок: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/error-page.html"><b>&laquo;error-page.html&raquo;</b></a>.</p>
 			<p>Обязательно сохранить все страницы ошибок и иконку <b>favicon</b> по строго определенному пути: <b>&laquo;/var/www/html/&raquo;</b>. Там скорее всего будет стандартная страница <b>&laquo;index.nginx-debian.html&raquo;</b>.</p>
-			<p>Далее будут &laquo;X-Header&raquo;-ы, ну, т.е. XSS, X-Frame, X-Permited, X-Content-Type, HSTS, OCSP Stapling и Expect CT (Optional).</p>
+			<p>Далее будут &laquo;X-Header&raquo;-ы, ну, т.е. настройки XSS, X-Frame, X-Permited, X-Content-Type, HSTS, OCSP Stapling и Expect CT (Optional).</p>
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/x_header.conf</b>
@@ -1607,7 +1607,7 @@ add_header Expect-CT "max-age=0";
 <b>CTRL + o</b>
 <b>CTRL + x</b></pre>
 			</div>
-			<p>Вручную пропишем адекватное сжатие контента.</p>
+			<p>Вручную пропишем умное сжатие контента посредством <b>GZIP</b>.</p>
 			<div class="codeses">
 				<pre>
 <b>$ sudo nano /etc/nginx/site_gzip.conf</b>
@@ -1648,6 +1648,7 @@ text/x-cross-domain-policy;
 <b>CTRL + x</b></pre>
 			</div>
 			<p>Теперь в самом <b>&laquo;/etc/nginx/nginx.conf&raquo;</b> пропишем <b>DDOS</b> для первого <b>Reverse Proxy</b>. Как его сделать описано вот в этом пункте: <a href="file:///home/mikl/git-ssh/Articles/The-security-of-network-connections.html#part5.4"><b>&laquo;NGINX DDoS (req limit)&raquo;</b></a>.</p>
+			<p><u>Такие <b>DDOS</b>-ы необходимо будет прописывать для всех ваших веб-сайтов или веб-сервисов.</u></p>
 			<p>Снова проверим конфигурацию и перезапустим Nginx.</p>
 			<p class="codes">
 				<span style="color:blue;"># Проверяем</span></br>
