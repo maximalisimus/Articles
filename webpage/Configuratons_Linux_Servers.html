@@ -1789,13 +1789,32 @@ server {
 				<b>$ sudo systemctl restart nginx</b>
 			</p>
 			<p>Заходим на наш домен уже по <b>HTTPS</b> - проверяем как всё работает. И можем вносить задачу crontab для автоматического перезапроса всех сертификатов по определенной дате.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Создадим папку для логов, чтобы знать когда у нас возникают ошибки и сбои пеерезапросов сертификатов и вовремя их устранять.</p>
+			<p class="codes">
+				$ sudo mkdir -p /etc/cron_logs/<br>
+				$ sudo touch /etc/cron_logs/certbot_log.log<br>
+				$ sudo touch /etc/cron_logs/certbot_log_error.log
+			</p>
+			<p>Чтобы настроить crontab необходимо понимать как устроены его задачи. Команды в crontab должны выглядеть следующим образом: <b>&laquo;минута час день месяц день_недели /путь/к/исполняемому/файлу&raquo;</b>.</p>
+			<p>Например, я хочу перезапрашивать <b>SSL</b>-сертификаты в 9 вечера в определенные дни каждый месяц, не забывая про логи. Например, 5 и 30 числа.</p>
+			<p>Выглядеть такая настройка будет так.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo crontab -e</b>
+<b>: nano</b>
+
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').
+# 0 20 * * 1 certbot renew
+0 21 5,30 * * certbot renew --rsa-key-size 4096 1>>/etc/cron_logs/certbot_log.log 2>>/etc/cron_logs/certbot_log_error.log
+
+<span style="color:blue;"># Сохраняем и выходим</span>
+<b>CTRL + o</b>
+<b>CTRL + x</b>
+<span style="color:blue;"># Проверяем. Если что-то не так - crontab должен выдать ошибку записи</span>
+<b>$ sudo crontab -l</b>
+				</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 		</div>
@@ -1803,7 +1822,7 @@ server {
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
 		<div class="about">
-			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+			<p>Copyright &copy; 01.05.2023 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
 		</div>
 		</br>
 	</div>
