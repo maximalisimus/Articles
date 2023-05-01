@@ -1446,8 +1446,68 @@ PersistentKeepAlive = 25
 			<p><b>Виртуализация</b> — технология, которая позволяет создавать виртуальное представление ресурсов отдельно от аппаратных. Например, под операционную систему (далее — ОС) можно отдать не весь диск, а только часть, создав его виртуальное представление.</p>
 			<p>Есть много разных видов виртуализации, и один из них — аппаратная виртуализация.</p>
 			<p>У аппаратной виртуализации есть большой плюс: внутри ВМ можно запускать абсолютно разные ОС, отличные от хостовой, но ценой дополнительных расходов на гипервизор.</p>
+			<div class="images">
+				<img src="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/virtualization.png" width="476px"/>
+			</div>
+			<div style="clear:both"></div>
 			<p>Казалось бы, проблемы с утилизацией ресурсов и изоляцией приложений решены, но как быть с установкой ОС и настройкой окружения: всё ещё делаем вручную и на каждой ВМ? Да и зачем платить за гипервизор, если не нужно держать на одном сервере Windows и Linux — достаточно ядра хостовой ОС?</p>
 			<p>На этот случай придумали контейнерную виртуализацию. При таком типе виртуализация происходит на уровне ОС: есть хостовая ОС и специальные механизмы, которые позволяют создавать изолированные контейнеры. В роли гипервизора выступает хостовая ОС — она отвечает за разделение ресурсов между контейнерами и обеспечивает их изолированность.</p>
+			<div class="images">
+				<img src="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/virtualization-2.png" width="483px"/>
+			</div>
+			<div style="clear:both"></div>
+			<p>Как мы уже знаем, контейнер — это изолированный процесс, который работает со своим кусочком файловой системы, памятью, ядром и другими ресурсами. При этом он думает, что все ресурсы принадлежат только ему.</p>
+			<p>Все механизмы для создания контейнеров заложены в ядро Linux, но на практике обычно используют готовые среды выполнения вроде Docker, containerd и cri-o, которые помогают автоматизировать развёртывание и управление контейнерами.</p>
+			<p><b>Установка и настройка.</b></p>
+			<p>Итак, переходим к установке и настройке. Для начала необходимо установить недостающие утилиты для работы <b>Docker</b>-а и его обновления.</p>
+			<p class="codes">
+				$ sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release wget curl bash-completion net-tools -y
+			</p>
+			<p>Далее необходимо настроить время и локаль из <a href="#part10"><b>&laquo;Пукнта 10&raquo;</b></a>, если ещё не настраивали. Иначе многие сервисы могут не заработать, или не смогут открываться.</p>
+			<p>Далее добавим <b>PGP</b> ключи репозитория с <b>Docker</b>-ом и добавим сам репозиторий.</p>
+			<div class="codeses">
+				<pre>curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+<span style="color:blue;"># Или так</span>
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+<span style="color:blue;"># И добавим сам Docker-репозиторий</span>
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null</pre>
+			</div>
+			<p>Обновим список пакетов и соответственно наконец-то установим <b>Docker</b> + добавим его в автозагрузку и сразу запустим.</p>
+			<p class="codes">
+				$ sudo apt update</br>
+				$ sudo apt install docker-ce docker-ce-cli containerd.io -y</br></br>
+				$ systemctl enable docker</br>
+				$ systemctl start docker
+			</p>
+			<p>Далее установим <b>Docker-Compose</b>.</p>
+			<p>К сожалению каким-либо кодом скачать последнюю <a href="https://github.com/docker/compose/releases/"><b>&laquo;latest версию с Github-Release&raquo;</b></a> не получится, т.к. разработчики в разных версиях могут не собирать 64-битную версию или какую-то другую. А если у вас архитектура <b>ARM</b> тем более. Поэтому придётся зайти туда через браузер, вручную найти нужную вам версию и скопировать на неё ссылку.</p>
+			<p>Например, на данный момент <b>v2.17.2</b>.</p>
+			<p class="codes">
+				$ wget https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
+			</p>
+			<p>Скопируем её в пользовательский <b>BIN</b> сразу с заменой, если вдруг будете обновлять и сделаем исполняемой.</p>
+			<p class="codes">
+				$ sudo cp -f ./docker-compose-linux-x86_64 /usr/local/bin/docker-compose<br>
+				$ rm -rf ./docker-compose-linux-x86_64<br>
+				$ sudo chmod +x /usr/local/bin/docker-compose
+			</p>
+			<p>Осталась последняя настройка - группа. В последних версиях <b>Docker</b>-а, при установке он автоматически создаёт нужную группу, но не добавляет в неё вашего пользователя. На всякий случай проделаем обе операции.</p>
+			<p class="codes">
+				$ sudo groupadd docker<br>
+				$ sudo usermod -aG docker myuser
+			</p>
+			<p>Всё, можно проверять.</p>
+			<p class="codes">
+				$ sudo docker --version<br>
+				$ sudo docker ps<br>
+				$ sudo docker-compose --version
+			</p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
