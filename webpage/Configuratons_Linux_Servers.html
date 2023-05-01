@@ -1662,10 +1662,51 @@ text/x-cross-domain-policy;
 			<h4>Переходим к Reverse Proxy.</h4>
 			<p>Итак, пусть моя конфигурация будет называться <b>example</b>, домен сайта <b>example.com</b>. Здесь я привожу только примеры. На своем реальном сервере вы, само собой, будете указывать реальные домены, привязанные к вашему серверу.</p>
 			<p>Не важно как они были привязаны - посредством <b>CloudFlare-docker</b>, <b>DuckDNS-docker</b> или же вы доплачивали хостинг-провайдеру за услуги под-доменов вашего <b>VPS</b>-сервера. Главное, что они у вас есть и привязаны к вашему серверу.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Создаем конфигурацию <b>example</b>.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/sites-available/example</b>
+
+server {
+	listen 80;
+	server_name example.com;
+	
+	location /{
+		proxy_pass http://localhost:port/;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Scheme $scheme;
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Port $server_port;
+		<span style="color:blue;">#proxy_set_header X-Forwarded-Proto https;</span>
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Ssl on;
+
+		<span style="color:blue;"># DDoS</span>
+		limit_req zone=myzone burst=5 nodelay;
+	}
+	
+	location /.well-known {
+		alias /var/www/example.com;
+	}
+}
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Обратите внимание на опцию <b>/.well-known</b>. Теперь для неё для временных файлов <b>Let'sencrypt</b> необходимо создать эту директорию. Сейчас у нас создана конфигурация, но она не активна. Поэтому, добавляем ссылку в активные конфигурации самого <b>Nginx</b>.</p>
+			<p class="codes">
+				$ sudo mkdir -p /var/www/example.com</br>
+				$ sudo ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/example<br><br>
+				<span style="color:blue;"># Не забываем проверять все активные конфигурации nginx и перезапускать последний</span></br>
+				$ sudo nginx -t<br>
+				$ sudo systemctl restart nginx
+			</p>
+			<p>Далее заходим по 80 порту на наш <b>example.com</b> домен и убеждаемся, что всё нормально прогружается и загружается без ошибок. Теперь можем запрашивать SSL сертификат. Он спросит для какого домена запросить - укажите циферку, и далее 1 раз и на всю жизнь введите для <b>certbot</b>-а свой E-Mail, город (например Москва) и пару других подобных мелких настроек.</p>
+			<p class="codes">
+				$ sudo certbot --nginx --rsa-key-size 4096
+			</p>
+			<p>И только после того, как утилита <b>certbot</b> автоматически прописала минимальные <b>SSL</b> настройки в вашей конфигурации, правим их и добавлеяем свои, созданные выше, т.к. после этого утилита никогда их менять не будет. Всё равно - многое мы заранее вынесли в отдельные файлы - так сказать перестраховались.</p>
 			<p></p>
 			<p></p>
 			<p></p>
