@@ -1533,12 +1533,30 @@ echo \
 				<li>У NPM нельзя включить GZIP сжатие для нужного вам домена. Только если вы эти параметры вручную пропишите на одной из вкладок и то при 2 условиях: правильно и в нужной вкладке в правильном параметре.</li>
 				<li>При запросе SSL вы не контролируете размер ключа и массу других SSL параметров. Они стандартные. А если вы хотите их изменить?</li>
 			</ul>
-			<p><b>Итак, переходим к особенностям Nginx Reverse Proxy</b>.</p>
-			<p>Для начала давайте установим все необходимые пакеты.</p>
+			<h4>Установка Nginx и Certbot.</h4>
+			<p>Для начала давайте установим все необходимые для работы пакеты.</p>
 			<p class="codes">
 				$ sudo apt install certbot nginx python3-certbot-nginx -y
 			</p>
-			<p>Давайте введем несколько файлов параметров, которые позже нам пригодятся.</p>
+			<p>Теперь выключим стандартную конфигурацию <b>Debian</b>-а. Иначе она будет мешаться и бесить. При необходимости её можно будет включить обратно.</p>
+			<p class="codes">
+				<span style="color:blue;"># Выключить</span></br>
+				$ sudo rm -rf /etc/nginx/sites-enabled/default</br></br>
+				<span style="color:blue;"># Включить</span></br>
+				$ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+			</p>
+			<p>Обязательно проверяем конфигурацию и если всё <b>ОК</b> - перезагружаем <b>Nginx</b>.</p>
+			<p class="codes">
+				<span style="color:blue;"># Проверяем</span></br>
+				<b>$ sudo nginx -t</b></br>
+				...<br>
+				nginx: the configuration file /etc/nginx/nginx.conf syntax is ok<br>
+				nginx: configuration file /etc/nginx/nginx.conf test is successful<br><br>
+				<span style="color:blue;"># Перезапускаем Nginx</span></br>
+				<b>$ sudo systemctl restart nginx</b>
+			</p>
+			<h4>Подготовительные работы.</h4>
+			<p>Давайте введем несколько файлов-параметров, которые позже нам пригодятся.</p>
 			<p>Первым из них будет <b>&laquo;custom-error-page.conf&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>
@@ -1561,6 +1579,7 @@ location = /error-page.html {
 			</div>
 			<p>Исходный код каждой страницы ошибок вы можете посмотреть здесь: <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/404-page.html" target="_blank">404-page.html</a> и <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/error-page.html" target="_blank">error-page.html</a>.</p>
 			<p>По идее вы можете указать в этой конфигурации одинаковые страницы ошибок - <b>error-page.html</b>, если вам не нравится моя шуточная <b>404-page.html</b>. Для моей шуточной страницы иконка находится здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-favicon.ico"><b>&laquo;404-favicon.ico&raquo;</b></a>. Если интересно, пример этой шуточной страницы здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-page.html"><b>&laquo;404-page.html&raquo;</b></a>. А здесь пример обычной нормальной страницы ошибок: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/error-page.html"><b>&laquo;error-page.html&raquo;</b></a>.</p>
+			<p>Обязательно сохранить все страницы ошибок и иконку <b>favicon</b> по строго определенному пути: <b>&laquo;/var/www/html/&raquo;</b>. Там скорее всего будет стандартная страница <b>&laquo;index.nginx-debian.html&raquo;</b>.</p>
 			<p>Далее будут &laquo;X-Header&raquo;-ы, ну, т.е. XSS, X-Frame, X-Permited, X-Content-Type, HSTS, OCSP Stapling и Expect CT (Optional).</p>
 			<div class="codeses">
 				<pre>
@@ -1628,10 +1647,20 @@ text/x-cross-domain-policy;
 <b>CTRL + o</b>
 <b>CTRL + x</b></pre>
 			</div>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Теперь в самом <b>&laquo;/etc/nginx/nginx.conf&raquo;</b> пропишем <b>DDOS</b> для первого <b>Reverse Proxy</b>. Как его сделать описано вот в этом пункте: <a href="file:///home/mikl/git-ssh/Articles/The-security-of-network-connections.html#part5.4"><b>&laquo;NGINX DDoS (req limit)&raquo;</b></a>.</p>
+			<p>Снова проверим конфигурацию и перезапустим Nginx.</p>
+			<p class="codes">
+				<span style="color:blue;"># Проверяем</span></br>
+				<b>$ sudo nginx -t</b></br>
+				...<br>
+				nginx: the configuration file /etc/nginx/nginx.conf syntax is ok<br>
+				nginx: configuration file /etc/nginx/nginx.conf test is successful<br><br>
+				<span style="color:blue;"># Перезапускаем Nginx</span></br>
+				<b>$ sudo systemctl restart nginx</b>
+			</p>
+			<h4>Переходим к Reverse Proxy.</h4>
+			<p>Итак, пусть моя конфигурация будет называться <b>example</b>, домен сайта <b>example.com</b>. Здесь я привожу только примеры. На своем реальном сервере вы, само собой, будете указывать реальные домены, привязанные к вашему серверу.</p>
+			<p>Не важно как они были привязаны - посредством <b>CloudFlare-docker</b>, <b>DuckDNS-docker</b> или же вы доплачивали хостинг-провайдеру за услуги под-доменов вашего <b>VPS</b>-сервера. Главное, что они у вас есть и привязаны к вашему серверу.</p>
 			<p></p>
 			<p></p>
 			<p></p>
