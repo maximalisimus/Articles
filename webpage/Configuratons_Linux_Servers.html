@@ -1554,7 +1554,11 @@ echo \
 				nginx: configuration file /etc/nginx/nginx.conf test is successful<br><br>
 				<span style="color:blue;"># Перезапускаем Nginx</span></br>
 				<b>$ sudo systemctl restart nginx</b>
-			</p>
+			</p><br>
+			<p><b><span style="color:red;">Обратите внимание!</span></b><br></p>
+			<p>На оф. сайте поддержки - <b>community.let'sencrypt.org</b> (<a href="https://community.letsencrypt.org/t/howto-a-with-all-100-s-on-ssl-labs-test-using-nginx-mainline-stable/55033"><b>&laquo;HOWTO: A+ with all 100%’s on SSL Labs...&raquo;</b></a>) - имеется руководство как настроить <b>SSL</b> правильно. Однако у меня так и не вышло сделать параметры в 100%, nginx ругался на моногие непонятные ему параметры. Разобраться до конца в этом вопросе я так и не смог, поэтому остановился на 90%. Если хотите - можете попытаться разобраться самостоятельно. Мне же хватит и 90%.</p>
+			<p>Проверять ваши сайты на <b>SSL</b> можно с помощью сервиса <a href="https://www.ssllabs.com/ssltest/"><b>&laquo;Qualys SSL Labs&raquo;</b></a>.</p>
+			<br>
 			<h4>Подготовительные работы.</h4>
 			<p>Давайте введем несколько файлов-параметров, которые позже нам пригодятся.</p>
 			<p>Первым из них будет <b>&laquo;custom-error-page.conf&raquo;</b> - свои страницы ошибок.</p>
@@ -1707,6 +1711,11 @@ server {
 				$ sudo certbot --nginx --rsa-key-size 4096
 			</p>
 			<p>И только после того, как утилита <b>certbot</b> автоматически прописала минимальные <b>SSL</b> настройки в вашей конфигурации, правим их и добавлеяем свои, созданные выше, т.к. после этого утилита никогда их менять не будет. Всё равно - многое мы заранее вынесли в отдельные файлы - так сказать перестраховались.</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
