@@ -1558,6 +1558,7 @@ echo \
 			<p><b><span style="color:red;">Обратите внимание!</span></b><br></p>
 			<p>На оф. сайте поддержки - <b>community.let'sencrypt.org</b> (<a href="https://community.letsencrypt.org/t/howto-a-with-all-100-s-on-ssl-labs-test-using-nginx-mainline-stable/55033"><b>&laquo;HOWTO: A+ with all 100%’s on SSL Labs...&raquo;</b></a>) - имеется руководство как настроить <b>SSL</b> правильно. Однако у меня так и не вышло сделать параметры в 100%, nginx ругался на моногие непонятные ему параметры. Разобраться до конца в этом вопросе я так и не смог, поэтому остановился на 90%. Если хотите - можете попытаться разобраться самостоятельно. Мне же хватит и 90%.</p>
 			<p>Проверять ваши сайты на <b>SSL</b> можно с помощью сервиса <a href="https://www.ssllabs.com/ssltest/"><b>&laquo;Qualys SSL Labs&raquo;</b></a>.</p>
+			<p>Зачем вам получать как можно больший бал за <b>SSL</b>? Всё очень просто - вас станут пропускать большинство ресурсов, включая фильтры рекламы, и ни один не скажет, что мол этот сайт на бесплатном сертификате и возможно является поддельным, мол не рекомендуем переходить по этой ссылке. Получить такое сообщение будет не приятно. Да и пользователям каждый раз щелкать по кнопке - всё равно перейти - тоже будет бесить. Лучше сразу все настроить как надо.</p>
 			<br>
 			<h4>Подготовительные работы.</h4>
 			<p>Давайте введем несколько файлов-параметров, которые позже нам пригодятся.</p>
@@ -1711,12 +1712,83 @@ server {
 				$ sudo certbot --nginx --rsa-key-size 4096
 			</p>
 			<p>И только после того, как утилита <b>certbot</b> автоматически прописала минимальные <b>SSL</b> настройки в вашей конфигурации, правим их и добавлеяем свои, созданные выше, т.к. после этого утилита никогда их менять не будет. Всё равно - многое мы заранее вынесли в отдельные файлы - так сказать перестраховались.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Теперь настроим файл <b>&laquo;/etc/letsencrypt/options-ssl-nginx.conf&raquo;</b>. Приведите его к следующему виду. Само собой в строках <b>ssl_ciphers</b> не должно быть переносов на новые строки. Просто у меня здесь в этом руководстве будут не видны строки полностью.</p>
+			<div class="codeses">
+				<pre>
+<span style="color:blue;"># This file contains important security parameters. If you modify this file
+# manually, Certbot will be unable to automatically provide future security
+# updates. Instead, Certbot will print and log an error message with a path to
+# the up-to-date file that you will need to refer to when manually updating
+# this file.
+
+#ssl_session_cache shared:le_nginx_SSL:10m;</span>
+ssl_session_cache shared:SSL:50m;
+ssl_session_timeout 1440m;
+ssl_session_tickets off;
+
+<span style="color:blue;">#ssl_protocols TLSv1.2 TLSv1.3;</span>
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+ssl_prefer_server_ciphers on;
+
+<span style="color:blue;">#ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:
+	ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:
+	ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:
+	DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
+#ssl_ciphers "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 
+	EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 
+	EECDH+aRSA+RC4 EECDH EDH+aRSA !RC4 !aNULL !eNULL !LOW 
+	!3DES !MD5 !EXP !PSK !SRP !DSS";
+#ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA:
+	ECDHE-RSA-AES256-SHA384;
+#ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256: 
+	ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:
+	ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:
+	DHE-RSA-AES256-GCM-SHA384;</span>
+ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:
+	TLS_AES_128_GCM_SHA256:TLS_AES_128_CCM_8_SHA256:
+	TLS_AES_128_CCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:
+	ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:
+	ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:
+	ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:
+	DHE-RSA-AES256-GCM-SHA384;
+ssl_ecdh_curve secp384r1;</pre>
+			</div>
+			<p>В данном случае мы сразу убили 2 зайцев - указали в правильной последовательности <b>ssl_ciphers</b> и настроили мелкие ssl-параметры, чтобы в итоге получить 90% в <b>SSL-тестах</b>.</p>
+			<p>Переходим к вашей конфигурации и наконец-то используем подготовленные заранее файлы.</p>
+			<p>В конце вашей конфигурации <b>&laquo;sudo nano /etc/nginx/sites-available/example&raquo;</b> в секции <b>&laquo;server {&raquo;</b>, после всех <b>&laquo;SSL-сертификатов&raquo;</b> (т.е. уже после <b>&laquo;ssl_dhparam&raquo;</b>), перед закрывающейся скобкой <b>&laquo;}&raquo;</b>, необходимо вставить следующие строки.</p>
+			<p>Ну, т.е. примерно так.</p>
+			<div class="codeses">
+				<pre>
+server {
+...
+	ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+	# XSS, X-Frame, X-Permited, X-Content-Type
+	include /etc/nginx/x_header.conf;
+
+	# custom 404 403 ...
+	include /etc/nginx/snippets/custom-error-page.conf;
+
+	# gzip content
+	include /etc/nginx/site_gzip.conf;
+
+}
+...
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Далее обязательно снова проверяем конфигурацию и перезагружаем <b>Nginx</b>.</p>
+			<p class="codes">
+				<span style="color:blue;"># Проверяем</span></br>
+				<b>$ sudo nginx -t</b></br>
+				...<br>
+				nginx: the configuration file /etc/nginx/nginx.conf syntax is ok<br>
+				nginx: configuration file /etc/nginx/nginx.conf test is successful<br><br>
+				<span style="color:blue;"># Перезапускаем Nginx</span></br>
+				<b>$ sudo systemctl restart nginx</b>
+			</p>
+			<p>Заходим на наш домен уже по <b>HTTPS</b> - проверяем как всё работает. И можем вносить задачу crontab для автоматического перезапроса всех сертификатов по определенной дате.</p>
 			<p></p>
 			<p></p>
 			<p></p>
