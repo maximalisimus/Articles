@@ -1510,6 +1510,131 @@ echo \
 			<hr>
 			<p><a name="part16"></a></p>
 			<h2>16. Nginx Reverse Proxy.</h2>
+			<p><b>Nginx (NGINX, Engine-X, &laquo;Энджин-икс&raquo;)</b> — это веб-сервер, прокси-сервер, обратный прокси-сервер, smtp-сервер и балансировщик нагрузки с открытым кодом.</p>
+			<p><b>Nginx</b> обслуживает более миллиона сайтов по всему миру и пользуется заслуженной любовью и почитанием. Однако несмотря на его популярность и большое количество материалов, вопросов по его использованию не убавляется.</p>
+			<p><b>Веб-сервер</b> — это программа, которая принимает и обрабатывает запросы от клиентов по протоколам HTTP и HTTPS и возвращает им ответ в виде HTML-страницы.</p>
+			<p>Прокси-сервер принимает и обрабатывает запросы клиентов, а затем передает их дальше, другим программам.</p>
+			<p><b>Обратный прокси-сервер</b> — принимает результат работы других серверов и отдаёт его клиентам. </p>
+			<p><b>Smtp-сервер</b> — это сервер почтовой службы.</p>
+			<p><b>Балансировщик нагрузки</b> — программа, которая распределяет сетевые запросы между серверами, следуя настройкам балансировки.</p>
+			<p><b>NGINX</b> сочетает в себе все перечисленные возможности, хотя изначально он задумывался только как <b>&laquo;web-&raquo;</b> и <b>&laquo;smtp-сервер&raquo;</b>.</p>
+			<p>Сегодня в век технологий давно существует система управления обратным прокси  - <b>&laquo;Nginx Proxy Manager&raquo;</b> (NPM), работающая на <b>Docker</b>. NPM основан на сервере <b>Nginx</b> и предоставляет пользователям чистый, эффективный и красивый веб-интерфейс для упрощения управления. Инструмент прост в настройке и не требует, чтобы пользователи знали, как работать с серверами <b>Nginx</b> или сертификатами <b>SSL</b>.</p>
+			<p>Однако, совершенно недавно я столкнулся с массой обстоятельств и проблем, которые позволили взглянуть на голый <b>Nginx</b> совершенно с другой стороны и лучше оценить его ручные настройки.</p>
+			<p>Поначалу на моем <b>VPS</b> сервере я долго не мог даже просто скачать контейнер с утилитой <b>Nginx Proxy Manager</b>. В ответ на скачивание видел только массу непонятных Golang ошибок. И чтобы я ни делал - он не скачивался. В последствии я эту проблему решил. Даже запустил его. Вместо docker-compose up -d - docker pull - нужный образ, и затем уже docker-compose up -d.</p>
+			<p>Далее, я столкнулся с тем, что просто не мог войти в панель по первичному имени администратора. Чтобы я ни делал - ничего не срабатывало. В итоге решил проблему тем, что указал в docker-compose файле ещё 2 смежных связанных контейнера - phpmyadmin и mariadb конкретно версия 10.6. Далее запустил в браузере попытку входа в phpmyadmin, которая почему-то никак не сработывала, затем выключил весь docker-compose. Закоментировал phpmyadmin полностью, снова запустил docker-compose - и о чудо - в панель можно войти.</p>
+			<p>Это было только цветочками. Далее естественно я сразу же указал первый адрес контейнера и его привязанным доменов в качестве Reverse Proxy. И что вы думаете, даже по 80 порту - меня туда не пускает. Но, если я добавляю к домену порт - всё работает. Причем самое забавное было в том, что порт можно поменять и достучаться до любого контейнера.</p>
+			<p>Ну, т.е. например какой-нибудь whoogle.example.com на адресе - localhost:5757.</p>
+			<p>Если вбивать в браузере whoogle.example.com - будеь некая ошибка Nginx. А вот если whoogle.example.com:5757 - то всё будет открываться.</p>
+			<p>В итоге от контейнера с этим менеджером пришлось полностью избавиться. Мне посоветовали напрямую поставить прямо в сервер - <b>Nginx</b> и <b>Certbot</b> и уже напрямую прямо в сервере запрашивать <b>Let'sencrypt</b> сертификаты. Перезапросы делать 1 раз в 2 месяца при помощи <b>crontab</b>. Настраивается всё не сложно. Что я и сделал.</p>
+			<p>И как не удивительно, но тут у меня сразу с ходу удалось без аналогичных выше проблем настроить нормальный Reverse Proxy. С чем были связаны проблемы выше - я до сих пор не знаю. Однако, позже я разобрался во всех настройках и понял несколько главных особенностей такого ручного конфигурирования.</p>
+			<ul>
+				<li>Да, в NPM вы можете указать раздельно и HSTS и HTTP2 и DDOS и подключить какие-то Header-ы. Но проблема в том, что вы их не контролиурете. У каждого такого параметра есть масса мелких настроек, которые помогут что-либо улучшить у вашего сайта. Вот эти мелкие настройки вы и не можете контролировать.</li>
+				<li>У NPM можно включить Header-ы, но проконтролировать какие именно вы включаете - нельзя.</li>
+				<li>У NPM нельзя включить GZIP сжатие для нужного вам домена. Только если вы эти параметры вручную пропишите на одной из вкладок и то при 2 условиях: правильно и в нужной вкладке в правильном параметре.</li>
+				<li>При запросе SSL вы не контролируете размер ключа и массу других SSL параметров. Они стандартные. А если вы хотите их изменить?</li>
+			</ul>
+			<p><b>Итак, переходим к особенностям Nginx Reverse Proxy</b>.</p>
+			<p>Для начала давайте установим все необходимые пакеты.</p>
+			<p class="codes">
+				$ sudo apt install certbot nginx python3-certbot-nginx -y
+			</p>
+			<p>Давайте введем несколько файлов параметров, которые позже нам пригодятся.</p>
+			<p>Первым из них будет <b>&laquo;custom-error-page.conf&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/snippets/custom-error-page.conf</b>
+
+error_page 404 /404-page.html;
+location = /404-page.html {
+        root /var/www/html;
+        internal;
+}
+
+error_page 403 500 503 /error-page.html;
+location = /error-page.html {
+        root /var/www/html;
+        internal;
+}
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Исходный код каждой страницы ошибок вы можете посмотреть здесь: <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/404-page.html" target="_blank">404-page.html</a> и <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/error-page.html" target="_blank">error-page.html</a>.</p>
+			<p>По идее вы можете указать в этой конфигурации одинаковые страницы ошибок - <b>error-page.html</b>, если вам не нравится моя шуточная <b>404-page.html</b>. Для моей шуточной страницы иконка находится здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-favicon.ico"><b>&laquo;404-favicon.ico&raquo;</b></a>. Если интересно, пример этой шуточной страницы здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-page.html"><b>&laquo;404-page.html&raquo;</b></a>. А здесь пример обычной нормальной страницы ошибок: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/error-page.html"><b>&laquo;error-page.html&raquo;</b></a>.</p>
+			<p>Далее будут &laquo;X-Header&raquo;-ы, ну, т.е. XSS, X-Frame, X-Permited, X-Content-Type, HSTS, OCSP Stapling и Expect CT (Optional).</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/x_header.conf</b>
+
+<span style="color:blue;"># XSS, X-Frame, X-Permited, X-Content-Type</span>
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Frame-Options "DENY";
+add_header X-Permitted-Cross-Domain-Policies master-only;
+add_header X-Content-Type-Options nosniff;
+
+<span style="color:blue;"># HSTS</span>
+<span style="color:blue;">#add_header Strict-Transport-Security "max-age=604800; includeSubDomains" always;</span>
+add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
+<span style="color:blue;">#add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;" preload;</span>
+
+<span style="color:blue;"># OCSP Stapling</span>
+ssl_stapling_verify on;
+ssl_stapling on;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+
+<span style="color:blue;">#Expect CT (Optional)</span>
+add_header Expect-CT "max-age=0";
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Вручную пропишем адекватное сжатие контента.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/site_gzip.conf</b>
+
+gzip on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied    any;
+gzip_vary       on;
+gzip_types
+application/atom+xml
+application/javascript
+application/json
+application/ld+json
+application/manifest+json
+application/rss+xml
+application/vnd.geo+json
+application/vnd.ms-fontobject
+application/x-font-ttf
+application/x-web-app-manifest+json
+application/xhtml+xml
+application/xml
+font/opentype
+image/bmp
+image/svg+xml
+image/x-icon
+text/cache-manifest
+text/css
+text/plain
+text/vcard
+text/vnd.rim.location.xloc
+text/vtt
+text/x-component
+text/x-cross-domain-policy;
+# text/html is always compressed by gzip module
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
