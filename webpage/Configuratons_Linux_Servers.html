@@ -2,15 +2,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Базовые настройки серверов Linux</title>
-	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/server.ico">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">	
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/frame.css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css">
+	<link rel="icon" href="../image/Configuratons_Linux_Servers_image/server.ico">
+	<link rel="stylesheet" href="../html/main.css" type="text/css">	
+	<link rel="stylesheet" href="../html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="../html/table.css" type="text/css">
+	<link rel="stylesheet" href="../html/frame.css">
+	<link rel="stylesheet" href="../html/ol-li.css" type="text/css">
 	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
-	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
-	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
+	<script src="../html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="../html/litezoom.js"></script>
 </head>
 <body>
 	<div class="site">
@@ -22,7 +22,7 @@
 		<div class="content">
 			<center>
 				<div class="images">
-					<img src="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/server-2.jpg" width="500px"/>
+					<img src="../image/Configuratons_Linux_Servers_image/server-2.jpg" width="500px"/>
 				</div>
 				<div style="clear:both"></div>
 			</center>
@@ -71,7 +71,7 @@
 					<li><a href="#part10.2">Синхронизация времени с помощью ntp и ntpdate.</a></li>
 					<li><a href="#part10.3">Настройка локали и языка.</a></li>
 				</ol>
-				<li><a target="_blank" href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part4">Настройка фаервола.</a></li>
+				<li><a target="_blank" href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part4.2">Настройка фаервола.</a></li>
 				<li><a target="_blank" href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part5.0">Настройка Fail2ban.</a></li>
 				<li><a href="#part13">Настройка DNS.</a></li>
 				<ol>
@@ -913,7 +913,7 @@ capability setuid,
 				$ sudo ncsd -g<br>
 				$ sudo strings /var/cache/nscd/hosts
 			</p>
-			<p>В Archlinux она есть только в <a href="https://vk.com/away.php?to=https%3A%2F%2Faur.archlinux.org%2Fpackages%2Funscd&cc_key=">&laquo;AUR&raquo;</a>.</p>
+			<p>В Archlinux она есть только в <a href="https://aur.archlinux.org/packages/unscd">&laquo;AUR&raquo;</a>.</p>
 			<p>При использовании &laquo;Network Manager&raquo;, его просто необходимо перезапустить.</p>
 			<p class="codes">
 				$ sudo service networking restart</br>
@@ -1103,7 +1103,7 @@ networks:
 			</p>
 			<p><b>Однако, это далеко не все настройки, которые надо сделать!</b> В данном случае используется firewalld. Но вы вполне можете использовать и ufw.</p>
 			<p>Чтобы DNS-сервер заработал, ещё необходимо настроить фаервол - разрешить dns-порты в той или иной зоне, чтобы запросы могли быть разрешены на нужном вам интерфейсе и + также внести в таблицу маршрутизации <b>INPUT</b> разрешение на пропуск трафика по данным портам в вашу систему.</p>
-			<p>В пункте <a href="file:///home/mikl/git-ssh/Articles/The-security-of-network-connections.html#part4.2">&laquo;по настройке firewalld&raquo;</a> мы разрешили в зоне на входном интерфейсе из интернета и в зоне на wireguard-е наименования определенных сервисов, таким образом разрешая трафику проходить в одну и в другую сторону по VPN тунелю. Т.к. это были наименования сервисов - то мы разрешили стандартные порты. Если бы у вас вдруг эти стандартные порты поменялись - то вам необходимо было бы добавлять в ваш фаервол конкретно сами порты и протоколы этих портов.</p>
+			<p>В пункте <a href="#part4.2">&laquo;по настройке firewalld&raquo;</a> мы разрешили в зоне на входном интерфейсе из интернета и в зоне на wireguard-е наименования определенных сервисов, таким образом разрешая трафику проходить в одну и в другую сторону по VPN тунелю. Т.к. это были наименования сервисов - то мы разрешили стандартные порты. Если бы у вас вдруг эти стандартные порты поменялись - то вам необходимо было бы добавлять в ваш фаервол конкретно сами порты и протоколы этих портов.</p>
 			<p>В данном случае, чтобы добавить dns-порты - мы также будем использовать наименования сервисов, т.е. стандартные порты этих сервисов. Если бы я изменил любой из этих портов - я бы обязательно прописывал бы сами порты и их протоколы.</p>
 			<p>Разрешим проход dns-трафика в зоне с wireguard-интерфейсом.</p>
 			<p class="codes">
@@ -1327,7 +1327,7 @@ PersistentKeepAlive = 25
 			<p>На клиенте есть такой параметр как <b>&laquo;AllowedIPs&raquo;</b>. Обычно, делают так. Настраивают на неком VPS-сервере 2 секции <b>&laquo;[Peer]&raquo;</b>. Одна для клиента внутри организации, другая, например, для домашнего клиента - дабы получить удалённый доступ к сети организации. Далее на домашнем клиенте в одноименном параметре <b>&laquo;AllowedIPs&raquo;</b> через точку с запаятой прописываются все сети, к которым необходимо получить доступ за VPN в организацию. Затем подключают к серверу оба клиента. Пока работает клиент в организации - будет доступ за VPN на клиенте дома.</p>
 			<p>Это не самый лучший вариант, т.к. на клиенте будут известны внутренние адреса сетей организации, к которым вы пробрасываете доступ.</p>
 			<p>Если вы хотите, чтобы клиенты никогда о них ничего не знали и по прежнему использовали в браузере в адресах внутренние домены - есть ещё 1 вариант проброса доступа.</p>
-			<p>В этом варианте все iptables правила настраиваются напрямую в <b>Firewalld</b> - будь то <b>INPUT</b> или <b>FORWARD</b> таблица, т.е. пункт <a href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part4"><b>&laquo;11. Настроек фаервола Firewalld&raquo;</b></a> обязателен. Таким образом заботиться о некоторых тонкостях настроек вам не придётся, а параметры правил значительно можно упростить. Да и настройки правил можно будет сохранять при перезагрузке сервера значительно проще. При использовании фаервола <b>UFW</b> для всех правил создаются отдельные скрипты с iptables правилами.</p>
+			<p>В этом варианте все iptables правила настраиваются напрямую в <b>Firewalld</b> - будь то <b>INPUT</b> или <b>FORWARD</b> таблица, т.е. пункт <a href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part4.2"><b>&laquo;11. Настроек фаервола Firewalld&raquo;</b></a> обязателен. Таким образом заботиться о некоторых тонкостях настроек вам не придётся, а параметры правил значительно можно упростить. Да и настройки правил можно будет сохранять при перезагрузке сервера значительно проще. При использовании фаервола <b>UFW</b> для всех правил создаются отдельные скрипты с iptables правилами.</p>
 			<p>Лично мне наиболее симпатичен 2-й вариант. Так как безопасность сервера будет на порядок выше.</p>
 			<p>Насчет необходимости правил маршрутизации <b>IPTABLES</b> через <b>Firewalld</b> я могу и ошибаться. В любом случае любую конфигурацию надо тестировать непосредственно на практике и при необходимости под-настраивать.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
@@ -1448,13 +1448,13 @@ PersistentKeepAlive = 25
 			<p>Есть много разных видов виртуализации, и один из них — аппаратная виртуализация.</p>
 			<p>У аппаратной виртуализации есть большой плюс: внутри ВМ можно запускать абсолютно разные ОС, отличные от хостовой, но ценой дополнительных расходов на гипервизор.</p>
 			<div class="images">
-				<img src="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/virtualization.png" width="476px"/>
+				<img src="../image/Configuratons_Linux_Servers_image/virtualization.png" width="476px"/>
 			</div>
 			<div style="clear:both"></div>
 			<p>Казалось бы, проблемы с утилизацией ресурсов и изоляцией приложений решены, но как быть с установкой ОС и настройкой окружения: всё ещё делаем вручную и на каждой ВМ? Да и зачем платить за гипервизор, если не нужно держать на одном сервере Windows и Linux — достаточно ядра хостовой ОС?</p>
 			<p>На этот случай придумали контейнерную виртуализацию. При таком типе виртуализация происходит на уровне ОС: есть хостовая ОС и специальные механизмы, которые позволяют создавать изолированные контейнеры. В роли гипервизора выступает хостовая ОС — она отвечает за разделение ресурсов между контейнерами и обеспечивает их изолированность.</p>
 			<div class="images">
-				<img src="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/virtualization-2.png" width="483px"/>
+				<img src="../image/Configuratons_Linux_Servers_image/virtualization-2.png" width="483px"/>
 			</div>
 			<div style="clear:both"></div>
 			<p>Как мы уже знаем, контейнер — это изолированный процесс, который работает со своим кусочком файловой системы, памятью, ядром и другими ресурсами. При этом он думает, что все ресурсы принадлежат только ему.</p>
@@ -1558,7 +1558,7 @@ echo \
 			<p><b><span style="color:red;">Обратите внимание!</span></b><br></p>
 			<p>На оф. сайте поддержки - <b>community.let'sencrypt.org</b> (<a href="https://community.letsencrypt.org/t/howto-a-with-all-100-s-on-ssl-labs-test-using-nginx-mainline-stable/55033"><b>&laquo;HOWTO: A+ with all 100%’s on SSL Labs...&raquo;</b></a>) - имеется руководство как настроить <b>SSL</b> правильно. Однако у меня так и не вышло сделать параметры в 100%, nginx ругался на моногие непонятные ему параметры. Разобраться до конца в этом вопросе я так и не смог, поэтому остановился на 90%. Если хотите - можете попытаться разобраться самостоятельно. Мне же хватит и 90%.</p>
 			<p>Проверять ваши сайты на <b>SSL</b> можно с помощью сервиса <a href="https://www.ssllabs.com/ssltest/"><b>&laquo;Qualys SSL Labs&raquo;</b></a>.</p>
-			<p>Зачем вам получать как можно больший бал за <b>SSL</b>? Всё очень просто - вас станут пропускать большинство ресурсов, включая фильтры рекламы, и ни один не скажет, что мол этот сайт на бесплатном сертификате и возможно является поддельным, мол не рекомендуем переходить по этой ссылке. Получить такое сообщение будет не приятно. Да и пользователей, которые каждый раз будут щелкать по кнопке - всё равно перейти - такой функционал будет каждый раз бесить. Лучше сразу настроить доступ на высшем уровне.</p>
+			<p>Зачем вам получать как можно больший бал за <b>SSL</b>? Всё очень просто - вас станут пропускать большинство ресурсов, включая фильтры рекламы, и ни один не скажет, что мол этот сайт на бесплатном сертификате и возможно является поддельным, мол не рекомендуем переходить по этой ссылке. Получить такое сообщение будет не приятно. Да и пользователям каждый раз щелкать по кнопке - всё равно перейти - тоже будет бесить. Лучше сразу все настроить как надо.</p>
 			<br>
 			<h4>Подготовительные работы.</h4>
 			<p>Давайте введем несколько файлов-параметров, которые позже нам пригодятся.</p>
@@ -1583,7 +1583,7 @@ location = /error-page.html {
 <b>CTRL + x</b></pre>
 			</div>
 			<p>Исходный код каждой страницы ошибок вы можете посмотреть здесь: <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/404-page.html" target="_blank">404-page.html</a> и <a href="https://github.com/maximalisimus/Articles/blob/main/image/Configuratons_Linux_Servers_image/error-page.html" target="_blank">error-page.html</a>.</p>
-			<p>По идее вы можете указать в этой конфигурации одинаковые страницы ошибок - <b>error-page.html</b>, если вам не нравится моя шуточная <b>404-page.html</b>. Для моей шуточной страницы иконка находится здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-favicon.ico"><b>&laquo;404-favicon.ico&raquo;</b></a>. Если интересно, пример этой шуточной страницы здесь: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/404-page.html"><b>&laquo;404-page.html&raquo;</b></a>. А здесь пример обычной нормальной страницы ошибок: <a href="https://maximalisimus.github.io/Articles/image/Configuratons_Linux_Servers_image/error-page.html"><b>&laquo;error-page.html&raquo;</b></a>.</p>
+			<p>По идее вы можете указать в этой конфигурации одинаковые страницы ошибок - <b>error-page.html</b>, если вам не нравится моя шуточная <b>404-page.html</b>. Для моей шуточной страницы иконка находится здесь: <a href="../image/Configuratons_Linux_Servers_image/404-favicon.ico"><b>&laquo;404-favicon.ico&raquo;</b></a>. Если интересно, пример этой шуточной страницы здесь: <a href="../image/Configuratons_Linux_Servers_image/404-page.html"><b>&laquo;404-page.html&raquo;</b></a>. А здесь пример обычной нормальной страницы ошибок: <a href="../image/Configuratons_Linux_Servers_image/error-page.html"><b>&laquo;error-page.html&raquo;</b></a>.</p>
 			<p>Обязательно сохранить все страницы ошибок и иконку <b>favicon</b> по строго определенному пути: <b>&laquo;/var/www/html/&raquo;</b>. Там скорее всего будет стандартная страница <b>&laquo;index.nginx-debian.html&raquo;</b>.</p>
 			<p>Далее будут &laquo;X-Header&raquo;-ы, ну, т.е. настройки XSS, X-Frame, X-Permited, X-Content-Type, HSTS, OCSP Stapling и Expect CT (Optional).</p>
 			<div class="codeses">
@@ -1652,7 +1652,7 @@ text/x-cross-domain-policy;
 <b>CTRL + o</b>
 <b>CTRL + x</b></pre>
 			</div>
-			<p>Теперь в самом <b>&laquo;/etc/nginx/nginx.conf&raquo;</b> пропишем <b>DDOS</b> для первого <b>Reverse Proxy</b>. Как его сделать описано вот в этом пункте: <a href="file:///home/mikl/git-ssh/Articles/The-security-of-network-connections.html#part5.4"><b>&laquo;NGINX DDoS (req limit)&raquo;</b></a>.</p>
+			<p>Теперь в самом <b>&laquo;/etc/nginx/nginx.conf&raquo;</b> пропишем <b>DDOS</b> для первого <b>Reverse Proxy</b>. Как его сделать описано вот в этом пункте: <a href="https://maximalisimus.github.io/Articles/The-security-of-network-connections.html#part5.4"><b>&laquo;NGINX DDoS (req limit)&raquo;</b></a>.</p>
 			<p><u>Такие <b>DDOS</b>-ы необходимо будет прописывать для всех ваших веб-сайтов или веб-сервисов.</u></p>
 			<p>Снова проверим конфигурацию и перезапустим Nginx.</p>
 			<p class="codes">

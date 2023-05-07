@@ -2,15 +2,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Hogwarts in Python</title>
-	<link rel="icon" href="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-favicon.png">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/main.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/zoom.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/table.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/frame.css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/ol-li.css" type="text/css">
-	<link rel="stylesheet" href="https://maximalisimus.github.io/Articles/html/img.css" type="text/css">
-	<script src="https://maximalisimus.github.io/Articles/html/jquery.2.2.0.min.js"></script>
-	<script type="text/javascript" src="https://maximalisimus.github.io/Articles/html/litezoom.js"></script>
+	<link rel="icon" href="../image/Python-Imports_image/py-imports-favicon.png">
+	<link rel="stylesheet" href="../html/main.css" type="text/css">
+	<link rel="stylesheet" href="../html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="../html/table.css" type="text/css">
+	<link rel="stylesheet" href="../html/frame.css">
+	<link rel="stylesheet" href="../html/ol-li.css" type="text/css">
+	<link rel="stylesheet" href="../html/img.css" type="text/css">
+	<script src="../html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="../html/litezoom.js"></script>
 </head>
 <body>
 	<div class="site">
@@ -22,7 +22,7 @@
 		<div class="content">
 			<center>
 				<div class="images">
-					<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/project-logo-0.png" width="500px"/>
+					<img src="../image/Python-Imports_image/project-logo-0.png" width="500px"/>
 				</div>
 				<div style="clear:both"></div>
 			</center>
@@ -123,14 +123,14 @@
 			<p>Для каждого модуля вам придётся мучиться не только с отдельными скриптами-тестами, но с импортом своих модулей в этих скриптах. Мало того, эти файлы-тесты будут включены в ваш пакет и мешать вам отлаживать его работу.</p>
 			<p>Не говоря уже про попытку теста всего пакета в целом, ведь в этом случае - относительный импорт не работает и вам придется переместить ваш тест-скрипт на директорию выше, а может и вообще перед директорией вашего пакета. И так будет с каждым скриптом-тестом.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.1.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №1" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.2.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №2" />
+				<img src="../image/Python-Imports_image/py-imports-2.1.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №1" />
+				<img src="../image/Python-Imports_image/py-imports-2.2.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №2" />
 			</div>
 			<p>В результате вам всё-таки придётся создать отдельную директорию для тестирования своего кода, в которой вы и будете хранить все <b>скрипты-тесты</b> вашего кода.</p>
 			<p><b><span style="color:Green;">Это как раз правильный подход!</span> Однако, есть нюансы.</b></p>
 			<p>Вот тут то и начинается вся магия <b>&laquo;Абры-Кадабры&raquo;</b> с импортом, т.к. в этом случае <span style="color:Red;">относительный импорт - не работает!</span></p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.3.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №3" />
+				<img src="../image/Python-Imports_image/py-imports-2.3.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №3" />
 			</div>
 			<p>Что же тогда делать и как решить такую задачу?</p>
 			<p><span style="color:Green;">Всё решается буквально 1...2 строчками кода </span> <b>-</b> <span style="color:Red;">но их необходимо понимать, чтобы применять правильно.</span></p>
@@ -144,7 +144,7 @@
 			<h2>Общая структура.</h2>
 			<p>Для примера пусть будет следующая структура проекта.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-1.png" class="fz__minimized" alt="клик для увеличения" title="Strukture Project" />
+				<img src="../image/Python-Imports_image/py-imports-1.png" class="fz__minimized" alt="клик для увеличения" title="Strukture Project" />
 			</div>
 			<div class="codeses">
 				<pre>
@@ -262,20 +262,20 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 				sys.path.append(<span style="color:Blue;">'../'</span>)
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №4" />
+				<img src="../image/Python-Imports_image/py-imports-2.4.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №4" />
 			</div>
 			<p>Есть.</p>
 			<p>Теперь попробуем импортировать наш модуль.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.5.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №5" />
+				<img src="../image/Python-Imports_image/py-imports-2.5.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №5" />
 			</div>
 			<p>Хм, ошибка. Может неправильно указали относительную директорию? Давайте попробуем с помощью модуля <b>pathlib</b>.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.6.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №6" />
+				<img src="../image/Python-Imports_image/py-imports-2.6.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №6" />
 			</div>
 			<p>Опять ошибка. Может опять относительность импорта указали не верно? Попробуем ещё раз.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-2.7.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №7" />
+				<img src="../image/Python-Imports_image/py-imports-2.7.png" class="fz__minimized" alt="клик для увеличения" title="Import attempt №7" />
 			</div>
 			<p>Хм, снова ошибка.</p>
 			<p><u>Однако, здесь не всё так просто, как показалось на первый взгляд.</u></p>
@@ -287,7 +287,7 @@ __all__ = [<span style="color:Blue;">'getPackageB'</span>]
 			<h2>4.2. Абсолютные и относительные пути.</h2>
 			<p>Давайте сначала посмотрим как получить полную директорию из относительной при помощи того же модуля <b>pathlib</b>.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-3.png" class="fz__minimized" alt="клик для увеличения" title="Относительные и абсолютные пути" />
+				<img src="../image/Python-Imports_image/py-imports-3.png" class="fz__minimized" alt="клик для увеличения" title="Относительные и абсолютные пути" />
 			</div>
 			<p>Хорошо. С директориями разобрались.</p>
 			<p>Есть такая встроенная переменная как &laquo;<b>__file__</b>&raquo;. Она указавает на текущий скрипт.</p>
@@ -313,7 +313,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			</div>
 			<p>Смотрим на результат.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-7.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.append" />
+				<img src="../image/Python-Imports_image/py-imports-7.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.append" />
 			</div>
 			<p><span style="color:Green;">Ура! Заработало!</span></p>
 			<p><span style="color:Brown;">Однако, такой способ добавления не совсем правильный!</span> Однако, вполне рабочий.</p>
@@ -341,7 +341,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				</pre>
 			</div>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-8.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.insert" />
+				<img src="../image/Python-Imports_image/py-imports-8.png" class="fz__minimized" alt="клик для увеличения" title="sys.path.insert" />
 			</div>
 			<br>
 			<hr class="hr_main">
@@ -493,7 +493,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			</p>
 			<p>Как показано выше, Pathlib создает путь к этому файлу, помещая этот конкретный скрипт в объект Path. Pathlib разделяет пути файловой системы на два разных класса, которые представляют два типа объектов path: чистый путь и конкретный путь.</p>
 			<div class="imageClear">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/pathlib-diagram.png" width="512px" />
+				<img src="../image/Python-Imports_image/pathlib-diagram.png" width="512px" />
 			</div>
 			<p>Чистый путь предоставляет утилиты для обработки и управления вашим путем к файлу без выполнения операций записи, в то время как конкретный путь позволяет вам манипулировать и выполнять операции записи в вашем пути к файлу.</p>
 			<p>Другими словами, конкретный путь является подклассом чистого пути. Он наследует манипуляции от родительского класса и добавляет операции ввода / вывода, которые выполняют системные вызовы.</p>
@@ -774,7 +774,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				<b>ValueError</b>: 'ocean/animals/fish/shark.txt' is not in the subpath of 'unrelated/path' OR one path is relative and the other is absolute.</span>
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.2.png" class="fz__minimized" alt="клик для увеличения" title="pathlib.Path().relative_to()" />
+				<img src="../image/Python-Imports_image/py-imports-4.2.png" class="fz__minimized" alt="клик для увеличения" title="pathlib.Path().relative_to()" />
 			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
@@ -810,8 +810,8 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 				pathlib /home/mikl/003/Primer/home/User/Desktop/file.txt<br></span>
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-4.png" class="fz__minimized" alt="клик для увеличения" title="Код name, suffix, resolve, joinpath" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-5.png" class="fz__minimized" alt="клик для увеличения" title="Выполнение кода name, suffix, resolve, joinpath" />
+				<img src="../image/Python-Imports_image/py-imports-4.png" class="fz__minimized" alt="клик для увеличения" title="Код name, suffix, resolve, joinpath" />
+				<img src="../image/Python-Imports_image/py-imports-5.png" class="fz__minimized" alt="клик для увеличения" title="Выполнение кода name, suffix, resolve, joinpath" />
 			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
@@ -904,7 +904,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			</ul>
 			<p>Я заранее создал каталог <b>gpgtest</b> и дал ему права <b>700</b> вручную, т.е. полный доступ только владельцу каталога. Дело в том, что утилита <b>GNUPG</b> требует для рабочей директории именно такие права доступа.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Python-Imports_image/py-imports-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
 			</div>
 			<p>Посмотрим как получить права доступа при помощи библиотек <b>os</b> и <b>pathlib</b>.</p>
 			<p class="codes">
@@ -994,7 +994,7 @@ if __name__ == <span style="color:Blue;">'__main__'</span>:
 			</p>
 			<p><b>Однако, помните, что для библиотеки OS запрашивать права доступа, т.е. обращаться к статусу состояния файла или папки необходимо повторно.</b></p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-6.png" class="fz__minimized" alt="клик для увеличения" title="Status" />
+				<img src="../image/Python-Imports_image/py-imports-6.png" class="fz__minimized" alt="клик для увеличения" title="Status" />
 			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2_5">Перейти к Главе</a></p>
@@ -2171,7 +2171,7 @@ paths = list(<span style="color:Red;">map</span>(Path, <span style="color:Red;">
 				Path('pkg/').rglob('[0-9]?.txt'): 22.txt 3a.txt</span>
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-16.png" class="fz__minimized" alt="клик для увеличения" title="Path.glob() и Path.rglob()" />
+				<img src="../image/Python-Imports_image/py-imports-16.png" class="fz__minimized" alt="клик для увеличения" title="Path.glob() и Path.rglob()" />
 			</div>
 			<hr class="hr_chapter">
 			<p><a href="#part6_2">Перейти к Главе</a></p>
@@ -2413,7 +2413,7 @@ b = []
 			</p>
 			<p>Если имя активного пользователя можно узнать с помощью кросплатформенной команды &laquo;<b>whoami</b>&raquo;, то с остальным надо разбираться как-то по другому.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-19.png" class="fz__minimized" alt="клик для увеличения" title="Linux and wine, python list-users.py" />
+				<img src="../image/Python-Imports_image/py-imports-19.png" class="fz__minimized" alt="клик для увеличения" title="Linux and wine, python list-users.py" />
 			</div>
 			<p>И вот тут на арену выходит задача-помошник.</p>
 			<ul>
@@ -2514,7 +2514,7 @@ b = []
 				В комментарии я указал второй способ получения списка всех пользователей системы. Здесь необходимо обратить внимание только на строку поиска <b>Path.glob('*')</b>. Поиск должен быть именно всех файлов и папок, но не рекурсивный, иначе вы рискуете получить исключение <span style="color:#ff9933;">IndexError</span>.
 			</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-18.png" class="fz__minimized" alt="клик для увеличения" title="IndexError" />
+				<img src="../image/Python-Imports_image/py-imports-18.png" class="fz__minimized" alt="клик для увеличения" title="IndexError" />
 			</div>
 			<p>
 				Теперь можно получить список доступных пользователей системы и одновременно исключить <b>exclude_users</b>.
@@ -2549,7 +2549,7 @@ exclude_users = [<span style="color:Blue;">'All Users'</span>, <span style="colo
 			</div>
 			<p>А теперь посмотрим как этот код выполняется в <b>Windows 10</b>.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-17.png" class="fz__minimized" alt="клик для увеличения" title="Windows 10, Qemu, python list-users.py" />
+				<img src="../image/Python-Imports_image/py-imports-17.png" class="fz__minimized" alt="клик для увеличения" title="Windows 10, Qemu, python list-users.py" />
 			</div>
 			<hr class="hr_main">
 			<p><a href="#part7">Перейти к Главе</a></p>
@@ -2684,7 +2684,7 @@ exclude_users = [<span style="color:Blue;">'All Users'</span>, <span style="colo
 			<p>При необходимости - просто создавайте <i>.bat</i> файл с таким же содержимым в нужной вам директории и запускайте ваш <i>Windows-Python</i> код в той же описанной последовательности.</p>
 			<p>В <i>Windows</i> похожие <i>.bat</i> файлы используются для доступа либо к портативным версиям каких либо консольных программ, либо для того, чтобы не прописывать доступ к этим программам в переменные окружения самой системы.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-15.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 User PowerShell Python and PIP" />
+				<img src="../image/Python-Imports_image/py-imports-15.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 User PowerShell Python and PIP" />
 			</div>
 			<p>Вам необходимо также знать, что в <i>Windows 10</i> использование командной строки или <i>PowerShell</i> в режиме администратора несёт за собой несколько неприяных последствий. Рекомендуется запускать только от имени пользователя, т.е. двойным щелчком мыши по <b>bat</b>-файлу и всё.</p>
 			<p>При запуске в режиме администратора:</p>
@@ -2697,10 +2697,10 @@ exclude_users = [<span style="color:Blue;">'All Users'</span>, <span style="colo
 			<p>Ну а в <b>PowerShell</b> соответственно не работают: <b>$env:Path+=</b>...</p>
 			<p>Т.е. для режима администратора все пути к вашим <b>EXE</b> программам всё-таки придётся записывать в переменные окружения самой системы.</p>
 			<div id="page" class="clearfix">
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-11.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD User" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-12.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 PowerShell USer" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-13.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD Admin" />
-				<img src="https://maximalisimus.github.io/Articles/image/Python-Imports_image/py-imports-14.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD PowerShell" />
+				<img src="../image/Python-Imports_image/py-imports-11.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD User" />
+				<img src="../image/Python-Imports_image/py-imports-12.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 PowerShell USer" />
+				<img src="../image/Python-Imports_image/py-imports-13.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD Admin" />
+				<img src="../image/Python-Imports_image/py-imports-14.png" class="fz__minimized" alt="клик для увеличения" title="Win-10 CMD PowerShell" />
 			</div>
 			<p>В <i>&laquo;Windows 7&raquo;</i> изменение переменных окружения делается так.</p>
 			<p style="margin-left: 20px">
