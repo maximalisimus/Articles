@@ -715,6 +715,15 @@ mywg
   interfaces: wg0</pre>
 			</div>
 			<p>Всё! На этом настройки данного фаервола завершены.</p>
+			<p>Вот так выглядит блокировка ip адреса или всей подсети.</p>
+			<p class="codes">
+				<span style="color:blue;"># Заблокировать IP 192.168.2.50</span></br>
+				$ sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='192.168.2.50' reject"</br>
+				<span style="color:blue;"># Заблокировать всю подсеть</span></br>
+				$ sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='192.168.2.0/24' reject"</br>
+				$ sudo firewall-cmd --reload</br>
+				$ sudo firewall-cmd --list-all
+			</p>
 			<h3>Переходим к настройкам wireguard-а.</h3>
 			<p>Настроим конфигурацию сервера. Закоментируем строки с маршрутизацией и перезапустим сервис.</p>
 			<p class="codes">
