@@ -88,7 +88,6 @@
 				</ol>
 				<li><a href="#part15">Docker, docker-compose.</a></li>
 				<li><a href="#part16">Nginx Reverse Proxy.</a></li>
-				<li><a href="#part17">Блокировка ip адреса или всей подсети.</a></li>
 			</ol>
 			<p><span style="color:red;"><b>&laquo;Podman&raquo;</b>, <b>&laquo;Podman-Compose&raquo;</b> и <b>&laquo;Cockpit&raquo;</b> рассмотрим в другой статье, т.к. он на порядок сложнее, чем <b>&laquo;Docker&raquo;</b> и <b>&laquo;Docker-Compose&raquo;</b> и в установке, и в настройке, и в использовании.</span></p>
 			<hr>
@@ -1816,50 +1815,6 @@ server {
 <b>$ sudo crontab -l</b>
 				</pre>
 			</div>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
-			<p><a name="part17"></a></p>
-			<h2>17. Блокировка ip адреса или всей подсети.</h2>
-			<p>С помощью <b>Firewalld</b> это будет выглядеть следующим образом.</p>
-			<p class="codes">
-				$ sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='192.168.2.0/24' reject"</br>
-				$ sudo firewall-cmd --reload</br>
-				$ sudo firewall-cmd --list-all
-			</p>
-			<p>С помощью <b>IPTABLES</b> так.</p>
-			<p>При этиом у <b>DROP</b> в ответ ничего не будет отправляться запрашивающему ресурсу, а у <b>REJECT</b> будет автоматически сформирован ответ.</p>
-			<p class="codes">
-				$ sudo iptables -t filter -A INPUT -s 8.8.8.8/32 -j DROP</br>
-				$ sudo iptables -t filter -A INPUT -s 8.8.8.8/32 -j REJECT
-			</p>
-			<p>Сохраним <b>IPTABLES</b> и посмотрим как восстанавить.</p>
-			<p class="codes">
-				$ sudo iptables-save</br></br>
-				$ sudo mkdir /etc/iptables-conf/</br>
-				$ sudo iptables-save -f /etc/iptables-conf/iptables_rules.ipv4</br>
-				<span style="color:blue;"># Или</span></br>
-				$ sudo iptables-save > /etc/iptables-conf/iptables_rules2.ipv4</br></br>
-				$ ls -la /etc/iptables-conf/</br></br>
-				<span style="color:blue;"># Восстановим</span></br>
-				$ sudo iptables-restore -vV /etc/iptables-conf/iptables_rules.ipv4</br>
-				$ sudo iptables-restore -nvV /etc/iptables-conf/iptables_rules.ipv4
-			</p>
-			<p>Применение с перезагрузкой.</p>
-			<div class="codeses">
-				<pre><b>$ sudo nano /etc/network/if-pre-up.d/iptables</b>
-
-#!/bin/sh
-/sbin/iptables-restore &lt; /etc/iptables-conf/iptables_rules.ipv4
-
-<span style="color:blue;"># Сохраняем, выходим</span>
-<b><span style="color:blue;">CTRL + o</span></b>
-<b><span style="color:blue;">CTRL + x</span></b>
-<span style="color:blue;"># Делаем исполняемым</span>
-<b>$ sudo chmod +x /etc/network/if-pre-up.d/iptables</b>
-<span style="color:blue;"># Загружаем до запуска интерфейсов</span>
-<b>$ sudo -t filter iptables -L</b></pre>
-			</div>
-			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 		</div>
