@@ -1388,12 +1388,55 @@ Connection: keep-alive</pre>
 				$ sudo iptables -t filter <b>-A</b> INPUT -s 34.124.185.0/24 -j DROP</br>
 				$ sudo iptables -t filter <b>-A</b> INPUT -s 45.79.221.110/24 -j REJECT
 			</p>
+			<p>А вот так будет выглядить разрешающее <b>ACCEPT</b> правило правило.</p>
+			<p class="codes">
+				$ sudo iptables -t filter <b>-A</b> INPUT -s 192.168.0.110/32 -j ACCEPT
+			</p>
 			<p>При этом ключ <b>&laquo;-A&raquo;</b> используется для добавления значения в <b>IPTABLES</b>, а ключ <b>&laquo;-D&raquo;</b> удаляет значение из <b>IPTABLES</b>. Т.е. первый <b><u>блокирует</u></b>, второй <b><u>раз</u></b>блокирует.</p>
 			<p>Разблокировка тех же адресов будет идентична, за исключением ключа <b>&laquo;-A&raquo;</b>.</p>
 			<p class="codes">
 				$ sudo iptables -t filter <b>-D</b> INPUT -s 34.124.185.0/24 -j DROP</br>
 				$ sudo iptables -t filter <b>-D</b> INPUT -s 45.79.221.110/24 -j REJECT
 			</p>
+			<p>Соответственно удаление разрешающего <b>ACCEPT</b> правила будет выглядеть так.</p>
+			<p class="codes">
+				$ sudo iptables -t filter <b>-D</b> INPUT -s 192.168.0.110/32 -j ACCEPT
+			</p>
+			<p>Блокировать с помощью <b>&laquo;NFTABLES&raquo;</b> немного сложнее, в том плане, что разблокировать придётся уже 2 командами, а не изменением ключа в одной команде.</p>
+			<p>Для начала нам нужно определиться с какой таблицей мы вообще работаем, а затем с какой цепочкой. Дело в том, что в <b>&laquo;NFTABLES&raquo;</b> все таблицы и цепочки вы создаете только самостоятельно. Есть стандартные таблицы, но могут отсутствовать стандартные цепочки. Посмотрим на таблицы, которые у нас есть.</p>
+			<p class="codes">
+				<b>$</b> sudo nft list tables
+			</p>
+			<p>Стандартно, скорее всего у вас будет таблица <b>&laquo;ip filter&raquo;</b>.</p>
+			<p>Теперь посмотрим на цепочки данной таблицы.</p>
+			<p class="codes">
+				<b>$</b> sudo nft list table ip filter
+			</p>
+			<p>Видим в ней цепочку <b>&laquo;chain INPUT&raquo;</b>. Если нет, то её придётся создавать. Создаётся цепочка примерно так.</p>
+			<p class="codes">
+				<b>$</b> sudo nft add chain ip filter INPUT '{ type filter hook input priority 0; policy accept; }'
+			</p>
+			<p>Теперь можно заблокировать надоедливый адрес, например, некой bootnet-сети.</p>
+			<p class="codes">
+				<b>$</b> sudo nft 'add rule ip filter INPUT ip saddr 165.22.60.249 counter drop'
+			</p>
+			<p>А вот так будет выглядеть разрешающиее правило, аналогично разрешающему в <b>IPATBLES</b>.</p>
+			<p class="codes">
+				<b>$</b> sudo nft 'add rule ip filter INPUT ip saddr 192.168.0.110 counter accept'
+			</p>
+			<p>Чтобы разблокировать адрес, т.е. удалить его из <b>NFTABLES</b>, необходимо узнать его <b>&laquo;handle&raquo;</b>. Сделать это можно так. Стандартная команда для определения рукопожатия и далее по конвееру небольшая фильтрация для более или менее приличного вида вывода. Все что идет по конвееру можно удалить, т.е. выполнять не обязательно.</p>
+			<p class="codes">
+				<span style="color:blue;"># Вот так выглядит обычная команда.</span></br>
+				<b>$</b> sudo nft --handle --numeric list chain ip filter INPUT</br></br>
+				<span style="color:blue;"># А вот так с конвеером.</span></br>
+				<b>$</b> sudo nft --handle --numeric list chain ip filter INPUT | grep -Ei "ip saddr|# handle" | sed 's/^[ \t]*//' | awk '!/^$/{print $0}'
+			</p>
+			<p>В конце каждой строки напротив ip-адреса как раз и будет заветный <b>&laquo;handle&raquo;</b>. Теперь зная его, можно удалить ip-адрес из <b>NFTABLES</b>.</p>
+			<p class="codes">
+				<b>$</b> sudo nft delete rule ip filter INPUT handle 10
+			</p>
+			<p>Да, вот так просто удалить по <b>&laquo;handle&raquo;</b>-у.</p>
+			<p><b>Учтите!</b> Что после перезагрузки все правила будут сброшены. Чтобы они сохранились их надо сохранить в файл, и загружать при старте системы дополнительным скриптом - примерно как <b>IPATBLES</b>, или отдельным <b>bash</b> скриптом и сервисом <b>systemd</b>.</p>
 			<p>Сохраним <b>IPTABLES</b> и посмотрим как восстанавливать внесенные изменения.</p>
 			<p class="codes">
 				$ sudo iptables-save</br></br>
