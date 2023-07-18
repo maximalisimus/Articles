@@ -47,21 +47,23 @@
 				<ol>
 					<li><a href="#part5.1">Установка и запуск.</a></li>
 					<li><a href="#part5.2">Базовая настройка.</a></li>
-					<li><a href="#part5.3">Настройка правил.</a></li>
-					<li><a href="#part5.4">NGINX DDoS (req limit).</a></li>
-					<li><a href="#part5.5">NGINX files.</a></li>
-					<li><a href="#part5.6">NGINX GZIP.</a></li>
-					<li><a href="#part5.7">NGINX X-XSS-Protection.</a></li>
-					<li><a href="#part5.8">NGINX X-Frame-Options.</a></li>
-					<li><a href="#part5.9">NGINX X-Permitted-Cross-Domain-Policies.</a></li>
-					<li><a href="#part5.10">NGINX Strict-Transport-Security.</a></li>
-					<li><a href="#part5.11">NGINX X-Content-Type-Options.</a></li>
-					<li><a href="#part5.12">NGINX SSL.</a></li>
-					<li><a href="#part5.13">Nginx Отключение серверных токенов.</a></li>
-					<li><a href="#part5.14">Nginx Задание размеров буферов.</a></li>
-					<li><a href="#part5.15">Работа со списком заблокированных адресов.</a></li>
-					<li><a href="#part5.16">Примеры правил.</a></li>
-					<li><a href="#part5.17">Удаление.</a></li>
+					<li><a href="#part5.3">Фильтры.</a></li>
+					<li><a href="#part5.4">Действия.</a></li>
+					<li><a href="#part5.5">Настройка правил.</a></li>
+					<li><a href="#part5.6">NGINX DDoS (req limit).</a></li>
+					<li><a href="#part5.7">NGINX files.</a></li>
+					<li><a href="#part5.8">NGINX GZIP.</a></li>
+					<li><a href="#part5.9">NGINX X-XSS-Protection.</a></li>
+					<li><a href="#part5.10">NGINX X-Frame-Options.</a></li>
+					<li><a href="#part5.11">NGINX X-Permitted-Cross-Domain-Policies.</a></li>
+					<li><a href="#part5.12">NGINX Strict-Transport-Security.</a></li>
+					<li><a href="#part5.13">NGINX X-Content-Type-Options.</a></li>
+					<li><a href="#part5.14">NGINX SSL.</a></li>
+					<li><a href="#part5.15">Nginx Отключение серверных токенов.</a></li>
+					<li><a href="#part5.16">Nginx Задание размеров буферов.</a></li>
+					<li><a href="#part5.17">Работа со списком заблокированных адресов.</a></li>
+					<li><a href="#part5.18">Примеры правил.</a></li>
+					<li><a href="#part5.19">Удаление.</a></li>
 				</ol>
 				<li><a href="#part6">Блокировка ip адреса или всей подсети.</a></li>
 			</ol>
@@ -733,7 +735,7 @@ mywg
 			<p><a name="part5.0"></a></p>
 			<h2>Fail2ban</h2>
 			<p><a name="part5.1"></a></p>
-			<h3>Установка и запуск</h3>
+			<h3>5.1. Установка и запуск</h3>
 			<p>Описывая <b>Fail2ban</b> в двух словах, можно сказать, что он позволяет на основе анализа логов блокировать тех, кто злоупотребляет доступностью сервера по сети. Например, защитить почтовые ящики от взлома путем перебора паролей или многократного запроса какого-либо ресурса.</p>
 			<p>Установка производится следующей командой:</p>
 			<p class="codes">
@@ -776,7 +778,7 @@ WantedBy=timers.target
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.2"></a></p>
-			<h3>Базовая настройка.</h3>
+			<h3>5.2. Базовая настройка.</h3>
 			<p>Процесс настройки fail2ban не зависит от дистрибутива Linux. Основной конфигурационный файл находится по пути <b>&laquo;/etc/fail2ban/jail.conf&raquo;</b>. Однако, его не рекомендуется менять и для настройки используют подключаемые файлы из каталога <b>&laquo;/etc/fail2ban/jail.d&raquo;</b>.</p>
 			<p>Для начала создаем первый файл, в котором будут храниться настройки по умолчанию.</p>
 			<p class="codes">
@@ -807,7 +809,25 @@ WantedBy=timers.target
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.3"></a></p>
-			<h3>Настройка правил.</h3>
+			<h3>5.3. Фильтры.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.4"></a></p>
+			<h3>5.4. Действия.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5.5"></a></p>
+			<h3>5.5. Настройка правил.</h3>
 			<p>В <b>Debian</b> по умолчанию вместо стандартной настройки есть такой файл: <b>&laquo;/etc/fail2ban/jail.d/defaults-debian.conf&raquo;</b>.</p>
 			<p>Обычно в нём заданы настройки SSH-ловушки по умолчанию. Сейчас она не работает. Мы её перезапишем в новой конфигурации: <b>&laquo;/etc/fail2ban/jail.d/ssh.conf&raquo;</b>.</p>
 			<p>Не забудьте перед этим создать нужный файл лога и дать ему соответствующие права доступа. Иначе при перезапуске <b>&laquo;fail2ban-сервиса&raquo;</b> получите ошибку.</p>
@@ -876,8 +896,8 @@ Status
 			<p>Фильтры, в основном, представляют набор регулярных выражений для поиска ключевых слов в log-файлах. Они находятся в каталоге <b>&laquo;/etc/fail2ban/filter.d&raquo;</b>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.4"></a></p>
-			<h3>NGINX DDoS (req limit).</h3>
+			<p><a name="part5.6"></a></p>
+			<h3>5.6. NGINX DDoS (req limit).</h3>
 			<p>Данное правило поможет защитить веб-сервер nginx от DDoS-атак. В некоторых сборках, для данного правило может не оказаться готового фильтра, поэтому в данном примере, мы его создадим вручную.</p>
 			<p>Для начала, необходимо настроить NGINX:</p>
 			<p class="codes">
@@ -935,8 +955,8 @@ Status
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.5"></a></p>
-			<h3>NGINX files.</h3>
+			<p><a name="part5.7"></a></p>
+			<h3>5.7. NGINX files.</h3>
 			<p>Настройка <b>upload</b> файлов.</p>
 			<div class="codeses">
 				<pre>
@@ -956,8 +976,8 @@ http {
 			<p>Более подробно о них написано в <a href="#part5.14"><b>&laquo;Пункте 5.14&raquo;</b>.</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.6"></a></p>
-			<h3>NGINX GZIP.</h3>
+			<p><a name="part5.8"></a></p>
+			<h3>5.8. NGINX GZIP.</h3>
 			<p>Создайте файл <b>&laquo;site_gzip.conf&raquo;</b> со следующим содержимым</p>
 			<div class="codeses">
 				<pre>
@@ -1002,8 +1022,8 @@ text/x-cross-domain-policy;
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.7"></a></p>
-			<h3>NGINX X-XSS-Protection.</h3>
+			<p><a name="part5.9"></a></p>
+			<h3>5.9. NGINX X-XSS-Protection.</h3>
 			<p>Заголовок X-XSS-Protection может предотвратить некоторые XSS-атаки.</p>
 			<p>Вы можете реализовать защиту XSS, используя три варианта в зависимости от конкретной потребности.</p>
 			<ul>
@@ -1026,8 +1046,8 @@ http {
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.8"></a></p>
-			<h3>NGINX X-Frame-Options.</h3>
+			<p><a name="part5.10"></a></p>
+			<h3>5.10. NGINX X-Frame-Options.</h3>
 			<p>Заголовок X-Frame-Options позволяет снизить уязвимость вашего сайта для clickjacking-атак. Этот заголовок служит инструкцией для браузера не загружать вашу страницу в frame/iframe. Не все браузеры поддерживают этот вариант.</p>
 			<p>Настроить X-Frame-Options можно тремя способами:</p>
 			<ul>
@@ -1049,8 +1069,8 @@ http {
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.9"></a></p>
-			<h3>NGINX X-Permitted-Cross-Domain-Policies.</h3>
+			<p><a name="part5.11"></a></p>
+			<h3>5.11. NGINX X-Permitted-Cross-Domain-Policies.</h3>
 			<p>Аналогично механизму браузеров блокировки стороннего контента Adobe Flash имеет свой. Он регулируется файлами crossdomain.xml сайта, начиная с корневого каталога. Проблема с механизмом в том, что на любом уровне вложенности корневой регулирующий файл (политика безопасности) может быть переопределен. Чтобы избежать таких ситуаций, необходимо задать этот HTTP-заголовок.</p>
 			<p>Доступно несколько вариантов настройки:</p>
 			<ul>
@@ -1074,8 +1094,8 @@ http {
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.10"></a></p>
-			<h3>NGINX Strict-Transport-Security.</h3>
+			<p><a name="part5.12"></a></p>
+			<h3>5.12. NGINX Strict-Transport-Security.</h3>
 			<p>Заголовок Strict-Transport-Security запрещает использование незащищенного HTTP соединения на сайте, если есть защищенное HTTPS.</p>
 			<div class="codeses">
 				<pre>
@@ -1092,8 +1112,8 @@ http {
 			<p>Лучше включить его в <b>&laquo;/etc/letsencrypt/options-ssl-nginx.conf&raquo;</b>. Ниже этот вариант тоже описан.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.11"></a></p>
-			<h3>NGINX X-Content-Type-Options.</h3>
+			<p><a name="part5.13"></a></p>
+			<h3>5.13. NGINX X-Content-Type-Options.</h3>
 			<p>Рейтинг наиболее опасных к использованию возможностей браузера возглавляет возможность Internet Explorer «угадывать» тип файла, игнорируя его MIME-тип.</p>
 			<p>При передаче от сервера к браузеру все файлы имеют тот или иной тип, который прямо указывает на суть содержимого файла. Однако, Internet Explorer имеет встроенный механизм, который позволяет по-содержимому файла переопределить его тип.</p>
 			<p>Таким образом, обычные текстовые файлы могут быть интерпретированы как JavaScript со всеми вытекающими последствиями. Например, если у вас на сайте запрещена загрузка текстовых файлов с расширениями .js пользователями, то они могут загрузить в виде картинок текстовый файл, содержащий JavaScript-код, который может быть исполнен браузером.</p>
@@ -1111,8 +1131,8 @@ http {
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.12"></a></p>
-			<h3>NGINX SSL.</h3>
+			<p><a name="part5.14"></a></p>
+			<h3>5.14. NGINX SSL.</h3>
 			<p><b>SSL 90%</b>.</p>
 			<p>Отредактируйте файл вашей конфигурации сервера. Например такой.</p>
 			<div class="codeses">
@@ -1178,8 +1198,8 @@ add_header Expect-CT "max-age=0";</pre>
 			<p>Здесь, важны все строки, включая <b>&laquo;Expect CT&raquo;</b> и <b>&laquo;OCSP Stapling&raquo;</b>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.13"></a></p>
-			<h3>Nginx Отключение серверных токенов.</h3>
+			<p><a name="part5.15"></a></p>
+			<h3>5.15. Nginx Отключение серверных токенов.</h3>
 			<p>В обычном режиме сервер будет отображать используемую версию NGINX. Поэтому зллоумышленники будут точно знать уязвимости вашего сервера, т.к. в разных версиях они разные и со временем nginx обновляли и устраняли эти уязвимости.</p>
 			<p>Давайте посмотрим на эту информацию, чтобы точно убедиться. У меня же для примера запрос будет к виртуальной машине. Дату я убрал, чтобы она вас не смущала.</p>
 			<div class="codeses">
@@ -1244,8 +1264,8 @@ Connection: keep-alive</pre>
 			<p><b>Отлично!</b></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.14"></a></p>
-			<h3>Nginx Задание размеров буферов.</h3>
+			<p><a name="part5.16"></a></p>
+			<h3>5.16. Nginx Задание размеров буферов.</h3>
 			<p>Буферы Nginx задают возможность использования оперативной памяти для сохранения представляющей ценность информации. Их размер задается в конфигурационном файле и определяет будет ли использоваться оперативная память или все будет записываться на диск.</p>
 			<p>Размер буферов задается в зависимости от количества доступных серверу ресурсов. Если их много значения можно можно увеличивать.</p>
 			<p>Размер буферов определяется четырьмя директивами в конфигурационном файле, в секции <b>server</b> либо в <b>http</b>:</p>
@@ -1270,8 +1290,8 @@ Connection: keep-alive</pre>
 			<p>Задать их можно для каждого виртуального хоста — для каждого сайта (в секции <b>server</b>) или для всего сервера (в секции <b>http</b> - <b>&laquo;/etc/nginx/nginx.conf&raquo;</b>).</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.15"></a></p>
-			<h3>Fail2ban. Работа со списком заблокированных адресов.</h3>
+			<p><a name="part5.17"></a></p>
+			<h3>5.17. Fail2ban. Работа со списком заблокированных адресов.</h3>
 			<p>Получить статистику заблокированных адресов можно следующей командой:</p>
 			<p class="codes">
 				$ sudo fail2ban-client status <имя правила>
@@ -1296,52 +1316,73 @@ Connection: keep-alive</pre>
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.16"></a></p>
-			<h3>Fail2ban. Примеры правил</h3>
-			<p>CentOS</p>
+			<p><a name="part5.18"></a></p>
+			<h3>5.18. Fail2ban. Примеры правил</h3>
+			<p>Настройки <b>Fail2ban</b> - <b>&laquo;/etc/fail2ban/jail.d/default.conf&raquo;</b>, при условии использования <b>Wireguard</b>. Хотя, последнее не обязательно. У вас просто появятся пару новых ip адресов в строке игнора, т.е. белых адресов.</p>
 			<p class="codes">
-				<b>$ sudo nano /etc/fail2ban/jail.d/ssh.conf</b></br></br>
-				[ssh]</br>
+				[DEFAULT]</br>
+				maxlines = 4</br>
+				maxretry = 5</br>
+				findtime = 5m</br>
+				bantime = 10m</br>
+				action = firewallcmd-ipset</br>
+				ignoreip = 127.0.0.1/8 10.10.10.0/24
+			</p>
+			<p>Конфигурация <b>SSH</b> - <b>&laquo;/etc/fail2ban/jail.d/ssh.conf&raquo;</b>.</p>
+			<p class="codes">
+				[sshd]</br>
 				enabled = true</br>
 				port = ssh</br>
-				filter = sshd</br>
-				action = firewallcmd-new[name=sshd]</br>
-				logpath = /var/log/secure
+				<span style="color:blue;">#action = iptables-ipset[name=sshd, port=ssh, protocol=tcp]</br>
+				#action = nftables-allports[name=sshd, protocol=tcp]</span></br>
+				action = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
+				logpath = /var/log/sshd.log
 			</p>
-			<p>Ubuntu</p>
+			<p>С помощью знака <b>&laquo;#&raquo;</b> решетки закоментированы не активные настройки. Таким образом я напоминаю о возможных других вариантах запуска. Однако, лучше использовать рекомендованные, раскоментированные, работоспособность которых неоднократно проверена как на виртуальной машине, так и на реальных серверах.</p>
+			<p>Настройка <b>Nginx-DDOS</b> - <b>&laquo;/etc/fail2ban/jail.d/nginx-ddos.conf&raquo;</b>.</p>
 			<p class="codes">
-				<b>$ sudo nano /etc/fail2ban/jail.d/ssh.conf</b></br></br>
-				[ssh]</br>
-				enabled = true</br>
-				port = ssh</br>
-				filter = sshd</br>
-				action = iptables[name=sshd]</br>
-				logpath = /var/log/auth.log
-			</p>
-			<p>Asterisk</p>
-			<p class="codes">
-				<b>$ sudo nano /etc/fail2ban/jail.d/asterisk.conf</b></br></br>
-				[asterisk]</br>
-				enabled = true</br>
-				filter = asterisk</br>
-				action = iptables-allports[name=asterisk, protocol=all]</br>
-				logpath = /var/log/asterisk/messages
-			</p>
-			<p>NGINX</p>
-			<p class="codes">
-				<b>$ sudo nano /etc/fail2ban/jail.d/nginx.conf</b></br></br>
-				[nginx]</br>
+				[nginx-ddos]
 				enabled = true</br>
 				port = http,https</br>
-				filter = nginx-http-auth</br>
-				action = iptables-multiport[name=nginx, port="http,https", protocol=tcp]</br>
-				<span style="color:blue;"># action = firewallcmd-multiport[name=nginx, port="http,https", protocol=tcp]</span></br>
-				logpath = /var/log/nginx/error.log
+				maxretry = 5</br>
+				findtime = 10s</br>
+				bantime = 10m</br>
+				filter = nginx-limit-req</br>
+				<span style="color:blue;">#action = firewallcmd-ipset[name=nginxddos, port=ssh, protocol=tcp]</br>
+				#action = firewallcmd-multiport[name=nginxddos, port="http,https", protocol=tcp]</span></br>
+				action = iptables-multiport[name=nginxddos, port="http,https", protocol=tcp]</br>
+				logpath = /var/log/nginx/error.log</br>
+				ignoreregex = \.(jpg|jpeg|png|gif|js|css)
 			</p>
+			<p>Отслеживание доступа в <b>NGINX</b> - <b>&laquo;/etc/fail2ban/jail.d/access-nginx.conf&raquo;</b>, при помощи собственного фильтра.</p>
+			<div class="codeses">
+				<pre>[anginx]
+enabled  = true
+port = all
+filter = nginx-access
+logpath = /var/log/nginx/access.log
+          /var/log/myservices/fwg/access.log<span style="color:blue;">
+#action = firewallcmd-ipset[name=anginx, port=ssh, protocol=tcp]
+#action = firewallcmd-multiport[name=anginx, port="http,https", protocol=tcp]</span>
+action = iptables-allports[name=anginx, protocol=all]
+ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
+			</div>
+			<p>Отдельное отслеживание ошибок <b>NGINX</b> - <b>&laquo;/etc/fail2ban/jail.d/error-nginx.conf&raquo;</b>, при помощи собственного фильтра.</p>
+			<div class="codeses">
+				<pre>[enginx]
+enabled  = true
+port = all
+filter = nginx-error
+logpath = /var/log/nginx/error.log<span style="color:blue;">
+#action = firewallcmd-ipset[name=enginx, port=ssh, protocol=tcp]
+#action = firewallcmd-multiport[name=enginx, port="all", protocol=tcp]</span>
+action = iptables-allports[name=enginx, protocol=all]
+ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part5.17"></a></p>
-			<h3>Fail2ban. Удаление.</h3>
+			<p><a name="part5.19"></a></p>
+			<h3>5.19. Fail2ban. Удаление.</h3>
 			<p class="pbold">Средствами fail2ban:</p>
 			<p>Для удаление адреса из списка вводим:</p>
 			<p class="codes">
