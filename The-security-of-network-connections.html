@@ -907,10 +907,123 @@ WantedBy=timers.target
 			<p><a name="part5.4"></a></p>
 			<h3>5.4. Действия.</h3>
 			<p>Действия <b>Fail2ban</b>-а имеют гораздо большее применение, чем кажется на первый взгляд.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Чаще всего, большинство из вас для того, чтобы отслеживать состояние Fail2ban-а - заблокированные адреса скорее всего будут это делать напрямую с помощью скриптов и регулярных выражений, для фильтрации и акцентирования внимания только на самом заблокированном адресе.</p>
+			<p>Ничего не имею против такого способа. Однако, обращу ваше внимание на следующее. Со временем вывод команды Fail2ban может измениться. В результате регулярное выражение придётся переписывать. Это один момент.</p>
+			<p>Это ни разу не круто!</p>
+			<p>Зачем так сильно заморачиваться, если для того же самого результата придуманы так называемы  экшены - <b>action.d</b> действия у <b>Fail2ban</b>-а.</p>
+			<p>Вы могли бы сразу начать менять стандартные действия - дописывая в них что-то своё.</p>
+			<p>Да, так можно делать, это будет прекрасно работать. Однако, после обновления все ваши старания слетят в круглый ноль и придётся настраивать всё заново.</p>
+			<p>Это второй момент.</p>
+			<p>Так как же тогда быть? Спросите вы.</p>
+			<p>Опять таки, всё гениально и просто - создать собственный  <b>custom action</b>!</p>
+			<p>Приведу в пример экшен для своего скрипта, который просто добавляет ip адреса в некий заранее предопределенный файл в json формате. А затем опишу некоторые особенности создания таких экшенов.</p>
+			<div class="codeses">
+				<pre><span style="color:red;"># Fail2Ban configuration file
+#
+# Author: Mikhail Artamonov
+# Modified by maximalisimus
+# 
+# /etc/fail2ban/action.d/blacksimple.conf</span>
+
+<span style="color:blue;">[INCLUDES]
+
+after =
+
+before =
+
+[Init]</span>
+
+<span style="color:red;"># Option:  Programs
+# Notes.:  A script for working with a blacklist and whitelist.
+# Values:  system command
+#</span>
+<span style="color:blue;">blacklistip = blacklist</span>
+
+<span style="color:red;"># Option: count
+# Notes.: The number of locks after which the ip-address 
+#         is entered in {IP,IP6,NF}TABLES.
+# Values: NUM Default: 3
+#</span>
+<span style="color:blue;">count = 3</span>
+
+<span style="color:red;"># Option: mask
+# Notes.: The network mask.
+# Values: NUM Default: 32
+#</span>
+<span style="color:blue;">mask = 32</span>
+
+<span style="color:red;"># Option: ipv6
+# Notes.: Select {IP6/NF}TABLES.
+# Values: STRING Default: ""
+#</span>
+<span style="color:blue;">ipv = ""
+
+[Definition]</span>
+
+<span style="color:red;"># Option:  actionstart
+# Notes.:  command executed once at the start of Fail2Ban.
+# Values:  CMD
+#</span>
+<span style="color:blue;">actionstart =</span>
+
+<span style="color:red;"># Option:  actionstop
+# Notes.:  command executed once at the end of Fail2Ban
+# Values:  CMD
+#</span>
+<span style="color:blue;">actionstop =</span>
+
+<span style="color:red;"># Option:  actioncheck
+# Notes.:  command executed once before each actionban command
+# Values:  CMD
+#</span>
+<span style="color:blue;">actioncheck =</span>
+
+<span style="color:red;"># Option:  actionban
+# Notes.:  command executed when banning an IP. Take care that the
+#          command is executed with Fail2Ban user rights.
+# Tags:    See jail.conf(5) man page
+# Values:  CMD
+#</span>
+<span style="color:blue;">actionban = &lt;blacklistip&gt; -nft &lt;ipv&gt; black -ip &lt;ip&gt; -a -save</span>
+
+<span style="color:red;"># Option:  actionunban
+# Notes.:  command executed when unbanning an IP. Take care that the
+#          command is executed with Fail2Ban user rights.
+# Tags:    See jail.conf(5) man page
+# Values:  CMD
+#</span>
+<span style="color:blue;">actionunban = &lt;blacklistip&gt; -nft &lt;ipv&gt; -c &lt;count&gt; service -start
+
+[Init?family=inet6]</span>
+
+<span style="color:red;"># Option:  ipv6
+# Note:    Select {IP6/NF}TABLES.
+# Values:  STRING Default: "-ipv6"
+#</span>
+<span style="color:blue;">ipv = -ipv6</span>
+
+<span style="color:red;"># Option: mask (ipv6)
+# Notes.: 
+# Values: NUM Default: 128
+#</span>
+<span style="color:blue;">mask = 128</span></pre>
+			</div>
+			<p>Первым делом в закоментированных строках необходимо указать авторство и путь сохранения. Это делается не столько для других людей, сколько для вас самих - чтобы вы не запутались в своих же экшенах.</p>
+			<p>В секции <b>INCLUDES</b> указываются другие экшены, которые должны быть сюда подключены в качестве стартовых. Если их не существует - ошибки не будет.</p>
+			<p>В секции <b>Init</b> определяют переменные, которые необходимо использовать в вашем экшене, и эти же переменные можно и нужно будет использовать в <b>jail</b> правилах.</p>
+			<p>В принципе всю секцию <b>Init</b> вместе с секцией <b>Init?family=inet6</b> можно было вынести в отдельный файл с другим наименованием и затем просто указать его в секции <b>INCLUDES</b>.</p>
+			<p>Далее в секции <b>Definition</b> указываются действия при обнаружении особо активного и ретивого ip адреса.</p>
+			<p>Насчет состояний: &laquo;actionstart&raquo;, &laquo;actionstop&raquo; и &laquo;actioncheck&raquo; - особо выделить ничего не могу. Однако, вы можете посмотреть в качестве примера в указанной папке <b>action.d</b> 2 файла, чтобы разобраться зачем нужны эти строки. Обратите внимание только на то, что если у вас нет этих действий - оставляйте строку пустой.</p>
+			<p>В <b>actionban</b> и <b>actionunban</b> - соответственно указываются действия при блокировании пойманного ip адреса и его разблокировании спустя заданное <b>Fail2ban</b>-ом времени.</p>
+			<p>В моём случае помимо добавления ip адреса в некий json файл при блокировке, запускается ещё один процес.</p>
+			<p>Секция <b>Init?family=inet6</b> переопределяет нужные вам переменные для протокола <b>IPV6</b>.</p>
+			<p>Обратите внимание ещё на одну вещь - ip адрес указывается квадратных одинарных скобках - <b>&lt;ip&gt;</b>.</p>
+			<p><u>Самое забавное в том, что дополнительный скрипт использовать в принципе не обязательно. Как так - просто напишите <b>BASH</b> команду в строке <b>actionban</b> вывода адреса в файл, а все остальные строки оставьте пустыми. Этого будет вполне достаточно.</u></p>
+			<p>Например, так.</p>
+			<p class="codes">
+				actionunban = &lt;ip&gt; &gt;&gt; /etc/blacklist.txt
+			</p>
+			<p><b>Таким образом вы можете отслеживать ip адреса в Fail2ban-е, без особых усилий и дополнительных скриптов.</b></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part5.5"></a></p>
@@ -940,6 +1053,7 @@ WantedBy=timers.target
 				<span style="color:blue;"># action = iptables-ipset[name=sshd, port=ssh, protocol=tcp]</span><br>
 				action = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]</br>
 				logpath = /var/log/sshd.log</br>
+				ignoreregex =
 			</p>
 			<p>* где:</p>
 			<ul>
@@ -948,7 +1062,24 @@ WantedBy=timers.target
 				<li><b>port</b> — порт целевого сервиса. Принимается буквенное или цифирное обозначение;</li>
 				<li><b>action</b> — действие, совершаемое в случае срабатывания правила. В квадратных скобках указаны название для правила, сетевой порт и протокол для блокировки;</li>
 				<li><b>logpath</b> - файл лога.</li>
+				<li><b>ignoreregex</b> - исключения из правил.</li>
 			</ul>
+			<p>Самое интересное в том, что в строке <b>logpath</b> вы можете указать несколько файлов логов. Для этого просто перенесите следующий файл на следующую строку пробелами примерно на один уровень с предыдущим логом.</p>
+			<p>Например.</p>
+			<div class="codeses">
+				<pre>logpath = /var/log/nginx/access.log
+          /var/log/mylog/access.log</pre>
+			</div>
+			<p>В строке <b>action</b> правил вы также можете указывать несколько действий по тому же принципу. Приведу полный текст примера правила для <b>SSH</b> правила.</p>
+			<div class="codeses">
+				<pre>[sshd]
+enabled = true
+port = ssh
+action = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]
+         blacksimple[count=3]
+logpath = /var/log/sshd.log</pre>
+			</div>
+			<p><u><b>Таким образом вы можете добавлять любые дополнительные действия с ip адресами непосредственно внутри Fail2ban-а и при этом вам не нужные никакие дополнительные сервисы или скрипты с регулярными выражениями.</b></u></p>
 			<p>Чтобы изменения вступили в силу, перезапускаем сервис и проверяем.</p>
 			<div class="codeses">
 				<pre><b>$ sudo systemctl restart fail2ban</b>
