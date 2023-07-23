@@ -1729,9 +1729,9 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			<p>Сохраним <b>NFTABLES</b> и посмотрим как восстанавливать внесённые изменения.</p>
 			<p class="codes">
 				<b>$</b> sudo mkdir /etc/nftables-conf/</br>
-				<b>$</b> nft -s list ruleset &gt;&gt; /etc/nftables-conf/nftables_rules<br></br>
+				<b>$</b> sudo nft -s list ruleset &gt;&gt; /etc/nftables-conf/nftables_rules<br></br>
 				<span style="color:blue;"># Восстановить</span></br>
-				<b>$</b> nft -f /etc/nftables-conf/nftables_rules
+				<b>$</b> sudo nft -f /etc/nftables-conf/nftables_rules
 			</p>
 			<p>Однако, лучше если вы сохраните свои правила (обязательно только добавить, а не заменять) в специальный конфигурационный файл - <b>&laquo;/etc/nftables.conf&raquo;</b>.</p>
 			<p class="codes">
