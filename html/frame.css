@@ -49,3 +49,10 @@
 	width:32px;
 	height: 32px;
 }
+
+#videoarea {
+	display: block;
+	position: relative;
+	margin: 0px 0px 0px 25px;
+	padding: 0px;
+}
