@@ -314,12 +314,15 @@ exit 0
 			<p>Грубо говоря, <b>Netfilter</b> по сути является как бы внутренней обороной ОС. Однако, самой ОС нужна ещё и внешняя оборона - инструмент или средство для управления брандмауэром, такие как <b>UFW</b> или <b>Firewalld</b>.</p>
 			<p><b>UFW (Uncomplicated Firewall)</b> - является самым простым и довольно популярным инструментарием командной строки для настройки и управления брандмауэром.</p>
 			<p><b>Firewalld</b> — программное обеспечение для управления брандмауэрами, поддерживаемое многими дистрибутивами <b>Linux</b>.</p>
+			<p>Чтобы понять как работает фильтрация пакетов в межсетевых экранах, для этого надо заглянуть в раздел <a href="#part4.3"><b>&laquo;Таблицы и цепочки IPTABLES&raquo;</b></a>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part4">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part4.3"></a></p>
 			<h3>4.3. Таблицы и цепочки IPTables.</h3>
-			<p>Чтобы понять как работает фильтрация пакетов в межсетевых экранах, для этого надо заглянуть в таблицы и цепочки <b>IPTABLES</b>.</p>
-			<p></p>
+			<p>Для начального понимания архитектуры <b>Netfilter/iptables</b> отлично подойдет иллюстрация из википедии.</p>
+			<div class="images">
+				<img src="../image/Blacklists-image/netfilter-diagram.png" width="400px"/>
+			</div>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -403,8 +406,11 @@ script
 			<p></p>
 			<p></p>
 			<p></p>
+			<div class="images">
+				<img src="../image/Blacklists-image/image.png" width="277px"/>
+			</div>
 			<div id="page" class="clearfix">
-				<img src="image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Blacklists-image/image.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
