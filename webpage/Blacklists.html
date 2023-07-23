@@ -261,7 +261,16 @@ exit 0
 			<p><a name="part4"></a></p>
 			<h2>4. Межсетевые экраны.</h2>
 			<h3>Содержание главы.</h3>
-			<ol>
+			<style> 
+				.glava { 
+					counter-reset: list1; /* Список первого уровня*/ 
+				} 
+				.glava li:before { /* Список первого уровня */ 
+					counter-increment: list1; /* Увеличиваем значение счетчика */ 
+					content: "4." counter(list1) ". "; /* Выводим значение типа 4.1, 4.2,... */ 
+				}
+			</style>
+			<ol class="glava">
 				<li><a href="#part4.1">История, определения.</a></li>
 				<li><a href="#part4.2">Netfilter</a></li>
 				<li><a href="#part4.3">Таблицы и цепочки IPTables.</a></li>
