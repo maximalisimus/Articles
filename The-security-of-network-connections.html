@@ -278,9 +278,14 @@
 			<p><b>Обратите внимание, что блокировка входящего трафика в docker-контейнеры может нормально не отработывать. <br>По крайней мере в локальной сети между 2-мя ПК.</b></p>
 			<p>Не во всех ОС в репозиториях имеется графическая оболочка к консольной версии утилиты, но с консольной версией работается намного быстрее и удобнее. Установка выполняется следующей командой:</p>
 			<p class="codes">
-				$: sudo pacman -S ufw gufw</br>
-				$: sudo yum -y install ufw</br>
-				$: sudo apt install ufw gufw
+				<b>$</b> sudo pacman -S ufw gufw</br>
+				<b>$</b> sudo yum -y install ufw</br>
+				<b>$</b> sudo apt install ufw gufw
+			</p>
+			<p>Теперь необходимо активировать фаервол. Мне в archlinux для автоматического запуска при перезагрузки системы понадобилось выполнить ещё одну команду.</p>
+			<p class="codes">
+				<b>$</b> sudo ufw enable</br>
+				<b>$</b> sudo systemctl enable ufw
 			</p>
 			<p>Команды UFW:</p>
 			<p class="codes">
@@ -297,17 +302,54 @@
 				delete - удалить правило;</br>
 				insert - вставить правило.
 			</p>
+			<p>Изменение стандартной внутренней политики.</p>
+			<p class="codes">
+				<b>$</b> sudo ufw default deny incoming
+			</p>
+			<p>Изменение стандартной внешней политики</p>
+			<p class="codes">
+				<b>$</b> sudo ufw default allow outgoing
+			</p>
 			<p>Например, чтобы открыть порт ufw для SSH, можно добавить одно из этих правил:</p>
 			<p class="codes">
-				$: sudo ufw allow OpenSSH</br>
-				$: sudo ufw allow 22</br>
-				$: sudo ufw allow 22/tcp
+				<b>$</b> sudo ufw allow OpenSSH</br>
+				<b>$</b> sudo ufw allow 22</br>
+				<b>$</b> sudo ufw allow 22/tcp
 			</p>
-			<p>Теперь необходимо активировать фаервол. Мне в archlinux для автоматического запуска при перезагрузки системы понадобилось выполнить ещё одну команду.</p>
+			<p>Примеры других правил.</p>
 			<p class="codes">
-				$: sudo ufw enable</br>
-				$: sudo systemctl enable ufw
+				<b>$</b> sudo ufw deny from 123.45.67.89</br>
+				<b>$</b> sudo ufw allow from 123.45.67.89/24</br>
+				<b>$</b> sudo ufw allow from 123.45.67.89/24 to any port 22<br>
+				<b>$</b> sudo ufw allow from 123.45.67.89 to any port 22<br>
+				<b>$</b> sudo ufw allow 3000:3100/tcp<br>
+				<b>$</b> sudo ufw allow 3000:3100/udp<br>
+				<b>$</b> sudo ufw allow 3000:3100<br>
+				<b>$</b> sudo ufw allow ftp<br>
+				<b>$</b> sudo ufw allow 21/tcp<br>
+				<b>$</b> sudo ufw allow https<br>
+				<b>$</b> sudo ufw allow 443
 			</p>
+			<p>Сброс правил.</p>
+			<p class="codes">
+				<b>$</b> sudo ufw reset
+			</p>
+			<p>Посмотреть правила с номерами.</p>
+			<p class="codes">
+				<b>$</b> sudo ufw status numbered
+			</p>
+			<p>В Ufw есть опция сохранения логов — журнал событий.</p>
+			<p class="codes">
+				<b>$</b> sudo ufw logging on
+			</p>
+			<p>Ufw поддерживает нескоько уровней логгирования:</p>
+			<ul>
+				<li><b>off</b> - отключен.</li>
+				<li><b>low</b> - регистрирует все заблокированные пакеты.</li>
+				<li><b>medium</b> - все тоже, что и low, плюс все разрешенные пакеты.</li>
+				<li><b>high</b> - все тоже, что и medium, плюс все пакеты с ограничением скорости.</li>
+				<li><b>full</b> - также как и high, но без ограниения скорости.</li>
+			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part4.2"></a></p>
