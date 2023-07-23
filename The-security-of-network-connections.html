@@ -1726,6 +1726,23 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			</p>
 			<p>Да, вот так просто удалить по <b>&laquo;handle&raquo;</b>-у.</p>
 			<p><b>Учтите!</b> Что после перезагрузки все правила будут сброшены. Чтобы они сохранились их надо сохранить в файл, и загружать при старте системы дополнительным скриптом - примерно как <b>IPATBLES</b>, или отдельным <b>bash</b> скриптом и сервисом <b>systemd</b>.</p>
+			<p>Сохраним <b>NFTABLES</b> и посмотрим как восстанавливать внесённые изменения.</p>
+			<p class="codes">
+				<b>$</b> sudo mkdir /etc/nftables-conf/</br>
+				<b>$</b> nft -s list ruleset &gt;&gt; /etc/nftables-conf/nftables_rules<br></br>
+				<span style="color:blue;"># Восстановить</span></br>
+				<b>$</b> nft -f /etc/nftables-conf/nftables_rules
+			</p>
+			<p>Однако, лучше если вы сохраните свои правила (обязательно только добавить, а не заменять) в специальный конфигурационный файл - <b>&laquo;/etc/nftables.conf&raquo;</b>.</p>
+			<p class="codes">
+				<b>$</b> nft -s list ruleset &gt;&gt; /etc/nftables.conf
+			</p>
+			<p>Применение с перезагрузкой NFTABLES.</p>
+			<p class="codes">
+					<span style="color:blue;"># Загружаем правила с помощью службы systemd.</span><br>
+					<b>$</b> sudo systemctl enable nftables.service<br><br>
+					<b>$</b> sudo systemctl start nftables.service
+			</p>
 			<p>Сохраним <b>IPTABLES</b> и посмотрим как восстанавливать внесенные изменения.</p>
 			<p class="codes">
 				$ sudo iptables-save</br></br>
@@ -1738,7 +1755,7 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 				$ sudo iptables-restore -vV /etc/iptables-conf/iptables_rules.ipv4</br>
 				$ sudo iptables-restore -nvV /etc/iptables-conf/iptables_rules.ipv4
 			</p>
-			<p>Применение с перезагрузкой.</p>
+			<p>Применение с перезагрузкой IPTABLES.</p>
 			<div class="codeses">
 				<pre><b>$ sudo nano /etc/network/if-pre-up.d/iptables</b>
 
@@ -1753,7 +1770,6 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 <span style="color:blue;"># Загружаем до запуска интерфейсов</span>
 <b>$ sudo -t filter iptables -L</b></pre>
 			</div>
-			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 		</div>
