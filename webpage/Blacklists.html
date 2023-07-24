@@ -78,12 +78,12 @@
 				<ol>
 					<li><a href="#part7.1">Понятие черного и белого списков и их необходимости?</a></li>
 					<li><a href="#part7.2">Обзор скрипта.</a></li>
-					<li><a href="#part7.3">Символическая ссылка.</a></li>
+					<li><a href="#part7.3">Символическая ссылка в <b>&laquo;/usr/bin/&raquo;</b>.</a></li>
 					<li><a href="#part7.4">Работа с логами, командами и выводом информации.</a></li>
 					<li><a href="#part7.5">Раздельная работа с черным или белым списком.</a></li>
 					<li><a href="#part7.6">IP(6)TABLES / NFTABLES.</a></li>
 					<li><a href="#part7.7">Работа с таблицами и цепочками.</a></li>
-					<li><a href="#part7.8">Service.</a></li>
+					<li><a href="#part7.8">Сервис.</a></li>
 					<li><a href="#part7.9">Systemd.</a></li>
 				</ol>
 				<li><a href="#part8">Использование скрипта черного списка в Fail2ban.</a></li>
@@ -286,15 +286,15 @@ exit 0
 			<h2>4. Межсетевые экраны.</h2>
 			<h3>Содержание главы.</h3>
 			<style> 
-				.glava { 
+				.glava4 { 
 					counter-reset: list1; /* Список первого уровня*/ 
 				} 
-				.glava li:before { /* Список первого уровня */ 
+				.glava4 li:before { /* Список первого уровня */ 
 					counter-increment: list1; /* Увеличиваем значение счетчика */ 
 					content: "4." counter(list1) ". "; /* Выводим значение типа 4.1, 4.2,... */ 
 				}
 			</style>
-			<ol class="glava">
+			<ol class="glava4">
 				<li><a href="#part4.1">История, определения.</a></li>
 				<li><a href="#part4.2">Netfilter</a></li>
 				<li><a href="#part4.3">Таблицы и цепочки IPTables.</a></li>
@@ -540,17 +540,74 @@ services:
 			<p>На самом деле дело в том, что в <b>Firewalld</b> имеется несколько сетей по умолчанию - внутренняя, внешняя (публичная) и другие. Это непосредственно связано с принципом работы самого фаервола как такового. Все сети разделяются разными правами доступа, разными политиками обработки пакетов, разными приоритетами и т.д. и т.п. Т.е. для любого сервиса можно настроить своё собственное поведение. Таким образом, для каждого сервиса будут разные базовые правила брендмауера, которые вы сами настроили. В итоге <b>Docker</b> просто перестаёт конфликтовать с фаерволом. Только если явно не указать другие настройки.</p>
 			<p>Правда появляется другой недостаток - не возможно запустить или остановить какой-либо <b>Docker-контейнер</b>. Для этого просто остановите сервис фаервола. Этого будет вполне достаточно.</p>
 			<p class="codes">
-				<b>$</b> sudo systemctl stop firewalld
+				<b>$</b> sudo systemctl stop firewalld.service
+			</p>
+			<p>Однако, если вы настраивали по моей инструкции и создавали таймера запуска фаервола, то сначала придётся остановить этот таймер и затем уже сервис. Поработали с контейнерами - что-то остановили, что-то запустили, и запустили только сервис фаервола. НУ а далее не забудьте проверить новые сети <b>Docker</b>-контейнеров и обязательно добавить их во внутреннюю зону <b>internal</b>.</p>
+			<p class="codes">
+				<b>$</b> sudo systemctl stop firewalld.timer<br>
+				<b>$</b> sudo systemctl stop firewalld.service<br><br>
+				<b>$</b> sudo systemctl start firewalld.timer<br>
+				<b>$</b> sudo systemctl start firewalld.service
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part4">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part5"></a></p>
-			<h2>part-5</h2>
+			<h2>5. Fail2ban</h2>
+			<h3>Содержание главы.</h3>
+			<style> 
+				.glava5 { 
+					counter-reset: list2; /* Список первого уровня*/ 
+				} 
+				.glava5 li:before { /* Список первого уровня */ 
+					counter-increment: list2; /* Увеличиваем значение счетчика */ 
+					content: "5." counter(list2) ". "; /* Выводим значение типа 4.1, 4.2,... */ 
+				}
+			</style>
+			<ol class="glava5">
+				<li><a href="#part5.1">Оперативная память.</a></li>
+				<li><a href="#part5.2">Фильтры.</a></li>
+				<li><a href="#part5.3">Действия.</a></li>
+				<li><a href="#part5.4">Правила.</a></li>
+			</ol>
+			<hr>
+			<p><a name="part5.1"></a></p>
+			<h3>5.1. Оперативная память.</h3>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part5">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part5.2"></a></p>
+			<h3>5.2. Фильтры.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part5">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part5.3"></a></p>
+			<h3>5.3. Действия.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part5">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part5.4"></a></p>
+			<h3>5.4. Правила.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part5">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part6"></a></p>
+			<h2>6. NGINX / Nginx Proxy Manager.</h2>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -558,65 +615,146 @@ services:
 			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			«»
-			&laquo;&raquo;
-			<b></b>
-			<p><b>&laquo;&raquo;</b></p>
-			<p class="codes">
-				$ Codes</br>
-				<span style="color:blue;"># Comment <b>at</b>, the number <b>of</b></span></br>
-				<span style="color:blue;"># </span></br>
-			</p>
-			<div class="codeses">
-				<pre>
-def myfunc:
-	pass
-				</pre>
-			</div>
-			<div class="codeses">
-				<pre>
-<span style="color:blue;">#!/bin/bash</span>
-...
-script
-...
-<span style="color:blue;"># echo "result"</span>
-				</pre>
-			</div>
-			<ul>
-				<li><span style="color:Blue;">Blue</span></li>
-				<li>Black</li>
-				<li><span style="color:Red;">Reed</span></li>
-				<li><span style="color:Yellow;">Yellow</span></li>
-				<li><span style="color:Green;">Green</span></li>
-			</ul>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part7"></a></p>
+			<h2>7. Черный и белый списки.</h2>
+			<h3>Содержание главы.</h3>
+			<style> 
+				.glava7 { 
+					counter-reset: list3; /* Список первого уровня*/ 
+				} 
+				.glava7 li:before { /* Список первого уровня */ 
+					counter-increment: list3; /* Увеличиваем значение счетчика */ 
+					content: "7." counter(list3) ". "; /* Выводим значение типа 4.1, 4.2,... */ 
+				}
+			</style>
+			<ol class="glava7">
+				<li><a href="#part7.1">Понятие черного и белого списков и их необходимости?</a></li>
+				<li><a href="#part7.2">Обзор скрипта.</a></li>
+				<li><a href="#part7.3">Символическая ссылка в <b>&laquo;/usr/bin/&raquo;</b>.</a></li>
+				<li><a href="#part7.4">Работа с логами, командами и выводом информации.</a></li>
+				<li><a href="#part7.5">Раздельная работа с черным или белым списком.</a></li>
+				<li><a href="#part7.6">IP(6)TABLES / NFTABLES.</a></li>
+				<li><a href="#part7.7">Работа с таблицами и цепочками.</a></li>
+				<li><a href="#part7.8">Сервис.</a></li>
+				<li><a href="#part7.9">Systemd.</a></li>
+			</ol>
 			<hr>
-			<p><a name="part2"></a></p>
-			<h1>Part-2 H1</h1>
+			<p><a name="part7.1"></a></p>
+			<h3>7.1. Понятие черного и белого списков и их необходимости?</h3>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
-			<p></p>
-			<div class="images">
-				<img src="../image/Blacklists-image/image.png" width="800px"/>
-			</div>
-			<div id="page" class="clearfix">
-				<img src="../image/Blacklists-image/image.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
-			</div>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
 			<hr>
-			<p><a name="part3"></a></p>
-			<h1>Part-3 H1</h1>
+			<p><a name="part7.2"></a></p>
+			<h3>7.2. Обзор скрипта.</h3>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.3"></a></p>
+			<h3>7.3. Символическая ссылка в <b>&laquo;/usr/bin/&raquo;</b>.</h3>
 			<p></p>
-						
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.4"></a></p>
+			<h3>7.4. Работа с логами, командами и выводом информации.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.5"></a></p>
+			<h3>7.5. Раздельная работа с черным или белым списком.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.6"></a></p>
+			<h3>7.6. IP(6)TABLES / NFTABLES.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.7"></a></p>
+			<h3>7.7. Работа с таблицами и цепочками.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.8"></a></p>
+			<h3>7.8. Сервис.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part7.9"></a></p>
+			<h3>7.9. Systemd.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part8"></a></p>
+			<h2>8. Использование скрипта черного списка в Fail2ban.</h2>
+			<h3>Содержание главы.</h3>
+			<style> 
+				.glava8 { 
+					counter-reset: list4; /* Список первого уровня*/ 
+				} 
+				.glava8 li:before { /* Список первого уровня */ 
+					counter-increment: list4; /* Увеличиваем значение счетчика */ 
+					content: "8." counter(list4) ". "; /* Выводим значение типа 4.1, 4.2,... */ 
+				}
+			</style>
+			<ol class="glava8">
+				<li><a href="#part8.1">Действия.</a></li>
+				<li><a href="#part8.2">Правила.</a></li>
+			</ol>
+			<hr>
+			<p><a name="part8.1"></a></p>
+			<h3>8.1. Действия.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part8">Перейти к главе</a>.</p>
+			<hr>
+			<p><a name="part8.2"></a></p>
+			<h3>8.2. Правила.</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part8">Перейти к главе</a>.</p>
+			<hr>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
