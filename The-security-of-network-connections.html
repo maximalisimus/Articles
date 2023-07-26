@@ -1820,7 +1820,7 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			</p>
 			<p>Применение с перезагрузкой IPTABLES.</p>
 			<div class="codeses">
-				<pre><b>$ sudo nano /etc/network/if-pre-up.d/iptables</b>
+				<pre><b>$ sudo nano /etc/network/if-pre-up.d/iptables && sudo chmod +x /etc/network/if-pre-up.d/iptables</b>
 
 #!/bin/sh
 /sbin/iptables-restore &lt; /etc/iptables-conf/iptables_rules.ipv4
@@ -1832,6 +1832,50 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 <b>$ sudo chmod +x /etc/network/if-pre-up.d/iptables</b>
 <span style="color:blue;"># Загружаем до запуска интерфейсов</span>
 <b>$ sudo -t filter iptables -L</b></pre>
+			</div>
+			<p>Либо для <b>NFTABLES</b> и <b>IP(6)TABLES</b> можете воспользоваться несколько другим способом.</p>
+			<p>Просто добавьте пару строчек в ручные настройки сети. Не важно как у вас настроены интерфейсы - на статичные адреса или динамические, главное чтобы после их настройки указать какой скрипт или скрипты необходимо запустить перед запуском того или иного интерфейса. И соответственно тут же можно указать какие скрипты запускать по окончании работы с интерфейсами.</p>
+			<p>Что можно в этих настройках писать, а что нельзя вы можете узнать в статье: <a href="https://maximalisimus.github.io/Articles/webpage/Configuratons_Linux_Servers.html#part4"><b>&laquo;Базовые настройки серверов Linux: 4. Настройки сетевых соединений.&raquo;</b></a>.</p>
+			<p>Например, изменим мак-адрес сетевой карты <b>eth0</b>. Само собой, закоментированная строка представляет собой 2-й способ смены мак-адреса. Ну и, также, в комментариях помечен способ указания статичного ip-адреса.</p>
+			<p>3-мя точками обозначено то, что в файле могут имется и другие различные строки, которые не нужно менять. Просто оставьте их в значениях по умолчанию, потому что нас интересуют только настройки нужной сетевой карты. Например, в строках перед вашей сетевой картой могут быть настройки <b>loopback</b>-интерфейса.</p>
+			<div class="codeses">
+				<pre><b>$</b> sudo nano /etc/network/interfaces
+
+...
+allow-hotplug eth0
+auto eth0
+iface eth0 inet dhcp
+<span style="color:blue;"># iface eth1 inet static
+	# address 192.168.0.120
+	# netmask 255.255.255.0
+	# gateway 192.168.0.1
+	# broadcast 192.168.0.255
+	# dns-nameservers 192.168.0.254 8.8.8.8
+# pre-up ifconfig eth0 hw ether xx:xx:xx:xx:xx:xx</span>
+pre-up ip link set eth0 address xx:xx:xx:xx:xx:xx
+...
+</pre>
+			</div>
+			<p>Допустим, у нас имеется сетевая карта <b>&laquo;enp0s3&raquo;</b>. Адрес должен быть получен в виде <b>DHCP</b>. Посмотрим на запуск скрипта для <b>IP(6)TABLES</b>.</p>
+			<div class="codeses">
+				<pre><b>$</b> sudo nano /etc/iptables-restore.sh && sudo chmod +x /etc/iptables-restore.sh
+
+#!/bin/sh
+/sbin/iptables-restore < /etc/iptables-conf/iptables_rules.ipv4
+
+<b>CTRL + o</b>
+<b>CTRL + x</b>
+<b>$</b> sudo nano /etc/network/interfaces
+
+...
+allow-hotplug enp0s3
+auto enp0s3
+iface enp0s3 inet dhcp
+pre-up /etc/iptables-restore.sh
+...
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
