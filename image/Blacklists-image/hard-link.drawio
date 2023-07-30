@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2023-07-30T07:12:45.331Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.3.7 Chrome/112.0.5615.204 Electron/24.5.0 Safari/537.36" etag="W96bRq6SUlTVohu0AbDa" version="21.3.7" type="device">
+  <diagram name="Страница 1" id="PAcOjD6ndljtekbhXcUc">
+    <mxGraphModel dx="880" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="g-KkgHFlnaWiiFR3BuNT-1" value="&lt;font color=&quot;#86c351&quot; style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;text-file.txt&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="50" y="80" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="g-KkgHFlnaWiiFR3BuNT-2" value="&lt;font color=&quot;#0a7bff&quot; style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;hard-link&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="220" y="80" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rrNBpoSipV1hKzNfW5zY-2" value="&lt;font style=&quot;font-size: 16px;&quot; color=&quot;#000000&quot;&gt;Данные&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dedede;" vertex="1" parent="1">
+          <mxGeometry x="120" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="rrNBpoSipV1hKzNfW5zY-3" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="g-KkgHFlnaWiiFR3BuNT-1" target="rrNBpoSipV1hKzNfW5zY-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="310" as="sourcePoint" />
+            <mxPoint x="440" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rrNBpoSipV1hKzNfW5zY-4" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="g-KkgHFlnaWiiFR3BuNT-2" target="rrNBpoSipV1hKzNfW5zY-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="310" as="sourcePoint" />
+            <mxPoint x="440" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
