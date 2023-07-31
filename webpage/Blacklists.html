@@ -1001,20 +1001,23 @@ Basic stable version.
 			<div class="codeses" style="background-color:black;color:white;">
 				<pre><span style="color:red;">#!/bin/bash</span>
 
-filelog=<span style="color:#ffa500;">"test_log.log"</span>
-_datetime=<span style="color:green;">$(date '+%Y-%m-%d %H:%M:%S,%Z %:::z')</span>
-_messages=<span style="color:#ffa500;">"A DEBUG Message"</span>
-echo <span style="color:#ffa500;">"${_datetime} DEBUG \"${_messages}\""</span> >> <span style="color:blue;">${filelog}</span>
-_messages=<span style="color:#ffa500;">"An INFO Message"</span>
-echo <span style="color:#ffa500;">"${_datetime} INFO \"${_messages}\""</span> >> <span style="color:blue;">${filelog}</span>
-_messages=<span style="color:#ffa500;">"A WARNING Message"</span>
-echo <span style="color:#ffa500;">"${_datetime} WARNING \"${_messages}\""</span> >> <span style="color:blue;">${filelog}</span>
-_messages=<span style="color:#ffa500;">"An ERROR Message"</span>
-echo <span style="color:#ffa500;">"${_datetime} ERROR \"${_messages}\""</span> >> <span style="color:blue;">${filelog}</span>
-_messages=<span style="color:#ffa500;">"A message of CRITICAL severity"</span>
-echo <span style="color:#ffa500;">"${_datetime} CRITICAL \"${_messages}\""</span> >> <span style="color:blue;">${filelog}</span></pre>
+filelog=<span style="color:#ffa500;">"./test_log.log"</span>
+<span style="color:blue;">function</span> log() {
+	datetime=<span style="color:green;">$(date '+%Y-%m-%d %H:%M:%S,%Z %:::z')</span>
+	current_level=<span style="color:#ffa500;">"${1}"</span>
+	outfile=<span style="color:green;">$(readlink -e "${2}")</span>
+	message=<span style="color:#ffa500;">"${3}"</span>
+	echo <span style="color:#ffa500;">"${datetime} ${current_level} \"${message}\""</span> >> <span style="color:blue;">${outfile}</span>
+}
+<span style="color:red;"># DEBUG INFO WARNING ERROR CRITICAL</span>
+log <span style="color:#ffa500;">"DEBUG" "${filelog}" "A DEBUG Message"</span>
+log <span style="color:#ffa500;">"INFO" "${filelog}" "An INFO Message"</span>
+log <span style="color:#ffa500;">"WARNING" "${filelog}" "A WARNING Message"</span>
+log <span style="color:#ffa500;">"ERROR" "${filelog}" "An ERROR Message"</span>
+log <span style="color:#ffa500;">"CRITICAL" "${filelog}" "A message of CRITICAL severity"</span></pre>
 			</div>
-			<p>В идеале, помимо самих событий, в случае обнаружения ошибок, выводить в журнал не только ошибки, но и команды, которые не удалось выполнить. Так и разработчик и пользователь будут понимать в каком месте произошёл сбой. Это даёт гораздо большее понимание сути ошибок. Это понимание в разы ускоряет получение средств и способов устранения последних.</p>
+			<p><b>Обратите внимание</b> на переменную <b>&laquo;outfile&raquo;</b>. Она нужна для того, чтобы преобразовать относительный путь в абсолютный. Её всегда вводят в скрипт только после введения относительного пути. Здесь же, чтобы перестраховаться она введена внутри ведения лога. Это сделано скорее для удобства. Например, у вас в скрипте имеется аргумент командной строки для изменения местоположения файла логов. При этом вам не нужно заботиться о том, чтобы указывать полный путь к файлу - можно указать короткий, относительно места запуска скрипта.</p>
+			<p>В идеале, помимо самих событий, в случае обнаружения ошибок, необходимо выводить в журнал не только ошибки, но и команды, которые не удалось выполнить. Так и разработчик и пользователь будут понимать в каком месте произошёл сбой. Это даёт гораздо большее понимание сути ошибок. Это понимание в разы ускоряет получение средств и способов устранения последних.</p>
 			<p>У меня в скрипте, в случае обнаружения ошибок, в журнал отправляются не только сами ошибки, но и не удачно выполненные команды.</p>
 			<p>Помимо этого, в моём скрипте я ввел как дополнение ключ <b>&laquo;-cmd&raquo;</b>. При этом все дальнейшие ключи и параметры приводят к тому, что в результате программа не будет выполнена. Вместо этого на экран будут выведены результирующие команды, которые должны были выполниться. Т.е. таким образом можно посмотреть на различные команды <b>IP(6)TABLES / NFTABLES</b>.</p>
 			<p>Например.</p>
