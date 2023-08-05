@@ -518,7 +518,9 @@ dhclient
 			<p>Далее у вас уже должен быть запущен <b>wireguard</b> и <b>docker</b> сервисы, чтобы их сети были включены и доступны.</p>
 			<p>Сразу выполним команду, с помощью которой определим все необходимые нам наименования сетей - сеть по которому идёт интернет, сети ваших контейнеров (при появлении новых, обязательно вносить их в дальнейшие настройки), и сеть VPN wireguard.</p>
 			<p class="codes">
-				$ ip a
+				<b>$</b> ip a<br>
+				<span style="color:blue;"># или</span></br>
+				<b>$</b> ls /sys/class/net
 			</p>
 			<p>У меня в виртуальной машине используются следующие сети. У вас могут быть другие. Пока просто запомним их. Они нам далее пригодятся.</p>
 			<ul>
@@ -1692,31 +1694,31 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			<p class="pbold">Средствами fail2ban:</p>
 			<p>Для удаление адреса из списка вводим:</p>
 			<p class="codes">
-				$ sudo fail2ban-client set <имя правила> unbanip <IP-адрес>
+				<b>$</b> sudo fail2ban-client set <имя правила> unbanip <IP-адрес>
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$ sudo fail2ban-client set ssh unbanip 31.207.47.55
+				<b>$</b> sudo fail2ban-client set ssh unbanip 31.207.47.55
 			</p>
 			<p class="pbold">С помощью iptables:</p>
 			<p class="codes">
-				$ sudo iptables -D <цепочка правил> -s IP-адрес
+				<b>$</b> sudo iptables -D <цепочка правил> -s IP-адрес
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$ sudo iptables -D fail2ban-ssh -s 10.212.245.29
+				<b>$</b> sudo iptables -D fail2ban-ssh -s 10.212.245.29
 			</p>
 			<p class="pbold">С помощью firewall-cmd:</p>
 			<p class="codes">
-				$ sudo firewall-cmd --direct --permanent --remove-rule <правило>
+				<b>$</b> sudo firewall-cmd --direct --permanent --remove-rule <правило>
 			</p>
 			<p>например:</p>
 			<p class="codes">
-				$ sudo firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
+				<b>$</b> sudo firewall-cmd --direct --permanent --remove-rule ipv4 filter f2b-sshd 0 -s 188.134.7.221
 			</p>
 			<p>После необходимо перечитать правила:</p>
 			<p class="codes">
-				$ sudo firewall-cmd --reload
+				<b>$</b> sudo firewall-cmd --reload
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -1724,30 +1726,38 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			<h2>6. Блокировка ip адреса или всей подсети.</h2>
 			<p>С помощью <b>Firewalld</b> это будет выглядеть следующим образом.</p>
 			<p class="codes">
-				$ sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='192.168.2.0/24' reject"</br>
-				$ sudo firewall-cmd --reload</br>
-				$ sudo firewall-cmd --list-all
+				<b>$</b> sudo firewall-cmd --permanent --add-rich-rule="rule family='ipv4' source address='192.168.2.0/24' reject"</br>
+				<b>$</b> sudo firewall-cmd --reload</br>
+				<b>$</b> sudo firewall-cmd --list-all
 			</p>
 			<p>С помощью <b>IPTABLES</b> так.</p>
 			<p>При этом у <b>DROP</b> в ответ запрашивающей стороне ничего не будет отправляться, а у <b>REJECT</b> будет автоматически сформирован ответ. Таким образом, если это злоумышленники, то при использовании последнего, т.е. <b>REJECT</b>, они просто будут знать о том, что вы их заблокировали. И тоже самое с блокировкой через <b>Firewalld</b> - лучше использовать <b>DROP</b>, а не <b>REJECT</b>.</p>
 			<p><u>Обратите внимание на ключ <b>&laquo;-A&raquo;</b>.</u></p>
 			<p class="codes">
-				$ sudo iptables -t filter <b>-A</b> INPUT -s 34.124.185.0/24 -j DROP</br>
-				$ sudo iptables -t filter <b>-A</b> INPUT -s 45.79.221.110/24 -j REJECT
+				<b>$</b> sudo iptables -t filter <b>-A</b> INPUT -s 34.124.185.0/24 -j DROP</br>
+				<b>$</b> sudo iptables -t filter <b>-A</b> INPUT -s 45.79.221.110/24 -j REJECT
 			</p>
 			<p>А вот так будет выглядить разрешающее <b>ACCEPT</b> правило правило.</p>
 			<p class="codes">
-				$ sudo iptables -t filter <b>-A</b> INPUT -s 192.168.0.110/32 -j ACCEPT
+				<b>$</b> sudo iptables -t filter <b>-A</b> INPUT -s 192.168.0.110/32 -j ACCEPT
 			</p>
 			<p>При этом ключ <b>&laquo;-A&raquo;</b> используется для добавления значения в <b>IPTABLES</b>, а ключ <b>&laquo;-D&raquo;</b> удаляет значение из <b>IPTABLES</b>. Т.е. первый <b><u>блокирует</u></b>, второй <b><u>раз</u></b>блокирует.</p>
 			<p>Разблокировка тех же адресов будет идентична, за исключением ключа <b>&laquo;-A&raquo;</b>.</p>
 			<p class="codes">
-				$ sudo iptables -t filter <b>-D</b> INPUT -s 34.124.185.0/24 -j DROP</br>
-				$ sudo iptables -t filter <b>-D</b> INPUT -s 45.79.221.110/24 -j REJECT
+				<b>$</b> sudo iptables -t filter <b>-D</b> INPUT -s 34.124.185.0/24 -j DROP</br>
+				<b>$</b> sudo iptables -t filter <b>-D</b> INPUT -s 45.79.221.110/24 -j REJECT
 			</p>
 			<p>Соответственно удаление разрешающего <b>ACCEPT</b> правила будет выглядеть так.</p>
 			<p class="codes">
-				$ sudo iptables -t filter <b>-D</b> INPUT -s 192.168.0.110/32 -j ACCEPT
+				<b>$</b> sudo iptables -t filter <b>-D</b> INPUT -s 192.168.0.110/32 -j ACCEPT
+			</p>
+			<p>Для привязки любого вышеупомянутого правила к определённому входному сетевому интерфейсу необходимо дополнить команду сразу после цепочки <b>INPUT</b> ключом <b>-i</b> и наименованием сетевого инетерфейса.</p>
+			<p>Например, с сетевым интерфейсом <b>&laquo;eth0&raquo;</b> все вышеупомянутые команды будут выглядеть теперь так.</p>
+			<p class="codes">
+				<b>$</b> sudo iptables -t filter <b>-A</b> INPUT -i eth0 -s 34.124.185.0/24 -j DROP</br>
+				<b>$</b> sudo iptables -t filter <b>-A</b> INPUT -i eth0 -s 192.168.0.110/32 -j ACCEPT</br>
+				<b>$</b> sudo iptables -t filter <b>-D</b> INPUT -i eth0 -s 34.124.185.0/24 -j DROP</br>
+				<b>$</b> sudo iptables -t filter <b>-D</b> INPUT -i eth0 -s 192.168.0.110/32 -j ACCEPT
 			</p>
 			<p>Блокировать с помощью <b>&laquo;NFTABLES&raquo;</b> немного сложнее, в том плане, что разблокировать придётся уже 2 командами, а не изменением ключа в одной команде.</p>
 			<p>Для начала нам нужно определиться с какой таблицей мы вообще работаем, а затем с какой цепочкой. Дело в том, что в <b>&laquo;NFTABLES&raquo;</b> все таблицы и цепочки вы создаете самостоятельно. Здесь нет ни стандартных таблиц, ни стандартных цепочек. Посмотрим на таблицы, которые вообще есть в системе, если они есть. Например, созданы по необходимости другим ПО.</p>
@@ -1782,6 +1792,11 @@ ignoreregex = \.(jpg|jpeg|png|gif|js|css)</pre>
 			<p>А вот так будет выглядеть разрешающиее правило, аналогично разрешающему в <b>IPATBLES</b>.</p>
 			<p class="codes">
 				<b>$</b> sudo nft 'add rule ip filter INPUT ip saddr 192.168.0.110 counter accept'
+			</p>
+			<p>Соответственно с привязкой к определённому входному сетевому интерфейсу, например, всё тот же <b>&laquo;eth0&raquo;</b>:</p>
+			<p class="codes">
+				<b>$</b> sudo nft 'add rule ip filter INPUT iifname "eth0" ip saddr 165.22.60.249 counter drop'</br>
+				<b>$</b> sudo nft 'add rule ip filter INPUT iifname "eth0" ip saddr 192.168.0.110 counter accept'
 			</p>
 			<p>Чтобы разблокировать адрес, т.е. удалить его из <b>NFTABLES</b>, необходимо узнать его <b>&laquo;handle&raquo;</b>. Сделать это можно так. Стандартная команда для определения рукопожатия и далее по конвееру небольшая фильтрация для более или менее приличного вида вывода. Все что идет по конвееру можно удалить, т.е. выполнять не обязательно.</p>
 			<p class="codes">
