@@ -1101,7 +1101,7 @@ log <span style="color:#ffa500;">"CRITICAL" "${filelog}" "A message of CRITICAL 
 			<p>Для работы с черным и белым списками в моём скрипте <b>&laquo;py-blacklist.py&raquo;</b> предусмотрено 2 раздельных меню с одинаковым набором команд: меню <b>&laquo;black&raquo;</b> и <b>&laquo;white&raquo;</b> соответственно.</p>
 			<p>Меню <b>black</b>:</p>
 			<div class="codeses">
-				<pre><b>$</b> ./py-blacklist.py black
+				<pre><b>$</b> sudo ./py-blacklist.py black
 
 usage: py-blacklist.py black [-h] [-ban] [-unban] [-a] [-d] [-s] [-j] [-save]
                              [-o OUTPUT] [-empty] [-ip IP [IP ...]]
@@ -1130,7 +1130,7 @@ Addressing:
 			</div>
 			<p>Меню <b>white</b>:</p>
 			<div class="codeses">
-				<pre><b>$</b> ./py-blacklist.py white
+				<pre><b>$</b> sudo ./py-blacklist.py white
 
 usage: py-blacklist.py white [-h] [-ban] [-unban] [-a] [-d] [-s] [-j] [-save]
                              [-o OUTPUT] [-empty] [-ip IP [IP ...]]
@@ -1160,16 +1160,16 @@ Addressing:
 			<p>Оба меню <b>black</b> и <b>white</b> поддерживают множественное введение ip-адресов. Маска адреса указывается через обратный слеш - «/». Например: 192.168.0.2/32. При этом вы вполне можете указать и ipv4 и ipv6 в одной команде. Протокол автоматически будет поправлен в процессе работы с адресом.</p>
 			<p>Например - добавим 2 адреса с разным протоколом в черный список:</p>
 			<p class="codes">
-				<b>$</b> ./py-blacklist.py black -ip 192.168.0.2 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1 -a -save
+				<b>$</b> sudo ./py-blacklist.py black -ip 192.168.0.2 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1 -a -save
 			</p>
 			<p>или так:</p>
 			<p class="codes">
-				<b>$</b> ./py-blacklist.py black -ip 192.168.0.2/32 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1/128 -a -save
+				<b>$</b> sudo ./py-blacklist.py black -ip 192.168.0.2/32 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1/128 -a -save
 			</p>
 			<p>Обратите внимание на то, что если вы не будете указывать маску - она будет применена автоматически. По умолчанию автоматическая маска ставится максимальной согласно протоколу адреса - IPV4 или IPV6.</p>
 			<p>Либо маску можно указать отдельным ключом. НО, в этом случае количество масок должно быть равно количеству вводимых ip-адресов!</p>
 			<p class="codes">
-				<b>$</b> ./py-blacklist.py black -ip 192.168.0.2 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1 -m 32 128 -a -save
+				<b>$</b> sudo ./py-blacklist.py black -ip 192.168.0.2 2001:db8:abf2:29ea:5298:ad71:2ca0:4ff1 -m 32 128 -a -save
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
 			<hr>
@@ -1193,7 +1193,7 @@ Addressing:
 			<p><span style="color:blue;"><b>Поработаем пока над nf_tables.</b></span></p>
 			<p>Для начала необходимо узнать список доступных таблиц <b>NFTABLES</b>.</p>
 			<p class="codes">
-				<b>$</b> ./py-blacklist.py -nft service -show -tb
+				<b>$</b> sudo ./py-blacklist.py -nft service -show -tb
 			</p>
 			<p>Ответ будет примерно такой:</p>
 			<p class="codes">
@@ -1218,9 +1218,9 @@ Addressing:
 			<p>Или же вы можете воспользоваться одним единственным ключом <b>&laquo;-run&raquo;</b> в сочетании с завершением команды <b>&laquo;-e&raquo;</b>.</p>
 			<p>Например.</p>
 			<p class="codes">
-				<b>$</b> ./py-blacklist.py -nft -newtable -newchain -e</br>
+				<b>$</b> sudo ./py-blacklist.py -nft -newtable -newchain -e</br>
 				<span style="color:blue;"># или</span></br>
-				<b>$</b> ./py-blacklist.py -nft -run -e
+				<b>$</b> sudo ./py-blacklist.py -nft -run -e
 			</p>
 			<p>Самое приятное в этом скрипте то, что когда мы не указываем протокол, мы используем протокол по умолчанию - <b>IPV4</b>. В этом случае вторая таблица и цепочка для протокола <b>IPV6</b> будет создана автоматически без нашего участия как необходимость.</p>
 			<p>Для очистки таблиц и/или цепочек воспользуйтесь следующими ключами:</p>
@@ -1263,15 +1263,26 @@ Addressing:
 			<p>Если бы в вашем скрипте такие команды имелись вам бы не пришлось долго искать проблему - всё что вам нужно было бы сделать - это найти ip-адрес конкурентной организации, просмотреть черный список вашего скрипта и удалить этот адрес и из списка и из таблиц <b>Netfilter</b>-а.</p>
 			<p>В скрипте <b>&laquo;py-blacklist.py&raquo;</b> такие команды имеются - и запуска, и остановки и перезапуска, и другие.</p>
 			<p>Рассмотрим их более подробно.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<ol>
+				<li><b>&laquo;-start&raquo;</b> - Запустить черный список.</li>
+				<li><b>&laquo;-stop&raquo;</b> - Остановить черный список.</li>
+				<li><b>&laquo;-nostop&raquo;</b> - Не делает ровным счетом ничего. Нужна для замены предыдущей команды в <b>Systemd</b>, если вдруг потребуется не очищать таблицы <b>Netfilter</b>-а, при остановке работы черного списка. Просто чтобы строку остановки не оставлять пустой.</li>
+				<li><b>&laquo;-reload&raquo;</b> - Перезапустить черный список.</li>
+				<li><b>&laquo;-grep&raquo;</b> - Фильтрация просмотра правил Netfilter в соответствии с указанным регулярным выражением. Некий аналог утилиты <b>Grep</b> без её дополнительных преимуществ, только для уменьшения результата просмотра или поиска в последнем определённой информации.</li>
+			</ol>
+			<p>Итак, 1. <b>&laquo;-start&raquo;</b> - запускает черный список. Это значит, что скрипт не просто запускает только один черный список, а обрабатывает оба списка - и черный и белый, т.е. оба списка в соответствии с заданным количеством блокировок заносятся в таблицы межсетевого экрана. Имеется введу, что запускается сервис скрипта с одноимённым наименованием.</p>
+			<p>Соответственно 2. <b>&laquo;-stop&raquo;</b> останавливает работу скрипта и также обрабатывает оба списка, удаляя все внесённые адреса из межсетевого экрана.</p>
+			<p>4. <b>&laquo;-reload&raquo;</b> - перезапускает работу скрипта. Т.е. сначала оба списка полностью удаляются из брендмауэра, в соответствии с заданным количеством блокировок и заносятся заново.</p>
+			<p class="codes">
+				<span style="color:blue;"># Для IP(6)TABLES</span></br>
+				<b>$</b> sudo ./py-blacklist.py -c 3 service -start</br>
+				<b>$</b> sudo ./py-blacklist.py -c 3 service -stop</br>
+				<b>$</b> sudo ./py-blacklist.py -c 3 service -reload</br></br>
+				<span style="color:blue;"># или для NFTABLES</span></br>
+				<b>$</b> sudo ./py-blacklist.py -nft -c 3 service -start</br>
+				<b>$</b> sudo ./py-blacklist.py -nft -c 3 service -stop</br>
+				<b>$</b> sudo ./py-blacklist.py -nft -c 3 service -reload
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part7.10"></a></p>
