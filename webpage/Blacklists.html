@@ -575,7 +575,6 @@ services:
 			<p>Нужны будут только скрипты или утилиты для работы с самими пойманными ip-адресами для того, чтобы прописать их в экшенах <b>Fail2ban</b>-а. Т.е. что делать с этими адресами вы решаете самостоятельно - блокировать навсегда или сделать что-то другое.</p>
 			<p>Или же вы вполне можете прописать в экшенах отправку уведомлений по электронной почте или даже по СМС. Вообщем, на что хватит фантазии ...</p>
 			<p>У <b>Fail2Ban</b> довольно низкие системные требования. При конфигурации только с <b>sshd</b> и несколькими различными правилами, <b>Fail2Ban</b> требует около 500 Мб памяти и загружает 1 ядро CPU в среднем менее чем на 0,2%.</p>
-			<p>Если вам нужна информация по установке и настройке <b>Fail2ban</b>-а, фильтрам, экшенам и действиям с разлиными примерами - обратитесь к статье: <a target="_blank" href="../The-security-of-network-connections.html#part5.0"><b>&laquo;Безопасность сетевых соединений: 5. Fail2ban.&raquo;</b></a>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part5">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part5.1"></a></p>
@@ -1578,15 +1577,69 @@ WantedBy=timers.target</pre>
 			<hr>
 			<p><a name="part8"></a></p>
 			<h2>8. Использование скриптов в Fail2ban.</h2>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>О <b>Fail2ban</b>-е было много рассказано в пункте <a href="#part5"><b>&laquo;5. Fail2ban&raquo;</b></a>.</p>
+			<p>Если вам нужна информация по установке и настройке <b>Fail2ban</b>-а, фильтрам, действиям и правилам с различными примерами - обратитесь к статье: <a target="_blank" href="../The-security-of-network-connections.html#part5.0"><b>&laquo;Безопасность сетевых соединений: 5. Fail2ban.&raquo;</b></a>. В ней подробно рассказано о том, как подключить и использовать собственные приложения для любых действий, совершаемых с пойманными ip-адресами при анализе системных журналов. А также приведены хорошие примеры настроек для собственных и скриптов, и действий, и фильтров, и правил.</p>
+			<p>В этом пункте упомяну лишь о том, что в репозитории скрипта <b>&laquo;py-blacklist.py&raquo;</b> имеются предопределённые наборы фильтров, действий и правил для <b>Fail2ban</b>-а, которые вы можете установить с помощью <b>Makefile</b>-а сразу все вместе или раздельно любой из них.</p>
+			<p>Часть этих настроек описано в указанной выше статье о настройках <b>Fail2ban</b>-а.</p>
+			<p>Все эти файлы настроек вы можете корректировать по смоему усмотрению после установки, перед перезапуском <b>Fail2ban</b>-а. Они не являются строгими! В них закоментированным текстом добавлены различные варианты настроек правил, которые вы могли бы использовать. Последними 3-мя закоментированными строками указаны переменные для использования их скрипте, который указан в настройках экшена <b>Fail2ban</b>-а и соответственно примеры значений этих переменных.</p>
+			<p>Таким образом вам не придётся лазить в настройки самих действий или фильтров, чтобы узнать что за переменные и в какие строки можно вписывать и использовать в правилах программы.</p>
+			<p>Почти все переменные понятны и откликаются в помощи скрипта.</p>
+			<p>Приведу пример одного правила <b>&laquo;access-nginx.conf&raquo;</b>.</p>
+			<div class="codeses">
+				<pre><span style="color:blue;">[anginx]</span>
+<span style="color:blue;">enabled </span> = true
+<span style="color:blue;">port</span> = all
+<span style="color:blue;">filter</span> = nginx-access
+<span style="color:blue;">logpath</span> = /var/log/nginx/access.log
+<span style="color:red;">#action = firewallcmd-ipset[name=anginx, port=ssh, protocol=tcp]
+#action = firewallcmd-multiport[name=anginx, port="http,https", protocol=tcp]
+#action = iptables-allports[name=anginx, protocol=all]
+#action = nftables-allports[name=anginx, protocol=tcp]</span>
+<span style="color:blue;">action</span> =  blackfull[count=3]
+<span style="color:red;">#         blackfull
+#         blacksimple
+#         count=3, nftables="", personal="-personal", proto="ip", table="filter", 
+#         chain="INPUT", interfaces="enp0s3", limitlog="-limit", nolog="-nolog"
+#         proto CHOICE ['ip', 'ip6', 'inet']</span>
+<span style="color:blue;">ignoreregex</span> = \.(jpg|jpeg|png|gif|js|css)</pre>
+			</div>
+			<p>Например, настройка <b>&laquo;nftables&raquo;</b>. Без указания этой строки как пустой - будет работа с <b>NFTABLES</b>. При указании параметра пустым - работа будет с <b>IP(6)TABLES</b>.</p>
+			<p>Причем использовать все эти переменные можно как в экшене <b>&laquo;blacksimple&raquo;</b>, так и в экшене <b>&laquo;blackfull&raquo;</b>. Потому они и указаны под этими действиями как закоментированные.</p>
+			<p>Однако, заметьте, что использовать 2 похожих блокировки одновременно мягко говоря не рекомендуется. Необходимо использовать одну из блокировок (firewallcmd-ipset, iptables-allports, ftables-allports, blackfull). Если хотите использовать черный список и одну из этих блокировок, но не <b>blackfull</b>, тогда раскоментируйте одну из них и закоментируйте экшен с этой функцией, а второй строкой укажите <b>blacksimple</b> с параметром <b>count</b> в квадратных скобках.</p>
+			<p>Примерно так. Пусть будет, например, <i>iptables-allports</i>. А для <i>blacksimple</i>, пусть черный список будет привязан к интерфейсу <b>eth0</b>:</p>
+			<div class="codeses">
+				<pre>action = iptables-allports[name=anginx, protocol=all]
+         blacksimple[count=3, interfaces="eth0"]</pre>
+			</div>
+			<p>В первоначальной настройке закоментированы следующие экшены:</p>
+			<ul>
+				<li>firewallcmd-ipset</li>
+				<li>iptables-allports</li>
+				<li>nftables-allports</li>
+				<li>blackfull</li>
+				<li>blacksimple</li>
+			</ul>
+			<p>Вы вполне могли бы закоментировать активный экшен и раскоментировать любой другой. Таким образом в данном правиле у вас будет использоваться другой способ блокировки ip-адресов. Сейчас пока что используется указанный выше скрипт <b>&laquo;py-blacklist.py&raquo;</b>.</p>
+			<p>Однако, как я уже упоминал ранее в одной из статей по безопасности - только для <b>SSH</b> настроек стоит использовать <b>Firewalld</b> способ блокировки, а для всех остальных либо <b>IPTBALES</b>, либо <b>NFTABLES</b>.</p>
+			<p>Но, здесь всё равно указана такая возможность, хоть и не рекомендуется к применению.</p>
+			<p>Последними 2-мя пунктами указаны введёные экшены от самого скрипта.</p>
+			<p>Первый из них будет и блокировать пойманный ip-адрес, и добавлять в черный список, анализируя количество блокировок одного и того же адреса. При разблокировке и превышении количества указанного вами в настройках правила ip-адрес автоматически будет заблокирован уже навсегда.</p>
+			<p>Второй же вариант будет только добавлять в черный список, анализируя количество блокировок, но не будет заниматься его блокировкой. При разблокировке адрес также согласно настройкам будет автоматически заблокирован навсегда.</p>
+			<p>Последний способ гораздо удобнее использовать совместно с правилами для <b>SSH</b>, нежели как единственную настройку и блокировки и добавления в черный список.</p>
+			<p>Правило <b>SSH</b> в этом случае будет выглядеть так:</p>
+			<div class="codeses">
+				<pre><span style="color:blue;">[sshd]</span>
+<span style="color:blue;">enabled</span> = true
+<span style="color:blue;">port</span> = ssh
+<span style="color:blue;">action</span> = firewallcmd-ipset[name=sshd, port=ssh, protocol=tcp]
+         blacksimple[count=3]
+<span style="color:red;">#        blackfull
+#        blacksimple
+#        count=3, nftables="", personal="-personal", proto="ip", table="filter", 
+#        chain="INPUT", interfaces="enp0s3", limitlog="-limit", nolog="-nolog"
+#        proto CHOICE ['ip', 'ip6', 'inet']</span>
+<span style="color:blue;">logpath</span> = /var/log/sshd.log</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 		</div>
@@ -1594,7 +1647,7 @@ WantedBy=timers.target</pre>
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
 		<div class="about">
-			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+			<p>Copyright &copy; 06.08.2023 by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
 		</div>
 		</br>
 	</div>
