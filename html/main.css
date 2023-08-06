@@ -228,3 +228,13 @@ BODY {
 	background: -o-linear-gradient(45deg, #ddd, #333);;
 	background: -ms-linear-gradient(45deg, #ddd, #333);;
 }
+.content p.selections {
+	text-indent: 0px;
+	display: block;
+	position: relative;
+	margin: 10px 10px 10px 25px;
+	padding: 10px;
+	border-left: 5px solid #548eaa;
+	background-color: #ccdfe8;
+	text-indent: 0px;
+}
