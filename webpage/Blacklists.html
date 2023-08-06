@@ -49,8 +49,6 @@
 			<p>После чего посмотрим каким образом блокировать и разблокировать угрозы безопасности.</p>
 			<p>Далее определимся с пониятием черных и белых списков и зачем они вообще нужны.</p>
 			<p>Посмотрим с вами на реальные примеры и виртуального и реального (<b>VPS</b>) серверов.</p>
-			<p>И наконец, на примере виртуального сервера в разы усилим его безопасность.</p>
-			<p>Итак, приступим.</p>
 			<p><a name="oglavlenie"></a></p>
 			<h2>Оглавление</h2>
 			<ol>
@@ -1639,6 +1637,10 @@ WantedBy=timers.target</pre>
 #        chain="INPUT", interfaces="enp0s3", limitlog="-limit", nolog="-nolog"
 #        proto CHOICE ['ip', 'ip6', 'inet']</span>
 <span style="color:blue;">logpath</span> = /var/log/sshd.log</pre>
+			</div>
+			<p>А теперь давайте посмотрим на работу скрипта черного списка <a target="_blank" href="https://github.com/maximalisimus/blacklist-scripts"><b>&laquo;py-blacklist.py&raquo;</b></a> в сочатении со всеми указанными фильтрами, действиями и правилами для <b>Fail2ban</b>-а на реальном <b>VPS</b>-сервере. Некоторые строки закоментированы в целях безопасности. Из журнала событий скрипта отображены только последние 5 строк, иначе он заполнит весь экран примера.</p>
+			<div class="images">
+				<img src="../image/Blacklists-image/bls-34.png" width="800px"/>
 			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
