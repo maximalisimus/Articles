@@ -1329,6 +1329,12 @@ Addressing:
 			<p>Вообще, ещё существует каталог юнитов пользователя - у каждого свой и при этом необходимо указывать <b>Systemd</b> что запуск или активация происходит только для заданного пользователя. Однако, такой способ запуска крайне специфичный и подходит только тем программам и утилитам, которым не нужны <b>ROOT</b>-права. Т.е. такие приложения не работают с системными файлами и журналами, на которые установлены конкретно <b>root</b>-ограничения.</p>
 			<p>Нас же интересуют только юниты, расположенные в каталоге <b>&laquo;/etc/systemd/system/&raquo;</b>.</p>
 			<p><b>Разберём основные параметры юнитов сервисов и таймеров в теории и перейдём к практике.</b></p>
+			<p>Юнит представляет из себя текстовый файл с форматом, похожим на файлы <b>.ini Microsoft Windows</b>.</p>
+			<p class="selections">
+				[Название секции в квадратных скобках]<br>
+				имя_переменной = значение
+			</p>
+			<p>Для создания любого юнита надо описать три секции: <b>&laquo;[Unit]&raquo;</b>, <b>&laquo;[Service]&raquo;</b> и <b>&laquo;[Install]&raquo;</b>.</p>
 			<h3>Юнит сервиса.</h3>
 			<p><u>Секция <b>&laquo;[Unit]&raquo;</b> - описание и порядок запуска.</u></p>
 			<p>Описание юнита:</p>
@@ -1414,6 +1420,20 @@ Addressing:
 				WantedBy=multi-user.target
 			</p>
 			<p><b>multi-user.target</b> или <b>runlevel3.target</b> соответствует многопользовательскому режиму без графики. Пользователи, как правило, входят в систему при помощи множества консолей или через сеть.</p>
+			<p>Чтобы иметь возможность передавать параметры, т.е. аргументы командной строки, в сервис или таймер, необходимо в наименование сервиса перед расширением добавить собаку. Например, <b>&laquo;status_email_user@.service&raquo;</b>.</p>
+			<p>Параметры(аргументы командной строки) передаются с помощью указания в строке запуска дополнительного ключа вместе с процентом: <b>&laquo;%i&raquo;</b>.</p>
+			<p>Например, файл юнита для получения статуса.</p>
+			<div class="codeses">
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/status_email_user@.service</p>
+[Unit]
+Description=status email for %i to user
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/systemd-email address %i
+User=nobody
+Group=systemd-journal</pre>
+			</div>
 			<p>Более подробно смотрите в статье: <a target="_blank" href="https://wiki.archlinux.org/title/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)"><b>&laquo;ArchWiki: systemd (Русский)&raquo;</b></a>.</p>
 			<h3>Юнит таймера.</h3>
 			<p>Таймер не обязательно должен называться точно также как и сервис, но расширение должно быть именно <b>&laquo;.timer&raquo;</b>.</p>
@@ -1431,7 +1451,7 @@ Addressing:
 			</ul>
 			<p>Например, таймер, который будет запускаться один раз в неделю (в 12:00 в понедельник).</p>
 			<div class="codeses">
-				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 1px dashed #808080;">/etc/systemd/system/foo.timer</p>
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/foo.timer</p>
 [Unit]
 Description=Run foo weekly
 
@@ -1481,7 +1501,7 @@ WantedBy=timers.target</pre>
 			<p>Параметры(аргументы командной строки) передаются с помощью указания в строке запуска дополнительного ключа вместе с процентом: <b>&laquo;%i&raquo;</b>.</p>
 			<p>Например, файл юнита для получения статуса.</p>
 			<div class="codeses">
-				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 1px dashed #808080;">/etc/systemd/system/status_email_user@.service</p>
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/status_email_user@.service</p>
 [Unit]
 Description=status email for %i to user
 
@@ -1493,18 +1513,42 @@ Group=systemd-journal</pre>
 			</div>
 			<p>Более подробно смотрите в статье: <a target="_blank" href="https://wiki.archlinux.org/title/Systemd_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)/Timers_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)"><b>&laquo;ArchWiki: systemd (Русский)/Timers (Русский)&raquo;</b></a>.</p>
 			<h3>Перейдём к практике.</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Для примера возьмём сервис юнита для скрипта <b>&laquo;py-blacklist.py&raquo;</b>, для которого уже создана символическая ссылка в <b>&laquo;/usr/bin/&raquo;</b>, с наименованием <b>&laquo;blacklist&raquo;</b>.</p>
+			<p>Также учтем, что в сервис необходимо иметь возможность передавать параметры, т.е. аргументы командной строки.</p>
+			<p>И ещё один момент - запуск будет для фреймфорвка <b>&laquo;nf_tables&raquo;</b>.</p>
+			<div class="codeses">
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/blacklist@.service</p>
+[Unit]
+Description=Blacklist service for banning and unbanning ip addresses of subnets.
+Wants=fail2ban.service
+After=fail2ban.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=blacklist -nft -nftproto ip -table filter -chain INPUT -run -c %i service -start
+ExecStop=blacklist -nft -nftproto ip -table filter -chain INPUT -fine -c %i service -stop
+ExecReload=blacklist -nft -nftproto ip -table filter -chain INPUT -c %i service -reload
+
+[Install]
+WantedBy=multi-user.target</pre>
+			</div>
+			<p>А теперь посмотрим на пример таймера. Аналогично сервису, таймер должен иметь аргументы командной строки и запускать предыдущий сервис с теми же аргументами.</p>
+			<div class="codeses">
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/blacklist@.timer</p>
+[Unit]
+Description=Blacklist timer for banning and unbanning ip addresses of subnets.
+Wants=fail2ban.service
+After=fail2ban.service
+
+[Timer]
+Unit=blacklist@%i.service
+OnBootSec=20s
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part8"></a></p>

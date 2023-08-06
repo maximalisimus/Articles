@@ -206,53 +206,53 @@
 			<p>
 				Протокол SSH первой версии имеет проблемы с безопасностью, которые закрыты во второй версии. Внесите эту строчку вручную, её нет в этом файле. </br>
 			</p>
-			<p class="codes">Protocol 2</p>
+			<p class="selections">Protocol 2</p>
 			<p>Отключение проверки пароля:</p>
-			<p class="codes">PasswordAuthentication no</p>
+			<p class="selections">PasswordAuthentication no</p>
 			<p>Включаем аутентификацию по открытому ключу:</p>
-			<p class="codes">PubkeyAuthentication yes</p>
+			<p class="selections">PubkeyAuthentication yes</p>
 			<p>Параметр <b>AuthorizedKeysFile</b> определяет файл, в котором содержатся публичные ключи, используемые для аутентификации пользователей по открытому ключу. В записи могут присутствовать переменные, например <b>%h</b> означает домашний каталог пользователя, а <b>%u</b> – имя пользователя. В дальнейшем мы планируем использование аутентификации по открытому ключу - раскомментируем эту строку.
 			</p>
-			<p class="codes">AuthorizedKeysFile .ssh/authorized_keys</p>
+			<p class="selections">AuthorizedKeysFile .ssh/authorized_keys</p>
 			<p>По умолчанию, все системные пользователи имеют возможность подключаться к системе по SSH. Например, разрешим SSH для пользователей root и networks:</br>
 			</p>
-			<p class="codes">AllowUsers root networks</p>
+			<p class="selections">AllowUsers root networks</p>
 			<p>Можно разрешить доступ всем, кроме указанных:</p>
-			<p class="codes">DenyUsers root networks</p>
+			<p class="selections">DenyUsers root networks</p>
 			<p>Выбранных пользователей можно добавить в группу и разрешить доступ только этой группе:</p>
-			<p class="codes">AllowGroups ssh_group</p>
+			<p class="selections">AllowGroups ssh_group</p>
 			<p>Укажем время, в течение которого, неактивная сессия будет завершена, а также количество проверок доступности клиента, которые могут оставаться без ответа:</p>
-			<p class="codes">
+			<p class="selections">
 				TCPKeepAlive yes</br>
 				ClientAliveInterval 300</br>
 				ClientAliveCountMax 3
 			</p>
 			<p>Отключаем уязвимость в виде файла .RHOSTS со списком хостов и пользователей:</p>
-			<p class="codes">IgnoreRhosts yes</p>
+			<p class="selections">IgnoreRhosts yes</p>
 			<p>Отключаем аутентификацию на базе хоста, которая позволяет пользователю с определённого хоста подключаться к серверу:</p>
-			<p class="codes">HostbasedAuthentication no</p>
+			<p class="selections">HostbasedAuthentication no</p>
 			<p>Отключаем прямое подключение через root:</p>
-			<p class="codes">PermitRootLogin no</p>
+			<p class="selections">PermitRootLogin no</p>
 			<p>За настройку баннера отвечает параметр Banner</p>
 			<p>Запрещаем пустые пароли</p>
-			<p class="codes">PermitEmptyPasswords no</p>
+			<p class="selections">PermitEmptyPasswords no</p>
 			<p>Изменяем порт по умолчанию. Обязательно запомните его. Он понадобится при настройке фаервола.</p>
-			<p class="codes">Port 962</p>
+			<p class="selections">Port 962</p>
 			<p>Анализ логов, для расширенного контроля над системой:</p>
-			<p class="codes">LogLevel INFO</p>
+			<p class="selections">LogLevel INFO</p>
 			<p>Отключаем пересылку X11 через ssh, т.к. данный протокол не ориентирован на безопасность.</p>
-			<p class="codes">X11Forwarding no</p>
+			<p class="selections">X11Forwarding no</p>
 			<p>Сначала нужно задать эти параметры в sshd_config. Поскольку мы вносим изменения в интерфейсы и удалённой, и клиентской системы, нам нужны права root с обеих сторон.</p>
-			<p class="codes">
+			<p class="selections">
 				PermitRootLogin yes</br>
 				PermitTunnel yes
 			</p>
 			<p>Форвардинг портов. С помощью SSH туннелей вы можете строить целые цепочки для форвардинга портов. Включить или отключить SSH туннелирование можно следующими директивами.</p>
-			<p class="codes">AllowStreamLocalForwarding yes</br>
-				# AllowTcpForwarding remote</br>
+			<p class="selections">AllowStreamLocalForwarding yes</br>
+				<span style="color:blue;"># AllowTcpForwarding remote</span></br>
 				AllowTcpForwarding yes</br>
 				GatewayPorts yes</br>
-				# AllowAgentForwarding yes
+				<span style="color:blue;"># AllowAgentForwarding yes</span>
 			</p>
 			<p>Сохраните файл и перезапустите sshd сервис:</p>
 			<p class="codes">
@@ -630,7 +630,7 @@ WantedBy=timers.target
 			</ul>
 			<p>Например, таймер, который будет запускаться один раз в неделю (в 12:00 в понедельник).</p>
 			<div class="codeses">
-				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 1px dashed #808080;">/etc/systemd/system/foo.timer</p>
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/foo.timer</p>
 [Unit]
 Description=Run foo weekly
 
@@ -680,7 +680,7 @@ WantedBy=timers.target</pre>
 			<p>Параметры(аргументы командной строки) передаются с помощью указания в строке запуска дополнительного ключа вместе с процентом: <b>&laquo;%i&raquo;</b>.</p>
 			<p>Например, файл юнита для получения статуса.</p>
 			<div class="codeses">
-				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 1px dashed #808080;">/etc/systemd/system/status_email_user@.service</p>
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 2px dashed #808080;">/etc/systemd/system/status_email_user@.service</p>
 [Unit]
 Description=status email for %i to user
 
