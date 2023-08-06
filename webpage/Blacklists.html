@@ -1549,6 +1549,31 @@ AccuracySec=1s
 [Install]
 WantedBy=timers.target</pre>
 			</div>
+			<p>Вообще для скрипта <b>&laquo;py-blacklist.py&raquo;</b> не обязательно вот так вручную создавать сервис и таймер. Для этого у него есть встроеные команды, с помощью которых он автоматически сформирует и сервис и таймер под нужный вам фреймворк - <b>XTables</b> или <b>nf_tables</b>.</p>
+			<p>Давайте посмотрим на пример необходимых для этого ключей и параметров.</p>
+			<p class="codes">
+				<span style="color:blue;"># Для NFTABLES</span></br>
+				<b>$</b> sudo ./py-blacklist.py -nft -run -fine -c 3 systemd -create</br></br>
+				<span style="color:blue;"># и для IP(6)TABLES соответственно</span></br>
+				<b>$</b> sudo ./py-blacklist.py -c 3 systemd -create
+			</p>
+			<p>Для удаления, соответственно:</p>
+			<p class="codes">
+				<span style="color:blue;"># Для NFTABLES</span></br>
+				<b>$</b> sudo ./py-blacklist.py -nft -run -fine -c 3 systemd -delete</br></br>
+				<span style="color:blue;"># и для IP(6)TABLES соответственно</span></br>
+				<b>$</b> sudo ./py-blacklist.py -c 3 systemd -delete
+			</p>
+			<p>При желании, можете персонализировать настройки соответствующими ключами и параметрами. В помощи скрипта имеется вполне понятные наименование и описание ключей и параметров. Если что-то не понятно - обратитесь к репозиторию скрипта, где есть перевод всех страниц помощи и дополнительные пояснительные моменты. Или же вы можете воспользоваться ключом <b>&laquo;-cmd&raquo;</b> перед всеми остальными ключами и параметрами, чтобы просто вывести на экран результирующие команды без их выполнения и применения.</p>
+			<p>Например, для всех команд выше - создания и удаления сервиса и таймера.</p>
+			<p class="codes">
+				<span style="color:blue;"># Для NFTABLES</span></br>
+				<b>$</b> sudo ./py-blacklist.py -cmd -nft -run -fine -c 3 systemd -create</br>
+				<b>$</b> sudo ./py-blacklist.py -cmd -nft -run -fine -c 3 systemd -delete</br></br>
+				<span style="color:blue;"># и для IP(6)TABLES соответственно</span></br>
+				<b>$</b> sudo ./py-blacklist.py -cmd -c 3 systemd -create</br>
+				<b>$</b> sudo ./py-blacklist.py -cmd -c 3 systemd -delete
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>. <a href="#part7">Перейти к главе</a>.</p>
 			<hr>
 			<p><a name="part8"></a></p>
