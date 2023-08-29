@@ -1,0 +1,272 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Example</title>
+	<link rel="icon" href="image/PyCharn_image/favicon.png">
+	<!--
+		<link rel="icon" href="image/favicon.png">
+		<link rel="shortcut icon" href="js-css/404-2.ico" Type="image/x-icon">
+		type="image/png"
+		<link rel="shortcut icon" href="favicon.png" type="image/png">
+		<link rel="icon" href="image/favicon.svg" type=" image/svg+xml">
+	-->
+	<link rel="stylesheet" href="../html/main.css" type="text/css">	
+	<link rel="stylesheet" href="../html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="../html/table.css" type="text/css">
+	<link rel="stylesheet" href="../html/frame.css">
+	<link rel="stylesheet" href="../html/ol-li.css" type="text/css">
+	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
+	<script src="../html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="../html/litezoom.js"></script>
+	
+	<!-- syntaxes light. -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+	<script type="text/javascript">
+		hljs.highlightAll();
+	</script>
+	<style>
+		.content .codeses pre {
+			text-indent: 0px;
+			display: block;
+			position: relative;
+			margin: 10px 10px 10px 25px;
+			padding: 5px;
+			background-color: #ccdfe8;
+			border:  1px solid black;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-o-border-radius: 5px;
+			-ms-border-radius: 5px;
+			box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+			-webkit-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+			-o-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+			-ms-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+		}
+		.content .codeses pre code {
+			background-color: #ccdfe8;
+		}
+		.content .codeses pre code.no-highlight {
+			padding: 10px;
+			display: block;
+		}
+	</style>
+	<!--
+	<style>
+		.comment {
+			color: gray;
+		}
+
+		.keyword {
+			font-weight: bold;
+		}
+
+		.python .string {
+			color: blue;
+		}
+
+		.html .atribute .value {
+			color: green;
+		}
+	</style>
+	-->
+	<!-- syntaxes light. -->
+</head>
+<body>
+	<div class="site">
+		<div class="header">
+			<div id="logo">
+				<p style="margin:10px; padding:0px;">Example</p>
+			</div>
+		</div>
+		<div class="content">
+			<center>
+				<div class="images">
+					<img src="image/image-0.png" width="500px"/>
+				</div>
+				<div style="clear:both"></div>
+			</center>
+		</div>
+		<div class="content">
+			<p><a name="oglavlenie"></a></p>
+			<center>
+				<h1>Example H1</h1>
+			</center>
+			<h2>Оглавление</h2>
+			<ol>
+				<li><a href="#part1">Part-1</a></li>
+				<li><a href="#part2">Part-2</a></li>
+				<li><a href="#part3">Part-3</a></li>
+			</ol>
+		</div>
+		<div class="content">
+			<p><a name="part1"></a></p>
+			<h3>Part-1 H1</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<!-- syntaxes light. -->
+			<div class="codeses">
+				<pre><code>#!/bin/bash
+upower -e | grep -vi "line_power" | grep -vi "displaydevice" >> ./pwr.nfo
+pwr_info=$(cat ./pwr.nfo)
+echo "" > ./pwr.nfo
+for i in ${pwr_info[*]}; do
+    upower -i $i >> ./pwr.nfo
+done
+# Comment
+VERSION=$(uname -r)
+SYSTEM=$(uname -s)
+ARCHI=$(uname -m)
+_DevShowTitle=""
+# Comment
+dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DevShowTitle" --textbox ./pwr.nfo 0 0
+rm -rf ./pwr.nfo
+clear
+exit 0</code></pre>
+			</div>
+			<!-- syntaxes light. -->
+			<div class="codeses">
+				<pre><code class="no-highlight">#!/bin/bash
+upower -e | grep -vi "line_power" | grep -vi "displaydevice" >> ./pwr.nfo
+pwr_info=$(cat ./pwr.nfo)
+echo "" > ./pwr.nfo
+for i in ${pwr_info[*]}; do
+    upower -i $i >> ./pwr.nfo
+done
+# Comment
+VERSION=$(uname -r)
+SYSTEM=$(uname -s)
+ARCHI=$(uname -m)
+_DevShowTitle=""
+# Comment
+dialog --backtitle "$VERSION - $SYSTEM ($ARCHI)" --title "$_DevShowTitle" --textbox ./pwr.nfo 0 0
+rm -rf ./pwr.nfo
+clear
+exit 0</code></pre>
+			</div>
+			<!-- syntaxes light. -->
+			<div class="codeses">
+				<pre><code class="python">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+def main():
+	pass
+
+if __name__ == '__main__':
+	main()</code></pre>
+			</div>
+			<!-- syntaxes light. -->
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p class="selections">
+				<!-- Blue -->Text<br>
+			</p>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				<!-- Blue -->Text<br>
+			</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				<!-- Green -->Text<br>
+			</p>
+			<p class="selections" style="border-left: 5px solid #ffa500; background-color: #ffe4b3;">
+				<!-- Orange -->Text<br>
+			</p>
+			<p class="selections" style="border-left: 5px solid #ff0000; background-color: #f2dede;">
+				<!-- Red -->Text<br>
+			</p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				<!-- Grey -->Text<br>
+			</p>
+			<a target="_blank" href=""></a>
+			<a target="_blank" href=""><b>&laquo;&raquo;</b></a>
+			&laquo;&raquo;
+			<b></b>
+			<b>&laquo;&raquo;</b>
+			<p><b>&laquo;&raquo;</b></p>
+			<p class="codes">
+				<b>$</b> </br>
+				<b>$</b> 
+			</p>
+			<p class="codes">
+				</br>
+			</p>
+			<p class="codes">
+				<b>$</b> Codes</br>
+				<span style="color:blue;"># Comment <b>at</b>, the number <b>of</b></span></br>
+				<span style="color:blue;"># </span></br>
+			</p>
+			<div class="codeses">
+				<pre>
+
+				</pre>
+			</div>
+			<div class="codeses">
+				<pre><p style="text-indent: 0px; margin: 0px; padding: 0px 0px 10px 0px; font-weight:bold; border: none; border-bottom: 1px dashed #808080;"></p>
+
+				</pre>
+			</div>
+			<div class="images">
+				<img src="../image/articles_image/image.png" width="500px"/>
+			</div>
+			<div style="clear:both"></div>
+			<br>
+			<div id="page" class="clearfix">
+				<img src="image/image-0.jpg" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<div class="codeses">
+				<pre>
+<span style="color:blue;">#!/bin/bash</span>
+...
+script
+...
+<span style="color:blue;"># echo "result"</span>
+				</pre>
+			</div>
+			<ul>
+				<li><span style="color:Blue;">Blue</span></li>
+				<li>Black</li>
+				<li><span style="color:Red;">Reed</span></li>
+				<li><span style="color:Yellow;">Yellow</span></li>
+				<li><span style="color:Green;">Green</span></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h1>Part-2 H1</h1>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h1>Part-3 H1</h1>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+						
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
+		</div>	
+		<div class="about">
+			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+		</div>
+		</br>
+	</div>
+	<script type="text/javascript">$('.fz__minimized').litezoom({speed:400, viewTitle:true});</script>
+</body>
+</html>
