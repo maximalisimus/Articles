@@ -1,0 +1,48 @@
+.content .codeses pre {
+	text-indent: 0px;
+	display: block;
+	position: relative;
+	background-color: #ccdfe8;
+	margin: 0px;
+	padding: 5px 0px 5px 5px;
+}
+.content .codeses pre code {
+	text-indent: 0px;
+	display: block;
+	position: relative;
+	background-color: #ccdfe8;
+	margin: 0px;
+	padding: 5px 0px 5px 5px;
+	color: black;
+}
+pre code[class]:after {
+	color: #646463;
+	display: block; text-align: right;
+	font: 1em / 1.3em 'Lucida Console', 'courier new', monospace;
+	text-shadow : 0px 1px 0px #000;
+}
+
+.content .codeses pre code.no-highlight {
+	text-indent: 0px;
+	display: block;
+	position: relative;
+	background-color: #ccdfe8;
+	margin: 0px;
+	padding: 5px 0px 5px 5px;
+	color: black;
+}
+.hljs-meta {
+	color:  blue;
+}
+.hljs-comment {
+	color: red;
+}
+.hljs-string,.hljs-variable {
+	color: #ff8d1a;
+}
+.hljs-code {
+	color: #0b850b;
+}
+.hljs-built_in {
+	color:  green;
+}

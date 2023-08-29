@@ -19,60 +19,21 @@
 	<script src="../html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="../html/litezoom.js"></script>
 	
+	<!-- highlight url code. -->
+	<!--
+		https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css
+		https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js
+		https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js
+	-->
+	<!-- highlight url code. -->
 	<!-- syntaxes light. -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/go.min.js"></script>
+	<link rel="stylesheet" href="../html/highlight_11.8.0.min.css">
+	<script src="../html/highlight_11.8.0.min.js"></script>
+	<script src="../html/highlight_11.8.0_languages_go.min.js"></script>
 	<script type="text/javascript">
 		hljs.highlightAll();
 	</script>
-	<style>
-		.content .codeses pre {
-			text-indent: 0px;
-			display: block;
-			position: relative;
-			margin: 10px 10px 10px 25px;
-			padding: 5px;
-			background-color: #ccdfe8;
-			border:  1px solid black;
-			border-radius: 5px;
-			-moz-border-radius: 5px;
-			-webkit-border-radius: 5px;
-			-o-border-radius: 5px;
-			-ms-border-radius: 5px;
-			box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-			-moz-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-			-webkit-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-			-o-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-			-ms-box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-		}
-		.content .codeses pre code {
-			background-color: #ccdfe8;
-		}
-		.content .codeses pre code.no-highlight {
-			padding: 10px;
-			display: block;
-		}
-	</style>
-	<!--
-	<style>
-		.comment {
-			color: gray;
-		}
-
-		.keyword {
-			font-weight: bold;
-		}
-
-		.python .string {
-			color: blue;
-		}
-
-		.html .atribute .value {
-			color: green;
-		}
-	</style>
-	-->
+	<link rel="stylesheet" href="../html/highlight-edit.css">
 	<!-- syntaxes light. -->
 </head>
 <body>
@@ -109,7 +70,7 @@
 			<p></p>
 			<p></p>
 			<p></p>
-			<!-- syntaxes light. -->
+<!-- syntaxes light. -->
 			<div class="codeses">
 				<pre><code>#!/bin/bash
 upower -e | grep -vi "line_power" | grep -vi "displaydevice" >> ./pwr.nfo
@@ -149,7 +110,16 @@ rm -rf ./pwr.nfo
 clear
 exit 0</code></pre>
 			</div>
-			<!-- syntaxes light. -->
+			<div class="codeses">
+				<pre>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+def main():
+	pass
+
+if __name__ == '__main__':
+	main()</pre>
+			</div>
 			<div class="codeses">
 				<pre><code class="python">#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -160,7 +130,7 @@ def main():
 if __name__ == '__main__':
 	main()</code></pre>
 			</div>
-			<!-- syntaxes light. -->
+<!-- syntaxes light. -->
 			<p></p>
 			<p></p>
 			<p></p>
