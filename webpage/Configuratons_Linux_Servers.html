@@ -89,6 +89,7 @@
 				<li><a href="#part15">Docker, docker-compose.</a></li>
 				<li><a href="#part16">Nginx Reverse Proxy.</a></li>
 				<li><a href="#part17">Кэш память в Linux.</a></li>
+				<li><a href="#part18">Shadowsocks рядом с Wireguard.</a></li>
 			</ol>
 			<p><span style="color:red;"><b>&laquo;Podman&raquo;</b>, <b>&laquo;Podman-Compose&raquo;</b> и <b>&laquo;Cockpit&raquo;</b> рассмотрим в другой статье, т.к. он на порядок сложнее, чем <b>&laquo;Docker&raquo;</b> и <b>&laquo;Docker-Compose&raquo;</b> и в установке, и в настройке, и в использовании.</span></p>
 			<hr>
@@ -1880,6 +1881,130 @@ sync ; echo 1 > /proc/sys/vm/drop_caches
 				<b>$</b> sudo swapoff -a && sudo swapon -a
 			</p>
 			<p><b>Имейте в виду, что при очистке swap, все данные будут перенесены обратно в оперативную память.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part18"></a></p>
+			<h2>18. Shadowsocks рядом с Wireguard.</h2>
+			<p>Устанавливать голый <b>&laquo;shadowsocks&raquo;</b> не имеет смысла, ибо им ещё надо как-то управлять.</p>
+			<p>Поэтому скачайте на свой домашний ПК с официального сайта <a href="https://getoutline.org/"><b>&laquo;Outline&raquo;</b></a> - и <b>&laquo;Outline-Manager&raquo;</b> и <b>&laquo;Outline-Client&raquo;</b>. Обратите внимание на адрес - он без всяких там <b>&laquo;/ru/&raquo;</b>. Иначе у вас в браузере ничего не отобразиться. При переходе по ссылке вас автоматически перебросит на этот же сайт с указанием страны <b>&laquo;/ru/&raquo;</b> того самого слеша с буквами. Зачем так сделали я не знаю.</p>
+			<p>Итак. первым делом вам понадобится менеджер, и только потом клиент.</p>
+			<p>В <b>Linux</b>-е сделайте файл исполняемым и запустите менеджер.</p>
+			<p class="codes">
+				<b>$</b> chmod +x ./Outline-Manager.AppImage</br>
+				<b>$</b> chmod +x ./Outline-Client.AppImage
+			</p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager.png" width="640px"/>
+			</div>
+			<p><b>Обратите внимание ещё на один нюанс!</b> При запуске вам может показаться, что менеджер не работает. <b>Это не так!</b> <b>Зачем разрабы так низко опустили кнопку &laquo;OK&raquo; пользовательского соглашения ума не приложу. Однако, если у вас ноутбук или маленький экран - её просто может быть не видно, из-за чего добраться до неё будет попросту невозможно.</b></p>
+			<p>Для этого есть 2 способа.</p>
+			<ol>
+				<li>Временно убрать нижнюю панель, чтобы хоть что-то было видно.</li>
+				<li>Или воспользоваться меню: <b>&laquo;View&raquo;</b> -> <b>&laquo;Zoom Out&raquo;</b> <u>несколько раз</u>.</li>
+			</ol>
+			<p>Самое забавное в том, что разворачивание на весь экран не работает. Поэтому обратитесь к списке выше и скриншоту ниже.</p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager2.png" width="427px"/>
+			</div>
+			<p>Далее, для работы с вашим личным <b>VPS</b> или <b>VDS</b> сервером выберите последний пункт.</p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager3.png" width="640px"/>
+			</div>
+			<p>Вот теперь можно переходить к самому серверу. Тут есть пара нюнансов, которые необходимо понимать.</p>
+			<p>Скопируйте полученную команду и вставьте на сервер - да, прямо как есть. <b>Обязательно согласитесь со всеми дополнительными установками, если скрипт спросит!</b></p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager4.png" width="640px"/>
+			</div>
+			<p>Установщик делает свои дела и в конце появляется зелёная надпись. Её надо скопировать в окно <b>Outline</b> менеджера. <b>Однако, перед вставкой сделайте ещё одну настройку. Обратите внимание на порты доступа в самом конце. Их необходимо добавить в ваш фаервол.</b></p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager5.png" width="640px"/>
+			</div>
+			<p>Если вы настраивали фаервол как я, то команды добавления данных портов в правила в качестве примера будут следующими (У вас должны появится свои порты. Они у всех будут разными):</p>
+			<p class="codes">
+				<span style="color:blue;"># Добавляем</span></br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mysite --add-port=54250/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mysite --add-port=57418/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mysite --add-port=57418/udp</br></br>
+				<span style="color:blue;"># Обязательно перезагружаем фаервол</span></br>
+				<b>$</b> sudo firewall-cmd --reload</br>
+			</p>
+			<p>Я для себя на всякий случай внёс эти же порты в 2 других зоны - <b>&laquo;public&raquo;</b> и <b>&laquo;mywg&raquo;</b>.</p>
+			<p class="codes">
+				<span style="color:blue;"># Добавляем</span></br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=public --add-port=54250/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=public --add-port=57418/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=public --add-port=57418/udp</br></br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mywg --add-port=54250/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mywg --add-port=57418/tcp</br>
+				<b>$</b> sudo firewall-cmd --permanent --zone=mywg --add-port=57418/udp</br></br>
+				<span style="color:blue;"># Обязательно перезагружаем фаервол</span></br>
+				<b>$</b> sudo firewall-cmd --reload</br></br>
+				<span style="color:blue;"># Смотрим что вышло</span></br>
+				<b>$</b> sudo firewall-cmd --get-active-zones</br>
+				<b>$</b> sudo firewall-cmd --list-all</br>
+				<b>$</b> sudo firewall-cmd --info-zone=public</br>
+				<b>$</b> sudo firewall-cmd --info-zone=mysite</br>
+				<b>$</b> sudo firewall-cmd --info-zone=mywg
+			</p>
+			<p><u>Вот теперь <b>&laquo;apiUrl&raquo;</b> можно полностью копировать и вставлять в окно менеджера вместе со всеми скобками!</u></p>
+			<p>Однако, это ещё не всё!</p>
+			<p>Чтобы клиент нормально заработал нужна ещё одна команда и утилита.</p>
+			<p>Внутри пакета <b>&laquo;Perl&raquo;</b> есть так называемая утилита <b>&laquo;shasum&raquo;</b>. Мало того, что без неё не будет работать клиент, но ещё и важно где она находится.</p>
+			<p>Поэтому установите пакет <b>&laquo;Perl&raquo;</b> и скопируйте утилиту в каталог <b>&laquo;/usr/bin/&raquo;</b>.</p>
+			<p class="codes">
+				<b>$</b> sudo cp /usr/bin/core_perl/shasum /usr/bin/shasum
+			</p>
+			<p>Теперь в менеджере можете добавлять новые ключи доступа и вставляйте их в клиент.</p>
+			<p>Кстати, не пытайтесь запустить менеджер на <b>&laquo;Android&raquo;</b> или <b>&laquo;IOS&raquo;</b>. Клиент на смартфоне прекрасно работает, а вот менеджер выдаёт какую-то чепуху с ошибками по поводу невозможности настроить сопряжение с сервером.</p>
+			<p>Допустим я хочу пользоваться утилитами на постоянной основе будто они были установлены в системе. Проделаем это в несколько этапов.</p>
+			<p>В <b>Linux</b> я перенесу оба <b>Appimage</b>-файла в некий каталог, вытащу из обоих файлов иконки в 256 пикселей, создам ярлыки запуска <b>&laquo;*.desktop&raquo;</b> и вытащу их на рабочий стол и в каталог всех ярлыков.</p>
+			<p>Создадим нужные каталоги и перенесём туда оба наших <b>Appimage</b>-файла.</p>
+			<p class="codes">
+				<span style="color:blue;"># Каталоги</span></br>
+				<b>$</b> mkdir -p ~/programs/Outline/</br>
+				<b>$</b> mv *.AppImage ~/programs/Outline/
+			</p>
+			<p>Вытащим из них нужные иконки.</p>
+			<p class="codes">
+				<span style="color:blue;"># Распаковка Appimage для вытаскивания ярлыков</span></br>
+				<b>$</b> cd ~/programs/Outline/</br>
+				<b>$</b> find ./ -type f -iname "*.Appimage" -exec {} --appimage-extract \;</br></br>
+				<span style="color:blue;"># Вытаскиваем иконки</span></br>
+				<b>$</b> cp -f ./squashfs-root/usr/share/icons/hicolor/256x256/apps/*.png ./</br></br>
+				<span style="color:blue;"># Убираем за собой мусор</span></br>
+				<b>$</b> rm -rf ./squashfs-root/
+			</p>
+			<p>Создади 2 файла: <b>&laquo;Outline-Manager.desktop&raquo;</b> и <b>&laquo;Outline-Client.desktop&raquo;</b>.</p>
+			<p>Содержание файла <b>&laquo;Outline-Manager.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Exec=/home/user/programs/Outline/Outline-Manager.AppImage
+Type=Application
+Name=Outline-Manager
+Terminal=false
+Icon=/home/user/programs/Outline/outline-manager.png
+Categories=Network;Utility;</pre>
+			</div>
+			<p>Содержание файла <b>&laquo;Outline-Client.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Exec=/home/user/programs/Outline/Outline-Client.AppImage
+Type=Application
+Name=Outline-Client
+Terminal=false
+Icon=/home/user/programs/Outline/outline-client.png
+Categories=Network;Utility;</pre>
+			</div>
+			<p>Теперь сделаем ярлыки исполняемыми и скопируем в каталог программ и на рабочий стол.</p>
+			<p class="codes">
+				<span style="color:blue;"># Сначала, обязательно сделать ярлыки исполняемыми.</span></br>
+				<b>$</b> chmod +x *.desktop</br></br>
+				<span style="color:blue;"># Копируем в каталог программ.</span></br>
+				<b>$</b> sudo cp *.desktop /usr/share/applications/</br></br>
+				<span style="color:blue;"># Копируем на рабочий стол.</span></br>
+				<b>$</b> cp *.desktop /home/user/Рабочий стол/
+			</p>
+			<p><b>Всё! Можно наслаждаться проделанной работой!</b></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 		</div>
