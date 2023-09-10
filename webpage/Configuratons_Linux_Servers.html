@@ -1955,7 +1955,17 @@ sync ; echo 1 > /proc/sys/vm/drop_caches
 				<b>$</b> sudo cp /usr/bin/core_perl/shasum /usr/bin/shasum
 			</p>
 			<p>Теперь в менеджере можете добавлять новые ключи доступа и вставляйте их в клиент.</p>
-			<p>Кстати, не пытайтесь запустить менеджер на <b>&laquo;Android&raquo;</b> или <b>&laquo;IOS&raquo;</b>. Клиент на смартфоне прекрасно работает, а вот менеджер выдаёт какую-то чепуху с ошибками по поводу невозможности настроить сопряжение с сервером.</p>
+			<p>Для <b>Android</b> тоже есть <b>&laquo;Outline Manager&raquo;</b>, скачать его можно с сайта <a href="https://f-droid.org/en/packages/org.sirekanyan.outline/"><b>&laquo;Fdroid&raquo;</b></a> или через одноименное приложение.</p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager6.png" width="640px"/>
+			</div>
+			<p>Когда запустите приложение в смартфоне, в него необходимо вставить не туже самую строку с <b>&laquo;apiUrl&laquo;</b> - другую. Для этого зайдите в настройки программы на ПК, скопируйте и передайте каким-либо образом строку: <b>&laquo;URL для доступа к Management API&raquo;</b>.</p>
+			<p>Строка должна выглядеть примерно так: <b>&laquo;https://ip:port/key&raquo;</b>.</p>
+			<div class="images">
+				<img src="../image/Configuratons_Linux_Servers_image/outline-manager7.png" width="640px"/>
+			</div>
+			<p>Теперь вы сможете управлять VPN подключения к вашему серверу не только через ПК.</p>
+			<p><b>Переходим к утилитам на ПК.</b></p>
 			<p>Допустим я хочу пользоваться утилитами на постоянной основе будто они были установлены в системе. Проделаем это в несколько этапов.</p>
 			<p>В <b>Linux</b> я перенесу оба <b>Appimage</b>-файла в некий каталог, вытащу из обоих файлов иконки в 256 пикселей, создам ярлыки запуска <b>&laquo;*.desktop&raquo;</b> и вытащу их на рабочий стол и в каталог всех ярлыков.</p>
 			<p>Создадим нужные каталоги и перенесём туда оба наших <b>Appimage</b>-файла.</p>
