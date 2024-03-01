@@ -301,6 +301,15 @@
 				<span style="color:blue;"># Для приёма файла с сервера.</span></br>
 				<b>$</b> scp -O user@host_ip:/home/user/file ./
 			</p>
+			<p>Если <b>SCP</b> по прежнему не работает, попробуйте следующую команду. Возможно она подскажет вам решение.</p>
+			<p class="codes">
+				<b>$</b> sudo sshd -t
+			</p>
+			<p>Возможно у вас просто нет каталога <b>&laquo;/var/empty&raquo;</b> с нужными правами доступа.</p>
+			<p class="codes">
+				<b>$</b> sudo mkdir -p /var/empty</br>
+				<b>$</b> sudo chown root /var/empty
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part4"></a></p>
