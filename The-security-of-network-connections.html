@@ -207,6 +207,24 @@
 				Протокол SSH первой версии имеет проблемы с безопасностью, которые закрыты во второй версии. Внесите эту строчку вручную, её нет в этом файле. </br>
 			</p>
 			<p class="selections">Protocol 2</p>
+			<p>Изменяем порт по умолчанию. Обязательно запомните его. Он понадобится при настройке фаервола.</p>
+			<p class="selections">Port 2222</p>
+			<p>Тип соединения (<b>ipv4</b>, <b>ipv6</b>, оба соединения одновременно).</p>
+			<p class="selections">
+				AddressFamily inet
+				<span style="color:blue;"><br>#AddressFamily inet6
+				<br>#AddressFamily any</span>
+			</p>
+			<p>При ошибках связанных с ключами, выполните команду проверки доступных шифрований.</p>
+			<p class="codes">
+				<b>$</b> ssh -Q PubkeyAcceptedAlgorithms | grep rsa
+			</p>
+			<p>А затем добавьте соответствующий параметр в <b>&laquo;/etc/ssh/sshd_config&raquo;</b>.</p>
+			<p class="selections">
+				PubkeyAcceptedKeyTypes=+ssh-rsa
+				<br>HostKeyAlgorithms +ssh-rsa
+				<br>PubkeyAcceptedAlgorithms +ssh-rsa
+			</p>
 			<p>Отключение проверки пароля:</p>
 			<p class="selections">PasswordAuthentication no</p>
 			<p>Включаем аутентификацию по открытому ключу:</p>
@@ -236,10 +254,12 @@
 			<p>За настройку баннера отвечает параметр Banner</p>
 			<p>Запрещаем пустые пароли</p>
 			<p class="selections">PermitEmptyPasswords no</p>
-			<p>Изменяем порт по умолчанию. Обязательно запомните его. Он понадобится при настройке фаервола.</p>
-			<p class="selections">Port 962</p>
 			<p>Анализ логов, для расширенного контроля над системой:</p>
 			<p class="selections">LogLevel INFO</p>
+			<p><b>PrintMotd</b> выводит при подключении к <b>sshd</b> сообщение дня <b>(message of the day)</b> из файла <b>&laquo;/etc/motd&raquo;</b>.</p>
+			<p class="selections">PrintMotd no # pam does that</p>
+			<p>Если <b>UsePAM</b> включен, то запустить sshd можно будет только от имени <b>root</b>.</p>
+			<p class="selections">UsePAM yes</p>
 			<p>Отключаем пересылку X11 через ssh, т.к. данный протокол не ориентирован на безопасность.</p>
 			<p class="selections">X11Forwarding no</p>
 			<p>Сначала нужно задать эти параметры в sshd_config. Поскольку мы вносим изменения в интерфейсы и удалённой, и клиентской системы, нам нужны права root с обеих сторон.</p>
@@ -264,6 +284,22 @@
 				<span style="color:blue;"># Или так, если вы меняли порт по умолчанию</span></br>
 				$ ssh user@host_ip -p 2222</br>
 				<span style="color:blue;"># Соответственно вставте свой порт, который вы настроили в sshd_config</span>
+			</p>
+			<p>Для передачи файлов по <b>SSH</b> воспользуемся следующими командами.</p>
+			<p class="codes">
+				<span style="color:blue;"># Для передачи файла на сервер.</span></br>
+				<b>$</b> scp /your/path/file user@host_ip:/home/user/</br></br>
+				<span style="color:blue;"># Для приёма файла с сервера.</span></br>
+				<b>$</b> scp user@host_ip:/home/user/file ./
+			</p>
+			<p>При проблемах с передачей файлов по <b>SSH</b>:</p>
+			<p class="selections">scp: Connection closed</p>
+			<p>Просто добавьте в команду <b>SCP</b> сразу после неё ключ <b>&laquo;-O&raquo;</b> - для работы в режиме <b>&laquo;Legacy&raquo;</b>.</p>
+			<p class="codes">
+				<span style="color:blue;"># Для передачи файла на сервер.</span></br>
+				<b>$</b> scp -O /your/path/file user@host_ip:/home/user/</br></br>
+				<span style="color:blue;"># Для приёма файла с сервера.</span></br>
+				<b>$</b> scp -O user@host_ip:/home/user/file ./
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
