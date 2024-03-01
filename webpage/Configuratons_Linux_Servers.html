@@ -1600,13 +1600,15 @@ add_header X-Content-Type-Options nosniff;
 
 <span style="color:blue;"># HSTS</span>
 <span style="color:blue;">#add_header Strict-Transport-Security "max-age=604800; includeSubDomains" always;</span>
-add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";
+<span style="color:blue;">#add_header Strict-Transport-Security "max-age=63072000; includeSubdomains;";</span>
+add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
 <span style="color:blue;">#add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;" preload;</span>
 
 <span style="color:blue;"># OCSP Stapling</span>
 ssl_stapling_verify on;
 ssl_stapling on;
 resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
 
 <span style="color:blue;">#Expect CT (Optional)</span>
 add_header Expect-CT "max-age=0";
@@ -1723,6 +1725,8 @@ server {
 # the up-to-date file that you will need to refer to when manually updating
 # this file.
 
+ssl on;
+
 #ssl_session_cache shared:le_nginx_SSL:10m;</span>
 ssl_session_cache shared:SSL:50m;
 ssl_session_timeout 1440m;
@@ -1746,6 +1750,7 @@ ssl_prefer_server_ciphers on;
 	ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:
 	ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:
 	DHE-RSA-AES256-GCM-SHA384;</span>
+<span style="color:blue;">#ssl_ciphers 'HIGH:!aNULL:!MD5:!kEDH';</span>
 ssl_ciphers TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:
 	TLS_AES_128_GCM_SHA256:TLS_AES_128_CCM_8_SHA256:
 	TLS_AES_128_CCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:
@@ -1776,6 +1781,67 @@ server {
 
 }
 ...
+
+<b>CTRL + o</b>
+<b>CTRL + x</b></pre>
+			</div>
+			<p>Если будете создавать конфигурацию вручную, т.е. со своими <b>SSL</b> сертификатами, без обращения к <b>Letsencrypt</b>, то конфигурация будет примерно следующей.</p>
+			<div class="codeses">
+				<pre>
+<b>$ sudo nano /etc/nginx/sites-available/example</b>
+
+server {
+	<span style="color:blue;">#server_name example.com;</span>
+	
+	location /{
+		proxy_pass http://localhost:port/;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Scheme $scheme;
+		proxy_set_header X-Forwarded-Host $host;
+		proxy_set_header X-Forwarded-Port $server_port;
+		<span style="color:blue;">#proxy_set_header X-Forwarded-Proto https;</span>
+		proxy_set_header X-Forwarded-Proto $scheme;
+		<span style="color:blue;">#proxy_set_header X-Forwarded-Proto https;</span>
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Ssl on;
+
+		<span style="color:blue;"># DDoS</span>
+		limit_req zone=myzone burst=5 nodelay;
+	}
+
+	# Server, param and name
+	listen 443 ssl http2;
+	server_name example.com;
+
+	# Custom certificate
+	ssl_certificate /path/to/your/ssl/server.pem;
+	ssl_certificate_key /path/to/your/ssl/key.pem;
+	ssl_trusted_certificate /path/to/your/ssl/ca-chain;
+
+	# SSL params
+	include /etc/letsencrypt/options-ssl-nginx.conf;
+	ssl_dhparam /path/to/your/ssl/ssl-dhparams.pem;
+
+	# Custom error page
+	include /etc/nginx/snippets/custom-error-page.conf;
+
+	# XSS, X-Frame, X-Permited, X-Content-Type
+	include /etc/nginx/x_header.conf;
+
+	# gzip content
+	include /etc/nginx/site_gzip.conf;
+
+}
+
+server {
+    if ($host = example.com) {
+        return 301 https://$host$request_uri;
+    }
+
+	listen 80;
+	server_name example.com;
+    return 404;
+}
 
 <b>CTRL + o</b>
 <b>CTRL + x</b></pre>
@@ -1817,6 +1883,7 @@ server {
 <b>$ sudo crontab -l</b>
 				</pre>
 			</div>
+			<p>Соответственно, если у вас свои <b>SSL</b> сертификаты, то данный перезапрос сертификатов через <b>crontab</b> не нужен.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part17"></a></p>
