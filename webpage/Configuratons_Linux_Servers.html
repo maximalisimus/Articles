@@ -1222,6 +1222,8 @@ options {
 			<p>Перейдём к установке.</p>
 			<p class="codes">
 				<span style="color:blue;"># Debian/Ubuntu подобные</span></br>
+				<span style="color:blue;"># Добавьте ключи</span></br>
+				$ sudo echo 'deb http://ftp.debian.org/debian buster-backports main' | sudo tee /etc/apt/sources.list.d/buster-backports.list</br>
 				$ sudo apt install wireguard wireguard-tools qrencode -y <br>
 				<span style="color:blue;"># sudo apt install wireguard wireguard-tools -y</span></br>
 				<span style="color:blue;"># sudo apt install kmod-wireguard wireguard-dkms -y</span></br>
