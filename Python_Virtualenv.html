@@ -65,10 +65,14 @@
 			<h3>Установка</h3>
 			<p>Для начала убедитесь, что у вас установлены все необходимые пакеты и зависимости:</p>
 			<p class="codes">
-				<b>Debian:</b> $ sudo apt install python-virtualenv python3-virtualenv python3-venv virtualenv python3-virtualenvwrapper python-distlib python-filelock python3-platformdirs python-stevedore</br>
+				<b>Debian:</b> $ sudo apt install python3-virtualenv python3-venv virtualenv python3-virtualenvwrapper python3-distlib python3-filelock python3-platformdirs python3-stevedore</br>
 				<b>Archlinux:</b> $ sudo pacman -S python-distlib python-filelock python-platformdirs python-stevedore python-virtualenv python-virtualenvwrapper</br>
 				<b>Python PIP:</b> $ python -m pip install --upgrade pip setuptools distlib filelock platformdirs stevedore virtualenv virtualenvwrapper --upgrade</br>
 				<b>Windows PIP / PIP:</b> $ pip install setuptools virtualenv virtualenvwrapper-win --upgrade
+			</p>
+			<p>По умолчанию путь к главному файлу настроек виртуального окружения в <b>Lunux</b> системах изменили и каким-то образом закрыли к нему доступ. Поэтому необходио ещё создать ссылку на этот файл вручную <b>&laquo;virtualenvwrapper&raquo;</b>. Для этого выполним примерно следующую команду. Возможно вам придётся ещё поискать этот файл поусле установки соответствующего пакета.</p>
+			<p class="codes">
+				<b>$</b> sudo ln -s /usr/share/virtualenvwrapper/virtualenvwrapper.sh /usr/local/sbin/virtualenvwrapper.sh
 			</p>
 			<h3>virtualenvwrapper</h3>
 			<p>Virtualenvwrapper хранит все окружения в одном месте. 
@@ -95,7 +99,9 @@
 				<span style="color:blue;"># export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'</span></br>
 				export PIP_VIRTUALENV_BASE=$WORKON_HOME</br>
 				export PIP_RESPECT_VIRTUALENV=true</br>
-				if [[ -r `which virtualenvwrapper.sh` ]]; then  source `which virtualenvwrapper.sh`; fi
+				source /usr/local/sbin/virtualenvwrapper.sh</br>
+				<span style="color:blue;"># Раньше была следующая строка, но файл переместили и закрыли доступ. Поэтому пользуемся жёстким source из команды выше</span></br>
+				<span style="color:blue;"># if [[ -r `which virtualenvwrapper.sh` ]]; then  source `which virtualenvwrapper.sh`; fi</span>
 			</p>
 			<p>Обратите внимание, что строку с аргументом <b>VIRTUALENVWRAPPER_VIRTUALENV_ARGS</b> я пометил - как неактивную. В <b>ОС Archlinux</b> данный аргумент не работает.</p>
 			<p>В <b>Debian</b> подобных системах <b>—no-site-packages</b> - запретит использование одноименного системного <b>site-packages</b> 
