@@ -814,8 +814,23 @@ capability setuid,
 				$ export LC_ALL=en_US.UTF-8<br>
 				$ export LC_COLLATE=en_US.UTF-8<br>
 				$ export LC_TIME=en_US.utf-8<br><br>
-				$ locale-gen
+				$ sudo locale-gen
 			</p>
+			<p>В Debian 12 и старше измените файл <b>/etc/locale.gen</b>:</p>
+			<p class="codes">
+				<b>$</b> sudo nano /etc/locale.gen
+			</p>
+			<p>Сгенерировать файлы настроек выбранной локали можно так.</p>
+			<p class="codes">
+				<b>$</b> sudo locale-gen ru_RU.UTF-8
+			</p>
+			<p>Назначьте русскую локаль по умолчанию с помощью следующей команды:</p>
+			<p class="codes">
+				<b>$</b> udo update-locale LANG=ru_RU.UTF-8<br>
+				<span style="color:blue;"># или</span></br>
+				<b>$</b> sudo localectl set-locale LANG=ru_RU.UTF-8
+			</p>
+			<p><span style="color:red;">Перезагрузить хост Linux, чтобы применить новые настройки локализации.</span></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part13"></a></p>
