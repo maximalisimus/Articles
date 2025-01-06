@@ -284,15 +284,19 @@
 			<p>Затем создаю в папке <b>&lt;&nbsp;C:\python\&nbsp;&gt;</b> два <b>BAT</b> файла со следующим содержимым:</p>
 			<p>C:\python\python-3.8-x86.bat</p>
 			<p class="codes">
+				@cd/d "%~dp0"</br>
 				@echo off</br>
 				SET PATH=C:\Python38-x86\;C:\Python38-x86\Scripts\;%PATH%</br>
 				SET WORKON_HOME=C:\Python-Projects\Envs-x86\</br>
+				DOSKEY clear=cls</br>
 				cmd.exe /s /k pushd "%V"
 			<p>C:\python\python-3.8-x64.bat</p>
 			<p class="codes">
+				@cd/d "%~dp0"</br>
 				@echo off</br>
 				SET PATH=C:\Python38\;C:\Python38\Scripts\;%PATH%</br>
 				SET WORKON_HOME=C:\Python-Projects\Envs-x64\</br>
+				DOSKEY clear=cls</br>
 				cmd.exe /s /k pushd "%V"
 			</p>
 			<p>Не забываем создать все необходимые для работы папки:</p>
