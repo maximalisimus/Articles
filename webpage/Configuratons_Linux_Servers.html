@@ -89,7 +89,13 @@
 				<li><a href="#part15">Docker, docker-compose.</a></li>
 				<li><a href="#part16">Nginx Reverse Proxy.</a></li>
 				<li><a href="#part17">Кэш память в Linux.</a></li>
-				<li><a href="#part18">Shadowsocks рядом с Wireguard.</a></li>
+				<li><a href="#part18">Outline рядом с Wireguard.</a></li>
+				<li><a href="#part19">SOCKS5 Proxy.</a></li>
+				<ol>
+					<li><a href="#part19.1">Что лучше Dante или Shadowsocks?</a></li>
+					<li><a href="#part19.2">Shadowsocks proxy.</a></li>
+					<li><a href="#part19.3">Dante proxy.</a></li>
+				</ol>
 			</ol>
 			<p><span style="color:red;"><b>&laquo;Podman&raquo;</b>, <b>&laquo;Podman-Compose&raquo;</b> и <b>&laquo;Cockpit&raquo;</b> рассмотрим в другой статье, т.к. он на порядок сложнее, чем <b>&laquo;Docker&raquo;</b> и <b>&laquo;Docker-Compose&raquo;</b> и в установке, и в настройке, и в использовании.</span></p>
 			<hr>
@@ -543,6 +549,120 @@ services:
 				net.ipv6.conf.all.disable_ipv6 = 1</br>
 				net.ipv6.conf.default.disable_ipv6 = 1</br>
 				net.ipv6.conf.lo.disable_ipv6 = 1</br></br>
+				
+				<span style="color:blue;"># Сохраняем и выходим</span></br>
+				<b>CTRL + o</b></br>
+				<b>CTRL + x</b></br>
+				<span style="color:blue;"># Принимаем правила без перезагрузки ОС.</span></br>
+				<b>$ sudo sysctl -p</b></br>
+			</p>
+			<p>Есть еще одни параметры ядра, которые часто используются при работе с <b>&laquo;SOCK5 Proxy&raquo;</b>.</p>
+			<p>В конце файла параметров ядра <b>&laquo;/etc/sysctl.conf&raquo;</b> указываем такие настройки:</p>
+			<ul>
+				<li>Максимальное количество открытых файловых дескрипторов в системе. Это ограничение на уровне ядра, которое влияет на общее число одновременно открытых файлов и сокетов.</li>
+				<ul>
+					<li><b>fs.file-max = 51200</b></li>
+				</ul>
+				<li>Максимальный размер буфера приема данных для сокетов (в байтах). Позволяет увеличить объем данных, которые ядро может буферизовать при приеме.</li>
+				<ul>
+					<li><b>net.core.rmem_max = 67108864</b></li>
+				</ul>
+				<li>Максимальный размер буфера отправки данных для сокетов (в байтах)</li>
+				<ul>
+					<li><b>net.core.wmem_max = 67108864</b></li>
+				</ul>
+				<li>Максимальное количество пакетов, которые могут быть поставлены в очередь на обработку сетевым интерфейсом, если драйвер не успевает их обрабатывать. Увеличение помогает при высоких нагрузках на сеть.</li>
+				<ul>
+					<li><b>net.core.netdev_max_backlog = 250000</b></li>
+				</ul>
+				<li>Максимальное количество ожидающих соединений в очереди для TCP-сокетов (backlog). По умолчанию обычно 128, увеличение улучшает обработку большого числа одновременных подключений.</li>
+				<ul>
+					<li><b>net.core.somaxconn = 4096</b></li>
+				</ul>
+				<li>Устанавливает алгоритм планирования очереди пакетов по умолчанию. fq (Fair Queueing) — современный алгоритм, улучшающий производительность и справедливость распределения трафика.</li>
+				<ul>
+					<li><b>net.core.default_qdisc = fq</b></li>
+				</ul>
+				<li>Включает защиту от SYN-флуд атак с помощью TCP SYN cookies. Позволяет серверу корректно обрабатывать большое количество входящих SYN-запросов.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_syncookies = 1</b></li>
+				</ul>
+				<li>Позволяет повторно использовать TCP-соединения в состоянии TIME_WAIT для новых исходящих соединений, что уменьшает количество занятых портов.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_tw_reuse = 1</b></li>
+				</ul>
+				<li>Отключает агрессивное быстрое удаление TIME_WAIT-соединений. В новых ядрах этот параметр считается опасным и может нарушать работу с NAT.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_tw_recycle = 0</b></li>
+				</ul>
+				<li>Время (в секундах), в течение которого TCP-соединение остается в состоянии FIN-WAIT-2 перед закрытием. Уменьшение этого времени освобождает ресурсы быстрее.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_fin_timeout = 30</b></li>
+				</ul>
+				<li>Время (в секундах) бездействия TCP-соединения перед отправкой keepalive пакета для проверки живости соединения.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_keepalive_time = 1200</b></li>
+				</ul>
+				<li>Диапазон локальных портов, используемых для исходящих соединений. Расширение диапазона помогает избежать исчерпания портов при большом количестве соединений.</li>
+				<ul>
+					<li><b>net.ipv4.ip_local_port_range = 10000 65000</b></li>
+				</ul>
+				<li>Максимальное количество ожидающих TCP-соединений в состоянии SYN_RECV (полуоткрытых соединений). Увеличение помогает при большом количестве одновременных попыток подключения.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_max_syn_backlog = 4096</b></li>
+				</ul>
+				<li>Максимальное количество TCP-соединений в состоянии TIME_WAIT, которые ядро может хранить. Если превышено, старые соединения будут удаляться принудительно.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_max_tw_buckets = 5000</b></li>
+				</ul>
+				<li>Включает TCP Fast Open — механизм ускоренного установления TCP-соединений. Значение 3 обычно означает включение как для клиентов, так и для серверов.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_max_tw_buckets = 5000</b></li>
+				</ul>
+				<li>Память (в страницах) для TCP буферов: минимальное, среднее и максимальное значения. Управляет объемом памяти, выделяемой TCP стеку.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_mem = 25600 51200 102400</b></li>
+				</ul>
+				<li>Размеры буферов приема TCP: минимальный, по умолчанию и максимальный (в байтах).</li>
+				<ul>
+					<li><b>net.ipv4.tcp_rmem = 4096 87380 67108864</b></li>
+				</ul>
+				<li>Размеры буферов отправки TCP: минимальный, по умолчанию и максимальный (в байтах).</li>
+				<ul>
+					<li><b>net.ipv4.tcp_wmem = 4096 65536 67108864</b></li>
+				</ul>
+				<li>Включает динамическое определение MTU (максимального размера пакета) для обхода проблем с фрагментацией.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_mtu_probing = 1</b></li>
+				</ul>
+				<li>Устанавливает алгоритм управления перегрузкой TCP. Hybla — алгоритм, оптимизированный для сетей с высокой задержкой.</li>
+				<ul>
+					<li><b>net.ipv4.tcp_congestion_control = hybla</b></li>
+				</ul>
+			</ul>
+			<p>Выглядит это следующим образом.</p>
+			<p class="codes">
+				<b>$ sudo nano /etc/sysctl.conf</b></br>
+				fs.file-max = 51200</br>
+				net.core.rmem_max = 67108864</br>
+				net.core.wmem_max = 67108864</br>
+				net.core.netdev_max_backlog = 250000</br>
+				net.core.somaxconn = 4096</br>
+				net.core.default_qdisc = fq</br>
+				net.ipv4.tcp_syncookies = 1</br>
+				net.ipv4.tcp_tw_reuse = 1</br>
+				net.ipv4.tcp_tw_recycle = 0</br>
+				net.ipv4.tcp_fin_timeout = 30</br>
+				net.ipv4.tcp_keepalive_time = 1200</br>
+				net.ipv4.ip_local_port_range = 10000 65000</br>
+				net.ipv4.tcp_max_syn_backlog = 4096</br>
+				net.ipv4.tcp_max_tw_buckets = 5000</br>
+				net.ipv4.tcp_fastopen = 3</br>
+				net.ipv4.tcp_mem = 25600 51200 102400</br>
+				net.ipv4.tcp_rmem = 4096 87380 67108864</br>
+				net.ipv4.tcp_wmem = 4096 65536 67108864</br>
+				net.ipv4.tcp_mtu_probing = 1</br>
+				net.ipv4.tcp_congestion_control = hybla</br></br>
 				
 				<span style="color:blue;"># Сохраняем и выходим</span></br>
 				<b>CTRL + o</b></br>
@@ -1972,7 +2092,7 @@ sync ; echo 1 > /proc/sys/vm/drop_caches
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part18"></a></p>
-			<h2>18. Shadowsocks рядом с Wireguard.</h2>
+			<h2>18. Outline рядом с Wireguard.</h2>
 			<p>Устанавливать голый <b>&laquo;shadowsocks&raquo;</b> не имеет смысла, ибо им ещё надо как-то управлять.</p>
 			<p>Поэтому скачайте на свой домашний ПК с официального сайта <a href="https://getoutline.org/"><b>&laquo;Outline&raquo;</b></a> - и <b>&laquo;Outline-Manager&raquo;</b> и <b>&laquo;Outline-Client&raquo;</b>. Обратите внимание на адрес - он без всяких там <b>&laquo;/ru/&raquo;</b>. Иначе у вас в браузере ничего не отобразиться. При переходе по ссылке вас автоматически перебросит на этот же сайт с указанием страны <b>&laquo;/ru/&raquo;</b> того самого слеша с буквами. Зачем так сделали я не знаю.</p>
 			<p>Итак. первым делом вам понадобится менеджер, и только потом клиент.</p>
@@ -2059,18 +2179,18 @@ sync ; echo 1 > /proc/sys/vm/drop_caches
 			<p>Создадим нужные каталоги и перенесём туда оба наших <b>Appimage</b>-файла.</p>
 			<p class="codes">
 				<span style="color:blue;"># Каталоги</span></br>
-				<b>$</b> mkdir -p ~/programs/Outline/</br>
-				<b>$</b> mv *.AppImage ~/programs/Outline/
+				mkdir -p ~/programs/Outline/</br>
+				mv *.AppImage ~/programs/Outline/
 			</p>
 			<p>Вытащим из них нужные иконки.</p>
 			<p class="codes">
 				<span style="color:blue;"># Распаковка Appimage для вытаскивания ярлыков</span></br>
-				<b>$</b> cd ~/programs/Outline/</br>
-				<b>$</b> find ./ -type f -iname "*.Appimage" -exec {} --appimage-extract \;</br></br>
+				cd ~/programs/Outline/</br>
+				find ./ -type f -iname "*.Appimage" -exec {} --appimage-extract \;</br></br>
 				<span style="color:blue;"># Вытаскиваем иконки</span></br>
-				<b>$</b> cp -f ./squashfs-root/usr/share/icons/hicolor/256x256/apps/*.png ./</br></br>
+				cp -f ./squashfs-root/usr/share/icons/hicolor/256x256/apps/*.png ./</br></br>
 				<span style="color:blue;"># Убираем за собой мусор</span></br>
-				<b>$</b> rm -rf ./squashfs-root/
+				rm -rf ./squashfs-root/
 			</p>
 			<p>Создади 2 файла: <b>&laquo;Outline-Manager.desktop&raquo;</b> и <b>&laquo;Outline-Client.desktop&raquo;</b>.</p>
 			<p>Содержание файла <b>&laquo;Outline-Manager.desktop&raquo;</b>.</p>
@@ -2096,15 +2216,403 @@ Categories=Network;Utility;</pre>
 			<p>Теперь сделаем ярлыки исполняемыми и скопируем в каталог программ и на рабочий стол.</p>
 			<p class="codes">
 				<span style="color:blue;"># Сначала, обязательно сделать ярлыки исполняемыми.</span></br>
-				<b>$</b> chmod +x *.desktop</br></br>
+				chmod +x *.desktop</br></br>
 				<span style="color:blue;"># Копируем в каталог программ.</span></br>
-				<b>$</b> sudo cp *.desktop /usr/share/applications/</br></br>
+				sudo cp *.desktop /usr/share/applications/</br></br>
 				<span style="color:blue;"># Копируем на рабочий стол.</span></br>
-				<b>$</b> cp *.desktop /home/user/Рабочий стол/
+				cp *.desktop /home/user/Рабочий стол/
 			</p>
 			<p><b>Всё! Можно наслаждаться проделанной работой!</b></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
+			<p><a name="part19"></a></p>
+			<h2>19. SOCKS5 Proxy.</h2>
+			<h3>Настройка SOCKS5 Proxy.</h3>
+			<p><a name="part19.1"></a></p>
+			<h4>19.1. Что лучше Dante или Shadowsocks?</h4>
+			<p><b>Dante</b> и <b>Shadowsocks</b> — это разные решения для организации прокси, и выбор между ними зависит от ваших целей и требований.</p>
+			<p><b>Dante.</b></p>
+			<ul>
+				<li>Dante — это SOCKS-сервер, который предоставляет функциональность прокси на уровне SOCKS5. Он хорошо подходит для организации прокси-сервера с гибкой настройкой.</li>
+				<li>Однако, Dante не шифрует трафик "из коробки", то есть без дополнительной настройки трафик передается в открытом виде.</li>
+				<li>Конфигурация Dante может быть сложной, и в новых версиях конфиг меняется, что иногда вызывает трудности.</li>
+				<li>Dante часто используется для постоянных прокси-соединений, но при этом не обеспечивает встроенного шифрования.</li>
+				<li>Можно использовать Dante вместе с другими инструментами для шифрования, например, stunnel или SSH, но это усложняет настройку.</li>
+			</ul>
+			<p><b>Shadowsocks.</b></p>
+			<ul>
+				<li>Shadowsocks — это прокси с встроенным шифрованием трафика между клиентом и сервером, что делает его более безопасным для обхода блокировок и защиты данных.</li>
+				<li>Он проще в настройке, чем OpenVPN, и оптимален, если ваша основная задача — шифрование трафика до доверенного сервера.</li>
+				<li>Shadowsocks часто используется для обхода цензуры и блокировок, например, в Китае.</li>
+				<li>По сравнению с обычным SOCKS-прокси, Shadowsocks обеспечивает защищённый транспорт, что является его ключевым преимуществом.</li>
+			</ul>
+			<p><b>Итог.</b></p>
+			<p>Если вам нужен простой и безопасный прокси с шифрованием, лучше выбрать Shadowsocks.</p>
+			<p>Если вам нужен гибкий SOCKS5-прокси без встроенного шифрования, который можно интегрировать в сложные схемы, то подойдет Dante (но потребуется дополнительное шифрование).</p>
+			<p>Для постоянного использования с минимальными усилиями по безопасности Shadowsocks будет предпочтительнее.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part19.2"></a></p>
+			<h4>19.2. Shadowsocks proxy.</h4>
+			<p>Установка.</p>
+			<p class="codes">
+				wget https://raw.githubusercontent.com/Vndroid/shadowsocks-install/master/shadowsocks.sh</br>
+				chmod +x shadowsocks.sh</br>
+				./shadowsocks.sh install 2>&1 | tee shadowsocks.log
+			</p>
+			<p>Настройка.</p>
+			<div class="codeses">
+				<pre>{
+	"server": "0.0.0.0",
+	"server_port": 3785,
+	"local_port": 1080,
+	"password": "barfoo",
+	"timeout": 20,
+	"method": "aes-256-gcm",
+	"fast_open": true,
+	"mode": "tcp_and_udp",
+	"nameserver": "8.8.8.8"
+}</pre>
+			</div>
+			<ul>
+				<li><b>server</b> - IP-адрес, на котором сервер слушает входящие подключения. 0.0.0.0 означает, что слушает на всех интерфейсах.</li>
+				<li><b>server_port</b> - порт, на котором Shadowsocks принимает подключения (в вашем случае 3785).</li>
+				<li><b>local_port</b> - локальный порт для прокси-клиента (чаще используется на клиентской стороне, не всегда нужен на сервере).</li>
+				<li><b>password</b> - пароль для шифрования и аутентификации клиента. Клиент должен использовать этот пароль для подключения.</li>
+				<li><b>timeout</b> - время ожидания (в секундах) бездействия соединения, после которого оно закрывается.</li>
+				<li><b>method</b> - метод шифрования трафика. aes-256-gcm — современный и безопасный AEAD-алгоритм.</li>
+				<li><b>fast_open</b> - включает TCP Fast Open, что уменьшает задержки при установлении TCP-соединения (если поддерживается ОС).</li>
+				<li><b>mode</b> - режим работы:</li>
+				<ul>
+					<li><b>tcp_only</b> — только TCP-трафик проксируется, UDP игнорируется.</li>
+					<li>Можно указать <b>tcp_and_udp</b> для поддержки UDP.</li>
+				</ul>
+				<li><b>nameserver</b> - DNS-сервер, который будет использоваться для резолвинга доменных имён на сервере.</li>
+			</ul>
+			<p class="codes">
+				socks5://&lt;IP_сервера&gt;:&lt;порт&gt;</br></br>
+				<span style="color:blue;"># Например, если сервер находится по IP 123.45.67.89, то строка соединения будет такой:</span></br></br>		
+				socks5://123.45.67.89:3785 
+			</p>
+			<p>Какие ещё параметры можно указывать?</p>
+			<ul>
+				<li><b>plugin</b> - для использования плагинов (например, obfs или v2ray-plugin) для маскировки трафика.</li>
+				<li><b>plugin_opts</b> - опции для плагина.</li>
+				<li><b>timeout</b> - время ожидания соединения.</li>
+				<li><b>mode</b> - tcp_only, udp_only, tcp_and_udp.</li>
+				<li><b>fast_open</b> - true/false.</li>
+				<li><b>reuse_port</b> - позволяет нескольким процессам слушать один порт (для повышения производительности).</li>
+				<li><b>no_delay</b> - отключение алгоритма Нейгла (Nagle's algorithm).</li>
+				<li><b>workers</b> - количество рабочих потоков.</li>
+				<li><b>nameserver</b> - DNS-сервер.</li>
+				<li><b>ipv6_first</b> - приоритет IPv6.</li>
+			</ul>
+			<p><b>Логина (username) в Shadowsocks нет и не поддерживается</b>, поэтому если клиент запрашивает логин — просто оставьте поле пустым или введите что угодно, но он не проверяется.</p>
+			<p>Если у вас появляется окно с запросом логина и пароля, скорее всего, это клиентская программа или браузер, который требует аутентификацию SOCKS5, но Shadowsocks её не поддерживает. В таком случае вводите только пароль из конфига, а логин оставляйте пустым.</p>
+			<p>Подробнее о параметрах <b>mode</b> и <b>fast_open</b> в <b>Shadowsocks</b>.</p>
+			<p><b>Параметр mode.</b></p>
+			<ul>
+				<li>tcp_only — Shadowsocks будет проксировать только TCP-трафик. UDP-пакеты игнорируются. Это самый простой и часто используемый режим.</li>
+				<li>udp_only — проксируется только UDP-трафик. TCP-пакеты игнорируются.</li>
+				<li>tcp_and_udp — проксируются и TCP, и UDP. Это полезно, если вам нужно, чтобы Shadowsocks поддерживал приложения, использующие UDP (например, игры, VoIP, DNS-запросы).</li>
+			</ul>
+			<p>Если указать tcp_and_udp, сервер будет обрабатывать оба типа трафика, что увеличит функциональность, но может немного повысить нагрузку.</p>
+			<p>Если указать udp_only, TCP-трафик не будет работать, что обычно нежелательно, так как большинство приложений используют TCP.</p>
+			<p>Если параметр не указан, по умолчанию обычно используется tcp_and_udp или tcp_only в зависимости от версии Shadowsocks.</p>
+			<p><b>Параметр fast_open.</b></p>
+			<ul>
+				<li>Уменьшение задержек при установлении соединения.</li>
+				<li>Быстрее стартует передача данных, что улучшает отзывчивость.</li>
+				<li>Поддержка TCP Fast Open должна быть включена в ядре ОС сервера и клиента.</li>
+				<li>Клиент и сервер должны поддерживать TFO.</li>
+				<li>В Linux это обычно требует включения опции в ядре и настройку sysctl.</li>
+				<li>Если fast_open: true и ОС поддерживает TFO — соединения будут устанавливаться быстрее.</li>
+				<li>Если ОС или клиент не поддерживают TFO — параметр не повлияет или соединения будут устанавливаться стандартным способом.</li>
+				<li>Если fast_open: false — соединения устанавливаются классическим TCP-рукопожатием.</li>
+			</ul>
+			<p>Что будет, если fast_open включить или выключить?</p>
+			<p>Обычно при установлении TCP-соединения происходит трехстороннее рукопожатие (SYN, SYN-ACK, ACK), и только после этого начинается передача данных. С TCP Fast Open часть данных можно отправить уже в первом пакете SYN, что уменьшает задержку.</p>
+			<p><b>Управление shadowsocks.</b></p>
+			<p class="codes">
+				sudo systemctl restart shadowsocks</br>
+				sudo systemctl status shadowsocks</br>
+				sudo systemctl start shadowsocks</br>
+				sudo systemctl stop shadowsocks
+			</p>
+			<p><b>Настройка фаервола для Shadowsocks: какие порты открывать и как это сделать в Firewalld и UFW.</b></p>
+			<p>Порт сервера Shadowsocks: В нашем конфиге это 3785 (параметр "server_port": 3785).</p>
+			<p>Этот порт должен быть разрешён для входящих TCP-соединений (и UDP, если в mode указан tcp_and_udp или udp_only). Порты для локального клиента (например, local_port: 1080) обычно не требуют открывать в фаерволе сервера, так как это локальный порт на клиенте.</p>
+			<p>Дополнительно: Если вы используете UDP-прокси (в mode есть UDP), то нужно разрешить UDP на порту 3785.</p>
+			<p><b>Настройка Firewall Shadowsocks.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 3785</span></br>
+				sudo firewall-cmd --zone=public --add-port=3785/tcp --permanent</br></br>
+				<span style="color:blue;"># Разрешить UDP порт 3785 (если используете UDP)</span></br>
+				sudo firewall-cmd --zone=public --add-port=3785/udp --permanent</br></br>
+				<span style="color:blue;"># Перезагрузить фаервол для применения изменений</span></br>
+				sudo firewall-cmd --reload</br></br>
+				<span style="color:blue;"># Проверка открытых портов</span></br>
+				sudo firewall-cmd --list-ports
+			</p>
+			<p><b>Настройка UFW Shadowsocks.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 3785</span></br>
+				sudo ufw allow 3785/tcp</br></br>
+				<span style="color:blue;"># Разрешить UDP порт 3785 (если используете UDP)</span></br>
+				sudo ufw allow 3785/udp</br></br>
+				<span style="color:blue;"># Проверить статус и правила</span></br>
+				sudo ufw status
+			</p>
+			<p>Сохранение и восстановление настроек.</p>
+			<p>Firewalld:</p>
+			<ul>
+				<li>Опция --permanent сохраняет правило в конфигурации, оно автоматически применяется при перезагрузке системы.</li>
+				<li>После добавления правил нужно выполнить firewall-cmd --reload для применения.</li>
+			</ul>
+			<p>UFW:</p>
+			<ul>
+				<li>Все правила, добавленные через ufw allow, сохраняются автоматически и применяются при старте системы.</li>
+			</ul>
+			<p>Для активации UFW (если не включён):</p>
+			<p class="codes">
+				sudo ufw enable
+			</p>
+			<p>Пример полного набора команд.</p>
+			<p><b>Firewalld:</b></p>
+			<p class="codes">
+				sudo firewall-cmd --zone=public --add-port=3785/tcp --permanent</br>
+				sudo firewall-cmd --zone=public --add-port=3785/udp --permanent  # если UDP нужен</br>
+				sudo firewall-cmd --reload</br>
+				sudo firewall-cmd --list-ports
+			</p>
+			<p><b>UFW:</b></p>
+			<p class="codes">
+				sudo ufw allow 3785/tcp</br>
+				sudo ufw allow 3785/udp  # если UDP нужен</br>
+				sudo ufw status
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part19.3"></a></p>
+			<h4>19.3. Dante proxy.</h4>
+			<p>Установка.</p>
+			<p class="codes">
+				sudo apt update</br>
+				sudo apt install dante-server
+			</p>
+			<p>Настройка.</p>
+			<div class="codeses">
+				<pre>sudo nano /etc/danted.conf
+
+logoutput: syslog
+internal: 0.0.0.0 port = 1080
+external: eth0
+method: username
+user.privileged: proxy
+user.unprivileged: nobody
+user.libwrap: nobody
+
+client pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   log: connect disconnect error
+}
+
+pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   protocol: tcp udp
+  log: connect disconnect error
+
+}
+
+<span style="color:blue;"># ИЛИ</span>
+
+internal: 0.0.0.0 port = 1080
+external: eth0
+socksmethod: username
+user.notprivileged: nobody
+
+client pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   socksmethod: username
+}
+
+socks pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   command: connect
+   socksmethod: username
+}
+
+<span style="color:blue;">CTRL + X</span>
+<span style="color:blue;">CTRL + o</span></pre>
+			</div>
+			<p><b>socksmethod: username</b></p>
+			<p>Определяет метод аутентификации для клиентов, подключающихся по SOCKS5. Метод username требует от клиента указания логина и пароля. Это повышает безопасность, так как прокси не будет открыт для всех подряд.</p>
+			<p><b>user.notprivileged: nobody</b></p>
+			<p>После запуска, процесс sockd (демон Dante) сбрасывает привилегии и работает от имени непривилегированного пользователя nobody. Это снижает риски при наличии уязвимостей в прокси — злоумышленник не сможет выполнить критически важные действия от имени root.</p>
+			<p><b>from: 0.0.0.0/0 to: 0.0.0.0/0</b> — Разрешает подключения от любых клиентов (всех IP) к любому IP на стороне сервера.</p>
+			<p><b>socksmethod: username</b> — Только клиенты с правильными логином и паролем смогут подключиться. Остальным будет отказано.</p>
+			<p><b>from: 0.0.0.0/0 to: 0.0.0.0/0</b> — Разрешено подключение от любых IP-адресов к любым внешним адресам.</p>
+			<p><b>command: connect</b> — Разрешена только команда CONNECT, то есть только TCP-туннелирование. Другие команды, такие как BIND или UDP ASSOCIATE, блокируются, что улучшает контроль над трафиком.</p>
+			<p><b>socksmethod: username</b> — Уточняется, что правило работает только для аутентифицированных клиентов.</p>
+			<br>
+			<p>Создай системного пользователя без доступа к оболочке:</p>
+			<p class="codes">
+				sudo useradd -M -s /usr/sbin/nologin proxyuser</br>
+				sudo passwd proxyuser
+			</p>
+			<p>Имя и пароль этого пользователя будут использоваться для подключения к вашему SOCKS5-прокси.</p>
+			<p>Например.</p>
+			<p class="codes">
+				sudo useradd -r -s /bin/false your_dante_user</br>
+				sudo passwd your_dante_user
+			</p>
+			<p><b>Далее управление сервисом.</b></p>
+			<p class="codes">
+				sudo systemctl enable danted.service</br>
+				sudo systemctl start danted.service</br>
+				sudo systemctl status danted.service</br>
+				sudo systemctl restart danted.service
+			</p>
+			<p>Проверка через <b>curl</b> будет выглядеть вот так.</p>
+			<p class="codes">
+				curl -v -x socks5://your_dante_user:your_dante_password@your_server_ip:1080
+			</p>
+			<p><b>Настройка шифрования Stunnel поверх Dante Proxy.</b></p>
+			<p>Установка Stunnel.</p>
+			<p class="codes">
+				sudo apt update</br>
+				sudo apt install stunnel4
+			</p>
+			<p>Предполагается, что Dante уже установлен и настроен, например, слушает на локальном интерфейсе и порту, например, 127.0.0.1:1080.</p>
+			<div class="codeses">
+				<pre>sudo nano /etc/stunnel/stunnel.conf
+
+# Включаем режим сервера
+client = no
+
+# Путь к сертификату и ключу (создайте их, если нет)
+cert = /etc/stunnel/stunnel.pem
+key = /etc/stunnel/stunnel.pem
+
+# Порт, на котором stunnel будет принимать TLS-соединения
+[ssocks]
+accept = 443
+# accept — порт, на котором stunnel слушает входящие TLS-соединения (например, 443 для маскировки под HTTPS).
+connect = 127.0.0.1:1080
+# connect — адрес и порт локального Dante proxy, куда stunnel будет перенаправлять расшифрованный трафик.
+
+<span style="color:blue;">CTRL + X</span>
+<span style="color:blue;">CTRL + o</span></pre>
+			</div>
+			<p>Создание сертификата для stunnel (если нет).</p>
+			<p class="codes">
+				sudo openssl req -new -x509 -days 3650 -nodes -out /etc/stunnel/stunnel.pem -keyout /etc/stunnel/stunnel.pem</br>
+				sudo chmod 600 /etc/stunnel/stunnel.pem
+			</p>
+			<p>Запуск и автозапуск stunnel.</p>
+			<p class="codes">
+				sudo systemctl enable stunnel4</br>
+				sudo systemctl start stunnel4
+			</p>
+			<p>Как это работает вместе?</p>
+			<p>Клиенты подключаются к stunnel по TLS (например, на порт 443).</p>
+			<p>stunnel расшифровывает трафик и пересылает его на локальный Dante SOCKS proxy.</p>
+			<p>Dante обрабатывает SOCKS5-прокси запросы и перенаправляет трафик дальше.</p>
+			<br>
+			<p>Цель: добавить TLS-шифрование с помощью stunnel</p>
+			<br>
+			<p>Настроить Dante слушать только на localhost</p>
+			<p class="codes">
+				internal: 127.0.0.1 port = 1080
+			</p>
+			<p>Теперь stunnel.</p>
+			<div class="codeses">
+				<pre>sudo nano /etc/stunnel/stunnel.conf
+
+client = no
+
+cert = /etc/stunnel/stunnel.pem
+key = /etc/stunnel/stunnel.pem
+
+[dante]
+accept = 443
+connect = 127.0.0.1:1080
+
+<span style="color:blue;">CTRL + X</span>
+<span style="color:blue;">CTRL + o</span></pre>
+			</div>
+			<p><b>accept = 443</b> — stunnel слушает порт 443 (можно выбрать другой, если 443 занят).</p>
+			<p><b>connect = 127.0.0.1:1080</b> — stunnel перенаправляет трафик на локальный Dante.</p>
+			<p>Создать сертификат для stunnel (если ещё нет).</p>
+			<p class="codes">
+				sudo openssl req -new -x509 -days 3650 -nodes -out /etc/stunnel/stunnel.pem -keyout /etc/stunnel/stunnel.pem</br>
+				sudo chmod 600 /etc/stunnel/stunnel.pem</br></br>
+				<span style="color:blue;"># Запустить</span></br>
+				sudo systemctl enable stunnel4</br>
+				sudo systemctl start stunnel4
+			</p>
+			<p><b>Фаервол.</b></p>
+			<p>Разрешить входящие подключения на порт 443 (или выбранный вами порт для stunnel).</p>
+			<p>Закрыть порт 1080 для внешних подключений (только localhost).</p>
+			<p>Строка подключения к Dante SOCKS5-прокси с аутентификацией по username и паролю будет выглядеть именно так:</p>
+			<p class="codes">
+				socks5://your_dante_user:your_dante_password@your_server_ip:1080
+			</p>
+			<ul>
+				<li><b>your_dante_user</b> — имя пользователя, которое настроено в системе или через PAM (в зависимости от вашей конфигурации Dante).</li>
+				<li><b>your_dante_password</b> — пароль этого пользователя.</li>
+				<li><b>your_server_ip</b> — IP-адрес сервера, где запущен Dante.</li>
+				<li><b>1080</b> — порт, на котором слушает Dante (в вашем случае 1080).</li>
+			</ul>
+			<p>Если вы используете stunnel для TLS-обёртки, то клиент сначала устанавливает TLS-соединение к stunnel (например, на порт 443), а затем внутри этого туннеля уже работает SOCKS5 с такой же аутентификацией. В этом случае в настройках клиента указываете адрес и порт stunnel (например, your_server_ip:443), а в SOCKS5-авторизации — тот же логин и пароль Dante.</p>
+			<p class="codes">
+				socks5://your_dante_user:your_dante_password@your_server_ip:443
+			</p>
+			<p><b>Firewalld Dante.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 1080</span></br>
+				sudo firewall-cmd --zone=public --add-port=1080/tcp --permanent</br></br>
+				<span style="color:blue;"># Разрешить UDP порт 1080 (если Dante проксирует UDP)</span></br>
+				sudo firewall-cmd --zone=public --add-port=1080/udp --permanent</br></br>
+				<span style="color:blue;"># Применить изменения</span></br>
+				sudo firewall-cmd --reload</br></br>
+				<span style="color:blue;"># Проверить открытые порты</span></br>
+				sudo firewall-cmd --list-ports
+			</p>
+			<p><b>UFW Dante.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 1080</span></br>
+				sudo ufw allow 1080/tcp</br></br>
+				<span style="color:blue;"># Разрешить UDP порт 1080 (если нужно)</span></br>
+				sudo ufw allow 1080/udp</br></br>
+				<span style="color:blue;"># Включить UFW, если ещё не включён</span></br>
+				sudo ufw enable</br></br>
+				<span style="color:blue;"># Проверить статус и правила</span></br>
+				sudo ufw status
+			</p>
+			<p><b>Firewalld Stunnel + Dante.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 443 для stunnel</span></br>
+				sudo firewall-cmd --zone=public --add-port=443/tcp --permanent</br></br>
+				<span style="color:blue;"># Закрыть порт 1080 для внешних подключений (если был открыт)</span></br>
+				sudo firewall-cmd --zone=public --remove-port=1080/tcp --permanent</br>
+				sudo firewall-cmd --zone=public --remove-port=1080/udp --permanent</br></br>
+				<span style="color:blue;"># Применить изменения</span></br>
+				sudo firewall-cmd --reload</br></br>
+				<span style="color:blue;"># Проверить открытые порты</span></br>
+				sudo firewall-cmd --list-ports
+			</p>
+			<p><b>UFW Stunnel + Dante.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Разрешить TCP порт 443 для stunnel</span></br>
+				sudo ufw allow 443/tcp</br></br>
+				<span style="color:blue;"># Закрыть порт 1080 для внешних подключений (если был открыт)</span></br>
+				sudo ufw deny 1080/tcp</br>
+				sudo ufw deny 1080/udp</br></br>
+				<span style="color:blue;"># Проверить статус и правила</span></br>
+				sudo ufw status				
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
