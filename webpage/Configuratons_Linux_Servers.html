@@ -2246,9 +2246,18 @@ Categories=Network;Utility;</pre>
 				<li>Shadowsocks часто используется для обхода цензуры и блокировок, например, в Китае.</li>
 				<li>По сравнению с обычным SOCKS-прокси, Shadowsocks обеспечивает защищённый транспорт, что является его ключевым преимуществом.</li>
 			</ul>
+			<p><b>Сравнение Dante + Stunnel и Shadowsocks.</b></p>
+			<p><b>Dante + Stunnel</b> — это связка, где Dante выступает как SOCKS-прокси-сервер, а Stunnel обеспечивает шифрование трафика поверх него. Такой подход позволяет гибко настраивать прокси с шифрованием, и с помощью Stunnel можно реализовать некоторые возможности, которые недоступны в Shadowsocks.</p>
+			<p><b>Shadowsocks</b> — это легковесный SOCKS5-прокси с встроенным шифрованием, который часто используется для обхода цензуры и блокировок. Он проще в настройке и обычно быстрее, чем связка Dante + Stunnel, так как не требует дополнительного туннелирования через SSL/TLS. Shadowsocks хорошо подходит для базового обхода блокировок и обеспечивает достаточный уровень безопасности для большинства пользователей.</p>
+			<p>Основные отличия и рекомендации.</p>
+			<ul>
+				<li><b>Производительность и простота:</b> Shadowsocks легче и быстрее в настройке, не требует постоянного поддержания отдельного SSL-туннеля, что делает его удобным для постоянного использования. Dante + Stunnel более сложен в настройке и может иметь накладные расходы из-за двойного туннелирования.</li>
+				<li><b>Гибкость и функциональность:</b> С помощью Stunnel можно реализовать дополнительные функции шифрования и маскировки, которые не доступны в Shadowsocks. Это может быть важно, если нужно обойти сложные DPI или корпоративные фильтры.</li>
+				<li><b>Обфускация:</b> Для усиления защиты Shadowsocks часто используют вместе с плагинами (например, v2ray) и дополнительными методами маскировки, что приближает его возможности к связке Dante + Stunnel по уровню обхода блокировок.</li>
+			</ul>
 			<p><b>Итог.</b></p>
-			<p>Если вам нужен простой и безопасный прокси с шифрованием, лучше выбрать Shadowsocks.</p>
-			<p>Если вам нужен гибкий SOCKS5-прокси без встроенного шифрования, который можно интегрировать в сложные схемы, то подойдет Dante (но потребуется дополнительное шифрование).</p>
+			<p>Если вам нужна простота, скорость и базовый уровень обхода блокировок, лучше выбрать Shadowsocks.</p>
+			<p>Если важна максимальная гибкость, расширенные возможности шифрования и маскировки, стоит рассмотреть связку Dante + Stunnel.</p>
 			<p>Для постоянного использования с минимальными усилиями по безопасности Shadowsocks будет предпочтительнее.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -2260,7 +2269,12 @@ Categories=Network;Utility;</pre>
 				chmod +x shadowsocks.sh</br>
 				./shadowsocks.sh install 2>&1 | tee shadowsocks.log
 			</p>
-			<p>Настройка.</p>
+			<p><b>Настройка Shadowsocks.</b></p>
+			<p>Расположение настроек: <b>&laquo;/etc/shadowsocks-libev/config.json&raquo;</b> или <b>&laquo;/etc/shadowsocks.conf&raquo;</b>.</p>
+			<p>Правильный и наиболее распространённый путь для конфигурационного файла <b>shadowsocks-libev</b> на <b>Debian</b> и подобных системах — <b>&laquo;/etc/shadowsocks-libev/config.json&raquo;</b>.</p>
+			<p>Это подтверждается официальными инструкциями и примерами из разных источников.</p>
+			<p>Файл <b>&laquo;/etc/shadowsocks.conf&raquo;</b> встречается реже и может использоваться в других реализациях или старых версиях, но для <b>shadowsocks-libev</b> и большинства современных установок лучше ориентироваться на <b>config.json</b> в папке <b>/etc/shadowsocks-libev/</b>.</p>
+			<p>Настройка <b>&laquo;/etc/shadowsocks-libev/config.json&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>{
 	"server": "0.0.0.0",
@@ -2339,6 +2353,107 @@ Categories=Network;Utility;</pre>
 				sudo systemctl start shadowsocks</br>
 				sudo systemctl stop shadowsocks
 			</p>
+			<br>
+			<p><b>Установка v2ray-plugin.</b></p>
+			<p class="codes">
+				sudo apt update</br>
+				sudo apt install shadowsocks-libev shadowsocks-v2ray-plugin</br></br>
+				<span style="color:blue;"># или</span></br></br>
+				wget https://github.com/shadowsocks/v2ray-plugin/releases/latest/download/v2ray-plugin-linux-amd64.tar.gz</br>
+				tar -xvzf v2ray-plugin-linux-amd64.tar.gz</br>
+				sudo mv v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin</br>
+				sudo chmod +x /usr/local/bin/v2ray-plugin
+			</p>
+			<p>Настройка Shadowsocks.</p>
+			<p>Настройка <b>&laquo;/etc/shadowsocks-libev/config.json&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>{
+    "server":"0.0.0.0",
+    "server_port":3785,
+    "password":"your_password",
+    "timeout":300,
+    "method":"aes-256-gcm",
+    "plugin":"v2ray-plugin",
+    "plugin_opts":"server;tls;host=your.domain.com"
+}</pre>
+			</div>
+			<p><b>plugin</b>  — указывает использовать v2ray-plugin.</p>
+			<p><b>plugin_opts</b> — параметры плагина, например, <b>server</b> для режима сервера, <b>tls</b> для включения <b>TLS</b>, <b>host</b> — доменное имя для SNI.</p>
+			<p>Строка параметра &laquo;&quot;plugin_opts":"server;tls;host=your.domain.com&quot;&raquo;.</p>
+			<p>Этот параметр передаётся плагину (например, v2ray-plugin) и задаёт его поведение.</p>
+			<p><b>host=your.domain.com</b> — это значение для SNI (Server Name Indication) в TLS-сессии.</p>
+			<p>Оно указывает, какой домен будет передаваться в процессе TLS-рукопожатия, чтобы сервер мог корректно выбрать сертификат и маскировать трафик под обычный HTTPS.</p>
+			<p><b><i>Можно ли указать пустое или абстрактное значение?</i></b></p>
+			<ul>
+				<li>Если у вас нет домена, а только IP-адрес сервера, то указание host в виде IP или localhost возможно, но это может привести к проблемам с TLS, так как сертификаты обычно привязаны к доменным именам, а не к IP.</li>
+				<li>В таком случае TLS-сессия может не пройти проверку, и соединение будет нестабильным или незащищённым.</li>
+			</ul>
+			<p><b>Если домена нет, лучше:</b></p>
+			<ul>
+				<li>Либо не использовать TLS (убрать tls из опций), если это приемлемо с точки зрения безопасности.</li>
+				<li>Либо приобрести домен и настроить его на ваш сервер, чтобы использовать полноценный TLS с правильным SNI.</li>
+				<li>Либо использовать самоподписанные сертификаты и соответствующую настройку клиента, но это сложнее.</li>
+				<li>Указывать host=localhost обычно не имеет смысла для внешнего подключения, так как клиент будет ожидать TLS-сертификат для localhost, что не совпадает с реальным сервером.</li>
+			</ul>
+			<p><b>Можно ли использовать DuckDNS (или другой DDNS) для параметра host=your.domain.com в v2ray-plugin?</b></p>
+			<p>Да, вы вполне можете использовать DuckDNS или любой другой сервис динамического DNS (DDNS) в качестве значения для host в параметре plugin_opts плагина v2ray-plugin. Это распространённая практика, если у вас нет статического публичного домена, но есть динамический IP-адрес.</p>
+			<p>DDNS-сервисы (например, DuckDNS) позволяют привязать динамический IP вашего сервера к постоянному доменному имени вида <b>&laquo;yourname.duckdns.org&raquo;</b>.</p>
+			<p>Это доменное имя можно использовать в TLS SNI (host=yourname.duckdns.org), что позволит корректно проходить TLS-рукопожатие и маскировать трафик под обычный HTTPS.</p>
+			<p>DuckDNS контейнер, &laquo;docker-compose.yml&raquo; файл.</p>
+			<div class="codeses">
+				<pre>---
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Europe/London
+      - SUBDOMAINS=subdomain1,subdomain2
+      - TOKEN=token
+      - LOG_FILE=false #optional
+    volumes:
+      - /path/to/appdata/config:/config #optional
+    restart: unless-stopped</pre>
+			</div>
+			<p>Можете указать &laquo;LOG_FILE=true&raquo;. Тогда логи будут сохраниться в &laquo;/config/duck.log&raquo;, папке которую вы указали в <u>volumes</u>.</p>
+			<p>Теперь запустите или перезапустите Shadowsocks.</p>
+			<p class="codes">
+				sudo systemctl restart shadowsocks-libev
+			</p>
+			<p>Проверьте статус.</p>
+			<p class="codes">
+				sudo systemctl status shadowsocks-libev
+			</p>
+			<br>
+			<p><b>Настройка V2Ray на ANDROID.</b></p>
+			<p>V2Ray — это мощный инструмент для обхода интернет-цензуры и создания защищённых прокси/VPN-соединений. Ниже приведена базовая инструкция по установке и настройке V2Ray на Windows и Android с использованием популярных клиентов.</p>
+			<p>Настройка V2Ray на Windows (через V2RayN).</p>
+			<ol>
+				<li><b>Скачайте V2RayN</b> — это удобный клиент для Windows, который упрощает работу с V2Ray.</li>
+				<li><b>Распакуйте архив</b> в удобную папку, например, &laquo;C:\Users\alex\VPN\v2rayN&raquo;.</li>
+				<li><b>Поместите ядро V2Ray</b> (файл &laquo;v2ray.exe&raquo; или &laquo;xray.exe&raquo;) в папку &laquo;v2rayN\bin\&raquo; (например, &laquo;C:\Users\alex\VPN\v2rayN\bin\Xray&raquo;).</li>
+				<li><b>Запустите V2RayN</b> и перейдите в настройки.</li>
+				<li><b>Добавьте сервер:</b></li>
+				<ol>
+					<li>Введите адрес сервера, порт, UUID (идентификатор пользователя), метод шифрования и другие параметры, которые вам предоставил провайдер или вы настроили сами.</li>
+				</ol>
+				<li><b>Активируйте прокси</b> — обычно это делается нажатием кнопки &quot;Запустить&quot; или &quot;Подключиться&quot;.</li>
+				<li><b>Проверьте подключение</b> — откройте браузер и убедитесь, что трафик идёт через V2Ray.</li>
+			</ol>
+			<p><b>Настройка V2Ray на Android (через v2rayNG).</b></p>
+			<ol>
+				<li><b>Установите приложение v2rayNG</b> из Google Play.</li>
+				<li><b>Запустите приложение</b> и перейдите в меню добавления сервера.</li>
+				<li><b>Добавьте конфигурацию:</b></li>
+				<ol>
+					<li>Можно импортировать конфиг из файла или ввести вручную: адрес сервера, порт, UUID, метод шифрования, тип протокола (VMess, VLESS и т.д.).</li>
+				</ol>
+				<li><b>Сохраните настройки</b> и активируйте подключение.</li>
+				<li><b>Проверьте работу</b> — откройте браузер или другое приложение, чтобы убедиться, что трафик идёт через V2Ray.</li>
+			</ol>
+			<br>
 			<p><b>Настройка фаервола для Shadowsocks: какие порты открывать и как это сделать в Firewalld и UFW.</b></p>
 			<p>Порт сервера Shadowsocks: В нашем конфиге это 3785 (параметр "server_port": 3785).</p>
 			<p>Этот порт должен быть разрешён для входящих TCP-соединений (и UDP, если в mode указан tcp_and_udp или udp_only). Порты для локального клиента (например, local_port: 1080) обычно не требуют открывать в фаерволе сервера, так как это локальный порт на клиенте.</p>
@@ -2364,12 +2479,12 @@ Categories=Network;Utility;</pre>
 				sudo ufw status
 			</p>
 			<p>Сохранение и восстановление настроек.</p>
-			<p>Firewalld:</p>
+			<p><b>Firewalld:</b></p>
 			<ul>
 				<li>Опция --permanent сохраняет правило в конфигурации, оно автоматически применяется при перезагрузке системы.</li>
 				<li>После добавления правил нужно выполнить firewall-cmd --reload для применения.</li>
 			</ul>
-			<p>UFW:</p>
+			<p><b>UFW:</b></p>
 			<ul>
 				<li>Все правила, добавленные через ufw allow, сохраняются автоматически и применяются при старте системы.</li>
 			</ul>
@@ -2518,9 +2633,7 @@ connect = 127.0.0.1:1080
 			<p>Клиенты подключаются к stunnel по TLS (например, на порт 443).</p>
 			<p>stunnel расшифровывает трафик и пересылает его на локальный Dante SOCKS proxy.</p>
 			<p>Dante обрабатывает SOCKS5-прокси запросы и перенаправляет трафик дальше.</p>
-			<br>
 			<p>Цель: добавить TLS-шифрование с помощью stunnel</p>
-			<br>
 			<p>Настроить Dante слушать только на localhost</p>
 			<p class="codes">
 				internal: 127.0.0.1 port = 1080
