@@ -1649,6 +1649,407 @@ echo \
 				$ sudo docker ps<br>
 				$ sudo docker-compose --version
 			</p>
+			<h3>Запуск и остановка docker контейнеров.</h3>
+			<p class="codes">
+				<span style="color:blue;"># Запуск</span></br>
+				docker-compose up -d</br></br>
+				<span style="color:blue;"># Остановка</span></br>
+				docker-compose stop</br></br>
+			</p>
+			<h3>Примеры &laquo;docker-compose.yml&raquo; файлов.</h3>
+			<p><b>Portainer</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p portainer-data && cd portainer-data
+nano docker-compose.yml
+
+version: "3"
+
+volumes:
+  portainer_data:
+
+services:
+
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 9000:9000
+      - 8000:8000
+    restart: always</pre>
+			</div>
+			<p><b>Nginx-Proxy-Manager</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p nginx-proxy-manager && cd nginx-proxy-manager
+nano docker-compose.yml
+
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: unless-stopped</pre>
+			</div>
+			<p>Default Admin User:</p>
+			<ul>
+				<li>Email: <b>admin@example.com</b></li>
+				<li>Password: <b>changeme</b></li>
+			</ul>
+			<p>Upgrading to new versions</p>
+			<p class="codes">
+				docker-compose pull</br>
+				docker-compose up -d
+			</p>
+			<p><b>DuckDNS</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p duckdns && cd duckdns
+nano docker-compose.yml
+
+---
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Europe/London
+      - SUBDOMAINS=subdomain1,subdomain2
+      - TOKEN=token
+      - LOG_FILE=false #optional
+    volumes:
+      - /path/to/appdata/config:/config #optional
+    restart: unless-stopped</pre>
+			</div>
+			<p>Можете указать &laquo;LOG_FILE=true&raquo;. Тогда логи будут сохраниться в &laquo;/config/duck.log&raquo;, папке которую вы указали в <u>volumes</u>.</p>
+			<p><b>Cloudflare</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p cloudflare && cd cloudflare
+nano docker-compose.yml
+
+version: '2'
+services:
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY=xxxxxxx
+      - ZONE=example.com
+      - SUBDOMAIN=subdomain
+      - PROXIED=false
+				</pre>
+			</div>
+			<p><b>Bitwardenrs</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>version: "2"
+
+services:
+
+  bitwardenrs:
+    image: bitwardenrs/server:latest
+    container_name: bitwardenrs
+    volumes:
+      - BitWardenRS:/data/
+    ports:
+      - 8100:80
+    restart: unless-stopped
+				</pre>
+			</div>
+			<p>Сгенерировать INSTALLATION_ID и INSTALLATION_KEY - для your@mail.com: <a href="https://bitwarden.com/host/">bitwarden.com</a></p>
+			<p>Генерация ADMIN_TOKEN:</p>
+			<p class="codes">
+				openssl rand -base64 48
+			</p>
+			<p>Тогда <b>&laquo;docker-compose.yml&raquo;</b> будет выглядеть следующим образом.</p>
+			<div class="codeses">
+				<pre>---
+version: "2"
+services:
+  bitwardenrs:
+    image: bitwardenrs/server:latest
+    container_name: bitwardenrs
+    environment:
+      - ADMIN_TOKEN=EeZ4kfsJPxx4sUiPnnOHeSx/HMcivBk/KKT2auZYJIGAZPlMgsJiDKSupJBsdYcU
+      - BW_INSTALLATION_ID=INSTALLATION_ID
+      - BW_INSTALLATION_KEY=INSTALLATION_KEY
+      - adminSettings__admins=your@mail.com
+    volumes:
+      - ./bwdata:/data/
+    ports:
+      - 8100:80
+    restart: unless-stopped</pre>
+			</div>
+			<p><b>Nextcloud</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>nano docker-compose.yml
+
+version: "3"
+services:
+  nclouddb:
+    image: yobasystems/alpine-mariadb:latest
+    container_name: nclouddb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=nextcloud #Change This
+      - MYSQL_PASSWORD=nextcloud #Change This
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+
+  ncloud:
+    image: nextcloud
+    container_name: ncloud
+    restart: always
+    ports:
+      - 1080:80
+    volumes:
+      - ./nextcloud:/var/www/html
+    links:
+      - nclouddb</pre>
+			</div>
+			<p><b>OnlyOffice</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>nano docker-compose.yml
+
+version: "3"
+services:
+  onlyoffice:
+    image: onlyoffice/documentserver
+    container_name: onlyoffice
+    restart: always
+    ports:
+      - 1180:80
+    volumes:
+      - ./DocumentServer/logs:/var/log/onlyoffice
+      - ./DocumentServer/data:/var/www/onlyoffice/Data
+      - ./DocumentServer/lib:/var/lib/onlyoffice
+      - ./DocumentServer/db:/var/lib/postgresql</pre>
+			</div>
+			<p><b>Searx</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>nano docker-compose.yml
+
+version: '2.3'
+
+services:
+  searx:
+    container_name: searx
+    image: angristan/searx:latest
+    restart: always
+    ports:
+      - "8585:8888"
+    environment:
+      - IMAGE_PROXY=true
+      - BASE_URL=http://192.168.0.120:8585
+      - UID=1000
+      - GID=1000</pre>
+			</div>
+			<p><b>Whoogle</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir whoogle && cd whoogle
+nano docker-compose.yml
+
+---
+version: '2'
+services:
+	whoogle:
+		image: benbusby/whoogle-search:latest
+		container_name: whoogle
+		ports:
+			- 5000:5000
+		restart: unless-stopped</pre>
+			</div>
+			<p>Variables.</p>
+			<ul>
+				<li>WHOOGLE_DOTENV Загружать переменные среды в whoogle.env</li>
+				<li>WHOOGLE_USER Имя пользователя для базовой авторизации. WHOOGLE_PASS также должен быть установлен, если используется.</li>
+				<li>WHOOGLE_PASS Пароль для базовой авторизации. WHOOGLE_USER также должен быть установлен, если используется.</li>
+				<li>WHOOGLE_PROXY_USER Имя пользователя прокси-сервера.</li>
+				<li>WHOOGLE_PROXY_PASS Пароль прокси-сервера.</li>
+				<li>WHOOGLE_PROXY_TYPE Тип прокси-сервера. Может быть "socks5", "socks4", или "http".</li>
+				<li>WHOOGLE_PROXY_LOC Местоположение прокси-сервера (хост или ip).</li>
+				<li>EXPOSE_PORT Порт, на котором будет доступен Whoogle.</li>
+				<li>HTTPS_ONLY Применяйте HTTPS. (Смотрите здесь)</li>
+				<li>WHOOGLE_ALT_TW В twitter.com альтернатива для использования, когда в конфигурации включены альтернативные варианты сайта.</li>
+				<li>WHOOGLE_ALT_YT В youtube.com альтернатива для использования, когда в конфигурации включены альтернативные варианты сайта.</li>
+				<li>WHOOGLE_ALT_IG В instagram.com альтернатива для использования, когда в конфигурации включены альтернативные варианты сайта.</li>
+				<li>WHOOGLE_ALT_RD В reddit.com альтернатива для использования, когда в конфигурации включены альтернативные варианты сайта.</li>
+				<li>WHOOGLE_ALT_TL Альтернатива Google Translate для использования. Это используется для всех поисковых запросов "перевести ____".</li>
+				<li>WHOOGLE_CONFIG_DISABLE Скрыть конфигурацию из пользовательского интерфейса и запретить изменения конфигурации клиентом</li>
+				<li>WHOOGLE_CONFIG_COUNTRY Фильтровать результаты по принимающей стране</li>
+				<li>WHOOGLE_CONFIG_LANGUAGE Установить язык интерфейса</li>
+				<li>WHOOGLE_CONFIG_SEARCH_LANGUAGE Установите язык результатов поиска</li>
+				<li>WHOOGLE_CONFIG_BLOCK Блокировать веб-сайты из результатов поиска (используйте список, разделенный запятыми)</li>
+				<li>WHOOGLE_CONFIG_THEME Установите режим темы (light, dark, or system)/li>
+				<li>WHOOGLE_CONFIG_SAFE Включить безопасный поиск</li>
+				<li>WHOOGLE_CONFIG_ALTS Используйте альтернативные сайты социальных сетей (nitter, invidious, etc)</li>
+				<li>WHOOGLE_CONFIG_TOR Используйте маршрутизацию Tor (если таковая имеется)</li>
+				<li>WHOOGLE_CONFIG_NEW_TAB Всегда открывайте результаты в новой вкладке</li>
+				<li>WHOOGLE_CONFIG_VIEW_IMAGE Включить опцию Просмотра изображения</li>
+				<li>WHOOGLE_CONFIG_GET_ONLY Поиск только с использованием запросов GET</li>
+				<li>WHOOGLE_CONFIG_URL Корневой URL-адрес экземпляра (https://<your url>/)</li>
+				<li>WHOOGLE_CONFIG_STYLE Пользовательский CSS, используемый для стилизации (должен быть однострочным)</li>
+			</ul>
+			<p>Настройки поисковика.</p>
+			<p><b>URL:</b> http[s]://\&lt;your whoogle url\&gt;/search?q=%s</p>
+			<p><b>Heimdall</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p ./heimdall/config && cd ./heimdall
+nano docker-compose.yml
+
+---
+version: "2.1"
+services:
+  heimdall:
+    image: ghcr.io/linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Moscow
+    volumes:
+      - ./config:/config
+    ports:
+      - 8787:80
+    restart: unless-stopped</pre>
+			</div>
+			<p><b>AdGuard</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>---
+version: "2"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 67:67/udp
+      - 68:68/tcp
+      - 68:68/udp
+      - 853:853/tcp
+      - 80:80/tcp #change this to something like 81:80 if port 80 is already in use
+      - 3000:3000/tcp
+    volumes:
+      - /srv/dev-disk-by-label-Files/config/AdGuard1/workdir:/opt/adguardhome/work
+      - /srv/dev-disk-by-label-Files/config/AdGuard1/confdir:/opt/adguardhome/conf
+    restart: unless-stopped
+
+<span style="color:blue;"># или</span>
+
+---
+version: "3"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    restart: unless-stopped
+    volumes:
+      - ./work:/opt/adguardhome/work
+      - ./conf:/opt/adguardhome/conf
+    ports:
+      - 53:53/tcp # 10.66.66.1:
+      - 53:53/udp # 10.66.66.1:
+      - 67:67/udp
+      - 68:68/tcp
+      - 68:68/udp
+      - 3080:80/tcp
+      - 3443:443/tcp
+      - 853:853/tcp
+      - 3123:3000/tcp
+      - 5449:5443/tcp
+    network_mode: "bridge"</pre>
+			</div>
+			<p>Отключите DNSStubListener и обновите адрес DNS-сервера. Создайте новый файл /etc/systemd/resolved.conf.d/adguardhome.conf (при необходимости создайте каталог /etc/systemd/resolved.conf.d) и добавьте в него следующее содержимое:</p>
+			<div class="codeses">
+				<pre># /etc/systemd/resolved.conf.d/adguardhome.conf
+[Resolve]
+DNS=127.0.0.1
+DNSStubListener=no</pre>
+			</div>
+			<p>Указание 127.0.0.1 в качестве адреса DNS-сервера необходимо, поскольку в противном случае сервером имен будет 127.0.0.53, который не работает без DNSStubListener.</p>
+			<p>Активируйте новый файл resolv.conf:</p>
+			<p class="codes">
+				mv /etc/resolv.conf /etc/resolv.conf.backup</br>
+				ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf</br></br>
+				<span style="color:blue;"># Остановить DNSStubListener:</span></br>
+				systemctl reload-or-restart systemd-resolved</br></br>
+			</p>
+			<p><b>Docker Link Shortener</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<p><a href="https://github.com/ajanvier/docker-polr.git">Docker Link Shortener</a></p>
+			<div class="codeses">
+				<pre>docker run -p 8080:8080 \
+    -e "DB_HOST=localhost" \
+    -e "DB_DATABASE=polr" \
+    -e "DB_USERNAME=polr" \
+    -e "DB_PASSWORD=password" \
+    -e "APP_ADDRESS=example.com" \
+    -e "ADMIN_USERNAME=admin" \
+    -e "ADMIN_PASSWORD=admin" \
+    ajanvier/polr</pre>
+			</div>
+			<p>Переместите файл <b>&laquo;.env.example&raquo;</b> в <b>&laquo;.env&raquo;</b>:</p>
+			<p class="codes">
+				mv .env.example .env
+			</p>
+			<p><b>Remotely</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>mkdir -p ./remotely && cd ./remotely
+nano docker-compose.yml
+
+---
+version: "3.1"
+services:
+  remotely:
+    image: immybot/remotely:latest
+    container_name: remotely
+    ports:
+      - 5000:5000
+    volumes:
+      - ./remotely-data:/remotely-data
+    restart: unless-stopped</pre>
+			</div>
+			<p><b>endlessh - Ловушка SSH.</b> контейнер <b>&laquo;docker-compose.yml&raquo;</b> файл.</p>
+			<div class="codeses">
+				<pre>---
+version: "3.4"
+services:
+  endlessh:
+    image: harshavardhanj/endlessh:alpine
+    container_name: endlessh
+    ports:
+      - "22:2222"
+    restart: unless-stopped</pre>
+			</div>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part16"></a></p>
@@ -2398,26 +2799,7 @@ Categories=Network;Utility;</pre>
 			<p><b>Можно ли использовать DuckDNS (или другой DDNS) для параметра host=your.domain.com в v2ray-plugin?</b></p>
 			<p>Да, вы вполне можете использовать DuckDNS или любой другой сервис динамического DNS (DDNS) в качестве значения для host в параметре plugin_opts плагина v2ray-plugin. Это распространённая практика, если у вас нет статического публичного домена, но есть динамический IP-адрес.</p>
 			<p>DDNS-сервисы (например, DuckDNS) позволяют привязать динамический IP вашего сервера к постоянному доменному имени вида <b>&laquo;yourname.duckdns.org&raquo;</b>.</p>
-			<p>Это доменное имя можно использовать в TLS SNI (host=yourname.duckdns.org), что позволит корректно проходить TLS-рукопожатие и маскировать трафик под обычный HTTPS.</p>
-			<p>DuckDNS контейнер, &laquo;docker-compose.yml&raquo; файл.</p>
-			<div class="codeses">
-				<pre>---
-services:
-  duckdns:
-    image: lscr.io/linuxserver/duckdns
-    container_name: duckdns
-    environment:
-      - PUID=1000 #optional
-      - PGID=1000 #optional
-      - TZ=Europe/London
-      - SUBDOMAINS=subdomain1,subdomain2
-      - TOKEN=token
-      - LOG_FILE=false #optional
-    volumes:
-      - /path/to/appdata/config:/config #optional
-    restart: unless-stopped</pre>
-			</div>
-			<p>Можете указать &laquo;LOG_FILE=true&raquo;. Тогда логи будут сохраниться в &laquo;/config/duck.log&raquo;, папке которую вы указали в <u>volumes</u>.</p>
+			<p>Это доменное имя можно использовать в TLS SNI (host=yourname.duckdns.org), что позволит корректно проходить TLS-рукопожатие и маскировать трафик под обычный HTTPS.</p>			
 			<p>Теперь запустите или перезапустите Shadowsocks.</p>
 			<p class="codes">
 				sudo systemctl restart shadowsocks-libev
@@ -2505,6 +2887,50 @@ services:
 				sudo ufw allow 3785/tcp</br>
 				sudo ufw allow 3785/udp  # если UDP нужен</br>
 				sudo ufw status
+			</p>
+			<h3>Docker container вариант.</h3>
+			<p>Создайте отдельную папку и файл настроек.</p>
+			<div class="codeses">
+				<pre>mkdir shadowsocks && cd shadowsocks
+nano docker-compose.yml
+
+services:
+  shadowsocks-libev:
+    image: shadowsocks/shadowsocks-libev
+    container_name: shadowsocks-libev
+    restart: unless-stopped
+    ports:
+      - "3785:3785/tcp"
+      - "3785:3785/udp"
+    volumes:
+      - ./config.json:/etc/shadowsocks-libev/config.json:ro
+    command: ss-server -c /etc/shadowsocks-libev/config.json
+
+<span style="color:blue;"># CTRL + x</span>
+<span style="color:blue;"># CTRL + o</span>
+
+nano ./config.json
+
+{
+    "server":"0.0.0.0",
+    "server_port":3785,
+    "password":"your_password",
+    "timeout":300,
+    "method":"aes-256-gcm",
+    "plugin":"v2ray-plugin",
+    "plugin_opts":"server;tls;host=your.domain.com"
+}
+
+<span style="color:blue;"># CTRL + x</span>
+<span style="color:blue;"># CTRL + o</span></pre>
+			</div>
+			<p>Shadowsocks-libev сам запустит плагин v2ray-plugin с нужными опциями.</p>
+			<p>Поэтому не нужно отдельно запускать плагин в другом контейнере.</p>
+			<p>Также не нужно указывать --plugin и --plugin-opts в command — они уже в конфиге.</p>
+			<p>Проброс портов делаем на 3785 TCP и UDP, как указано в server_port.</p>
+			<p>Монтируем конфиг в контейнер по пути /etc/shadowsocks-libev/config.json.</p>
+			<p class="codes">
+				docker-compose up -d
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -2725,6 +3151,99 @@ connect = 127.0.0.1:1080
 				<span style="color:blue;"># Проверить статус и правила</span></br>
 				sudo ufw status				
 			</p>
+			<h3>Docker container вариант.</h3>
+			<p>Создайте отдельную папку и файл настроек.</p>
+			<div class="codeses">
+				<pre>mkdir dante && cd dante
+nano docker-compose.yml
+
+version: '3.8'
+
+services:
+  dante:
+    image: serjs/go-dante
+    container_name: dante
+    restart: unless-stopped
+    ports:
+      - "1080:1080"
+    volumes:
+      - ./dante.conf:/etc/danted.conf:ro
+      - ./sockd.passwd:/etc/sockd.passwd:ro   # файл с пользователями и паролями
+    command: danted -f /etc/danted.conf
+    networks:
+      - proxy-net
+
+  stunnel:
+    image: stunnel/stunnel
+    container_name: stunnel
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./stunnel.conf:/etc/stunnel/stunnel.conf:ro
+      - ./cert.pem:/etc/stunnel/cert.pem:ro
+      - ./key.pem:/etc/stunnel/key.pem:ro
+    networks:
+      - proxy-net
+
+networks:
+  proxy-net:
+    driver: bridge</pre>
+			</div>
+			<p>Далее создайте файл <b>&laquo;stunnel.conf&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>client = no
+cert = /etc/stunnel/stunnel.pem
+key = /etc/stunnel/stunnel.pem
+
+[ssocks]
+accept = 443
+connect = dante:1080</pre>
+			</div>
+			<p>Теперь файл <b>&laquo;&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>internal: 0.0.0.0 port = 1080
+external: 0.0.0.0
+socksmethod: username
+user.notprivileged: nobody
+passwd.file: /etc/sockd.passwd
+
+client pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   socksmethod: username
+}
+
+socks pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   command: connect
+   socksmethod: username
+}</pre>
+			</div>
+			<p>Обязательно создайте файл пользователей.</p>
+			<p class="codes">
+				sudo apt-get update</br>
+				sudo apt-get install apache2-utils</br></br>
+				<span style="color:blue;"># Чтобы создать новый файл и добавить первого пользователя (например, username):</span></br>
+				htpasswd -c ./sockd.passwd username</br></br>
+				<span style="color:blue;"># Добавление новых пользователей в существующий файл</span></br>
+				htpasswd ./sockd.passwd user2</br></br>
+				<span style="color:blue;"># Пример файла sockd.passwd</span></br>
+				cat sockd.passwd</br></br>
+				username:$apr1$randomsalt$hashedpassword</br>
+				user2:$apr1$randomsalt$hashedpassword
+			</p>
+			<p>Вот теперь запускаем контейнер.</p>
+			<p class="codes">
+				docker-compose up -d
+			</p>
+			<p><b>Итог.</b></p>
+			<ul>
+				<li><b>passwd.file:/etc/sockd.passwd</b> — указывает <b>Dante</b>, где искать файл с пользователями и паролями в формате <b>htpasswd</b>.</li>
+				<li>Монтируем <b>sockd.passwd</b> в контейнер по пути <b>/etc/sockd.passwd</b> с правами только для чтения.</li>
+				<li><b>user.notprivileged: nobody</b> — процесс <b>Dante</b> будет работать от пользователя <b>nobody</b> для безопасности.</li>
+				<li><b>external: 0.0.0.0</b> — слушать на всех интерфейсах, чтобы <b>Stunnel</b> мог подключаться по сети <b>Docker</b>.</li>
+				<li>Оба сервиса подключены к одной сети <b>proxy-net</b> для возможности обращения по имени контейнера (<b>dante:1080</b> в <b>stunnel.conf</b>).</li>
+			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
