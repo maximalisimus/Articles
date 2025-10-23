@@ -38,6 +38,12 @@
 				<li><a href="#part1">Пароли,</a></li>
 				<li><a href="#part2">Настройка роутеров и маршрутизаторв.</a></li>
 				<li><a href="#part3">Настройка безопасности ssh соединений.</a></li>
+					<ol>
+						<li><a href="#part3.1">Установка и настройка.</a></li>
+						<li><a href="#part3.2">sshd_config</a></li>
+						<li><a href="#part3.3">Управление.</a></li>
+						<li><a href="#part3.4">Тунелирование.</a></li>
+					</ol>
 				<li><a href="#part4">Фаерволы.</a></li>
 					<ol>
 						<li><a href="#part4.1">Фаервол UFW.</a></li>
@@ -157,6 +163,8 @@
 		<div class="content">
 			<p><a name="part3"></a></p>
 			<h2>Настройка безопасности ssh соединений.</h2>
+			<p><a name="part3.1"></a></p>
+			<h3>Установка и настройка.</h3>
 			<p>Наконец мы подошли к главному вопросу дня – «Настройка безопасности ssh соединений».</p>	
 			<p>Для начала необходимо установить пакет для ssh:</p>
 			<p class="codes">
@@ -202,6 +210,9 @@
 				$: cat id_rsa.pub >> /home/user/.ssh/authorized_keys
 			</p>
 			<p><b>&laquo;user&raquo;</b> - имя вашего созданного пользователя.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part3.2"></a></p>
+			<h3>sshd_config</h3>
 			<p>Теперь внесем некоторые изменения от имени суперпользователя в файл: <b>/etc/ssh/sshd_config</b></p>
 			<p>
 				Протокол SSH первой версии имеет проблемы с безопасностью, которые закрыты во второй версии. Внесите эту строчку вручную, её нет в этом файле. </br>
@@ -256,16 +267,25 @@
 			<p class="selections">PermitEmptyPasswords no</p>
 			<p>Анализ логов, для расширенного контроля над системой:</p>
 			<p class="selections">LogLevel INFO</p>
+			<p>Либо лучше даже так.</p>
+			<p class="selections">LogLevel VERBOSE</p>
 			<p><b>PrintMotd</b> выводит при подключении к <b>sshd</b> сообщение дня <b>(message of the day)</b> из файла <b>&laquo;/etc/motd&raquo;</b>.</p>
 			<p class="selections">PrintMotd no # pam does that</p>
 			<p>Если <b>UsePAM</b> включен, то запустить sshd можно будет только от имени <b>root</b>.</p>
 			<p class="selections">UsePAM yes</p>
+			<p>Чаще всего <b>UsePAM</b> просто выключен.</p>
+			<p class="selections"># UsePAM yes</p>
 			<p>Отключаем пересылку X11 через ssh, т.к. данный протокол не ориентирован на безопасность.</p>
 			<p class="selections">X11Forwarding no</p>
 			<p>Сначала нужно задать эти параметры в sshd_config. Поскольку мы вносим изменения в интерфейсы и удалённой, и клиентской системы, нам нужны права root с обеих сторон.</p>
 			<p class="selections">
 				PermitRootLogin yes</br>
 				PermitTunnel yes
+			</p>
+			<p>Вообще, их по хорошему лучше выключить.</p>
+			<p class="codes">
+				PermitRootLogin no</br>
+				PermitTunnel no
 			</p>
 			<p>Форвардинг портов. С помощью SSH туннелей вы можете строить целые цепочки для форвардинга портов. Включить или отключить SSH туннелирование можно следующими директивами.</p>
 			<p class="selections">AllowStreamLocalForwarding yes</br>
@@ -274,6 +294,27 @@
 				GatewayPorts yes</br>
 				<span style="color:blue;"># AllowAgentForwarding yes</span>
 			</p>
+			<p>Разрешаем пользователю proxyjump-user логиниться только на втором порту.</p>
+			<p class="selections">
+				Match LocalPort 22<br>
+					DenyUsers proxyjump-user<br><br>
+				Match LocalPort 175<br>
+					AllowUsers proxyjump-user
+			</p>
+			<p>Запрещаем пользователю proxyjump-user логиниться по паролю и оперделяем файл со списком разрещенный публиных ключей.</p>
+			<p class="selections">
+				Match User proxyjump-user<br>
+  					PasswordAuthentication no<br>
+  					AuthorizedKeysFile /etc/ssh/proxyjump-user-authorized-keys<br>
+  					PermitTTY no<br>
+  					X11Forwarding no<br>
+  					PermitTunnel no<br>
+  					GatewayPorts no<br>
+  					ForceCommand /usr/sbin/nologin<br>
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part3.3"></a></p>
+			<h3>Управление.</h3>
 			<p>Сохраните файл и перезапустите sshd сервис:</p>
 			<p class="codes">
 				$: sudo systemctl restart sshd
@@ -309,6 +350,39 @@
 			<p class="codes">
 				<b>$</b> sudo mkdir -p /var/empty</br>
 				<b>$</b> sudo chown root /var/empty
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a name="part3.4"></a></p>
+			<h3>Тунелирование.</h3>
+			<p>Для socks прокси можно использовать следующий ключ: <b>&laquo;-D port&raquo;</b>.</p>
+			<p>Т.е. происходит некий локальный проброс socks5-proxy.</p>
+			<p><b>&laquo;-p port&raquo;</b> Указывает порт для подключения к SSH-серверу.</p>
+			<p><b>&laquo;-L PORT-Пользователя:IP:PORT-на-сервере&raquo;</b> Локальный порт-форвардинг (Local Forwarding).</p>
+			<p>То есть, когда вы подключаетесь к <b>&laquo;localhost:PORT-Пользователя&raquo;</b> на своей машине, соединение будет перенаправлено через SSH на <b>&laquo;IP:PORT-на-сервере&raquo;</b> в удалённой сети. Это удобно для доступа к сервисам, которые доступны только изнутри удалённой сети.</p>
+			<p><b>-C</b> Включает сжатие данных.</p>
+			<p><b>-f</b> Запускает SSH в фоновом режиме после аутентификации.</p>
+			<p><b>-n</b> Перенаправляет стандартный ввод с <b>&laquo;/dev/null&raquo;</b>.</p>
+			<p><b>-N</b> Не выполнять удалённые команды.</p>
+			<p><b>-T</b> Отключает выделение псевдотерминала.</p>
+			<p><b>user@user-pc</b> Пользователь и адрес удалённого SSH-сервера.</p>
+			<p>Приведем пример.</p>
+			<p class="codes">
+				ssh -p 2222 -D 8888 -L 7777:172.16.0.3:7777 -CfnNT user@user-pc
+			</p>
+			<p>Команда создаёт SSH-соединение к серверу <b>&laquo;user-pc&raquo;</b> на порту <b>&laquo;2222&raquo;</b>, запускает в фоне туннель с:</p>
+			<il>
+				<li>SOCKS-прокси на локальном порту 8888 (-D 8888),</li>
+				<li>локальным пробросом порта 7777 на адрес 172.16.0.3:7777 в удалённой сети (-L 7777:172.16.0.3:7777),</li>
+				<li>сжатие данных (-C),</li>
+				<li>без запуска удалённого shell (-N),</li>
+				<li>без выделения терминала (-T),</li>
+				<li>и без блокировки терминала локально (-f -n).</li>
+			</il>
+			<p>Таким образом <b>SOCKS5-Proxy</b> будет доступен по следующему адресу: <b>&laquo;socks5://localhost:8888&raquo;</b>.</p>
+			<p>Локальный проброс порта доступен по адресу: <b>&laquo;localhost:7777&raquo;</b>.</p>
+			<p>Таким образом можно, например, запустить отдельный процесс браузера google-chrome с отдельным socks5-proxy без вмешательства в настройки браузера.</p>
+			<p class="codes">
+				/usr/bin/google-chrome-stable --user-data-dir="/home/user/user/my-folder" --profile-directory="Bases" --proxy-server="socks5://localhost:8888" --new-window "ya.ru" "google.com"
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
