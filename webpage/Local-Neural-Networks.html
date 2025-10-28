@@ -56,6 +56,7 @@
 						<li><a href="#part1.1.17">stabilityai/stable-diffusion-3.5-large-turbo</a></li>
 						<li><a href="#part1.1.18">Image Creator</a></li>
 						<li><a href="#part1.1.19">Stability Matrix</a></li>
+						<li><a href="#part1.1.20">DALL·E mini</a></li>
 					</ol>
 					<li><a href="#part1.2">Параметры</a></li>
 					<ol>
@@ -84,6 +85,9 @@
 						<li><a href="#part1.3.17">PygmalionAI</a></li>
 						<li><a href="#part1.3.18">Другие</a></li>
 						<li><a href="#part1.3.20">Lora Model</a></li>
+						<li><a href="#part1.3.21">DistilBERT</a></li>
+						<li><a href="#part1.3.22">GPT-2 </a></li>
+						<li><a href="#part1.3.23">BERT</a></li>
 					</ol>
 					<li><a href="#part1.4">Программирование</a></li>
 					<li><a href="#part1.5">Дополнительная информация</a></li>
@@ -100,11 +104,24 @@
 		<div class="content">
 			<p><a name="part1"></a></p>
 			<h2>1. Нейронные сети на ПК</h2>
+			<p><b>Что такое нейросети, модели и квантизация?</b></p>
+			<ul>
+				<li><b>Нейросеть</b> — это математическая модель, вдохновлённая работой мозга, которая состоит из множества взаимосвязанных "нейронов" (узлов). Она обучается на данных, чтобы решать задачи: распознавать изображения, переводить текст, генерировать контент и т.д.</li>
+				<li><b>Модель</b> — это конкретная обученная нейросеть с набором параметров (весов), которые она получила в процессе обучения. Например, модель GPT-2 — это нейросеть, обученная генерировать текст.</li>
+				<li><b>Квантизация</b> — это способ уменьшить размер модели и ускорить её работу, переводя параметры из высокоточных чисел (например, 32-битных float) в более компактные форматы (например, 8-битные int). Это снижает требования к памяти и вычислениям, иногда с небольшой потерей качества, но часто незаметной для пользователя.</li>
+			</ul>
+			<p><b>Что такое LoRA (Low-Rank Adaptation)?</b></p>
+			<ul>
+				<li>LoRA — это метод <b>тонкой настройки (fine-tuning)</b> больших моделей, который позволяет адаптировать модель под новую задачу, обучая лишь небольшую часть параметров, а не всю модель целиком.</li>
+				<li>Идея в том, что вместо изменения огромной матрицы весов модели, LoRA добавляет две маленькие матрицы низкого ранга, которые корректируют поведение модели. Это значительно снижает вычислительные затраты и объём данных для обучения, сохраняя при этом высокое качество результата.</li>
+				<li>Такой подход особенно полезен для дообучения больших языковых моделей (LLM) и генеративных моделей, когда нет ресурсов для полного переобучения.</li>
+			</ul>
 			<p><a name="part1.1"></a></p>
 			<h3>1.1. Програмное обеспечение</h3>
 			<p>Официальный сайт <a href="https://ollama.com/">Ollama</a>.</p>
 			<p><a name="part1.1.1"></a></p>
 			<p>Python версия <a href="https://github.com/ggerganov/llama.cpp.git">Llama-CPP</a></p>
+			<p><b>Llama-CPP</b> — минималистичный open-source движок для запуска больших языковых моделей (LLM) на CPU и GPU с поддержкой web-интерфейса и API.</p>
 			<p>Установка и запуск.</p>
 			<div class="codeses">
 				<pre>git clone https://github.com/ggerganov/llama.cpp.git
@@ -137,6 +154,7 @@ $ ollama run my-own-model</pre>
 			</div>
 			<p><a name="part1.1.2"></a></p>
 			<p>Приложение <a href="https://msty.app/">msty app</a></p>
+			<p><b>msty app</b> — приложение для работы с локальными языковыми моделями с удобным интерфейсом и поддержкой различных форматов моделей.</p>
 			<ul>
 				<li><a href="https://assets.msty.app/prod/latest/win/auto/Msty_x64.exe">msty-x64 windows gpu (amd or nvidia)</a></li>
 				<li><a href="https://assets.msty.app/prod/latest/win/cpu/Msty_x64.exe">msty-x64 windows cpy only</a></li>
@@ -147,8 +165,10 @@ $ ollama run my-own-model</pre>
 			</ul>
 			<p><a name="part1.1.3"></a></p>
 			<p>Приложение <a href="https://jan.ai/download">Jan for Desktop</a></p>
+			<p><b>Jan for Desktop</b> — локальный AI-ассистент с возможностью работы с языковыми моделями и интеграцией в рабочий процесс.</p>
 			<p><a name="part1.1.4"></a></p>
 			<p>Использование <a href="https://docs.openwebui.com/">open-webui</a> на Linux.</p>
+			<p><b>open-webui на Linux</b> — веб-интерфейс для запуска и управления локальными языковыми моделями на Linux-системах.</p>
 			<div class="codeses">
 				<pre>curl -LsSf https://astral.sh/uv/install.sh | sh
 pip install open-webui
@@ -157,6 +177,7 @@ pip install --upgrade open-webui</pre>
 			</div>
 			<p><a name="part1.1.5"></a></p>
 			<p>Приложение <a href="https://anythingllm.com/">AnythingLLM</a></p>
+			<p><b>AnythingLLM</b> — универсальный фронтенд для запуска и взаимодействия с различными локальными языковыми моделями.</p>
 			<ul>
 				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop-Silicon.dmg">AnythingLLM Desktop MacOS Silicon</a></li>
 				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop.dmg">AnythingLLM Desktop MacOS</a></li>
@@ -168,11 +189,13 @@ pip install --upgrade open-webui</pre>
 			</ul>
 			<p><a name="part1.1.6"></a></p>
 			<p>Приложение <a href="https://lmstudio.ai/">LM Studio</a></p>
+			<p><b>LM Studio</b> — приложение для локального запуска и управления большими языковыми моделями с удобным графическим интерфейсом.</p>
 			<ul>
 				<li><a href="https://installers.lmstudio.ai/win32/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.exe">LM-Studio Windows X64</a></li>
 				<li><a href="https://installers.lmstudio.ai/linux/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.AppImage">LM Studion AppImage</a></li>
 			</ul>
 			<p><a name="part1.1.7"></a></p>
+			<p><b>Appimage extract</b> — код для распаковки и извлечения содержимого из любого AppImage-файлов на Linux.</p>
 			<p>Appimage extract:</p>
 			<div class="codeses">
 				<pre>./Application_xxx-version.AppImage --appimage-extract
@@ -193,6 +216,7 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 			<p><a name="part1.1.8"></a></p>
 			<p><a name="TextGenerationWebui"></a></p>
 			<p>Приложение <a href="https://github.com/oobabooga/text-generation-webui">Text-Generation-Webui</a></p>
+			<p><b>Text-Generation-Webui</b> — веб-интерфейс для генерации текста с использованием локальных языковых моделей, поддерживает множество моделей и кастомизацию.</p>
 			<ul>
 				<li><a href="https://github.com/oobabooga/text-generation-webui.git">Text-Generation-Webui Git https</a></li>
 				<li><a href="git@github.com:oobabooga/text-generation-webui.git">Text-Generation-Webui Git git</a></li>
@@ -205,6 +229,7 @@ start_linux.sh --api</pre>
 			</div>
 			<p><a name="part1.1.9"></a></p>
 			<p>Приложение <a href="https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh">Miniconda3</a></p>
+			<p><b>Miniconda3</b> — минималистичный дистрибутив Python с менеджером пакетов conda для управления окружениями и зависимостями.</p>
 			<p>Запуск на Linux.</p>
 			<div class="codeses">
 				<pre>wget https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh
@@ -213,6 +238,7 @@ conda update -n base -c defaults conda</pre>
 			</div>
 			<p><a name="part1.1.10"></a></p>
 			<p>Приложение <a href="https://github.com/TavernAI/TavernAI">TavernAI</a> для <a href="#TextGenerationWebui">Text-Generation-Webui</a></p>
+			<p><b>TavernAI</b> для <u>Text-Generation-Webui</u> — расширение для Text-Generation-Webui, добавляющее удобный интерфейс для ролевых игр и чат-ботов.</p>
 			<ul>
 				<li><a href="https://sourceforge.net/projects/tavernaimain/files/">TavernAI sourceforge</a></li>
 				<li><a href="https://github.com/TavernAI/TavernAI">TavernAI</a></li>
@@ -222,18 +248,21 @@ conda update -n base -c defaults conda</pre>
 			</ul>
 			<p><a name="part1.1.11"></a></p>
 			<p>Приложение <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable-Diffusion-Webui</a></p>
+			<p><b>Stable-Diffusion-Webui</b> — популярный веб-интерфейс для локального запуска модели Stable Diffusion с множеством расширений и поддержкой LoRA.</p>
 			<ul>
 				<li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui.git">Stable-Diffusion-Webui Git https</a></li>
 				<li><a href="git@github.com:AUTOMATIC1111/stable-diffusion-webui.git"></a>Stable-Diffusion-Webui Git git</li>
 			</ul>
 			<p><a name="part1.1.12"></a></p>
 			<p>Приложение <a href="https://github.com/oobabooga/one-click-installers">one-click-installers</a></p>
+			<p><b>one-click-installers</b> — скрипты и установщики для быстрого развёртывания Text-Generation-Webui и связанных инструментов.</p>
 			<ul>
 				<li><a href="https://github.com/oobabooga/one-click-installers.git">one-click-installers git https</a></li>
 				<li><a href="git@github.com:oobabooga/one-click-installers.git">one-click-installers git git</a></li>
 			</ul>
 			<p><a name="part1.1.13"></a></p>
 			<p>Приложение <a href="https://github.com/ebolam/KoboldAI">KoboldAI</a> или <a href="https://github.com/ebolam/KoboldAI.git">KoboldAI GIT</a></p>
+			<p><b>KoboldAI</b> или <b>KoboldAI GIT</b> — платформа для интерактивного сторителлинга и генерации текста с поддержкой различных языковых моделей.</p>
 			<ul>
 				<li><a href="https://github.com/KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git https</a></li>
 				<li><a href="git@github.com:KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git git</a></li>
@@ -247,6 +276,7 @@ conda update -n base -c defaults conda</pre>
 			</ul>
 			<p><a name="part1.1.14"></a></p>
 			<p>Программа <a href="https://krita.org/en/download/">Krita</a></p>
+			<p><b>Krita</b> — бесплатный и мощный редактор растровой графики, ориентированный на цифровую живопись и иллюстрацию.</p>
 			<p>Например.</p>
 			<ul>
 				<li><a href="https://download.kde.org/stable/krita/5.2.9/krita-x64-5.2.9-setup.exe">krita-x64-5.2.9-setup.exe</a></li>
@@ -257,6 +287,7 @@ conda update -n base -c defaults conda</pre>
 			<p><a name="part1.1.15"></a></p>
 			<p>Внедрение Diffusion в Krita.</p>
 			<p>Приложение <a href="https://github.com/Acly/krita-ai-diffusion">Krita AI Diffusion</a></p>
+			<p><b>Krita AI Diffusion</b> — плагин для Krita, позволяющий использовать модели диффузии для генерации и редактирования изображений.</p>
 			<ul>
 				<li><a href="https://github.com/Acly/krita-ai-diffusion/releases">Krita AI Diffusion Release</a></li>
 				<li><a href="https://github.com/Acly/krita-ai-diffusion/releases/download/v1.32.0/krita_ai_diffusion-1.32.0.zip">Krita AI Diffusion, например, версия 1.32.0</a></li>
@@ -265,6 +296,7 @@ conda update -n base -c defaults conda</pre>
 			<hr>
 			<p><a name="part1.1.16"></a></p>
 			<p>Программа <a href="https://www.nikse.dk/subtitleedit">SubTitleEdit</a></p>
+			<p><b>SubTitleEdit</b> — редактор субтитров с поддержкой автоматического создания и перевода субтитров с помощью встроенного AI.</p>
 			<p><a href="https://github.com/SubtitleEdit/subtitleedit">SubTitleEdit Github</a></p>
 			<p><a href="https://github.com/SubtitleEdit/subtitleedit.git">SubTitleEdit Github https</a></p>
 			<p><a href="git@github.com:SubtitleEdit/subtitleedit.git">SubTitleEdit Github git</a></p>
@@ -273,11 +305,13 @@ conda update -n base -c defaults conda</pre>
 			<hr>
 			<p><a name="part1.1.17"></a></p>
 			<p><b><span style="color:red;">&laquo;stabilityai/stable-diffusion-3.5-large-turbo&raquo;</span></b></p>
+			<p><b>stabilityai/stable-diffusion-3.5-large-turbo</b> — улучшенная версия модели Stable Diffusion для генерации изображений с высоким качеством и скоростью.</p>
 			<p><a href="https://huggingface.co/stabilityai/stable-diffusion-3.5-large-turbo">stabilityai/stable-diffusion-3.5-large-turbo</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.1.18"></a></p>
 			<p><b><span style="color:red;">&laquo;Image Creator&raquo;</span></b></p>
+			<p><b>Image Creator</b> — инструмент для генерации изображений на основе текстовых подсказок с использованием локальных моделей.</p>
 			<p><a href="https://github.com/Klopolupka007/ImageCreator">ImageCreator</a></p>
 			<p><a href="https://github.com/Klopolupka007/ImageCreator.git">ImageCreator Git https</a></p>
 			<p><a href="git@github.com:Klopolupka007/ImageCreator.git">ImageCreator Git git</a></p>
@@ -285,12 +319,27 @@ conda update -n base -c defaults conda</pre>
 			<hr>
 			<p><a name="part1.1.19"></a></p>
 			<p><b><span style="color:red;">&laquo;Stability Matrix&raquo;</span></b></p>
+			<p><b>Stability Matrix</b> — платформа или инструмент для управления и анализа моделей Stable Diffusion и их параметров.</p>
 			<p><a href="https://github.com/LykosAI/StabilityMatrix">StabilityMatrix</a></p>
 			<p><a href="https://github.com/LykosAI/StabilityMatrix.git">StabilityMatrix Git https</a></p>
 			<p><a href="git@github.com:LykosAI/StabilityMatrix.git">StabilityMatrix Git git</a></p>
 			<p><a href="https://github.com/LykosAI/StabilityMatrix/releases">StabilityMatrix Git Release</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
+			<p><a name="part1.1.20"></a></p>
+			<p><b><span style="color:red;">&laquo;DALL·E mini&raquo;</span></b></p>
+			<p><b>DALL·E mini (теперь известна как Craiyon)</b> — это упрощённая версия модели DALL·E для генерации изображений по текстовому описанию.</p>
+			<p>Работает на Windows, Linux, macOS, но для комфортной работы нужен GPU с минимум 6-8 ГБ видеопамяти.</p>
+			<p>Она доступна как веб-сервис и как локальная программа (на Python), но локальный запуск требует мощного железа и настройки.</p>
+			<p><a href="https://github.com/borisdayma/dalle-mini">DALL·E mini</a></p>
+			<p><a href="https://github.com/borisdayma/dalle-mini.git">DALL·E mini Github https</a></p>
+			<p><a href="git@github.com:borisdayma/dalle-mini.git">DALL·E mini Github git</a></p>
+			<p><a href="https://github.com/borisdayma/dalle-mini/releases">DALL·E mini Github Release</a></p>
+			<p><a href="https://sourceforge.net/projects/dall-e-mini.mirror/">DALL·E mini SourceForge</a></p>
+			<p><a href="https://github.com/marcelb/craiyon">Craiyon</a></p>
+			<p><a href="https://github.com/marcelb/craiyon.git">Craiyon Github https</a></p>
+			<p><a href="git@github.com:marcelb/craiyon.git">Craiyon Github git</a></p>
+			<p><a href="https://github.com/marcelb/craiyon/releases">Craiyon Github release</a></p>
 			<p><a name="part1.2"></a></p>
 			<h3>1.2. Параметры</h3>
 			<p><a name="part1.2.1"></a></p>
@@ -726,6 +775,32 @@ hf download Mykes/medicus</pre>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
+			<p><a name="part1.3.21"></a></p>
+			<p><b><span style="color:red;">&laquo;DistilBERT&raquo;</span></b></p>
+			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
+			<p><b>DistilBERT</b> — облегчённая и быстрая версия BERT с почти таким же качеством.</p>
+			<ul>
+				<li><a href="https://huggingface.co/distilbert/distilbert-base-uncased">DistilBERT huggingface</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.22"></a></p>
+			<p><b><span style="color:red;">&laquo;GPT-2&raquo;</span></b></p>
+			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
+			<p><b>GPT-2</b> — генеративная модель для создания текста, диалогов, историй.</p>
+			<ul>
+				<li><a href="https://huggingface.co/openai-community/gpt2">GPT-2 huggingface</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.23"></a></p>
+			<p><b><span style="color:red;">&laquo;BERT&raquo;</span></b></p>
+			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
+			<p><b>BERT</b> — модель для понимания текста, например, для классификации или поиска смысла.</p>
+			<ul>
+				<li><a href="https://huggingface.co/google-bert/bert-base-uncased">BERT huggingface</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p><a name="part1.4"></a></p>
@@ -1069,6 +1144,26 @@ image.save("whimsical.png")</pre>
 		<div class="content">
 			<p><a name="part1.5"></a></p>
 			<h3>1.5. Дополнительная информация</h3>
+			<p><b>Как применять LoRA к Stable Diffusion для генерации изображений с кастомным стилем?</b></p>
+			<p>В Stable-Diffusion-WebUI (AUTOMATIC1111) можно легко загружать и применять LoRA-модели.</p>
+			<ul>
+				<li>В интерфейсе есть раздел для загрузки LoRA-файлов (.safetensors или .ckpt).</li>
+				<li>После загрузки можно выбрать нужный LoRA в выпадающем списке и задать его вес (насколько сильно он влияет на итоговое изображение).</li>
+				<li>Можно комбинировать несколько LoRA, задавая веса для каждого, чтобы смешивать стили и получать уникальные результаты.</li>
+			</ul>
+			<p>Такой подход особенно полезен для дообучения больших языковых моделей (LLM) и генеративных моделей, когда нет ресурсов для полного переобучения.</p>
+			<p>Идея в том, что вместо изменения огромной матрицы весов модели, LoRA добавляет две маленькие матрицы низкого ранга, которые корректируют поведение модели. Это значительно снижает вычислительные затраты и объём данных для обучения, сохраняя при этом высокое качество результата.</p>
+			<p>LoRA — это метод тонкой настройки (fine-tuning) больших моделей, который позволяет адаптировать модель под новую задачу, обучая лишь небольшую часть параметров, а не всю модель целиком.</p>
+			<p><b>Пример использования LoRA в Stable-Diffusion-WebUI (AUTOMATIC1111).</b></p>
+			<ol>
+				<li>Скачай нужную LoRA-модель (например, с Huggingface или специализированных репозиториев).</li>
+				<li>Помести файл в папку models/Lora внутри папки с WebUI.</li>
+				<li>Запусти WebUI, зайди в раздел &laquo;Lora&raquo; или &laquo;Extras&raquo;.</li>
+				<li>В поле для LoRA выбери нужную модель и настрой вес (например, 0.5 — половина влияния).</li>
+				<li>Можно выбрать несколько LoRA, указав веса для каждого, чтобы смешать стили.</li>
+				<li>Генерируй изображения с новыми стилями!</li>
+			</ol>
+			<hr>
 			<p>Auto-Launch -> Extra Launch Arguments:</p>
 			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
 				--windows-standalone-build --front-end-version Comfy-Org/ComfyUI_frontend@latest
@@ -1162,6 +1257,7 @@ You activate your LoRAs by adding a special phrase inside your prompt. We’ll g
 I’m going to download the following popular LoRA breastInClass for this example, a LoRA that creates bodies with better proportions.
 After downloading this .safetensor file, place it in the folder stable-diffusion-webui/models/Lora</pre>
 			</p>
+			<hr>
 			<div class="images">
 				<img src="../image/Neural-Networks/ollma-commands.png" width="393px"/>
 				<img src="../image/Neural-Networks/Stable-diffusion-gui-settings.png" width="1000px"/>
