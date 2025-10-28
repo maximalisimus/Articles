@@ -116,6 +116,7 @@
 				<li>Идея в том, что вместо изменения огромной матрицы весов модели, LoRA добавляет две маленькие матрицы низкого ранга, которые корректируют поведение модели. Это значительно снижает вычислительные затраты и объём данных для обучения, сохраняя при этом высокое качество результата.</li>
 				<li>Такой подход особенно полезен для дообучения больших языковых моделей (LLM) и генеративных моделей, когда нет ресурсов для полного переобучения.</li>
 			</ul>
+			<hr>
 			<p><a name="part1.1"></a></p>
 			<h3>1.1. Програмное обеспечение</h3>
 			<p>Официальный сайт <a href="https://ollama.com/">Ollama</a>.</p>
@@ -152,6 +153,7 @@ PARAMETER stop <|im_end|>
 $ ollama create my-own-model -f Modelfile
 $ ollama run my-own-model</pre>
 			</div>
+			<hr>
 			<p><a name="part1.1.2"></a></p>
 			<p>Приложение <a href="https://msty.app/">msty app</a></p>
 			<p><b>msty app</b> — приложение для работы с локальными языковыми моделями с удобным интерфейсом и поддержкой различных форматов моделей.</p>
@@ -163,9 +165,11 @@ $ ollama run my-own-model</pre>
 				<li><a href="https://assets.msty.app/prod/latest/linux/rocm/Msty_x86_64_rocm.AppImage">msty-x64 linux amd gpu -rocm AppImage</a></li>
 				<li><a href="https://assets.msty.app/prod/latest/linux/rocm/Msty_amd64_rocm.deb">msty-x64 linux amd gpu -rocm DEB</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.3"></a></p>
 			<p>Приложение <a href="https://jan.ai/download">Jan for Desktop</a></p>
 			<p><b>Jan for Desktop</b> — локальный AI-ассистент с возможностью работы с языковыми моделями и интеграцией в рабочий процесс.</p>
+			<hr>
 			<p><a name="part1.1.4"></a></p>
 			<p>Использование <a href="https://docs.openwebui.com/">open-webui</a> на Linux.</p>
 			<p><b>open-webui на Linux</b> — веб-интерфейс для запуска и управления локальными языковыми моделями на Linux-системах.</p>
@@ -175,6 +179,7 @@ pip install open-webui
 open-webui serve
 pip install --upgrade open-webui</pre>
 			</div>
+			<hr>
 			<p><a name="part1.1.5"></a></p>
 			<p>Приложение <a href="https://anythingllm.com/">AnythingLLM</a></p>
 			<p><b>AnythingLLM</b> — универсальный фронтенд для запуска и взаимодействия с различными локальными языковыми моделями.</p>
@@ -187,6 +192,7 @@ pip install --upgrade open-webui</pre>
 				<li><a href="https://github.com/Mintplex-Labs/anything-llm">Mintplex-Labs AnythingLLM</a></li>
 				<li><a href="https://github.com/Mintplex-Labs/anything-llm.git">Mintplex-Labs AnythingLLM GIT</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.6"></a></p>
 			<p>Приложение <a href="https://lmstudio.ai/">LM Studio</a></p>
 			<p><b>LM Studio</b> — приложение для локального запуска и управления большими языковыми моделями с удобным графическим интерфейсом.</p>
@@ -194,6 +200,7 @@ pip install --upgrade open-webui</pre>
 				<li><a href="https://installers.lmstudio.ai/win32/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.exe">LM-Studio Windows X64</a></li>
 				<li><a href="https://installers.lmstudio.ai/linux/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.AppImage">LM Studion AppImage</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.7"></a></p>
 			<p><b>Appimage extract</b> — код для распаковки и извлечения содержимого из любого AppImage-файлов на Linux.</p>
 			<p>Appimage extract:</p>
@@ -213,6 +220,7 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 				<li>Включение функции «Keep entire model in RAM». Если её отключить, то можно запросить модель и получить ответ.</li>
 				<li>Использование видеокарты для загрузки модели. Если на видеокарте достаточно памяти для модели, то можно попробовать использовать её. Для этого нужно кликнуть на галочку «GPU Offloading» и убедиться, что там стоит n_layers = -1</li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.8"></a></p>
 			<p><a name="TextGenerationWebui"></a></p>
 			<p>Приложение <a href="https://github.com/oobabooga/text-generation-webui">Text-Generation-Webui</a></p>
@@ -227,6 +235,7 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 start_linux.sh --api --cuda
 start_linux.sh --api</pre>
 			</div>
+			<hr>
 			<p><a name="part1.1.9"></a></p>
 			<p>Приложение <a href="https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh">Miniconda3</a></p>
 			<p><b>Miniconda3</b> — минималистичный дистрибутив Python с менеджером пакетов conda для управления окружениями и зависимостями.</p>
@@ -236,6 +245,7 @@ start_linux.sh --api</pre>
 sudo bash ./Miniconda3-py38_23.5.2-0-Linux-x86_64.sh
 conda update -n base -c defaults conda</pre>
 			</div>
+			<hr>
 			<p><a name="part1.1.10"></a></p>
 			<p>Приложение <a href="https://github.com/TavernAI/TavernAI">TavernAI</a> для <a href="#TextGenerationWebui">Text-Generation-Webui</a></p>
 			<p><b>TavernAI</b> для <u>Text-Generation-Webui</u> — расширение для Text-Generation-Webui, добавляющее удобный интерфейс для ролевых игр и чат-ботов.</p>
@@ -246,6 +256,7 @@ conda update -n base -c defaults conda</pre>
 				<li><a href="git@github.com:TavernAI/TavernAI.git">TavernAI Git git</a></li>
 				<li><a href="https://github.com/TavernAI/TavernAI/releases">TavernAI Git Release</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.11"></a></p>
 			<p>Приложение <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable-Diffusion-Webui</a></p>
 			<p><b>Stable-Diffusion-Webui</b> — популярный веб-интерфейс для локального запуска модели Stable Diffusion с множеством расширений и поддержкой LoRA.</p>
@@ -253,6 +264,34 @@ conda update -n base -c defaults conda</pre>
 				<li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui.git">Stable-Diffusion-Webui Git https</a></li>
 				<li><a href="git@github.com:AUTOMATIC1111/stable-diffusion-webui.git"></a>Stable-Diffusion-Webui Git git</li>
 			</ul>
+			<p><b>Откуда берется первоначальная модель для Stable Diffusion WebUI от AUTOMATIC1111?</b></p>
+			<p>При первом запуске <b>Stable Diffusion WebUI</b> сама программа не содержит встроенной модели — её нужно скачать отдельно. Обычно для работы требуется файл модели (например, с расширением <b>&laquo;.ckpt&raquo;</b> или <b>&laquo;.safetensors&raquo;</b>), который содержит веса нейросети.</p>
+			<ul>
+				<li>Часто рекомендуют скачивать модели с таких ресурсов, как Civitai или Huggingface. Например, в документации и обсуждениях упоминается, что можно скачать модель с Civitai напрямую и положить в папку models/Stable-diffusion внутри папки с WebUI.</li>
+				<li>Если Civitai недоступен или не работает, можно использовать альтернативные источники, например, Huggingface.</li>
+			</ul>
+			<p><b>Что делать, если Civitai не работает?</b></p>
+			<ul>
+				<li>Можно скачать модель с другого источника вручную и положить её в папку с моделями.</li>
+				<li>Важно, чтобы файл модели имел правильное имя, например, <b>model.ckpt</b> или <b>model.safetensors</b>, и находился в папке <b>stable-diffusion-webui/models/Stable-diffusion/</b>.</li>
+				<li>После этого при запуске WebUI программа подхватит модель и загрузит её для работы.</li>
+			</ul>
+			<p><b>Как перенести модели и нейросети с одного ПК на другой?</b></p>
+			<p>Если у вас уже была установлена программа на одном из ПК и там есть скачанные модели, то:</p>
+			<ol>
+				<li>Найдите папку с моделями на старом ПК. Обычно это: stable-diffusion-webui/models/Stable-diffusion/</li>
+				<li>Скопируйте оттуда все файлы моделей (.ckpt, .safetensors и т.п.).</li>
+				<li>Перенесите эти файлы в такую же папку на новом ПК, где установлена WebUI.</li>
+				<li>Запустите WebUI — она должна обнаружить модели и использовать их без необходимости скачивать заново.</li>
+			</ol>
+			<p><b>Ссылки на .ckpt и .safetensors stable-diffusion модели.</b></p>
+			<ul>
+				<li><a href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/tree/main">stable-diffusion-v1-5 / stable-diffusion-v1-5</a></li>
+				<li><a href="https://huggingface.co/czl/stable-diffusion-v1-5">czl/stable-diffusion-v1-5</a></li>
+				<li><a href="https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8">Comfy-Org / stable-diffusion-3.5</a></li>
+				<li><a href="https://huggingface.co/stabilityai/collections">Stability AI репозиторий</a></li>
+			</ul>
+			<hr>
 			<p><a name="part1.1.12"></a></p>
 			<p>Приложение <a href="https://github.com/oobabooga/one-click-installers">one-click-installers</a></p>
 			<p><b>one-click-installers</b> — скрипты и установщики для быстрого развёртывания Text-Generation-Webui и связанных инструментов.</p>
@@ -260,6 +299,7 @@ conda update -n base -c defaults conda</pre>
 				<li><a href="https://github.com/oobabooga/one-click-installers.git">one-click-installers git https</a></li>
 				<li><a href="git@github.com:oobabooga/one-click-installers.git">one-click-installers git git</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.13"></a></p>
 			<p>Приложение <a href="https://github.com/ebolam/KoboldAI">KoboldAI</a> или <a href="https://github.com/ebolam/KoboldAI.git">KoboldAI GIT</a></p>
 			<p><b>KoboldAI</b> или <b>KoboldAI GIT</b> — платформа для интерактивного сторителлинга и генерации текста с поддержкой различных языковых моделей.</p>
@@ -274,6 +314,7 @@ conda update -n base -c defaults conda</pre>
 				<li><a href="https://colab.research.google.com/github/KoboldAI/KoboldAI-Client/blob/main/colab/TPU.ipynb">Colab KoboldAI TPU</a></li>
 				<p>Пока Google не исправит драйвера для TPU, эта версия бесполезна.</p>
 			</ul>
+			<hr>
 			<p><a name="part1.1.14"></a></p>
 			<p>Программа <a href="https://krita.org/en/download/">Krita</a></p>
 			<p><b>Krita</b> — бесплатный и мощный редактор растровой графики, ориентированный на цифровую живопись и иллюстрацию.</p>
@@ -284,6 +325,7 @@ conda update -n base -c defaults conda</pre>
 				<li><a href="https://download.kde.org/stable/krita/5.2.9/krita-5.2.9-x86_64.AppImage">krita-5.2.9-x86_64.AppImage</a></li>
 				<li><a href="https://download.kde.org/stable/krita/KritaShellExtension-v1.2.4b-setup.exe">KritaShellExtension-v1.2.4b-setup.exe</a></li>
 			</ul>
+			<hr>
 			<p><a name="part1.1.15"></a></p>
 			<p>Внедрение Diffusion в Krita.</p>
 			<p>Приложение <a href="https://github.com/Acly/krita-ai-diffusion">Krita AI Diffusion</a></p>
@@ -340,6 +382,7 @@ conda update -n base -c defaults conda</pre>
 			<p><a href="https://github.com/marcelb/craiyon.git">Craiyon Github https</a></p>
 			<p><a href="git@github.com:marcelb/craiyon.git">Craiyon Github git</a></p>
 			<p><a href="https://github.com/marcelb/craiyon/releases">Craiyon Github release</a></p>
+			<hr>
 			<p><a name="part1.2"></a></p>
 			<h3>1.2. Параметры</h3>
 			<p><a name="part1.2.1"></a></p>
