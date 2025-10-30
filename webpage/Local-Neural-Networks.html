@@ -89,8 +89,15 @@
 						<li><a href="#part1.3.22">GPT-2 </a></li>
 						<li><a href="#part1.3.23">BERT</a></li>
 					</ol>
-					<li><a href="#part1.4">Программирование</a></li>
-					<li><a href="#part1.5">Дополнительная информация</a></li>
+					<li><a href="#part1.4">Конвертирование моделей</a></li>
+					<li><a href="#part1.5">Запуск GGML/GGUF через ollama</a></li>
+					<ol>
+						<li><a href="#part1.5.1">Modelfile</a></li>
+						<li><a href="#part1.5.2">Квантизация моделей</a></li>
+						<li><a href="#part1.5.3">Работа с несколькими вариантами одной модели</a></li>
+					</ol>
+					<li><a href="#part1.6">Программирование</a></li>
+					<li><a href="#part1.7">Дополнительная информация</a></li>
 				</ol>
 				<li><a href="#part2">Нейронные сети на Android / IOS</a></li>
 				<ol>
@@ -99,6 +106,14 @@
 					<li><a href="#part2.3">Модели</a></li>
 					<li><a href="#part2.4">Итоги</a></li>
 				</ol>
+				<!--
+				<li><a href="#part3">Ollama VPS/VDS</a></li>
+				<ol>
+					<li><a href="#part3.1">Ollama</a></li>
+					<li><a href="#part3.2">Подключение поисковых утилит на open-webui</a></li>
+				</ol>
+				<li><a href="#part4">VPS/VDS n8nio/n8n</a></li>
+		    	-->
 			</ol>
 		</div>
 		<div class="content">
@@ -119,11 +134,32 @@
 			<hr>
 			<p><a name="part1.1"></a></p>
 			<h3>1.1. Програмное обеспечение</h3>
+			<p>Далее ниже указан список програмного обеспечения для работы с нейронными сетями.</p>
+			<p>Нужно понимать, что одни программы предназначены только для работы на Linux, другие только на Windows,т.е. далеко не все могут работать в обеих ОС.</p>
+			<p>Также есть нюанс касающийся самих программ для работы с теми или иными моделями нейронных сетей - это конкретные задачи, которые нижеуказанные программы могут или не могут выполнять. Один тип программ только для работы с текстом, другие для работы с изображениями, третьи для работы с видео, субтитрами и т.д. и т.п.</p>
+			<p>Для каждой программы я указываю несколько типов ссылок.</p>
+			<ol>
+				<li>Ссылка на официальный сайт - обязательна.</li>
+				<li>Git https ссылка - Если это Git репозиторий.</li>
+				<li>Git ssh ссылка - Для более быстрого скачивания через Git.</li>
+				<li>Git Release ссылка - чтобы сразу найти последнюю версию программы.</li>
+				<li>И ссылки на сами программы для разных ОС и разных архитектур - i686 (x86), amd64 (x86_64).</li>
+			</ol>
+			<p>Для каждой программы если это не официальный сайт, а конкретно Git репозиторий - внутри каждого есть инструкция по установке и использованию, поэтому добавлять ее сюда и загромождать место не имеет смысла. Информация в этом случае будет дублироваться, а если при обновлении в репозитории хоть что-то изменится - то она даже будет не актуальна.</p>
+			<p>У меня на Linux - используется пользвотель &laquo;Mikl&raquo;. И для запуска я испольную отдельную папку с иконкой и скриптом запуска просто для удобства.</p>
+			<p>Нюанс. У меня установлен &laquo;Python&raquo; и &laquo;virtualenvwrapper&raquo;. Как установить его на Linux или Windows <a href="https://maximalisimus.github.io/Articles/Python_Virtualenv.html#part1">можно посмотреть здесь</a>.</p>
+			<p>В папке пользователя создана отдельная директория, например <b>&laquo;/home/mikl/programs/ollama-apps/&raquo;</b>.</p>
+			<p>Еще один нюанс - В <b>Linux</b> я чаще использую <b>&laquo;.Appimage&raquo;</b> формат введу его универсальности, т.к. он уже содержит в себе все необходимые библиотеки и устанавливать их в систему и думать будут ли они конфликтовать с теми, что там уже есть - мне не приходится.</p>
+			<p>И еще <b>&laquo;.Appimage&raquo;</b> архив запуска я обязательно распаковываю в отдельную папку для ускорения работы с программой и также удобства работы с ней, т.к. появляются настройки, которые можно вытащить, скопировать, перенести и т.д. и т.п.</p>
+			<p>Распаковать <b>&laquo;.Appimage&raquo;</b> формат запуска <a href="#part1.1.7">можно вот так</a>.</p>
+			<p>Поясняю нюанс по поводу всех форматов файлов в <b>Linux</b>. В Linux все файлы <b>не важно какого формата по сути текстовые и редактируются</b>, даже если это просто ярлычок запуска с рабочего стола. Удобнее всего использовать <b>&laquo;Редактор Geany&raquo;</b>. Важно только то, где эти файлы располагаются. Иногда их просто подключают как начальную точку входа в тот или иной скрипт, а иногда используют просто как информацию, а иногда такой файл бывает полноценным скриптом в зависимости от конечного формата - будь то bashrc, sh-скрипт и т.д. и т.п.</p>
+			<p>Например, любой ярлычок запуска на рабочем столе. По сути представляет из себя некий ini-файл в котором указаны параметры его работы. В Windows не полноценный аналог - простой ярлык на какой-то файл, если посмотреть его свойства правой кнопкой мыши. Не полноценный, потому что в Linux гораздо больше возможностей настроек запуска того или иного ПО. В Windows только указать путь к файлу запуска и корневой директории.</p>
+			<hr>
 			<p>Официальный сайт <a href="https://ollama.com/">Ollama</a>.</p>
 			<p><a name="part1.1.1"></a></p>
 			<p>Python версия <a href="https://github.com/ggerganov/llama.cpp.git">Llama-CPP</a></p>
 			<p><b>Llama-CPP</b> — минималистичный open-source движок для запуска больших языковых моделей (LLM) на CPU и GPU с поддержкой web-интерфейса и API.</p>
-			<p>Установка и запуск.</p>
+			<p>Установка и запуск. Это Python версия, с ней можно работать через Python и виртуальное окружение. Это нормальная практика.</p>
 			<div class="codeses">
 				<pre>git clone https://github.com/ggerganov/llama.cpp.git
 pip install -r llama.cpp/requirements.txt
@@ -179,6 +215,35 @@ pip install open-webui
 open-webui serve
 pip install --upgrade open-webui</pre>
 			</div>
+			<p>Файл <b>&laquo;/home/mikl/programs/ollama-apps/bashrc&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>export WORKON_HOME=$HOME/programs/ollama-apps/open-webui/open-webui-env
+export PROJECT_HOME=$HOME/programs/ollama-apps/open-webui/
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+# export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+source /usr/local/sbin/virtualenvwrapper.sh
+#if [[ -r `which virtualenvwrapper.sh` ]]; then source `which virtualenvwrapper.sh`; fi</pre>
+			</div>
+			<p>Файл <b>&laquo;/home/mikl/programs/ollama-apps/open-webui-run.sh&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>#!/bin/bash
+source /home/mikl/programs/ollama-apps/open-webui/bashrc
+workon ollama-env
+open-webui serve</pre>
+			</div>
+			<p>Иконка для скачивания - <a href="../image/Neural-Networks/neural-icons/open-webui-icon.png"><b>&laquo;open-webui-icon.png&raquo;</b></a>.</p>
+			<p>И конечно же сам файл запуска на рабочем столе <b>&laquo;Open-WebUI.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Exec=/home/mikl/programs/ollama-apps/open-webui/open-webui-run.sh
+Type=Application
+Name=Open-WebUI
+Terminal=true
+Icon=/home/mikl/programs/ollama-apps/open-webui/open-webui-icon.png</pre>
+			</div>
 			<hr>
 			<p><a name="part1.1.5"></a></p>
 			<p>Приложение <a href="https://anythingllm.com/">AnythingLLM</a></p>
@@ -192,6 +257,20 @@ pip install --upgrade open-webui</pre>
 				<li><a href="https://github.com/Mintplex-Labs/anything-llm">Mintplex-Labs AnythingLLM</a></li>
 				<li><a href="https://github.com/Mintplex-Labs/anything-llm.git">Mintplex-Labs AnythingLLM GIT</a></li>
 			</ul>
+			<p>Для AnythingLLM я использую вот такую иконку <a href="../image/Neural-Networks/neural-icons/anythingllm-desktop.png"><b>&laquo;anythingllm-desktop.png&raquo;</b></a> и ярлычок запуска <b>&laquo;anythingllm-desktop.desktop&raquo;</b> на рабочем столе.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Name=AnythingLLM
+Exec=/home/mikl/programs/anythingllm-desktop/AppRun --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/home/mikl/programs/anythingllm-desktop/usr/share/icons/hicolor/1024x1024/apps/anythingllm-desktop.png
+StartupWMClass=AnythingLLM
+X-AppImage-Version=1.7.2
+Comment=AnythingLLM Desktop Application
+MimeType=x-scheme-handler/anythingllm;
+Categories=Utility;</pre>
+			</div>
 			<hr>
 			<p><a name="part1.1.6"></a></p>
 			<p>Приложение <a href="https://lmstudio.ai/">LM Studio</a></p>
@@ -200,18 +279,40 @@ pip install --upgrade open-webui</pre>
 				<li><a href="https://installers.lmstudio.ai/win32/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.exe">LM-Studio Windows X64</a></li>
 				<li><a href="https://installers.lmstudio.ai/linux/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.AppImage">LM Studion AppImage</a></li>
 			</ul>
+			<p>Иконка запуска LM Studio <a href="../image/Neural-Networks/neural-icons/lm-studio.png"><b>&laquo;lm-studio.png&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;lm-studio.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Name=LM Studio
+Exec=/home/mikl/programs/LM-Studio-0.3.6-8-x64/LM-Studio-0.3.6-8-x64-appimage-extract/AppRun --no-sandbox %U
+Terminal=false
+Type=Application
+Icon=/home/mikl/programs/LM-Studio-0.3.6-8-x64/LM-Studio-0.3.6-8-x64-appimage-extract/usr/share/icons/hicolor/0x0/apps/lm-studio.png
+StartupWMClass=LM Studio
+X-AppImage-Version=0.3.6
+Comment=Use the chat UI or local server to experiment and develop with local LLMs.
+Keywords=developer;llm;
+category=Development;Utility;
+MimeType=x-scheme-handler/lmstudio;
+Categories=Development;</pre>
+			</div>
 			<hr>
 			<p><a name="part1.1.7"></a></p>
 			<p><b>Appimage extract</b> — код для распаковки и извлечения содержимого из любого AppImage-файлов на Linux.</p>
 			<p>Appimage extract:</p>
 			<div class="codeses">
 				<pre>./Application_xxx-version.AppImage --appimage-extract
+<span style="color:blue;"># Извлекли, посмотрели категорию ПО</span>
 cat /usr/share/applications/Your-Apps_x-vers.desktop | grep -Ei "Categories"
+<span style="color:blue;"># Отредактировали ярлычок запуска который будем вытаскивать на рабочий стол, прописывая полные пути</span>
 nano ./squashfs-root/Application_xxx-version.desktop
+<span style="color:blue;"># Ну и не забыли добавить разрешение на выполнения/запуск</span>
 chmod +x ./squashfs-root/AppRun
 chmod +x ./squashfs-root/*.desktop
+
+<span style="color:blue;"># А вот так упаковываем обратно. Сначала нужна утилита для упаковки.</span>
 wget "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 chmod +x ./appimagetool-x86_64.AppImage
+<span style="color:blue;"># Упаковываем из директории squashfs-root. Все пути внутри в скриптах должны быть относительными.</span>
 ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 			</div>
 			<p>Несколько возможных причин, по которым LM Studio не загружает модель, и способы их устранения:</p>
@@ -234,6 +335,20 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 				<pre>start_linux.sh --api --cpu
 start_linux.sh --api --cuda
 start_linux.sh --api</pre>
+			</div>
+			<p>Иконка для text-generation-webui <a href="../image/Neural-Networks/neural-icons/text-generation-webui-logo.svg"><b>&laquo;text-generation-webui-logo.svg&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;text-generation-webui.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Name=Text Generation WebUI
+Exec=bash -c "/media/mikl/LocalDisk/Neural-Networks/text-generation-webui/start_linux.sh --api --cpu"
+Terminal=true
+Type=Application
+Icon=/home/mikl/programs/ollama-apps/text-generation-webui-logo.svg
+StartupWMClass=TextGenerationWebUI
+X-AppImage-Version=1.7.2
+Comment=Text-Generation-WebUI Desktop Application
+MimeType=x-scheme-handler/textgenerationwebui;
+Categories=Utility;</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.9"></a></p>
@@ -366,6 +481,32 @@ conda update -n base -c defaults conda</pre>
 			<p><a href="https://github.com/LykosAI/StabilityMatrix.git">StabilityMatrix Git https</a></p>
 			<p><a href="git@github.com:LykosAI/StabilityMatrix.git">StabilityMatrix Git git</a></p>
 			<p><a href="https://github.com/LykosAI/StabilityMatrix/releases">StabilityMatrix Git Release</a></p>
+			<p>Иконка запуска StabilityMatrix <a href="../image/Neural-Networks/neural-icons/zone.lykos.stabilitymatrix.png"><b>&laquo;zone.lykos.stabilitymatrix.png&raquo;</b></a> и ярлычок на рабочем столе <b>&laquo;Stability_Matrix_AppImage.desktop&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>[Desktop Entry]
+Type=Application
+Name=Stability Matrix
+Icon=/home/mikl/programs/StabilityMatrix-apps/StabilityMatrix-AppImage/zone.lykos.stabilitymatrix.png
+Comment=Package and checkpoint manager for Stable Diffusion.
+Exec=/home/mikl/programs/StabilityMatrix-apps/StabilityMatrix-AppImage/usr/bin/StabilityMatrix.Avalonia
+TryExec=/home/mikl/programs/StabilityMatrix-apps/StabilityMatrix-AppImage/usr/bin/StabilityMatrix.Avalonia
+NoDisplay=false
+X-AppImage-Integrate=true
+Terminal=false
+Categories=Utility;
+MimeType=
+Keywords=</pre>
+			</div>
+			<p>В самой программе на достаточно древнем оборудовании - 2 ядра, 2 потока, без видеокарты, с 16 ГБ опертивной памяти - мне удалось протестировать несколько моделей. И даже с такими низкими параметрами удалось использовать модели с низкой квантизацией. И даже в этом случае не смотря на то, что генерация занимала чуть ли не целый час - результат был на уровне серьезных платных онлайн ресурсов.</p>
+			<p>Для тестов были использованы модели с CivitAI встроенного браузера.</p>
+			<ul>
+				<li>DreamShaper</li>
+				<li>epiCRealism</li>
+				<li>Erotic Vision</li>
+				<li>PornRealistic</li>
+				<li>PornVision</li>
+				<li>v1-5-Pruned-emaonly</li>
+			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.1.20"></a></p>
@@ -844,10 +985,186 @@ hf download Mykes/medicus</pre>
 				<li><a href="https://huggingface.co/google-bert/bert-base-uncased">BERT huggingface</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.4"></a></p>
+			<h3>1.4. Конвертирование моделей</h3>
+			<p>Для начала давайте рассмотрим случай, когда модель разбита на несколько частей и их нужно объединить.</p>
+			<p>Для этого понадобится утилита <a href="#part1.1.1">llama.cpp</a>. Например так.</p>
+			<p class="codes">
+				~/llama.cpp/gguf-split --merge infile-00001-of-0000N.gguf outfile.gguf
+			</p>
+			<p>Объединение нескольких safetensor файлов в один.</p>
+			<p>В отличие от GGUF, для safetensors нет стандартной утилиты типа gguf-split --merge для объединения нескольких частей в один файл. Safetensors — это формат, ориентированный на хранение весов модели, и обычно модели в safetensors идут либо в одном файле, либо разбиты на части, которые загружаются и обрабатываются фреймворком (например, HuggingFace Transformers) на уровне кода.</p>
+			<p>Поэтому прямого и простого способа объединить несколько safetensors в один файл нет. Обычно для работы с несколькими safetensors используют загрузку и объединение весов программно, а не через объединение файлов.</p>
+			<p>Для конвертации safetensors в GGUF можно использовать скрипты из llama.cpp, например, convert_lora_to_gguf.py или другие утилиты, которые преобразуют веса из safetensors в формат GGUF, подходящий для Ollama и llama.cpp. Но для этого нужен исходный базовый модельный файл, и желательно, чтобы safetensors были совместимы с базовой моделью.</p>
+			<p>Квантизация моделей. Если вдруг у вас не хватает ресурсов для той или иной модели.</p>			
+			<p>Конкретный пример команды для создания квантизированной версии модели в формате GGUF с помощью инструментов из llama.cpp может выглядеть так:</p>
+			<p class="codes">
+				./quantize -i input.gguf -o output_q4_0.gguf q4_0
+			</p>
+			<ul>
+				<li>./quantize — утилита для квантизации из llama.cpp,</li>
+				<li>-i input.gguf — исходный файл модели в формате GGUF,</li>
+				<li>-o output_q4_0.gguf — имя выходного файла с квантизированной моделью,</li>
+				<li>q4_0 — выбранный режим квантизации (например, 4-битный вариант).</li>
+			</ul>
+			<p>Аналогично можно создать другие варианты квантизации, например:</p>
+			<p class="codes">
+				./quantize -i input.gguf -o output_q8_0.gguf q8_0</br>
+				./quantize -i input.gguf -o output_q5_1.gguf q5_1
+			</p>
+			<p>После этого полученные GGUF-файлы с разной квантизацией можно импортировать в Ollama командой:</p>
+			<p class="codes">
+				ollama create model_q4 -f output_q4_0.gguf</br>
+				ollama create model_q8 -f output_q8_0.gguf
+			</p>
+			<p>Таким образом вы получите несколько моделей с разной степенью сжатия и точности, которые можно запускать в зависимости от возможностей железа.</p>
+			<p>Если у вас нет утилиты quantize, её можно найти в репозитории llama.cpp или аналогичных проектах, где описаны разные схемы квантизации и примеры использования.</p>
+			<ul>
+				<li>Использование скрипта OllamaToGGUF.py</li>
+				<li>Ollama-Model-Dumper</li>
+				<li>Прямое использование папки с моделью</li>
+			</ul>
+			<p>Иногда можно просто указать путь к папке с Ollama моделью (blob folder) в llama.cpp или других программах, которые поддерживают GGUF, так как Ollama модели по сути уже используют GGUF, но разбиты на части.</p>
+			<p>Ещё один инструмент для экспорта и бэкапа Ollama моделей в GGUF и Modelfile форматы. Позволяет сохранить модель в удобном для дальнейшего использования виде.</p>
+			<p>Это Python-скрипт, который конвертирует модели из формата Ollama (часто разбитые на несколько файлов) обратно в единый GGUF файл. Репозиторий с этим инструментом: <a href="https://github.com/mattjamo/OllamaToGGUF">OllamaToGGUF</a> Скрипт автоматически объединяет части и восстанавливает GGUF модель, пригодную для использования в llama.cpp и других инструментах, программах и утилитах.</p>
+			<p>Пример использования OllamaToGGUF.py</p>
+			<p class="codes">
+				git clone https://github.com/mattjamo/OllamaToGGUF.git</br>
+				cd OllamaToGGUF</br>
+				python OllamaToGGUF.py --input /path/to/ollama/model/folder --output /path/to/output/model.gguf
+			</p>
+			<ul>
+				<li>--input — путь к папке с Ollama моделью (обычно папка с файлами .bin или .gguf частями).</li>
+				<li>--output — путь и имя итогового GGUF файла.</li>
+			</ul>
+			<p><b>Итог.</b></p>
+			<ul>
+				<li><b>Для конвертации Ollama модели в GGUF формат используйте скрипт OllamaToGGUF.py или аналогичные утилиты.</b></li>
+				<li>Это позволит получить единый GGUF файл, который можно использовать в llama.cpp и других инструментах.</li>
+				<li>В некоторых случаях можно просто указать путь к папке с Ollama моделью напрямую, если программа поддерживает работу с таким форматом.</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<hr>
+			<p><a name="part1.5"></a></p>
+			<h3>1.5. Запуск GGML/GGUF через ollama</h3>
+			<p><a name="part1.5.1"></a></p>
+			<h4>1.5.1. Modelfile</h4>
+			<p>Для того чтобы запустить GGML/GGUF формат в ollama, нужно создать отдельную директорию, где будет лежать этот файл и рядом с ним создать файл без фората <b>&laquo;Modelfile&raquo;</b>.</p>
+			<p>На официальном сайте пишут, что достаточно указать в нем всего два параметра - название модели и полный путь к ggml/gguf файлу.</p>
+			<div class="codeses">
+				<pre>FROM &lt;model name&gt;
+ADAPTER /path/to/file.gguf</pre>
+			</div>
+			<p>В этих файлах можно еще указывать шаблон, температуру, параметры семплинга и размер ответа.</p>
+			<div class="codeses">
+				<pre>FROM ./model.gguf
+TEMPLATE """&lt;s&gt;[INST] {{ .Prompt }} [/INST]"""
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+PARAMETER num_ctx 4096
+SYSTEM """You are a helpful AI assistant. Respond clearly and concisely to user questions."""</pre>
+			</div>
+			<ul>
+				<li><b>temperature</b> — влияет на креативность и случайность ответов (меньше — более детерминированно, больше — более разнообразно).</li>
+				<li><b>top_p</b> и <b>top_k</b> — параметры сэмплинга, которые ограничивают выбор слов при генерации.</li>
+				<li><b>num_ctx</b> — размер контекстного окна (сколько токенов модель учитывает при генерации).</li>
+			</ul>
+			<p><b>НО</b> я не рекомендую их использовать. Лучше если вы будет подстраивать эти параметры непосредственно к каждой нейронке в <a href="#part1.1.4"><b>&laquo;open-webui&raquo;</b></a> прямо во время их использования. Есть и другие похожие утилиты для Windows, которые также имеют подобные настройки на лету.</p>
+			<p>Тем не менее, такие <b>&laquo;Modelfile&raquo;</b> далеко не полные. Не хватает шаблона ответа пользователю и остановки. Например.</p>
+			<div class="codeses">
+				<pre># FROM Model-Name
+FROM /YOUR/PATH/Local-Models/Model-Name.ext-model
+TEMPLATE "&lt;|im_start|&gt;system
+{{ .System }}&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+{{ .Prompt }}&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant
+"
+SYSTEM You are my-own-model, a helpful AI assistant.
+PARAMETER stop &lt;|im_start|&gt;
+PARAMETER stop &lt;|im_end|&gt;</pre>
+			</div>
+			<p>Давайте рассмотрим конкретный пример для модели <a href="#part1.3.15"><b>&laquo;nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF&raquo;</b></a>.</p>
+			<div class="codeses">
+				<pre>FROM /media/mikl/LocalDisk/Neural-Networks/Huggingface-Models/nidum__Nidum-Llama-3.2-3B-Uncensored-GGUF/model-Q6_K.gguf
+TEMPLATE "&lt;|im_start|&gt;system
+{{ .System }}&lt;|im_end|&gt;
+&lt;|im_start|&gt;user
+{{ .Prompt }}&lt;|im_end|&gt;
+&lt;|im_start|&gt;assistant
+"
+SYSTEM You are Nudim-Llama-3.2-3B-Unc-Q6-K, a helpful AI assistant.
+PARAMETER stop &lt;|im_start|&gt;
+PARAMETER stop &lt;|im_end|&gt;</pre>
+			</div>
+			<p>Для создания ollama модели используйте следующие команды.</p>
+			<p class="codes">
+				ollama create my-own-model -f Modelfile</br>
+				<span style="color:blue;"># И далее сразу запускаем её</span></br>
+				ollama run my-own-model
+			</p>
+			<p>Например.</p>
+			<p class="codes">
+				ollama create llama2-7b-chat -f Modelfile</br>
+				ollama run llama2-7b-chat
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.5.2"></a></p>
+			<h4>1.5.2. Квантизация моделей</h4>
+			<p>Команда <b>&laquo;ollama create --quantize q4_K_M mymodel&raquo;</b> используется для создания новой модели в <b>Ollama</b> с применением квантизации уровня <b>q4_K_M</b>.</p>
+			<p>Вот что это значит:</p>
+			<ul>
+				<li>ollama create — команда для создания (импорта) модели в Ollama.</li>
+				<li>--quantize q4_K_M — флаг, указывающий, что модель нужно квантизировать при импорте, используя схему квантизации q4_K_M.</li>
+				<li>mymodel — имя создаваемой модели в Ollama.</li>
+			</ul>
+			<p>Если вы создали модель с квантизацией, например:</p>
+			<p class="codes">
+				ollama create --quantize q4_K_M mymodel_q4 -f Modelfile
+			</p>
+			<p>то для запуска именно этой квантизированной версии используйте:</p>
+			<p class="codes">
+				ollama run mymodel_q4
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.5.3"></a></p>
+			<h4>1.5.3. Работа с несколькими вариантами одной модели</h4>
+			<p>Если у вас есть несколько версий модели с разной квантизацией, например:</p>
+			<ul>
+				<li>mymodel — полная модель</li>
+				<li>mymodel_q4 — 4-битная квантизация q4_K_M</li>
+				<li>mymodel_q8 — 8-битная квантизация</li>
+			</ul>
+			<p>то запускать их нужно по отдельности, указывая нужное имя:</p>
+			<p class="codes">
+				ollama run mymodel</br>
+				<span style="color:blue;"># Или</span></br>
+				ollama run mymodel_q4</br>
+				<span style="color:blue;"># Или</span></br>
+				ollama run mymodel_q8
+			</p>
+			<p><b>Пример полного цикла.</b></p>
+			<p class="codes">
+				<span style="color:blue;"># Создать полную модель</span></br>
+				ollama create mymodel -f Modelfile</br></br>
+				<span style="color:blue;"># Создать квантизированную модель q4_K_M</span></br>
+				ollama create --quantize q4_K_M mymodel_q4 -f Modelfile</br></br>
+				<span style="color:blue;"># Запустить полную модель</span></br>
+				ollama run mymodel</br></br>
+				<span style="color:blue;"># Запустить квантизированную модель</span></br>
+				ollama run mymodel_q4</br>			
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
 		</div>
 		<div class="content">
-			<p><a name="part1.4"></a></p>
-			<h3>1.4. Программирование</h3>
+			<p><a name="part1.6"></a></p>
+			<h3>1.6. Программирование</h3>
 			<p>Просмотр и редактирование модели.</p>
 			<div class="codeses">
 				<pre>$ ollama show your-model-exist:latest --modelfile > Modelfile
@@ -1176,17 +1493,11 @@ image = pipeline(
 ).images[0]
 image.save("whimsical.png")</pre>
 			</div>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
-			<p><a name="part1.5"></a></p>
-			<h3>1.5. Дополнительная информация</h3>
+			<p><a name="part1.7"></a></p>
+			<h3>1.7. Дополнительная информация</h3>
 			<p><b>Как применять LoRA к Stable Diffusion для генерации изображений с кастомным стилем?</b></p>
 			<p>В Stable-Diffusion-WebUI (AUTOMATIC1111) можно легко загружать и применять LoRA-модели.</p>
 			<ul>
@@ -1471,6 +1782,53 @@ After downloading this .safetensor file, place it in the folder stable-diffusion
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
+		<!--
+		<div class="content">
+			<p><a name="part3"></a></p>
+			<h2>3. Ollama VPS/VDS</h2>
+			<p><a name="part3.1"></a></p>
+			<h3>3.1. Ollama</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.2"></a></p>
+			<h3>3.2. Подключение поисковых утилит на open-webui</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part4"></a></p>
+			<h2>4. VPS/VDS n8nio/n8n</h2>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		-->
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	

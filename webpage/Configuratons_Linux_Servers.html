@@ -1633,11 +1633,28 @@ echo \
 				$ systemctl enable docker</br>
 				$ systemctl start docker
 			</p>
+			<p>Docker еще можно установить и вот таким способом.</p>
+			<p class="codes">
+				curl -fsSL https://get.docker.com -o get-docker.sh</br>
+				sudo sh get-docker.sh</br>
+				<span style="color:blue;"># Добавление пользователя в группу docker</span></br>
+				sudo usermod -aG docker $USER</br>
+				newgrp docker
+			</p>
 			<p>Далее установим <b>Docker-Compose</b>.</p>
 			<p>К сожалению каким-либо кодом скачать последнюю <a target="_blank" href="https://github.com/docker/compose/releases/"><b>&laquo;latest версию с Github-Release&raquo;</b></a> не получится, т.к. разработчики в разных версиях могут не собирать 64-битную версию или какую-то другую. А если у вас архитектура <b>ARM</b> тем более. Поэтому придётся зайти туда через браузер, вручную найти нужную вам версию и скопировать на неё ссылку.</p>
 			<p>Например, на данный момент <b>v2.17.2</b>.</p>
 			<p class="codes">
 				$ wget https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
+			</p>
+			<p>Ну а чтобы не переходить и не искать последнюю версию, можно поступить следующим образом.</p>
+			<p class="codes">
+				sudo apt install docker-compose-plugin -y
+			</p>
+			<p>Или таким.</p>
+			<p class="codes">
+				curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</br>
+				chmod +x /usr/local/bin/docker-compose
 			</p>
 			<p>Скопируем её в пользовательский <b>BIN</b> сразу с заменой, если вдруг будете обновлять и сделаем исполняемой.</p>
 			<p class="codes">
