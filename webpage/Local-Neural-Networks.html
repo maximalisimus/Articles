@@ -106,14 +106,12 @@
 					<li><a href="#part2.3">Модели</a></li>
 					<li><a href="#part2.4">Итоги</a></li>
 				</ol>
-				<!--
 				<li><a href="#part3">Ollama VPS/VDS</a></li>
 				<ol>
 					<li><a href="#part3.1">Ollama</a></li>
 					<li><a href="#part3.2">Подключение поисковых утилит на open-webui</a></li>
 				</ol>
 				<li><a href="#part4">VPS/VDS n8nio/n8n</a></li>
-		    	-->
 			</ol>
 		</div>
 		<div class="content">
@@ -152,8 +150,8 @@
 			<p>Еще один нюанс - В <b>Linux</b> я чаще использую <b>&laquo;.Appimage&raquo;</b> формат введу его универсальности, т.к. он уже содержит в себе все необходимые библиотеки и устанавливать их в систему и думать будут ли они конфликтовать с теми, что там уже есть - мне не приходится.</p>
 			<p>И еще <b>&laquo;.Appimage&raquo;</b> архив запуска я обязательно распаковываю в отдельную папку для ускорения работы с программой и также удобства работы с ней, т.к. появляются настройки, которые можно вытащить, скопировать, перенести и т.д. и т.п.</p>
 			<p>Распаковать <b>&laquo;.Appimage&raquo;</b> формат запуска <a href="#part1.1.7">можно вот так</a>.</p>
-			<p>Поясняю нюанс по поводу всех форматов файлов в <b>Linux</b>. В Linux все файлы <b>не важно какого формата по сути текстовые и редактируются</b>, даже если это просто ярлычок запуска с рабочего стола. Удобнее всего использовать <b>&laquo;Редактор Geany&raquo;</b>. Важно только то, где эти файлы располагаются. Иногда их просто подключают как начальную точку входа в тот или иной скрипт, а иногда используют просто как информацию, а иногда такой файл бывает полноценным скриптом в зависимости от конечного формата - будь то bashrc, sh-скрипт и т.д. и т.п.</p>
-			<p>Например, любой ярлычок запуска на рабочем столе. По сути представляет из себя некий ini-файл в котором указаны параметры его работы. В Windows не полноценный аналог - простой ярлык на какой-то файл, если посмотреть его свойства правой кнопкой мыши. Не полноценный, потому что в Linux гораздо больше возможностей настроек запуска того или иного ПО. В Windows только указать путь к файлу запуска и корневой директории.</p>
+			<p>Поясняю нюанс по поводу всех форматов файлов в <b>Linux</b>. В Linux все файлы <b>не важно какого формата по сути текстовые и редактируются</b>, даже если это просто ярлычок запуска с рабочего стола. Удобнее всего использовать <b>&laquo;Редактор Geany&raquo;</b> для редактирования файлов. Важно только то, где эти файлы располагаются и имеют ли права доступа для запуска. Иногда их просто подключают как начальную точку входа в тот или иной скрипт, а иногда используют просто как информацию, а иногда такой файл бывает полноценным скриптом даже без формата. Если у файла есть права доступа для запуска, то файл является выполняемым, как <b>.bat</b> или <b>.cmd</b> в Windows, только здесь ну нужны никакие форматы.</p>
+			<p>Например, любой ярлычок запуска на рабочем столе. По сути представляет из себя некий ini-файл в котором указаны параметры его работы и ему даны права доступа для запуска. В Windows не полноценный аналог - простой ярлык на какой-то файл, если посмотреть его свойства правой кнопкой мыши. Не полноценный, потому что в Linux гораздо больше возможностей настроек запуска того или иного ПО. В Windows только указать путь к файлу запуска и корневую директориюы.</p>
 			<hr>
 			<p>Официальный сайт <a href="https://ollama.com/">Ollama</a>.</p>
 			<p><a name="part1.1.1"></a></p>
@@ -1782,22 +1780,213 @@ After downloading this .safetensor file, place it in the folder stable-diffusion
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
-		<!--
 		<div class="content">
 			<p><a name="part3"></a></p>
 			<h2>3. Ollama VPS/VDS</h2>
 			<p><a name="part3.1"></a></p>
 			<h3>3.1. Ollama</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Для работы ollama на виртуальном севере нужны следующие минимальные технические требования.</p>
+			<ul>
+				<li>VPS с Ubuntu 20.04+, а лучше Debian 12+</li>
+				<li>16 ГБ ОЗУ (минимум 8 ГБ)</li>
+				<li>50 ГБ SSD (для моделей)</li>
+				<li>4+ vCPU</li>
+				<li>Доменное имя</li>
+			</ul>
+			<p>Учтите 2 больших нюанса.</p>
+			<ol>
+				<li>Вам в любом случае придётся либо подобрать некую модель нейронной сети для работы, либо квантизировать её до нужного размера. Модель, которая будет по вашему мнению работать наилучшим образом для ваших задач. И проверить придётся немало моделей.</li>
+				<li>Любая модель на таких системных требованиях будет работать достаточно медленно и с этим придётся смириться, если не хотите платить заоблачные суммы либо за доступ к онлайн чатам, либо за сам сервер с уже серьезными боевыми характеристиками.</li>
+			</ol>
+			<p>Предполагается, что вы уже знакомы с Linux-системами и умеете хотя бы базово настраивать сервер на базе ОС хотя бы <b>Debian/Ubuntu</b>, включая безопасность.</p>
+			<p>Если же нет - перейдите <a target="_blank" href="Configuratons_Linux_Servers.html">по этой ссылке</a> и настройте. Не обязательно настраивать прямо всё-всё. Настройте только то, что вам необходимо, включая фаервол как обязательный параметр безопасности доступа к вашему серверу.</p>
+			<p>Что нужно установить?</p>
+			<ul>
+				<li>Docker & Docker Compose</li>
+				<li>Ollama (локальные AI-модели)</li>
+				<li>Open WebUI (веб-интерфейс)</li>
+				<li>Nginx (обратный прокси)</li>
+				<li>SSL сертификат</li>
+			</ul>
+			<p>Подключаемся к серверу и устанавливаем необходимые компоненты.</p>
+			<p>Обновление системы.</p>
+			<p class="codes">
+				sudo apt update && sudo apt upgrade -y
+			</p>
+			<p>Docker и Docker-Compose можно установить <a target="_blank" href="Configuratons_Linux_Servers.html#part15">по следующей инструкции</a>.</p>
+			<p>Установка Ollama.</p>
+			<p class="codes">
+				curl -fsSL https://ollama.com/install.sh | sh
+			</p>
+			<p>Настройка доступа для Docker.</p>
+			<p class="codes">
+				sudo systemctl stop ollama</br>
+				sudo mkdir -p /etc/systemd/system/ollama.service.d/</br>
+				echo -e '[Service]\nEnvironment="OLLAMA_HOST=0.0.0.0"' | sudo tee /etc/systemd/system/ollama.service.d/environment.conf</br>
+				sudo systemctl daemon-reload</br>
+				sudo systemctl start ollama
+			</p>
+			<p>Загрузка моделей (выберите нужные).</p>
+			<p class="codes">
+				ollama pull llama3.1:8b</br>
+				ollama pull codellama:7b
+			</p>
+			<p>Проверка установленных моделей.</p>
+			<p class="codes">
+				ollama list
+			</p>
+			<p>Создаем и запускаем Open WebUI контейнер.</p>
+			<p>Создание директории проекта.</p>
+			<p class="codes">
+				mkdir ~/open-webui && cd ~/open-webui
+			</p>
+			<p>Вариант-1, файл <b>&laquo;docker.compose.yml&raquo;</b>.</p>
+			<div class="codeses">
+				<pre>nano docker.compose.yml
+version: '3.8'
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - ./data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    networks:
+      - webui
+  ollama:
+    image: ollama/ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - webui
+volumes:
+  ollama_data:
+networks:
+  webui:
+    driver: bridge</pre>
+			</div>
+			<p>Вариант-2.</p>
+			<div class="codeses">
+				<pre>nano docker.compose.yml
+version: '3.8'
+services:
+ open-webui:
+   image: ghcr.io/open-webui/open-webui:main
+   container_name: open-webui
+   restart: unless-stopped
+   ports:
+     - "8080:8080"
+   environment:
+     - OLLAMA_BASE_URL=http://localhost:11434
+     - WEBUI_SECRET_KEY=ваш_секретный_ключ
+     - WEBUI_AUTH=True
+   volumes:
+     - open-webui-data:/app/backend/data
+   network_mode: "host"
+volumes:
+   open-webui-data:</pre>
+			</div>
+			<p>Запуск контейнера.</p>
+			<p class="codes">
+				docker compose up -d
+			</p>
+			<p>Настраиваем доменный доступ через обратный прокси.</p>
+			<p>становка Nginx.</p>
+			<p class="codes">
+				sudo apt install nginx -y
+			</p>
+			<p>Создание конфигурации.</p>
+			<div class="codeses">
+				<pre>sudo nano /etc/nginx/sites-available/openwebui
+server {
+   listen 80;
+   server_name ваш-домен;
+
+   location / {
+       proxy_pass http://localhost:8080;
+       proxy_set_header Host \$host;
+       proxy_set_header X-Real-IP \$remote_addr;
+       proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto \$scheme;
+
+       # WebSocket поддержка
+       proxy_http_version 1.1;
+       proxy_set_header Upgrade \$http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_read_timeout 86400;
+   }
+   client_max_body_size 100M;
+}</pre>
+			</div>
+			<p>Активация конфигурации.</p>
+			<p class="codes">
+				sudo ln -s /etc/nginx/sites-available/openwebui /etc/nginx/sites-enabled/</br>
+				sudo nginx -t</br>
+				sudo systemctl reload nginx
+			</p>
+			<p>Настройка брандмауэра. Если вы используете <b>UFW</b>.</p>
+			<p class="codes">
+				sudo ufw allow 80</br>
+				sudo ufw allow 443</br>
+				sudo ufw allow 22
+			</p>
+			<p>Настройка брандмауэра. Если у вас более продвинутый фаервол <b>Firewalld</b>.</p>
+			<p class="codes">
+				sudo firewall-cmd --permanent --add-port=80/tcp</br>
+				sudo firewall-cmd --permanent --add-port=443/tcp</br>
+				sudo firewall-cmd --permanent --add-port=22/tcp</br>
+				sudo firewall-cmd --reload
+			</p>
+			<p>Добавляем HTTPS для безопасного соединения.</p>			
+			<p>Установка Certbot.</p>
+			<p class="codes">
+				sudo apt install certbot python3-certbot-nginx -y
+			</p>
+			<p>Получение SSL сертификата.</p>
+			<p class="codes">
+				sudo certbot --nginx -d ваш-домен
+			</p>
+			<p>Автоматическое обновление.</p>
+			<p class="codes">
+				sudo systemctl enable certbot.timer
+			</p>
+			<p>Open WebUI предоставляет REST API для интеграции с другими приложениями.</p>
+			<p>Получение API ключа.</p>
+			<p> Settings → API Keys → Generate New Key</p>
+			<p><b>Решение частых проблем.</b></p>
+			<p>Open WebUI не видит модели Ollama.</p>
+			<p>Проверьте подключение между контейнерами.</p>
+			<p class="codes">
+				curl http://localhost:11434/api/tags
+			</p>
+			<p>Проверка из контейнера Open WebUI.</p>
+			<p class="codes">
+				docker exec open-webui curl http://localhost:11434/api/tags
+			</p>
+			<p>Перезапуск сервисов.</p>
+			<p class="codes">
+				docker compose down</br>
+				docker compose up -d
+			</p>
+			<p>Ошибки памяти при работе с большими моделями.</p>
+			<p>Для 12 ГБ ОЗУ рекомендуемые настройки:</p>
+			<ul>
+				<li>Max Tokens: 8192</li>
+				<li>Модель: llama3.1:8b или codellama:7b</li>
+				<li>Температура: 0.3</li>
+				<li>Мониторинг памяти: запустите терминал и введите одну из команд, либо запустите несколько терминалов и позапускайте каждую команду.</li>
+				<ul>
+					<li>htop</li>
+					<li>free -h</li>
+					<li>docker stats</li>
+				</ul>
+			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.2"></a></p>
@@ -1828,7 +2017,6 @@ After downloading this .safetensor file, place it in the folder stable-diffusion
 			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
-		-->
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
