@@ -5,6 +5,15 @@ BODY {
 	color: black; 
 	margin:0;
 }
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  -moz-pre-wrap: pre-wrap;
+  -o-pre-wrap: pre-wrap;
+  -webkit-pre-wrap: pre-wrap;
+  -ms-pre-wrap: pre-wrap;
+}
+
 .site {
 	display: block;
 	width: 100%;
