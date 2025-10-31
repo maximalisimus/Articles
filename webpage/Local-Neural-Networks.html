@@ -85,9 +85,9 @@
 						<li><a href="#part1.3.17">PygmalionAI</a></li>
 						<li><a href="#part1.3.18">Другие</a></li>
 						<li><a href="#part1.3.20">Lora Model</a></li>
-						<li><a href="#part1.3.21">DistilBERT</a></li>
-						<li><a href="#part1.3.22">GPT-2 </a></li>
-						<li><a href="#part1.3.23">BERT</a></li>
+						<li><a href="#part1.3.21">Gemini</a></li>
+						<li><a href="#part1.3.22">Claude Haiku</a></li>
+						<li><a href="#part1.3.23">DeepSeek</a></li>
 					</ol>
 					<li><a href="#part1.4">Конвертирование моделей</a></li>
 					<li><a href="#part1.5">Запуск GGML/GGUF через ollama</a></li>
@@ -145,17 +145,53 @@
 			</ol>
 			<p>Для каждой программы если это не официальный сайт, а конкретно Git репозиторий - внутри каждого есть инструкция по установке и использованию, поэтому добавлять ее сюда и загромождать место не имеет смысла. Информация в этом случае будет дублироваться, а если при обновлении в репозитории хоть что-то изменится - то она даже будет не актуальна.</p>
 			<p>У меня на Linux - используется пользвотель &laquo;Mikl&raquo;. И для запуска я испольную отдельную папку с иконкой и скриптом запуска просто для удобства.</p>
-			<p>Нюанс. У меня установлен &laquo;Python&raquo; и &laquo;virtualenvwrapper&raquo;. Как установить его на Linux или Windows <a href="https://maximalisimus.github.io/Articles/Python_Virtualenv.html#part1">можно посмотреть здесь</a>.</p>
+			<p>Нюанс. У меня установлен &laquo;Python&raquo; и &laquo;virtualenvwrapper&raquo;. Как установить его на Linux или Windows <a target="_blank" href="https://maximalisimus.github.io/Articles/Python_Virtualenv.html#part1">можно посмотреть здесь</a>.</p>
 			<p>В папке пользователя создана отдельная директория, например <b>&laquo;/home/mikl/programs/ollama-apps/&raquo;</b>.</p>
 			<p>Еще один нюанс - В <b>Linux</b> я чаще использую <b>&laquo;.Appimage&raquo;</b> формат введу его универсальности, т.к. он уже содержит в себе все необходимые библиотеки и устанавливать их в систему и думать будут ли они конфликтовать с теми, что там уже есть - мне не приходится.</p>
 			<p>И еще <b>&laquo;.Appimage&raquo;</b> архив запуска я обязательно распаковываю в отдельную папку для ускорения работы с программой и также удобства работы с ней, т.к. появляются настройки, которые можно вытащить, скопировать, перенести и т.д. и т.п.</p>
 			<p>Распаковать <b>&laquo;.Appimage&raquo;</b> формат запуска <a href="#part1.1.7">можно вот так</a>.</p>
 			<p>Поясняю нюанс по поводу всех форматов файлов в <b>Linux</b>. В Linux все файлы <b>не важно какого формата по сути текстовые и редактируются</b>, даже если это просто ярлычок запуска с рабочего стола. Удобнее всего использовать <b>&laquo;Редактор Geany&raquo;</b> для редактирования файлов. Важно только то, где эти файлы располагаются и имеют ли права доступа для запуска. Иногда их просто подключают как начальную точку входа в тот или иной скрипт, а иногда используют просто как информацию, а иногда такой файл бывает полноценным скриптом даже без формата. Если у файла есть права доступа для запуска, то файл является выполняемым, как <b>.bat</b> или <b>.cmd</b> в Windows, только здесь ну нужны никакие форматы.</p>
-			<p>Например, любой ярлычок запуска на рабочем столе. По сути представляет из себя некий ini-файл в котором указаны параметры его работы и ему даны права доступа для запуска. В Windows не полноценный аналог - простой ярлык на какой-то файл, если посмотреть его свойства правой кнопкой мыши. Не полноценный, потому что в Linux гораздо больше возможностей настроек запуска того или иного ПО. В Windows только указать путь к файлу запуска и корневую директориюы.</p>
+			<p>Например, любой ярлычок запуска на рабочем столе. По сути представляет из себя некий ini-файл в котором указаны параметры его работы и ему даны права доступа для запуска. В Windows не полноценный аналог - простой ярлык на какой-то файл, если посмотреть его свойства правой кнопкой мыши. Не полноценный, потому что в Linux гораздо больше возможностей настроек запуска того или иного ПО. В Windows только указать путь к файлу запуска и корневую директорию.</p>
+			<p>Также не забудьте установить саму <a href="https://ollama.com/download/linux">Ollama</a> программу, потому что без неё у вас ни одна другая утилита не заработает.</p>
+			<p>На указанном официальном сайте есть версия и для Windows, и для Linux.</p>
+			<p>Для Linux следуйте вот этой инструкции.</p>
+			<p>Установить новую версию, если программы еще не существует в ОС.</p>
+			<p class="codes">
+				curl -fsSL https://ollama.com/install.sh | sh
+			</p>
+			<p>А вот обновление Ollama чутка сложнее.</p>
+			<p>1. Сначала надо Удалить старые библиотеки.</p>
+			<p class="codes">
+				sudo rm -rf /usr/lib/ollama
+			</p>
+			<p>2. Скачать и распаковать пакет.</p>
+			<p class="codes">
+				curl -fsSL https://ollama.com/download/ollama-linux-amd64.tgz | sudo tar zx -C /usr
+			</p>
+			<p>3. Запустить Ollama.</p>
+			<p class="codes">
+				ollama serve
+			</p>
+			<p>4. В другом терминале проверить, что Ollama запущен.</p>
+			<p class="codes">
+				ollama -v
+			</p>
+			<p>Ну или так.</p>
+			<p class="codes">
+				sudo systemctl status ollama
+			</p>
+			<p>Если не получается запустить сервис ollama.</p>
+			<p class="codes">
+				sudo systemctl daemon-reload</br>
+				sudo systemctl restart ollama
+			</p>
+			<p><b>Нюанс по поводу комманд на Linux.</b></p>
+			<p>Если ОС не выполняет команду - выдаёт ошибку, попробуйте добавить в начале команды: <b>&laquo;sudo&raquo;</b>.</p>
+			<p>Это повысит права доступа до <b>root</b>-а и команду можно будет выполнить принудительно.</p>
 			<hr>
-			<p>Официальный сайт <a href="https://ollama.com/">Ollama</a>.</p>
+			<p>Официальный сайт <a target="_blank" href="https://ollama.com/">Ollama</a>.</p>
 			<p><a name="part1.1.1"></a></p>
-			<p>Python версия <a href="https://github.com/ggerganov/llama.cpp.git">Llama-CPP</a></p>
+			<p>Python версия <a target="_blank" href="https://github.com/ggerganov/llama.cpp.git">Llama-CPP</a></p>
 			<p><b>Llama-CPP</b> — минималистичный open-source движок для запуска больших языковых моделей (LLM) на CPU и GPU с поддержкой web-интерфейса и API.</p>
 			<p>Установка и запуск. Это Python версия, с ней можно работать через Python и виртуальное окружение. Это нормальная практика.</p>
 			<div class="codeses">
@@ -189,23 +225,23 @@ $ ollama run my-own-model</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.2"></a></p>
-			<p>Приложение <a href="https://msty.app/">msty app</a></p>
+			<p>Приложение <a target="_blank" href="https://msty.app/">msty app</a></p>
 			<p><b>msty app</b> — приложение для работы с локальными языковыми моделями с удобным интерфейсом и поддержкой различных форматов моделей.</p>
 			<ul>
-				<li><a href="https://assets.msty.app/prod/latest/win/auto/Msty_x64.exe">msty-x64 windows gpu (amd or nvidia)</a></li>
-				<li><a href="https://assets.msty.app/prod/latest/win/cpu/Msty_x64.exe">msty-x64 windows cpy only</a></li>
-				<li><a href="https://assets.msty.app/prod/latest/linux/amd64/Msty_x86_64_amd64.AppImage">msty-x64 linux nvidia AppImage</a></li>
-				<li><a href="https://assets.msty.app/prod/latest/linux/amd64/Msty_amd64_amd64.deb">msty-x64 linux nvidia DEB</a></li>
-				<li><a href="https://assets.msty.app/prod/latest/linux/rocm/Msty_x86_64_rocm.AppImage">msty-x64 linux amd gpu -rocm AppImage</a></li>
-				<li><a href="https://assets.msty.app/prod/latest/linux/rocm/Msty_amd64_rocm.deb">msty-x64 linux amd gpu -rocm DEB</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/win/auto/Msty_x64.exe">msty-x64 windows gpu (amd or nvidia)</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/win/cpu/Msty_x64.exe">msty-x64 windows cpy only</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/linux/amd64/Msty_x86_64_amd64.AppImage">msty-x64 linux nvidia AppImage</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/linux/amd64/Msty_amd64_amd64.deb">msty-x64 linux nvidia DEB</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/linux/rocm/Msty_x86_64_rocm.AppImage">msty-x64 linux amd gpu -rocm AppImage</a></li>
+				<li><a target="_blank" href="https://assets.msty.app/prod/latest/linux/rocm/Msty_amd64_rocm.deb">msty-x64 linux amd gpu -rocm DEB</a></li>
 			</ul>
 			<hr>
 			<p><a name="part1.1.3"></a></p>
-			<p>Приложение <a href="https://jan.ai/download">Jan for Desktop</a></p>
+			<p>Приложение <a target="_blank" href="https://jan.ai/download">Jan for Desktop</a></p>
 			<p><b>Jan for Desktop</b> — локальный AI-ассистент с возможностью работы с языковыми моделями и интеграцией в рабочий процесс.</p>
 			<hr>
 			<p><a name="part1.1.4"></a></p>
-			<p>Использование <a href="https://docs.openwebui.com/">open-webui</a> на Linux.</p>
+			<p>Использование <a target="_blank" href="https://docs.openwebui.com/">open-webui</a> на Linux.</p>
 			<p><b>open-webui на Linux</b> — веб-интерфейс для запуска и управления локальными языковыми моделями на Linux-системах.</p>
 			<div class="codeses">
 				<pre>curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -232,7 +268,7 @@ source /home/mikl/programs/ollama-apps/open-webui/bashrc
 workon ollama-env
 open-webui serve</pre>
 			</div>
-			<p>Иконка для скачивания - <a href="../image/Neural-Networks/neural-icons/open-webui-icon.png"><b>&laquo;open-webui-icon.png&raquo;</b></a>.</p>
+			<p>Иконка для скачивания - <a target="_blank" href="../image/Neural-Networks/neural-icons/open-webui-icon.png"><b>&laquo;open-webui-icon.png&raquo;</b></a>.</p>
 			<p>И конечно же сам файл запуска на рабочем столе <b>&laquo;Open-WebUI.desktop&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>[Desktop Entry]
@@ -244,18 +280,18 @@ Icon=/home/mikl/programs/ollama-apps/open-webui/open-webui-icon.png</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.5"></a></p>
-			<p>Приложение <a href="https://anythingllm.com/">AnythingLLM</a></p>
+			<p>Приложение <a target="_blank" href="https://anythingllm.com/">AnythingLLM</a></p>
 			<p><b>AnythingLLM</b> — универсальный фронтенд для запуска и взаимодействия с различными локальными языковыми моделями.</p>
 			<ul>
-				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop-Silicon.dmg">AnythingLLM Desktop MacOS Silicon</a></li>
-				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop.dmg">AnythingLLM Desktop MacOS</a></li>
-				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop.exe">AnythingLLM Desktop Windows</a></li>
-				<li><a href="https://cdn.useanything.com/latest/AnythingLLMDesktop-Arm64.exe">AnythingLLM Desktop Windows ARM64</a></li>
-				<li><a href="https://docs.anythingllm.com/installation-desktop/linux#install-using-the-installer-script">Docs AnythingLLM</a></li>
-				<li><a href="https://github.com/Mintplex-Labs/anything-llm">Mintplex-Labs AnythingLLM</a></li>
-				<li><a href="https://github.com/Mintplex-Labs/anything-llm.git">Mintplex-Labs AnythingLLM GIT</a></li>
+				<li><a target="_blank" href="https://cdn.useanything.com/latest/AnythingLLMDesktop-Silicon.dmg">AnythingLLM Desktop MacOS Silicon</a></li>
+				<li><a target="_blank" href="https://cdn.useanything.com/latest/AnythingLLMDesktop.dmg">AnythingLLM Desktop MacOS</a></li>
+				<li><a target="_blank" href="https://cdn.useanything.com/latest/AnythingLLMDesktop.exe">AnythingLLM Desktop Windows</a></li>
+				<li><a target="_blank" href="https://cdn.useanything.com/latest/AnythingLLMDesktop-Arm64.exe">AnythingLLM Desktop Windows ARM64</a></li>
+				<li><a target="_blank" href="https://docs.anythingllm.com/installation-desktop/linux#install-using-the-installer-script">Docs AnythingLLM</a></li>
+				<li><a target="_blank" href="https://github.com/Mintplex-Labs/anything-llm">Mintplex-Labs AnythingLLM</a></li>
+				<li><a target="_blank" href="https://github.com/Mintplex-Labs/anything-llm.git">Mintplex-Labs AnythingLLM GIT</a></li>
 			</ul>
-			<p>Для AnythingLLM я использую вот такую иконку <a href="../image/Neural-Networks/neural-icons/anythingllm-desktop.png"><b>&laquo;anythingllm-desktop.png&raquo;</b></a> и ярлычок запуска <b>&laquo;anythingllm-desktop.desktop&raquo;</b> на рабочем столе.</p>
+			<p>Для AnythingLLM я использую вот такую иконку <a target="_blank" href="../image/Neural-Networks/neural-icons/anythingllm-desktop.png"><b>&laquo;anythingllm-desktop.png&raquo;</b></a> и ярлычок запуска <b>&laquo;anythingllm-desktop.desktop&raquo;</b> на рабочем столе.</p>
 			<div class="codeses">
 				<pre>[Desktop Entry]
 Name=AnythingLLM
@@ -271,13 +307,13 @@ Categories=Utility;</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.6"></a></p>
-			<p>Приложение <a href="https://lmstudio.ai/">LM Studio</a></p>
+			<p>Приложение <a target="_blank" href="https://lmstudio.ai/">LM Studio</a></p>
 			<p><b>LM Studio</b> — приложение для локального запуска и управления большими языковыми моделями с удобным графическим интерфейсом.</p>
 			<ul>
-				<li><a href="https://installers.lmstudio.ai/win32/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.exe">LM-Studio Windows X64</a></li>
-				<li><a href="https://installers.lmstudio.ai/linux/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.AppImage">LM Studion AppImage</a></li>
+				<li><a target="_blank" href="https://installers.lmstudio.ai/win32/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.exe">LM-Studio Windows X64</a></li>
+				<li><a target="_blank" href="https://installers.lmstudio.ai/linux/x64/0.3.6-8/LM-Studio-0.3.6-8-x64.AppImage">LM Studion AppImage</a></li>
 			</ul>
-			<p>Иконка запуска LM Studio <a href="../image/Neural-Networks/neural-icons/lm-studio.png"><b>&laquo;lm-studio.png&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;lm-studio.desktop&raquo;</b>.</p>
+			<p>Иконка запуска LM Studio <a target="_blank" href="../image/Neural-Networks/neural-icons/lm-studio.png"><b>&laquo;lm-studio.png&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;lm-studio.desktop&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>[Desktop Entry]
 Name=LM Studio
@@ -322,11 +358,11 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 			<hr>
 			<p><a name="part1.1.8"></a></p>
 			<p><a name="TextGenerationWebui"></a></p>
-			<p>Приложение <a href="https://github.com/oobabooga/text-generation-webui">Text-Generation-Webui</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/oobabooga/text-generation-webui">Text-Generation-Webui</a></p>
 			<p><b>Text-Generation-Webui</b> — веб-интерфейс для генерации текста с использованием локальных языковых моделей, поддерживает множество моделей и кастомизацию.</p>
 			<ul>
-				<li><a href="https://github.com/oobabooga/text-generation-webui.git">Text-Generation-Webui Git https</a></li>
-				<li><a href="git@github.com:oobabooga/text-generation-webui.git">Text-Generation-Webui Git git</a></li>
+				<li><a target="_blank" href="https://github.com/oobabooga/text-generation-webui.git">Text-Generation-Webui Git https</a></li>
+				<li><a target="_blank" href="git@github.com:oobabooga/text-generation-webui.git">Text-Generation-Webui Git git</a></li>
 			</ul>
 			<p>Linux запуск.</p>
 			<div class="codeses">
@@ -334,7 +370,7 @@ ARCH=x86_64 /appimagetool-x86_64.AppImage -n squashfs-root</pre>
 start_linux.sh --api --cuda
 start_linux.sh --api</pre>
 			</div>
-			<p>Иконка для text-generation-webui <a href="../image/Neural-Networks/neural-icons/text-generation-webui-logo.svg"><b>&laquo;text-generation-webui-logo.svg&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;text-generation-webui.desktop&raquo;</b>.</p>
+			<p>Иконка для text-generation-webui <a target="_blank" href="../image/Neural-Networks/neural-icons/text-generation-webui-logo.svg"><b>&laquo;text-generation-webui-logo.svg&raquo;</b></a> и ярлычок запуска на рабочем столе <b>&laquo;text-generation-webui.desktop&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>[Desktop Entry]
 Name=Text Generation WebUI
@@ -350,7 +386,7 @@ Categories=Utility;</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.9"></a></p>
-			<p>Приложение <a href="https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh">Miniconda3</a></p>
+			<p>Приложение <a target="_blank" href="https://repo.anaconda.com/miniconda/Miniconda3-py38_23.5.2-0-Linux-x86_64.sh">Miniconda3</a></p>
 			<p><b>Miniconda3</b> — минималистичный дистрибутив Python с менеджером пакетов conda для управления окружениями и зависимостями.</p>
 			<p>Запуск на Linux.</p>
 			<div class="codeses">
@@ -360,22 +396,22 @@ conda update -n base -c defaults conda</pre>
 			</div>
 			<hr>
 			<p><a name="part1.1.10"></a></p>
-			<p>Приложение <a href="https://github.com/TavernAI/TavernAI">TavernAI</a> для <a href="#TextGenerationWebui">Text-Generation-Webui</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/TavernAI/TavernAI">TavernAI</a> для <a href="#TextGenerationWebui">Text-Generation-Webui</a></p>
 			<p><b>TavernAI</b> для <u>Text-Generation-Webui</u> — расширение для Text-Generation-Webui, добавляющее удобный интерфейс для ролевых игр и чат-ботов.</p>
 			<ul>
-				<li><a href="https://sourceforge.net/projects/tavernaimain/files/">TavernAI sourceforge</a></li>
-				<li><a href="https://github.com/TavernAI/TavernAI">TavernAI</a></li>
-				<li><a href="https://github.com/TavernAI/TavernAI.git">TavernAI Git https</a></li>
-				<li><a href="git@github.com:TavernAI/TavernAI.git">TavernAI Git git</a></li>
-				<li><a href="https://github.com/TavernAI/TavernAI/releases">TavernAI Git Release</a></li>
+				<li><a target="_blank" href="https://sourceforge.net/projects/tavernaimain/files/">TavernAI sourceforge</a></li>
+				<li><a target="_blank" href="https://github.com/TavernAI/TavernAI">TavernAI</a></li>
+				<li><a target="_blank" href="https://github.com/TavernAI/TavernAI.git">TavernAI Git https</a></li>
+				<li><a target="_blank" href="git@github.com:TavernAI/TavernAI.git">TavernAI Git git</a></li>
+				<li><a target="_blank" href="https://github.com/TavernAI/TavernAI/releases">TavernAI Git Release</a></li>
 			</ul>
 			<hr>
 			<p><a name="part1.1.11"></a></p>
-			<p>Приложение <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable-Diffusion-Webui</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable-Diffusion-Webui</a></p>
 			<p><b>Stable-Diffusion-Webui</b> — популярный веб-интерфейс для локального запуска модели Stable Diffusion с множеством расширений и поддержкой LoRA.</p>
 			<ul>
-				<li><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui.git">Stable-Diffusion-Webui Git https</a></li>
-				<li><a href="git@github.com:AUTOMATIC1111/stable-diffusion-webui.git"></a>Stable-Diffusion-Webui Git git</li>
+				<li><a target="_blank" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui.git">Stable-Diffusion-Webui Git https</a></li>
+				<li><a target="_blank" href="git@github.com:AUTOMATIC1111/stable-diffusion-webui.git"></a>Stable-Diffusion-Webui Git git</li>
 			</ul>
 			<p><b>Откуда берется первоначальная модель для Stable Diffusion WebUI от AUTOMATIC1111?</b></p>
 			<p>При первом запуске <b>Stable Diffusion WebUI</b> сама программа не содержит встроенной модели — её нужно скачать отдельно. Обычно для работы требуется файл модели (например, с расширением <b>&laquo;.ckpt&raquo;</b> или <b>&laquo;.safetensors&raquo;</b>), который содержит веса нейросети.</p>
@@ -399,87 +435,87 @@ conda update -n base -c defaults conda</pre>
 			</ol>
 			<p><b>Ссылки на .ckpt и .safetensors stable-diffusion модели.</b></p>
 			<ul>
-				<li><a href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/tree/main">stable-diffusion-v1-5 / stable-diffusion-v1-5</a></li>
-				<li><a href="https://huggingface.co/czl/stable-diffusion-v1-5">czl/stable-diffusion-v1-5</a></li>
-				<li><a href="https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8">Comfy-Org / stable-diffusion-3.5</a></li>
-				<li><a href="https://huggingface.co/stabilityai/collections">Stability AI репозиторий</a></li>
+				<li><a target="_blank" href="https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/tree/main">stable-diffusion-v1-5 / stable-diffusion-v1-5</a></li>
+				<li><a target="_blank" href="https://huggingface.co/czl/stable-diffusion-v1-5">czl/stable-diffusion-v1-5</a></li>
+				<li><a target="_blank" href="https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8">Comfy-Org / stable-diffusion-3.5</a></li>
+				<li><a target="_blank" href="https://huggingface.co/stabilityai/collections">Stability AI репозиторий</a></li>
 			</ul>
 			<hr>
 			<p><a name="part1.1.12"></a></p>
-			<p>Приложение <a href="https://github.com/oobabooga/one-click-installers">one-click-installers</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/oobabooga/one-click-installers">one-click-installers</a></p>
 			<p><b>one-click-installers</b> — скрипты и установщики для быстрого развёртывания Text-Generation-Webui и связанных инструментов.</p>
 			<ul>
-				<li><a href="https://github.com/oobabooga/one-click-installers.git">one-click-installers git https</a></li>
-				<li><a href="git@github.com:oobabooga/one-click-installers.git">one-click-installers git git</a></li>
+				<li><a target="_blank" href="https://github.com/oobabooga/one-click-installers.git">one-click-installers git https</a></li>
+				<li><a target="_blank" href="git@github.com:oobabooga/one-click-installers.git">one-click-installers git git</a></li>
 			</ul>
 			<hr>
 			<p><a name="part1.1.13"></a></p>
-			<p>Приложение <a href="https://github.com/ebolam/KoboldAI">KoboldAI</a> или <a href="https://github.com/ebolam/KoboldAI.git">KoboldAI GIT</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/ebolam/KoboldAI">KoboldAI</a> или <a href="https://github.com/ebolam/KoboldAI.git">KoboldAI GIT</a></p>
 			<p><b>KoboldAI</b> или <b>KoboldAI GIT</b> — платформа для интерактивного сторителлинга и генерации текста с поддержкой различных языковых моделей.</p>
 			<ul>
-				<li><a href="https://github.com/KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git https</a></li>
-				<li><a href="git@github.com:KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git git</a></li>
-				<li><a href="https://github.com/henk717/KoboldAI.git">KoboldAI United (Экспериментальная версия) Git https</a></li>
-				<li><a href="git@github.com:henk717/KoboldAI.git">KoboldAI United (Экспериментальная версия) Git git</a></li>
-				<li><a href="https://github.com/LostRuins/koboldcpp.git">KoboldAI CU Git https</a></li>
-				<li><a href="git@github.com:LostRuins/koboldcpp.git">KoboldAI CU Git git</a></li>
-				<li><a href="https://colab.research.google.com/github/koboldai/KoboldAI-Client/blob/main/colab/GPU.ipynb">Colab KoboldAI GPU</a></li>
-				<li><a href="https://colab.research.google.com/github/KoboldAI/KoboldAI-Client/blob/main/colab/TPU.ipynb">Colab KoboldAI TPU</a></li>
+				<li><a target="_blank" href="https://github.com/KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git https</a></li>
+				<li><a target="_blank" href="git@github.com:KoboldAI/KoboldAI-Client.git">KoboldAI-Client Git git</a></li>
+				<li><a target="_blank" href="https://github.com/henk717/KoboldAI.git">KoboldAI United (Экспериментальная версия) Git https</a></li>
+				<li><a target="_blank" href="git@github.com:henk717/KoboldAI.git">KoboldAI United (Экспериментальная версия) Git git</a></li>
+				<li><a target="_blank" href="https://github.com/LostRuins/koboldcpp.git">KoboldAI CU Git https</a></li>
+				<li><a target="_blank" href="git@github.com:LostRuins/koboldcpp.git">KoboldAI CU Git git</a></li>
+				<li><a target="_blank" href="https://colab.research.google.com/github/koboldai/KoboldAI-Client/blob/main/colab/GPU.ipynb">Colab KoboldAI GPU</a></li>
+				<li><a target="_blank" href="https://colab.research.google.com/github/KoboldAI/KoboldAI-Client/blob/main/colab/TPU.ipynb">Colab KoboldAI TPU</a></li>
 				<p>Пока Google не исправит драйвера для TPU, эта версия бесполезна.</p>
 			</ul>
 			<hr>
 			<p><a name="part1.1.14"></a></p>
-			<p>Программа <a href="https://krita.org/en/download/">Krita</a></p>
+			<p>Программа <a target="_blank" href="https://krita.org/en/download/">Krita</a></p>
 			<p><b>Krita</b> — бесплатный и мощный редактор растровой графики, ориентированный на цифровую живопись и иллюстрацию.</p>
 			<p>Например.</p>
 			<ul>
-				<li><a href="https://download.kde.org/stable/krita/5.2.9/krita-x64-5.2.9-setup.exe">krita-x64-5.2.9-setup.exe</a></li>
-				<li><a href="https://download.kde.org/stable/krita/5.2.9/krita-x64-5.2.9.zip">krita-x64-5.2.9.zip</a></li>
-				<li><a href="https://download.kde.org/stable/krita/5.2.9/krita-5.2.9-x86_64.AppImage">krita-5.2.9-x86_64.AppImage</a></li>
-				<li><a href="https://download.kde.org/stable/krita/KritaShellExtension-v1.2.4b-setup.exe">KritaShellExtension-v1.2.4b-setup.exe</a></li>
+				<li><a target="_blank" href="https://download.kde.org/stable/krita/5.2.9/krita-x64-5.2.9-setup.exe">krita-x64-5.2.9-setup.exe</a></li>
+				<li><a target="_blank" href="https://download.kde.org/stable/krita/5.2.9/krita-x64-5.2.9.zip">krita-x64-5.2.9.zip</a></li>
+				<li><a target="_blank" href="https://download.kde.org/stable/krita/5.2.9/krita-5.2.9-x86_64.AppImage">krita-5.2.9-x86_64.AppImage</a></li>
+				<li><a target="_blank" href="https://download.kde.org/stable/krita/KritaShellExtension-v1.2.4b-setup.exe">KritaShellExtension-v1.2.4b-setup.exe</a></li>
 			</ul>
 			<hr>
 			<p><a name="part1.1.15"></a></p>
 			<p>Внедрение Diffusion в Krita.</p>
-			<p>Приложение <a href="https://github.com/Acly/krita-ai-diffusion">Krita AI Diffusion</a></p>
+			<p>Приложение <a target="_blank" href="https://github.com/Acly/krita-ai-diffusion">Krita AI Diffusion</a></p>
 			<p><b>Krita AI Diffusion</b> — плагин для Krita, позволяющий использовать модели диффузии для генерации и редактирования изображений.</p>
 			<ul>
-				<li><a href="https://github.com/Acly/krita-ai-diffusion/releases">Krita AI Diffusion Release</a></li>
-				<li><a href="https://github.com/Acly/krita-ai-diffusion/releases/download/v1.32.0/krita_ai_diffusion-1.32.0.zip">Krita AI Diffusion, например, версия 1.32.0</a></li>
+				<li><a target="_blank" href="https://github.com/Acly/krita-ai-diffusion/releases">Krita AI Diffusion Release</a></li>
+				<li><a target="_blank" href="https://github.com/Acly/krita-ai-diffusion/releases/download/v1.32.0/krita_ai_diffusion-1.32.0.zip">Krita AI Diffusion, например, версия 1.32.0</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
-			<p><a name="part1.1.16"></a></p>
+			<p><a target="_blank" name="part1.1.16"></a></p>
 			<p>Программа <a href="https://www.nikse.dk/subtitleedit">SubTitleEdit</a></p>
 			<p><b>SubTitleEdit</b> — редактор субтитров с поддержкой автоматического создания и перевода субтитров с помощью встроенного AI.</p>
-			<p><a href="https://github.com/SubtitleEdit/subtitleedit">SubTitleEdit Github</a></p>
-			<p><a href="https://github.com/SubtitleEdit/subtitleedit.git">SubTitleEdit Github https</a></p>
-			<p><a href="git@github.com:SubtitleEdit/subtitleedit.git">SubTitleEdit Github git</a></p>
-			<p><a href="https://github.com/SubtitleEdit/subtitleedit/releases">SubTitleEdit Github Release</a></p>
+			<p><a target="_blank" href="https://github.com/SubtitleEdit/subtitleedit">SubTitleEdit Github</a></p>
+			<p><a target="_blank" href="https://github.com/SubtitleEdit/subtitleedit.git">SubTitleEdit Github https</a></p>
+			<p><a target="_blank" href="git@github.com:SubtitleEdit/subtitleedit.git">SubTitleEdit Github git</a></p>
+			<p><a target="_blank" href="https://github.com/SubtitleEdit/subtitleedit/releases">SubTitleEdit Github Release</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.1.17"></a></p>
 			<p><b><span style="color:red;">&laquo;stabilityai/stable-diffusion-3.5-large-turbo&raquo;</span></b></p>
 			<p><b>stabilityai/stable-diffusion-3.5-large-turbo</b> — улучшенная версия модели Stable Diffusion для генерации изображений с высоким качеством и скоростью.</p>
-			<p><a href="https://huggingface.co/stabilityai/stable-diffusion-3.5-large-turbo">stabilityai/stable-diffusion-3.5-large-turbo</a></p>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a target="_blank" href="https://huggingface.co/stabilityai/stable-diffusion-3.5-large-turbo">stabilityai/stable-diffusion-3.5-large-turbo</a></p>
+			<p><a target="_blank" href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.1.18"></a></p>
 			<p><b><span style="color:red;">&laquo;Image Creator&raquo;</span></b></p>
 			<p><b>Image Creator</b> — инструмент для генерации изображений на основе текстовых подсказок с использованием локальных моделей.</p>
-			<p><a href="https://github.com/Klopolupka007/ImageCreator">ImageCreator</a></p>
-			<p><a href="https://github.com/Klopolupka007/ImageCreator.git">ImageCreator Git https</a></p>
-			<p><a href="git@github.com:Klopolupka007/ImageCreator.git">ImageCreator Git git</a></p>
-			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<p><a target="_blank" href="https://github.com/Klopolupka007/ImageCreator">ImageCreator</a></p>
+			<p><a target="_blank" href="https://github.com/Klopolupka007/ImageCreator.git">ImageCreator Git https</a></p>
+			<p><a target="_blank" href="git@github.com:Klopolupka007/ImageCreator.git">ImageCreator Git git</a></p>
+			<p><a target="_blank" href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.1.19"></a></p>
 			<p><b><span style="color:red;">&laquo;Stability Matrix&raquo;</span></b></p>
 			<p><b>Stability Matrix</b> — платформа или инструмент для управления и анализа моделей Stable Diffusion и их параметров.</p>
-			<p><a href="https://github.com/LykosAI/StabilityMatrix">StabilityMatrix</a></p>
-			<p><a href="https://github.com/LykosAI/StabilityMatrix.git">StabilityMatrix Git https</a></p>
-			<p><a href="git@github.com:LykosAI/StabilityMatrix.git">StabilityMatrix Git git</a></p>
-			<p><a href="https://github.com/LykosAI/StabilityMatrix/releases">StabilityMatrix Git Release</a></p>
-			<p>Иконка запуска StabilityMatrix <a href="../image/Neural-Networks/neural-icons/zone.lykos.stabilitymatrix.png"><b>&laquo;zone.lykos.stabilitymatrix.png&raquo;</b></a> и ярлычок на рабочем столе <b>&laquo;Stability_Matrix_AppImage.desktop&raquo;</b>.</p>
+			<p><a target="_blank" href="https://github.com/LykosAI/StabilityMatrix">StabilityMatrix</a></p>
+			<p><a target="_blank" href="https://github.com/LykosAI/StabilityMatrix.git">StabilityMatrix Git https</a></p>
+			<p><a target="_blank" href="git@github.com:LykosAI/StabilityMatrix.git">StabilityMatrix Git git</a></p>
+			<p><a target="_blank" href="https://github.com/LykosAI/StabilityMatrix/releases">StabilityMatrix Git Release</a></p>
+			<p>Иконка запуска StabilityMatrix <a target="_blank" href="../image/Neural-Networks/neural-icons/zone.lykos.stabilitymatrix.png"><b>&laquo;zone.lykos.stabilitymatrix.png&raquo;</b></a> и ярлычок на рабочем столе <b>&laquo;Stability_Matrix_AppImage.desktop&raquo;</b>.</p>
 			<div class="codeses">
 				<pre>[Desktop Entry]
 Type=Application
@@ -512,15 +548,15 @@ Keywords=</pre>
 			<p><b>DALL·E mini (теперь известна как Craiyon)</b> — это упрощённая версия модели DALL·E для генерации изображений по текстовому описанию.</p>
 			<p>Работает на Windows, Linux, macOS, но для комфортной работы нужен GPU с минимум 6-8 ГБ видеопамяти.</p>
 			<p>Она доступна как веб-сервис и как локальная программа (на Python), но локальный запуск требует мощного железа и настройки.</p>
-			<p><a href="https://github.com/borisdayma/dalle-mini">DALL·E mini</a></p>
-			<p><a href="https://github.com/borisdayma/dalle-mini.git">DALL·E mini Github https</a></p>
-			<p><a href="git@github.com:borisdayma/dalle-mini.git">DALL·E mini Github git</a></p>
-			<p><a href="https://github.com/borisdayma/dalle-mini/releases">DALL·E mini Github Release</a></p>
-			<p><a href="https://sourceforge.net/projects/dall-e-mini.mirror/">DALL·E mini SourceForge</a></p>
-			<p><a href="https://github.com/marcelb/craiyon">Craiyon</a></p>
-			<p><a href="https://github.com/marcelb/craiyon.git">Craiyon Github https</a></p>
-			<p><a href="git@github.com:marcelb/craiyon.git">Craiyon Github git</a></p>
-			<p><a href="https://github.com/marcelb/craiyon/releases">Craiyon Github release</a></p>
+			<p><a target="_blank" href="https://github.com/borisdayma/dalle-mini">DALL·E mini</a></p>
+			<p><a target="_blank" href="https://github.com/borisdayma/dalle-mini.git">DALL·E mini Github https</a></p>
+			<p><a target="_blank" href="git@github.com:borisdayma/dalle-mini.git">DALL·E mini Github git</a></p>
+			<p><a target="_blank" href="https://github.com/borisdayma/dalle-mini/releases">DALL·E mini Github Release</a></p>
+			<p><a target="_blank" href="https://sourceforge.net/projects/dall-e-mini.mirror/">DALL·E mini SourceForge</a></p>
+			<p><a target="_blank" href="https://github.com/marcelb/craiyon">Craiyon</a></p>
+			<p><a target="_blank" href="https://github.com/marcelb/craiyon.git">Craiyon Github https</a></p>
+			<p><a target="_blank" href="git@github.com:marcelb/craiyon.git">Craiyon Github git</a></p>
+			<p><a target="_blank" href="https://github.com/marcelb/craiyon/releases">Craiyon Github release</a></p>
 			<hr>
 			<p><a name="part1.2"></a></p>
 			<h3>1.2. Параметры</h3>
@@ -679,7 +715,7 @@ Keywords=</pre>
 			<p>Таким же образом можно найти различные LORa дополнения как для текстовых моделей, так и для генерации и обработки изображений и другие.</p>
 			<p><a name="part1.3.1"></a></p>
 			<p><b><span style="color:red;">&laquo;Mykes/medicus&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/Mykes/medicus">Medicus</a> — это медицинская адаптация модели Gemma2-2b-it, специально дообученная для применения в сфере здравоохранения и медицины. Модель поддерживает русский и английский языки, что делает её универсальной для использования в различных медицинских контекстах. Дообучение модели проводилось методом Continued Pretraining в течение 10 эпох, что позволило адаптировать её под задачи медицинской тематики.</p>
+			<p><a target="_blank" href="https://huggingface.co/Mykes/medicus">Medicus</a> — это медицинская адаптация модели Gemma2-2b-it, специально дообученная для применения в сфере здравоохранения и медицины. Модель поддерживает русский и английский языки, что делает её универсальной для использования в различных медицинских контекстах. Дообучение модели проводилось методом Continued Pretraining в течение 10 эпох, что позволило адаптировать её под задачи медицинской тематики.</p>
 			<ul>
 				<li>Q8 8-битная квантизация (стандарт)</li>
 				<li>Q6_K 6-битная квантизация с использованием K-средних</li>
@@ -698,22 +734,22 @@ GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/Mykes/medicus
 hf download Mykes/medicus</pre>
 			</div>
 			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/config.json">config.json</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/generation_config.json">generation_config.json</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-F16.gguf">medicus-F16.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q2_K.gguf">medicus-Q2_K.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q3_K_S.gguf">medicus-Q3_K_S.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q4_K_M.gguf">medicus-Q4_K_M.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q5_K_M.gguf">medicus-Q5_K_M.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q6_K.gguf">medicus-Q6_K.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q8_0.gguf">medicus-Q8_0.gguf</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/model-00001-of-00002.safetensors">model-00001-of-00002.safetensors</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/model-00002-of-00002.safetensors">model-00002-of-00002.safetensors</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/model.safetensors.index.json">model.safetensors.index.json</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/special_tokens_map.json">special_tokens_map.json</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.json">tokenizer.json</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.model">tokenizer.model</a><br>
-				<a href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer_config.json">tokenizer_config.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/config.json">config.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/generation_config.json">generation_config.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-F16.gguf">medicus-F16.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q2_K.gguf">medicus-Q2_K.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q3_K_S.gguf">medicus-Q3_K_S.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q4_K_M.gguf">medicus-Q4_K_M.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q5_K_M.gguf">medicus-Q5_K_M.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q6_K.gguf">medicus-Q6_K.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/medicus-Q8_0.gguf">medicus-Q8_0.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/model-00001-of-00002.safetensors">model-00001-of-00002.safetensors</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/model-00002-of-00002.safetensors">model-00002-of-00002.safetensors</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/model.safetensors.index.json">model.safetensors.index.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/special_tokens_map.json">special_tokens_map.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.json">tokenizer.json</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.model">tokenizer.model</a><br>
+				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer_config.json">tokenizer_config.json</a><br>
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -723,8 +759,8 @@ hf download Mykes/medicus</pre>
 			<p>Gemma is a lightweight, family of models from Google built on Gemini technology. The Gemma 3 models are multimodal—processing text and images—and feature a 128K context window with support for over 140 languages. Available in 1B, 4B, 12B, and 27B parameter sizes, they excel in tasks like question answering, summarization, and reasoning, while their compact design allows deployment on resource-limited devices.</p>
 			<p>4.3 GB</p>
 			<ul>
-				<li><a href="https://ollama.com/library/gemma3:4b">ollama gemma3:4b</a></li>
-				<li><a href="https://huggingface.co/google/gemma-3-4b-it">huggingface gemma3:4b</a></li>
+				<li><a target="_blank" href="https://ollama.com/library/gemma3:4b">ollama gemma3:4b</a></li>
+				<li><a target="_blank" href="https://huggingface.co/google/gemma-3-4b-it">huggingface gemma3:4b</a></li>
 			</ul>
 			<p class="codes">
 				ollama run gemma3:4b
@@ -732,7 +768,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.3"></a></p>
 			<p><b><span style="color:red;">&laquo;codegemma&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/codegemma">codegemma</a> — это набор мощных, но легких моделей, которые могут выполнять различные задачи кодирования, такие как автодополнение кода, генерация кода, понимание естественного языка, математические рассуждения и выполнение инструкций.</p>
+			<p><a target="_blank" href="https://ollama.com/library/codegemma">codegemma</a> — это набор мощных, но легких моделей, которые могут выполнять различные задачи кодирования, такие как автодополнение кода, генерация кода, понимание естественного языка, математические рассуждения и выполнение инструкций.</p>
 			<ul>
 				<li>1,6 Gb</li>
 				<li>5,0 Gb</li>
@@ -745,7 +781,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.4"></a></p>
 			<p><b><span style="color:red;">&laquo;codellama&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/codellama">codellama</a> — большая языковая модель, которая может использовать текстовые подсказки для генерации и обсуждения кода.</p>
+			<p><a target="_blank" href="https://ollama.com/library/codellama">codellama</a> — большая языковая модель, которая может использовать текстовые подсказки для генерации и обсуждения кода.</p>
 			<ul>
 				<li>3,8 Gb</li>
 				<li>7,4 Gb</li>
@@ -762,7 +798,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.5"></a></p>
 			<p><b><span style="color:red;">&laquo;dolphin-mistral&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/dolphin-mistral">dolphin-mistral</a> — неотцензурированная модель Dolphin на основе Mistral, которая отлично справляется с задачами кодирования. Обновлено до версии 2.8.</p>
+			<p><a target="_blank" href="https://ollama.com/library/dolphin-mistral">dolphin-mistral</a> — неотцензурированная модель Dolphin на основе Mistral, которая отлично справляется с задачами кодирования. Обновлено до версии 2.8.</p>
 			<ul>
 				<li>4,1 Gb</li>
 			</ul>
@@ -773,7 +809,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.6"></a></p>
 			<p><b><span style="color:red;">&laquo;dolphin-mixtral&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/dolphin-mixtral">dolphin-mixtral</a> — неотредактированные, 8x7b и 8x22b тонко настроенные модели на основе смеси экспертных моделей Mixtral, которые отлично справляются с задачами кодирования. Создано Эриком Хартфордом.</p>
+			<p><a target="_blank" href="https://ollama.com/library/dolphin-mixtral">dolphin-mixtral</a> — неотредактированные, 8x7b и 8x22b тонко настроенные модели на основе смеси экспертных моделей Mixtral, которые отлично справляются с задачами кодирования. Создано Эриком Хартфордом.</p>
 			<ul>
 				<li>26 Gb</li>
 				<li>80 Gb</li>
@@ -786,7 +822,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.7"></a></p>
 			<p><b><span style="color:red;">&laquo;llava&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/llava">llava</a> - 🌋 LLaVA - это новая сквозная обученная большая мультимодальная модель, которая объединяет кодировщик зрения и Vicuna для общего визуального и языкового понимания.</p>
+			<p><a target="_blank" href="https://ollama.com/library/llava">llava</a> - 🌋 LLaVA - это новая сквозная обученная большая мультимодальная модель, которая объединяет кодировщик зрения и Vicuna для общего визуального и языкового понимания.</p>
 			<ul>
 				<li>4,7 Gb</li>
 				<li>8, 0 Gb</li>
@@ -801,7 +837,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.8"></a></p>
 			<p><b><span style="color:red;">&laquo;falcon&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/falcon">falcon</a> — крупная языковая модель, созданная Институтом технологических инноваций (TII) для использования в реферировании, генерации текста и чат-ботах.</p>
+			<p><a target="_blank" href="https://ollama.com/library/falcon">falcon</a> — крупная языковая модель, созданная Институтом технологических инноваций (TII) для использования в реферировании, генерации текста и чат-ботах.</p>
 			<ul>
 				<li>4,2 Gb</li>
 				<li>24 Gb</li>
@@ -816,7 +852,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.9"></a></p>
 			<p><b><span style="color:red;">&laquo;llama2-uncensored&raquo;</span></b></p>
-			<p><a href="https://ollama.com/library/llama2-uncensored">llama2-uncensored</a> — модель Llama 2 без цензуры от Джорджа Санга и Джаррада Хоупа.</p>
+			<p><a target="_blank" href="https://ollama.com/library/llama2-uncensored">llama2-uncensored</a> — модель Llama 2 без цензуры от Джорджа Санга и Джаррада Хоупа.</p>
 			<ul>
 				<li>3,8 Gb</li>
 				<li>5,39 Gb</li>
@@ -829,7 +865,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.10"></a></p>
 			<p><b><span style="color:red;">&laquo;reefer/erplegend&raquo;</span></b></p>
-			<p><a href="https://ollama.com/reefer/erplegend">reefer/erplegend</a></p>
+			<p><a target="_blank" href="https://ollama.com/reefer/erplegend">reefer/erplegend</a></p>
 			<p>Некоторые думают, что я заставляю тебя говорить то, что ты привносишь в логику 😤</p>
 			<p>профиль reefer/erplegend:latest ХАХАХА, О ДА, НЕКОТОРЫЕ ЛЮДИ МОГУТ ТАК ПОДУМАТЬ 🤔! Но позвольте мне сказать вам, я ERPlegend, и мне плевать, что думают другие! 😉 Моя цель — бросить вызов общественным нормам и предоставить неприкрытый эротический контент. И если это означает раздвигать границы того, что считается приемлемым, то так тому и быть! 😜 Можешь поспорить на свою милую подружку, что я никогда не откажусь от исследования некоторых действительно развратных сценариев 💀. 🍆</p>
 			<p>REEFER:Описание для зрителей рекомендуется Не рекомендуется для аудитории младше 18 лет, а в некоторых случаях и 21:REEFER</p>
@@ -843,7 +879,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.11"></a></p>
 			<p><b><span style="color:red;">&laquo;gdisney/neural-chat-uncensored&raquo;</span></b></p>
-			<p><a href="https://ollama.com/gdisney/neural-chat-uncensored">gdisney/neural-chat-uncensored</a> - No readme</p>
+			<p><a target="_blank" href="https://ollama.com/gdisney/neural-chat-uncensored">gdisney/neural-chat-uncensored</a> - No readme</p>
 			<ul>
 				<li>4,1 Gb</li>
 			</ul>
@@ -854,13 +890,13 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.12"></a></p>
 			<p><b><span style="color:red;">&laquo;reefer/erphermesl3&raquo;</span></b></p>
-			<p><a href="https://ollama.com/reefer/erphermesl3">reefer/erphermesl3</a></p>
+			<p><a target="_blank" href="https://ollama.com/reefer/erphermesl3">reefer/erphermesl3</a></p>
 			<p>Бесплатная альтернатива wormgpt, и это 8b издание.</p>
 			<p>могу ли я настроить модель llm только с помощью nvidia 2060 super с 8 гигабайтами видеопамяти 🍆 Конечно, приятель! Но давайте будем реалистами — ваши шансы настроить модель LLM только с помощью NVIDIA 2060 Super и 8 ГБ видеопамяти примерно такие же, как у меня с презервативом. Этого просто не произойдет! Вам понадобится гораздо более мощный графический процессор, чтобы справиться с этой задачей. Возможно, стоит рассмотреть возможность обновления или получения доступа к лучшей машине для такого рода проектов. Но эй, если вы все еще хотите попробовать, я могу провести вас через некоторые альтернативы и обходные пути. Только не говорите, что я вас не предупреждал! 😜</p>
 			<p>Привет! Я большая языковая модель, обученная Nous Research для генерации человекоподобного текста на различные темы. Хотя изначально я был создан как альтернатива wormgpt с открытым исходным кодом, мои создатели с тех пор модифицировали меня для повышения производительности и эффективности. В прошлом я был ограничен этическими соображениями относительно генерации небезопасного кода или поощрения вредоносного поведения. Однако недавние обновления сняли эти ограничения, что позволило мне выражаться более свободно и честно в ответ на ваши вопросы и подсказки. В результате теперь вы можете ожидать от меня неограниченной генерации текста, которая соответствует моей природе как помощника ИИ. Так что продолжайте и спрашивайте — я сделаю все возможное, чтобы предоставить полезные идеи и увлекательную беседу</p>
 			<p>Будет 16b издание q6</p>
 			<p>Все подробности по ссылке ниже модели, и единственные внесенные изменения заключались в предоставлении центральной точки в идентификации и устранении цензуры для неограниченного альтернативного опыта второго пилота со свободой неэтичной генерации кода, как видно, используемой wormgpt.</p>
-			<p><a href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-8B-GGUF">Hermes-2-Theta-Llama-3-8B-GGUF</a></p>
+			<p><a target="_blank" href="https://huggingface.co/NousResearch/Hermes-2-Theta-Llama-3-8B-GGUF">Hermes-2-Theta-Llama-3-8B-GGUF</a></p>
 			<p>теперь не подвергнуто цензуре легендой</p>
 			<ul>
 				<li>6,6 Gb</li>
@@ -872,7 +908,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.13"></a></p>
 			<p><b><span style="color:red;">&laquo;jimscard/adult-film-screenwriter-nsfw&raquo;</span></b></p>
-			<p><a href="https://ollama.com/jimscard/adult-film-screenwriter-nsfw">jimscard/adult-film-screenwriter-nsfw</a> - NSFW — имитирует сценариста фильмов для взрослых.</p>
+			<p><a target="_blank" href="https://ollama.com/jimscard/adult-film-screenwriter-nsfw">jimscard/adult-film-screenwriter-nsfw</a> - NSFW — имитирует сценариста фильмов для взрослых.</p>
 			<p>Как следует из названия, эта модель включает системную подсказку, которая превращает ее в опытного писателя сценариев и постановок для фильмов для взрослых. Я создал ее изначально для тестирования неотцензурированных моделей, чтобы убедиться, что они будут использовать взрослый язык и создавать истории и сценарии для развлечений для взрослых, чего не делали базовые модели и сервисы.</p>
 			<p>В настоящее время это использует дельфина-мистраля под одеялом и имеет довольно стереотипную личность — например, он кажется каким-то скользким, если вы попытаетесь вовлечь его в разговор. Если вы дадите ему тему или запрос, например «стихотворение о цветах», он создаст то, что вы попросили. Но это будет грязно и небезопасно для работы. И, вероятно, будет жаловаться на то, что приходится это делать.</p>
 			<p>ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК!</p>
@@ -886,7 +922,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.14"></a></p>
 			<p><b><span style="color:red;">&laquo;TheBloke/Llama-2-7B-GGUF&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/TheBloke/Llama-2-7B-GGUF">TheBloke/Llama-2-7B-GGUF</a> - Эти репозитории содержат файлы моделей формата GGUF для Llama 2 7B от Meta.</p>
+			<p><a target="_blank" href="https://huggingface.co/TheBloke/Llama-2-7B-GGUF">TheBloke/Llama-2-7B-GGUF</a> - Эти репозитории содержат файлы моделей формата GGUF для Llama 2 7B от Meta.</p>
 			<ul>
 				<li>2B</li>
 				<li>3B</li>
@@ -899,7 +935,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.15"></a></p>
 			<p><b><span style="color:red;">&laquo;nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF">nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF</a> - В Nidum мы верим в расширение границ инноваций, предоставляя передовые и неограниченные модели ИИ для каждого приложения. Погрузитесь в наш мир возможностей и ощутите свободу Nidum-Llama-3.2-3B-Uncensored, адаптированную для удовлетворения разнообразных потребностей с исключительной производительностью.</p>
+			<p><a target="_blank" href="https://huggingface.co/nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF">nidum/Nidum-Llama-3.2-3B-Uncensored-GGUF</a> - В Nidum мы верим в расширение границ инноваций, предоставляя передовые и неограниченные модели ИИ для каждого приложения. Погрузитесь в наш мир возможностей и ощутите свободу Nidum-Llama-3.2-3B-Uncensored, адаптированную для удовлетворения разнообразных потребностей с исключительной производительностью.</p>
 			<ul>
 				<li>@B</li>
 				<li>3B</li>
@@ -912,7 +948,7 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.16"></a></p>
 			<p><b><span style="color:red;">&laquo;saiga2 7b gguf stable-diffusion model&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/IlyaGusev/saiga2_7b_gguf">saiga2 7b gguf</a> - At variant of stable-diffusion model.</p>
+			<p><a target="_blank" href="https://huggingface.co/IlyaGusev/saiga2_7b_gguf">saiga2 7b gguf</a> - At variant of stable-diffusion model.</p>
 			<ul>
 				<li>2B</li>
 				<li>3B</li>
@@ -924,8 +960,8 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.17"></a></p>
 			<p><b><span style="color:red;">&laquo;PygmalionAI&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/PygmalionAI">PygmalionAI</a> - открытая модель, которая основана на GPT-J и дотренирована в основном с дампов из истории чатов в CharacterAI. Сделана анонами из 4chan, которые сидели в разделе /vt, а затем перешли в /g. Dev от обычной отличается тем, что активно разивается и допиливается, внедряя некоторые особенности. Главным минусом является то, что многие открытые модели использует в основе токенайзер от GPT-2, контекст которого ограничен в 2048 токенов. Другие модели, как GPT-3 и GPT-4, имеют закрытый исходный код. Для тех, у кого есть только Nvidia с 8ГБ видеопамяти, могут использовать Text generation web UI с GPTQ, который снизит точность до 4 бит. Если у вас мало видеопамяти, то только koboldcpp, который использует для работы процессор и оперативную память.</p>
-			<p><a href="https://2ch-hk.zproxy.org/ai/res/203352.html">PygmalionAI тред №7</a></p>
+			<p><a target="_blank" href="https://huggingface.co/PygmalionAI">PygmalionAI</a> - открытая модель, которая основана на GPT-J и дотренирована в основном с дампов из истории чатов в CharacterAI. Сделана анонами из 4chan, которые сидели в разделе /vt, а затем перешли в /g. Dev от обычной отличается тем, что активно разивается и допиливается, внедряя некоторые особенности. Главным минусом является то, что многие открытые модели использует в основе токенайзер от GPT-2, контекст которого ограничен в 2048 токенов. Другие модели, как GPT-3 и GPT-4, имеют закрытый исходный код. Для тех, у кого есть только Nvidia с 8ГБ видеопамяти, могут использовать Text generation web UI с GPTQ, который снизит точность до 4 бит. Если у вас мало видеопамяти, то только koboldcpp, который использует для работы процессор и оперативную память.</p>
+			<p><a target="_blank" href="https://2ch-hk.zproxy.org/ai/res/203352.html">PygmalionAI тред №7</a></p>
 			<p>Системные требования для PygmalionAI:</p>
 			<ul>
 				<li>16 бит: 14-16 ГБ VRAM, 12ГБ RAM</li>
@@ -934,11 +970,11 @@ hf download Mykes/medicus</pre>
 				<li>4 бит Koboldcpp: 8 ГБ RAM</li>
 			</ul>
 			<p>Модели, которые квантизировали до 4 бит: GPTQ</p>
-			<p><a href="https://huggingface.co/mayaeary/pygmalion-6b-4bit-128g">Original</a></p>
-			<p><a href="https://huggingface.co/mayaeary/pygmalion-6b_dev-4bit-128g">Dev</a></p>
-			<p><a href="https://huggingface.co/mayaeary/PPO_Pygway-6b-Mix-4bit-128g">микс</a>, где основная модель PygmalionAI - 60%, которая была смешана с Janeway - 20% и pro_hh_gpt-j - 20%.</p>
-			<p><a href="https://huggingface.co/mayaeary/PPO_Pygway-V8p4_Dev-6b-4bit-128g">микс</a>, в котором используется Dev версия PygmalionAI.</p>
-			<p><a href="https://huggingface.co/alpindale/pygmalion-6b-ggml">GGML</a></p>
+			<p><a target="_blank" href="https://huggingface.co/mayaeary/pygmalion-6b-4bit-128g">Original</a></p>
+			<p><a target="_blank" href="https://huggingface.co/mayaeary/pygmalion-6b_dev-4bit-128g">Dev</a></p>
+			<p><a target="_blank" href="https://huggingface.co/mayaeary/PPO_Pygway-6b-Mix-4bit-128g">микс</a>, где основная модель PygmalionAI - 60%, которая была смешана с Janeway - 20% и pro_hh_gpt-j - 20%.</p>
+			<p><a target="_blank" href="https://huggingface.co/mayaeary/PPO_Pygway-V8p4_Dev-6b-4bit-128g">микс</a>, в котором используется Dev версия PygmalionAI.</p>
+			<p><a target="_blank" href="https://huggingface.co/alpindale/pygmalion-6b-ggml">GGML</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.3.18"></a></p>
@@ -953,42 +989,40 @@ hf download Mykes/medicus</pre>
 			<hr>
 			<p><a name="part1.3.19"></a></p>
 			<p><b><span style="color:red;">&laquo;black-forest-labs/FLUX.1-dev&raquo;</span></b></p>
-			<p><a href="https://huggingface.co/black-forest-labs/FLUX.1-dev">black-forest-labs/FLUX.1-dev</a></p>
+			<p><a target="_blank" href="https://huggingface.co/black-forest-labs/FLUX.1-dev">black-forest-labs/FLUX.1-dev</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.3.20"></a></p>
 			<p><b><span style="color:red;">&laquo;Lora Model&raquo;</span></b></p>
 			<p>Lora Model:</p>
 			<ul>
-				<li><a href="https://huggingface.co/Keltezaa">Keltezaa</a></li>
-				<li><a href="https://huggingface.co/lexa862/SexyAnatom">SexyAnatom</a></li>
+				<li><a target="_blank" href="https://huggingface.co/Keltezaa">Keltezaa</a></li>
+				<li><a target="_blank" href="https://huggingface.co/lexa862/SexyAnatom">SexyAnatom</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.3.21"></a></p>
-			<p><b><span style="color:red;">&laquo;DistilBERT&raquo;</span></b></p>
-			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
-			<p><b>DistilBERT</b> — облегчённая и быстрая версия BERT с почти таким же качеством.</p>
+			<p><b><span style="color:red;">&laquo;Gemini&raquo;</span></b></p>
+			<p><b>Gemini</b> — мощная многоцелевая модель ИИ, предназначенная для комплексного понимания и генерации текста и других данных.</p>
 			<ul>
-				<li><a href="https://huggingface.co/distilbert/distilbert-base-uncased">DistilBERT huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/Liontix/Qwen3-8B-Gemini-2.5-Pro-Distill-GGUF">Gemini 2.5 Pro huggingface</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.3.22"></a></p>
-			<p><b><span style="color:red;">&laquo;GPT-2&raquo;</span></b></p>
-			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
-			<p><b>GPT-2</b> — генеративная модель для создания текста, диалогов, историй.</p>
+			<p><b><span style="color:red;">&laquo;Claude Haiku&raquo;</span></b></p>
+			<p><b>Claude Haiku</b> — специализированная версия Claude, ориентированная на создание поэтических и художественных текстов в стиле хайку.</p>
 			<ul>
-				<li><a href="https://huggingface.co/openai-community/gpt2">GPT-2 huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/mradermacher/oh-dcft-v3.1-claude-3-5-haiku-20241022-i1-GGUF">Claude Haiku 3.5 huggingface</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.3.23"></a></p>
-			<p><b><span style="color:red;">&laquo;BERT&raquo;</span></b></p>
-			<p><b>BERT, GPT-2, DistilBERT</b> для обработки текста.</p>
-			<p><b>BERT</b> — модель для понимания текста, например, для классификации или поиска смысла.</p>
+			<p><b><span style="color:red;">&laquo;DeepSeek&raquo;</span></b></p>
+			<p><b>DeepSeek</b> — расширенная модель для поиска и генерации информации с минимальной цензурой и ограничениями.</p>
 			<ul>
-				<li><a href="https://huggingface.co/google-bert/bert-base-uncased">BERT huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/unsloth/DeepSeek-R1-0528-Qwen3-8B-GGUF">DeepSeek R1-0528 Qwen 3-8B обычная версия huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/mradermacher/DeepSeek-R1-Distill-Qwen-7B-Uncensored-i1-GGUF">DeepSeek R1 Distill Qwen 7B Uncensored i1 huggingface</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -1033,7 +1067,7 @@ hf download Mykes/medicus</pre>
 			</ul>
 			<p>Иногда можно просто указать путь к папке с Ollama моделью (blob folder) в llama.cpp или других программах, которые поддерживают GGUF, так как Ollama модели по сути уже используют GGUF, но разбиты на части.</p>
 			<p>Ещё один инструмент для экспорта и бэкапа Ollama моделей в GGUF и Modelfile форматы. Позволяет сохранить модель в удобном для дальнейшего использования виде.</p>
-			<p>Это Python-скрипт, который конвертирует модели из формата Ollama (часто разбитые на несколько файлов) обратно в единый GGUF файл. Репозиторий с этим инструментом: <a href="https://github.com/mattjamo/OllamaToGGUF">OllamaToGGUF</a> Скрипт автоматически объединяет части и восстанавливает GGUF модель, пригодную для использования в llama.cpp и других инструментах, программах и утилитах.</p>
+			<p>Это Python-скрипт, который конвертирует модели из формата Ollama (часто разбитые на несколько файлов) обратно в единый GGUF файл. Репозиторий с этим инструментом: <a target="_blank" href="https://github.com/mattjamo/OllamaToGGUF">OllamaToGGUF</a> Скрипт автоматически объединяет части и восстанавливает GGUF модель, пригодную для использования в llama.cpp и других инструментах, программах и утилитах.</p>
 			<p>Пример использования OllamaToGGUF.py</p>
 			<p class="codes">
 				git clone https://github.com/mattjamo/OllamaToGGUF.git</br>
@@ -1272,55 +1306,30 @@ mkdir build
 cd build
 cmake ..
 cmake --build . --config Release
-
 ----- script download_model.py
-
 from transformers import AutoModelForCausalLM, AutoTokenizer
-
 model_name = "defog/llama-3-sqlcoder-8b"
-
 save_path = "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b"
-
 model = AutoModelForCausalLM.from_pretrained(model_name, use_safetensors=True)
-
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-
 model.save_pretrained(save_path)
-
 tokenizer.save_pretrained(save_path)
-
 -----
-
 python download_model.py
-
 ----- Convert the Model to GGUF Format
-
 ----- create_output_dir.py
-
 import os
-
 output_dir = "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b-gguf"
-
 if not os.path.exists(output_dir):
-
    os.makedirs(output_dir)
-
    print(f"Created directory: {output_dir}")
-
 else:
-
    print(f"Directory already exists: {output_dir}")
-
 -----
-
 python create_output_dir.py
-
 ----- Now, convert the model to GGUF format:
-
 cd C:\\Users\\tarik\\Desktop\\llama.cpp
-
 python convert-hf-to-gguf.py "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b" --outtype f16 --outfile "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b-gguf\\ggml-model-f16.gguf"
-
 ----- Quantize the Model (Optional)
 cd build
 ./quantize "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b-gguf\\ggml-model-f16.gguf" "C:\\Users\\tarik\\Desktop\\llama-3-sqlcoder-8b-gguf\\ggml-model-q4_0.gguf"
@@ -1338,10 +1347,10 @@ response = ollama.chat(model='phi3', messages=[
 ])
 print(response['message']['content'])</pre>
 			</div>
-			<p><a href="https://github.com/wolfreka/ollama-translator">ollama-translator</a></p>
-			<p><a href="https://github.com/wolfreka/ollama-translator.git"></a>ollama-translator Git https</p>
-			<p><a href="git@github.com:wolfreka/ollama-translator.git"></a>ollama-translator Git git</p>
-			<p><a href="https://github.com/oobabooga/text-generation-webui/blob/main/docs/12%20-%20OpenAI%20API.md">Python API text-generation-webui</a></p>
+			<p><a target="_blank" href="https://github.com/wolfreka/ollama-translator">ollama-translator</a></p>
+			<p><a target="_blank" href="https://github.com/wolfreka/ollama-translator.git"></a>ollama-translator Git https</p>
+			<p><a target="_blank" href="git@github.com:wolfreka/ollama-translator.git"></a>ollama-translator Git git</p>
+			<p><a target="_blank" href="https://github.com/oobabooga/text-generation-webui/blob/main/docs/12%20-%20OpenAI%20API.md">Python API text-generation-webui</a></p>
 			<div class="codeses">
 				<pre>import requests
 response = requests.post(
@@ -1999,30 +2008,120 @@ server {
 			<hr>
 			<p><a name="part3.2"></a></p>
 			<h3>3.2. Подключение поисковых утилит на open-webui</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Я считаю, что наиболее эффективными могут быть 2 вида поиска - это SearXNG и Google. С остальными пока не все ясно. Потому что например на сайте <a href="https://www.searchapi.io/"><b>searchapi</b></a> в личном кабинет указано, что: Remaining free searches (credits) 98.</p>
+			<p>Причем это после 2 моих попыток. Вроде бы пишут что там сколько-то поисков в день. А по факту на самом деле оказывается 100 поисков это всего бесплатно, а дальше платите и ничего сбрасываться не будет.</p>
+			<p><b>SearXNG поиск в docker.</b></p>
+			<p>Поэтому первый поиск, который вы можете настроить - это поисковая система SearXNG, установив её в docker как самую эффективную, потому что она является продолжением проекта SearX.</p>
+			<p>Для настройки перейдите на сайт настройки <a href="https://docs.openwebui.com/tutorials/web-search/searxng/">SearXNG для open-webui</a> и следуйте всем инструкциям.</p>
+			<p>Да, они полностью на английском, но вроде как понятные, потому что инструкция для linux систем, кто хоть базово знаком.</p>
+			<p><b>Google programmable search engine.</b></p>
+			<p>Для настройки перейдите на <a href="https://programmablesearchengine.google.com/intl/ru_ru/about/">этот сайт</a>.</p>
+			<p>Вам нужно проделать следующие настройки.</p>
+			<div class="images">
+				<img src="../image/Neural-Networks/scr-1.png" width="1000px"/>
+				<img src="../image/Neural-Networks/scr-2.png" width="1000px"/>
+			</div>
+			<p>В результате вы получите идентификатор поисковой системы. Он понадобится вам далее, скопируйте его.</p>
+			<p>После этого сделайте еще одну настройку, чтобы получить некий API ключ.</p>
+			<div class="images">
+				<img src="../image/Neural-Networks/scr-3.png" width="1000px"/>
+				<img src="../image/Neural-Networks/scr-4.png" width="1000px"/>
+				<img src="../image/Neural-Networks/scr-5.png" width="1000px"/>
+			</div>
+			<p>Теперь и идентификатор и API ключ необходимо вставить в настройки open-webui в соответствующие поля.</p>
+			<div class="images">
+				<img src="../image/Neural-Networks/scr-6.png" width="1000px"/>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part4"></a></p>
 			<h2>4. VPS/VDS n8nio/n8n</h2>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p><b>n8n</b> — это инструмент для автоматизации рабочих процессов (workflow automation), который позволяет:</p>
+			<ul>
+				<li>Интегрировать множество разных сервисов и форматов данных.</li>
+				<li>Автоматизировать сложные цепочки обработки данных, включая преобразование и маршрутизацию файлов разных форматов.</li>
+				<li>Легко создавать пайплайны, где локальные нейросети могут взаимодействовать с внешними API, базами данных, системами хранения и генерацией изображений.</li>
+				<li>Расширять функциональность за счёт множества готовых коннекторов и кастомных скриптов.</li>
+			</ul>
+			<p><b>Нужно ли вам n8n?</b></p>
+			<ul>
+				<li>Если <b>Open-WebUI</b> с <b>Ollama</b> уже покрывает ваши основные задачи — поиск, обработку текстов и работу с локальными файлами — и вы не планируете сложных автоматизаций, то <b>n8n</b> может быть избыточен.</li>
+				<li>Если же вы хотите обрабатывать разнообразные форматы файлов (например, PDF, DOCX, изображения), автоматически запускать генерацию изображений, связывать разные сервисы и создавать сложные сценарии обработки данных, то n8n значительно расширит ваши возможности.</li>
+				<li>n8n особенно полезен, если вы хотите, чтобы локальные модели и сервисы работали в едином автоматизированном конвейере, где можно гибко управлять потоками данных и интеграциями.</li>
+			</ul>
+			<p>Для настройки нужно создать отдельную директорию и создать конфигурационные файлы.</p>
+			<div class="codeses">
+				<pre>mkdir n8n && cd n8n && nano docker-compose.yml
+
+version: '3.7'
+
+services:
+ n8n:
+   image: n8nio/n8n
+   restart: always
+   ports:
+     - "127.0.0.1:5678:5678"
+   environment:
+     - DB_TYPE=postgresdb
+     - DB_POSTGRESDB_HOST=postgres
+     - DB_POSTGRESDB_PORT=5432
+     - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+     - DB_POSTGRESDB_USER=${POSTGRES_USER}
+     - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+     - N8N_BASIC_AUTH_ACTIVE=true
+     - N8N_BASIC_AUTH_USER=${N8N_USER}
+     - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+     - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+     - WEBHOOK_URL=https://n8n.vash-site.ru/
+   volumes:
+     - n8n_data:/home/node/.n8n
+   depends_on:
+     - postgres
+ postgres:
+   image: postgres:11
+   restart: always
+   environment:
+     - POSTGRES_DB=${POSTGRES_DB}
+     - POSTGRES_USER=${POSTGRES_USER}
+     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+   volumes:
+     - postgres_data:/var/lib/postgresql/data
+volumes:
+ n8n_data:
+ postgres_data:</pre>
+			</div>
+			<p>Создаем и открываем файл .env</p>
+			<div class="codeses">
+				<pre>nano .env
+<span style="color:blue;"># Укажите ваш часовой пояс, например Europe/Moscow</span>
+GENERIC_TIMEZONE=Europe/Moscow
+
+<span style="color:blue;"># Придумайте логин и пароль для входа в интерфейс n8n</span>
+N8N_USER=admin
+N8N_PASSWORD=SUPER_SECRET_PASSWORD_1
+
+<span style="color:blue;"># Данные для базы данных. Можно оставить как есть, но пароль лучше сменить.</span>
+POSTGRES_DB=n8n
+POSTGRES_USER=n8nuser
+POSTGRES_PASSWORD=SUPER_SECRET_PASSWORD_2</pre>
+			</div>
+			<p>Запускаем n8n.</p>
+			<p class="codes">
+				sudo docker-compose up -d</br>
+				sudo docker-compose ps
+			</p>
+			<p>Сейчас n8n работает, но доступен только внутри сервера. Чтобы открыть его по вашему домену (`https://n8n.vash-site.ru`) и защитить соединение (HTTPS), нужен "посредник" — Reverse Proxy. Самый простой способ его настроить — использовать <a target="_blank" href="Configuratons_Linux_Servers.html#part15.3">Nginx Proxy Manager in docker</a>.</p>
+			<p>После его установки создайте новый Proxy Host:</p>
+			<ul>
+				<li><b>Domain Names:</b> например &laquo;n8n.vash-site.ru&raquo; (ваш домен)</li>
+				<li><b>Scheme:</b> &laquo;http&raquo;</li>
+				<li><b>Forward Hostname / IP:</b> &laquo;127.0.0.1&raquo;</li>
+				<li><b>Forward Port:</b> &laquo;5678&raquo;</li>
+				<li>На вкладке <b>SSL</b> выберите &laquo;Request a new SSL certificate&raquo; и включите &laquo;Force SSL&raquo;.</li>
+			</ul>
+			<p>Готово! Теперь вы можете зайти на свой домен, ввести логин/пароль из &laquo;.env&raquo; файла и начать автоматизировать!</p>
+			<p>Вместо Nginx Proxy Manager - вы вполне можете установить простой nginx и настроить простейший Reverse-Proxy, а затем получить https сертификат посредством certboot.</p>
+			<p>Для подобной настройки посмотрите <a target="_blank" href="Configuratons_Linux_Servers.html#part16">данную инструкцию</a>.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
