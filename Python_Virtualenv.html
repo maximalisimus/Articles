@@ -87,6 +87,29 @@
 				<b>Python PIP:</b> $ python -m pip install --upgrade pip setuptools distlib filelock platformdirs stevedore virtualenv virtualenvwrapper --upgrade</br>
 				<b>Windows PIP / PIP:</b> $ pip install setuptools virtualenv virtualenvwrapper-win --upgrade
 			</p>
+			<p>Иногда у вас может возникнуть ошибка доступа, мол в системе не установлен <b>pip</b>.</p>
+			<p class="codes">
+				pip list
+			</p>
+			<div class="images">
+				<img src="image/Python_Virtualenv/scr-2-2.png" width="673px"/>
+			</div>
+			<p>Во первых проверьте другой командой - возможно данная версия Python-а просто не воспринимает встроенные скрипты напрямую.</p>
+			<p class="codes">
+				python -m pip list
+			</p>
+			<p>А во вторых проверьте директорию со встроенными скриптами: &laquo;Папка-с-распакованным-Python&raquo;\Scripts - на наличие под-программ: &laquo;pip.exe&raquo;, &laquo;pip3.exe&raquo; и &laquo;wheel.exe&raquo;.</p>
+			<div class="images">
+				<img src="image/Python_Virtualenv/scr-1.png" width="773px"/>
+				<img src="image/Python_Virtualenv/scr-2.png" width="974px"/>
+			</div>
+			<p>Если у вас не получается обновить <a target="_blank" href="https://bootstrap.pypa.io/get-pip.py"><b>get-pip.py</b></a>, скачайте его заново и обновите или установите через этот скрипт.</p>
+			<p class="codes">
+				python get-pip.py
+			</p>
+			<div class="images">
+				<img src="image/Python_Virtualenv/scr-3.png" width="990px"/>
+			</div>
 			<p>По умолчанию путь к главному файлу настроек виртуального окружения в <b>Lunux</b> системах изменили и каким-то образом закрыли к нему доступ. Поэтому необходио ещё создать ссылку на этот файл вручную <b>&laquo;virtualenvwrapper&raquo;</b>. Для этого выполним примерно следующую команду. Возможно вам придётся ещё поискать этот файл поусле установки соответствующего пакета.</p>
 			<p class="codes">
 				<b>$</b> sudo ln -s /usr/share/virtualenvwrapper/virtualenvwrapper.sh /usr/local/sbin/virtualenvwrapper.sh
@@ -460,8 +483,10 @@ cmd.exe</pre>
 			<p>Теперь запустите SFX exe архив и распакуйте в текущий каталог без каких-то дополнительных подпапок!</p>
 			<p><b>После чего обязательно создайте в текущем каталоге еще одну папку:</b></p>
 			<ul>
-				<li>Для 64 бит: <b>&laquo;env-3.10.5-x64&raquo;</b></li>
-				<li>Для 32 бит: <b>&laquo;env-3.10.5-x86&raquo;</b></li>
+				<li>Для 64 бит версия 3.10.5: <b>&laquo;env-3.10.5-x64&raquo;</b></li>
+				<li>Для 32 бит версия 3.10.5: <b>&laquo;env-3.10.5-x86&raquo;</b></li>
+				<li>Для 64 бит версия 3.8.9: <b>&laquo;env-3.8.9-x64&raquo;</b></li>
+				<li>Для 32 бит версия 3.8.9: <b>&laquo;env-3.8.9-x86&raquo;</b></li>
 			</ul>
 			<p>Вот теперь можете запустить ваш <b>.bat</b> файл. Python будет доступен прямо в текущей папке. Виртуальные окружения будут устанавливаться в только что созданную директорию, что будет крайне удобно.</p>
 			<p>Не забудьте скачать <a target="_blank" href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a> и установить его.</p>
