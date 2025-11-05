@@ -443,6 +443,13 @@ cmd.exe</pre>
 			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
 			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
 			<p><b>6. Остался только Qemu (<a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip для Windows</a>, <a href="https://qemu.weilnetz.de/w32/">32 бит для Windows</a>, <a href="https://qemu.weilnetz.de/w64/">64 бит для Windows</a>) для тестирования загрузочных флешек.</b></p>
+			<p>Для Windows обратите внимание на то, что для наиболее старых версия Windows - вроде 7-ки ищите в 2022 году такую версию как <a href="https://qemu.weilnetz.de/w32/2022/">&laquo;20220419&raquo;</a> для 32 бит или <a href="https://qemu.weilnetz.de/w64/2022/">&laquo;20221230&raquo;</a> для 64 бит. Для старших версий ОС Windows от 10-ки и выше можете ставить любую свежую версию.</p>
+			<ul>
+				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20220419.exe">&laquo;qemu-w32-setup-20220419.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20220419.exe">&laquo;qemu-w64-setup-20220419.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20221230.exe">&laquo;qemu-w32-setup-20221230.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20221230.exe">&laquo;qemu-w64-setup-20221230.exe&raquo;</a></li>
+			</ul>
 			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
 			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi.</p>
 			<p>Понадобится еще один файлик - <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/edk2-ovmf-202505-1-any.pkg.tar.gz">edk2-ovmf-202505-1-any.pkg.tar.gz</a> - имитация загрузки UEFI режима, если вы не скачивали QemuBootTester, в который она встроена, чтобы не перезагружать вашу ОС для проверки получившейся мультизагрузочной флешки.</p>
