@@ -451,7 +451,7 @@ cmd.exe</pre>
 				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20221230.exe">&laquo;qemu-w64-setup-20221230.exe&raquo;</a></li>
 			</ul>
 			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
-			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi.</p>
+			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi. Т.е. в Archlinux вместо &laquo;qemu-system-gui&raquo; вообще &laquo;qemu-ui-gtk&raquo;.</p>
 			<p>Понадобится еще один файлик - <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/edk2-ovmf-202505-1-any.pkg.tar.gz">edk2-ovmf-202505-1-any.pkg.tar.gz</a> - имитация загрузки UEFI режима, если вы не скачивали QemuBootTester, в который она встроена, чтобы не перезагружать вашу ОС для проверки получившейся мультизагрузочной флешки.</p>
 			<p><b>7. Установка самих загрузчиков.</b></p>
 			<p>Инструкция установки MBR и PBR из утилиты Bootice. (Ниже список одной и той же инструкции в разных форматах для онлайн чтения)</p>
