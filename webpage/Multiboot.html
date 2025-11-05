@@ -407,6 +407,44 @@ cmd.exe</pre>
 		<div class="content">
 			<p><a name="part2"></a></p>
 			<h2>2. Програмное обеспечение</h2>
+			<p><b>Нюансы выбора ПО.</b></p>
+			<p>Есть несколько важных нюансов выбора ПО для создания действительно хороших мультизагрузочных флешек.</p>
+			<ol>
+				<li>Старая версия ПО.</li>
+				<li>Портативная версия ПО.</li>
+				<li>Создание из любой Windows.</li>
+			</ol>
+			<p>Дело не в том, что мне нравятся или не нравятся старые или портативные версии, а в том, что новые или свежие версии программ скорее всего не совместимы со старыми ОС - такими как Windows 7 или даже XP, если вдруг однажды понадобится. А иногда даже требуют неких дополнительных каких-то библиотек или драйверов.</p>
+			<p>Создание таких флешек преимущественно отдается именно Windows, начиная с 7-ки. Но это не значит, что тоже самое вы не сможете сделать из любой другой ОС - будь то хоть Linux, хоть MacOS или буквально считай почти MSDos.</p>
+			<p>Единственным исключением является только сам загрузчик Windows, начиная с 7-ки и выше - под названием <a href="#part1.7">&laquo;BCD (Boot Configuration Data)&raquo;</a>. Для него качественных альтернатив редакторов, к большому сожалению, просто нет.</p>
+			<p><b>Програмное обеспечение.</b></p>
+			<p><b>1. Первое что нам понадобится - это текстовый редактор Geany</b> (<a href="https://geany.ru/download/releases">оф. сайт</a>, <a href="https://github.com/maximalisimus/Archivers-Configs-Linux/releases/download/v3.0/Geany-Portable-1.37.1-x86-sfx.exe">Портативная версия 1.37.1 x86</a>), но не простой.</p>
+			<p>В одной из глав выше я писал, что в каждой ОС и всех текстовых файлах важна кодировка. <b>В каждом загрузчике есть конфигурационные файлы</b>, которые по сути <b>являются текстовыми в определнных кодировках</b>. И чтобы их не нарушать кодировку конфигурационных файлов, лучше редактировать их сразу правильно. <u>А значит обычные встроенные в любую ОС текстовые редакторы не подойдут, именно потому что они могут испортить кодировку конфигурационных файлов загрузчиков и в итоге флешка просто не сможет загрузится</u>.</p>
+			<p>Предлагаемый мною текстовый редактор не только адекватно воспринимает и сразу правильно работает с любой кодировкой, но ещё и отображает коды программирования разными цветами не зависимо от языка программирования просто для вашего удобства.</p>
+			<p>Он есть как для Windows. так и для Linux и других ОС. Свежая версия для ОС от 10-ки и старше. Портативная должна работать хоть на 7-ке, хоть даже на XP, вроде бы.</p>
+			<p>Если не сможете им воспользоваться, есть альтернативный текстовый редактор, но только для Windows - &laquo;Notepad ++&raquo;. Для Linux подойдут такие как: &laquo;Leafpad&raquo; и &laquo;Gedit&raquo; В консольном варианте Linux скорее всего только один редактор &laquo;Nano&raquo;, но с осторожностью.</p>
+			<p><b>2. Далее нам понадобится универсальная утилита</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/BOOTICEx86_ru.7z">BOOTICE x86 ru</a>, русскоязычная версия.</p>
+			<p>Она универсальная тем, что выступает не только как редактор разделов флешек, но и как единственный, качественный и понятный редактор <b>BCD (Boot Configuration Data)</b> файлов загрузчиков Windows.</p>
+			<p><u>В Windows</u> в качестве альтернативы вполне можно воспользоваться и <u>встроенным редактором</u>, но с небольшой оговоркой - <u>он может не видеть всех разделов флешек</u>.</p>
+			<p>В Linux же есть целых 2 варианта редакторов разделов - это &laquo;GParted&raquo; графический редактор разделов и консольный вариант &laquo;cfdisk&raquo;.</p>
+			<p><b>3. Далее понадобится несколько архивов самих установочников загрузчиков.</b> Не волнуйсте, установка возможна не только одним единственным Bootice из Windows, но также и из Linux, и даже из MSDos, если вдруг однажды придётся.</p>
+			<ul>
+				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/grub4dos-0.4.6a-2024-02-26.7z">grub4dos-0.4.6a-2024-02-26.7z</a> или <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/grubinst_1.0.1_bin_win.7z">grubinst_1.0.1_bin_win.7z</a>.</li>
+				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/syslinux-6.03.tar.gz">syslinux-6.03.tar.gz</a> или <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/syslinux-5.10.tar.gz">syslinux-5.10.tar.gz</a>.</li>
+			</ul>
+			<p><b>4. Теперь сами загрузчики.</b></p>
+			<ul>
+				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/EFI-Grub4Dos-SysLinux-Full.7z">EFI-Grub4Dos-SysLinux-Full.7z</a></li>
+				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/EFI-Grub4Dos-SysLinux-minimal.7z">EFI-Grub4Dos-SysLinux-minimal.7z</a></li>
+				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/GFX-Editor1.0.exe.7z">GFX-Editor1.0.exe.7z</a></li>
+			</ul>
+			<p><b>5. Примеры конфигурационных файлов загрузчиков.</b></p>
+			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
+			<p><b>6. Остался только Qemu (<a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip для Windows</a>, <a href="https://qemu.weilnetz.de/w32/">32 бит для Windows</a>, <a href="https://qemu.weilnetz.de/w64/">64 бит для Windows</a>) для тестирования загрузочных флешек.</b></p>
+			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
+			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi.</p>
+			<p>Понадобится еще один файлик - <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/edk2-ovmf-202505-1-any.pkg.tar.gz">edk2-ovmf-202505-1-any.pkg.tar.gz</a> - имитация загрузки UEFI режима, если вы не скачивали QemuBootTester, в который она встроена.</p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -418,11 +456,6 @@ cmd.exe</pre>
 			<p></p>
 			<p></p>
 			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>			
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
