@@ -545,6 +545,22 @@ cmd.exe</pre>
 			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
 			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi. Т.е. в Archlinux вместо &laquo;qemu-system-gui&raquo; вообще &laquo;qemu-ui-gtk&raquo;.</p>
 			<p>Понадобится еще один файлик - <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/edk2-ovmf-202505-1-any.pkg.tar.gz">edk2-ovmf-202505-1-any.pkg.tar.gz</a> - имитация загрузки UEFI режима, если вы не скачивали QemuBootTester, в который она встроена, чтобы не перезагружать вашу ОС для проверки получившейся мультизагрузочной флешки.</p>
+			<p>Из этого архива понадобятся только 2 файла.</p>
+			<ul>
+				<li>По пути &laquo;usr\share\edk2\x64\&raquo; файл &laquo;OVMF_CODE.4m.fd&raquo;.</li>
+				<li>По пути &laquo;usr\share\edk2\ia32\&raquo; файл &laquo;OVMF_CODE.4m.fd&raquo;.</li>
+			</ul>
+			<p>Можете даже распаковать их по очереди и сразу переименовать сразу так.</p>
+			<ul>
+				<li>&laquo;OVMF_CODE.4m.x86.fd&raquo;.</li>
+				<li>&laquo;OVMF_CODE.4m.x64.fd&raquo;.</li>
+			</ul>
+			<p><b>Только учтите один нюанс!</b></p>
+			<p>Ни одна программа виртуализации толком нормально и адекватно не работает на Windows с флешками!</p>
+			<p>На Linux - без проблем с чем угодно. А вот на Windows - извините, чтобы интернет не посоветовал - я перепробовал далеко не один 10-к способов.</p>
+			<p>Наиболее адекватным оказался только <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip</a> для Windows.</p>
+			<p>Тем не менее, я все равно приведу коды запуска проверки флешек и для Windows и для Linux.</p>
+			<p>Вдруг это только мне так не везет.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part2.8"></a></p>
