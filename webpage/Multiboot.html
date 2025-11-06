@@ -597,7 +597,8 @@ cmd.exe</pre>
 			<p>А вторая проблема в таблице разделов. При форматировании в <b>&laquo;GPT&raquo;</b> вы рискуете потерять возможность взаимодействовать с BIOS режимом загрузки.</p>
 			<p><span style="color:blue;">Если же вы сразу воспользуетесь таблицей <b>&laquo;MBR&raquo;</b> и файловой системой <b>&laquo;FAT32&raquo;</b> - то у вас будет нормальная возможность взаимодействовать с загрузкой и в &laquo;UEFI&raquo; и в &laquo;BIOS&raquo; режимах! А это и есть конечная цель создания такой мультизагрузочной флешки!</span></p>
 			<p><b>Переходим к архиву &laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;.</b></p>
-			<p>В самом архиве содержится набор файлов.</p>
+			<p>В самом архиве содержится набор файлов. Распакуйте, зайдите в саму папку и перенесети все файлы и папки на вашу флешку.</p>
+			<p>По поводу скинов и фоновых картинок поговорим как-нибудь отдельно. Сначала нужно научиться управлять данными загрузчиками.</p>
 			<ul>
 				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;boot</li>
 				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;boot-info</li>
@@ -683,11 +684,21 @@ boot</pre>
 			<p>Значит ли это, что initrd /live/initrd.img будет искать файл в другом месте?</p>
 			<p>Нет, если вы указали find --set-root /live/vmlinuz, то и initrd /live/initrd.img будет искать файл именно на том же разделе, где был найден /live/vmlinuz, потому что корень уже установлен на этот раздел. <b>Корень — это корень раздела, а не абсолютный путь в файловой системе. Важно понимать, что root в grub4dos — это не абсолютный путь в файловой системе, а именно указание на раздел/устройство, с которого грузятся файлы.</b></p>
 			<p>Пути /live/vmlinuz и /live/initrd.img — это пути внутри этого раздела.</p>
-			<p>Таким образом процесс создания собственной меню загрузки Grub4DOS по сути отчасти даже является творческим процессом. Вы распологаете те пункты меню какие вам нужны и там, где вам нужно в том порядке, в каком вы сами захотите.</p>
+			<p>Таким образом процесс создания собственной меню загрузки Grub4DOS по сути отчасти даже является творческим процессом. Вы распологаете те пункты меню какие вам нужны и там, где вам нужно, в том порядке, в каком вы сами захотите.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.1.2"></a></p>
 			<h4>3.1.2. Syslinux</h4>
+			<p>Теперь рассмотрим меню &laquo;syslinux.cfg&raquo;.</p>
+			<p>Вообще таких файла в архиве 2. Один находится в корне. Другой в папке &laquo;boot/syslinux/syslinux.cfg&raquo;.</p>
+			<p>Важен только тот файл, какой вы установили в качестве меню загрузки по умолчанию. Если тот, который в корне флешки - значит его и будем редактировать.</p>
+			<p>Все что находится после знака решетки &laquo;#&raquo; является комментарием для вас и вы можете изменять эту строку как захотите. Она никак и нигде отображаться не будет.</p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
