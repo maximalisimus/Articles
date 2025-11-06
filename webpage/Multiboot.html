@@ -59,7 +59,28 @@
 					<li><a href="#part1.10">Окончание строк в Windows и Linux: CR+LF и LF</a></li>
 				</ol>
 				<li><a href="#part2">Програмное обеспечение</a></li>
+				<ol>
+					<li><a href="#part2.1">Операционные системы, Live диски</a></li>
+					<li><a href="#part2.2">Geany</a></li>
+					<li><a href="#part2.3">Утилита BOOTICE</a></li>
+					<li><a href="#part2.4">Дистрибутивы загрузчиков</a></li>
+					<li><a href="#part2.5">Готовые архивы EFI / GRUB4DOS / SYSLINUX</a></li>
+					<li><a href="#part2.6">Примеры конфигурационных файлов</a></li>
+					<li><a href="#part2.7">Утилита виртуализации Qemu</a></li>
+					<li><a href="#part2.8">Инструкции по установке загрузчиков</a></li>
+				</ol>
 				<li><a href="#part3">Практика</a></li>
+				<ol>
+					<li><a href="#part3.1">Объяснение загрузчиков</a></li>
+					<ol>
+						<li><a href="#part3.1.1">GRUB4DOS</a></li>
+						<li><a href="#part3.1.2">Syslinux</a></li>
+						<li><a href="#part3.1.3">GRUB2</a></li>
+					</ol>
+					<li><a href="#part3.2">Элемент изучения</a></li>
+					<li><a href="#part3.3">Практические примеры</a></li>
+					<li><a href="#part3.4">Тестирование</a></li>
+				</ol>
 			</ol>
 		</div>
 		<div class="content">
@@ -439,30 +460,81 @@ cmd.exe</pre>
 			<p>Единственным исключением является только сам загрузчик Windows, начиная с 7-ки и выше - под названием <a href="#part1.7">&laquo;BCD (Boot Configuration Data)&raquo;</a>. Для него качественных альтернатив редакторов, к большому сожалению, просто нет.</p>
 			<hr>
 			<p><b>Програмное обеспечение.</b></p>
-			<p><b>1. Первое что нам понадобится - это текстовый редактор Geany</b> (<a href="https://geany.ru/download/releases">оф. сайт</a>, <a href="https://github.com/maximalisimus/Archivers-Configs-Linux/releases/download/v3.0/Geany-Portable-1.37.1-x86-sfx.exe">Портативная версия 1.37.1 x86</a>), но не простой.</p>
+			<p><a name="part2.1"></a></p>
+			<h3>2.1. Операционные системы, Live диски</h3>
+			<p>Сами ОС и Live диски можно найти на <a href="https://maximalisimus.github.io/url/#menu1.3.3">&laquo;Панели ссылок&raquo;</a> - Глава 3.3.</p>
+			<p>На ней содержаться ссылки на следующие системы и Live диски:</p>
+			<ul>
+				<li>Live диск <a href="https://win-pe.sourceforge.io/">&laquo;Win-7-PE-Compact&raquo;</a></li>
+				<li><a href="https://livedisks.sourceforge.io/">&laquo;Live диски CD / DVD / USB&raquo;</a>, такие как:</li>
+				<ul>
+					<li>Ieshuas-Live</li>
+					<li>AdminPE 10</li>
+					<li>krd-10</li>
+					<li>Reanimator-2008-NoViruses</li>
+					<li>Acronis-BootCD-Collection-2012-Grub4Dos-Edition-11-in-1-v6-12.2012</li>
+					<li>Victoria</li>
+					<li>DOSLiveCD</li>
+					<li>Alkid-Live-DVD</li>
+					<li>MSDaRTFull</li>
+				</ul>
+				<li>Live диски<a href="https://gparted.org/download.php">&laquo;Gparted&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/100N_8X4XQqqtaU_EnC9ZOiDU-wYmwNsc/view?usp=sharing">&laquo;Win 7 SP1 18in1 ru-en x86 x64&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/1d0EesLPoh9xrBjDMhqG5RgSIgVmP8bkJ/view?usp=sharing">&laquo;Win-10 22H2 X64&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/1Yu2dvwxNstD76yMMF43wWVe2ctQOyGIS/view?usp=sharing">&laquo;Win-10 22H2 X86&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/1dvQs-22FGwg6EKIYBtGczCRAQATEXspN/view?usp=sharing">&laquo;Win-11 24H2 X64&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/1dw5fkRUCXnewdd7ls4Wa3t9-V3hYrYsX/view?usp=sharing">&laquo;virtio-win-0.1.271.iso&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/158n2mQzhSO9OlpqCi0Ve3UfNOq6hI0iT/view?usp=sharing">&laquo;Win_11_Boot_And_Upgrade_FiX_KiT_v6.0.tar.gz&raquo;</a></li>
+				<li>Драйвера USB <a href="https://github.com/maximalisimus/Archivers-Configs-Linux/releases/download/v3.0/Win-Drivers.zip">&laquo;Win-Drivers.zip&raquo;</a></li>
+				<li><a href="https://drive.google.com/file/d/14WSEI5VUn4FgakpBnQ6BI5a2j4yOo6E8/view?usp=sharing">&laquo;Windows-Loader (запоролено в целях безопасности, спр. у админа)&raquo;</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.2"></a></p>
+			<h3>2.2. Geany</h3>
+			<p><b>Далее что нам понадобится - это текстовый редактор Geany</b> (<a href="https://geany.ru/download/releases">оф. сайт</a>, <a href="https://github.com/maximalisimus/Archivers-Configs-Linux/releases/download/v3.0/Geany-Portable-1.37.1-x86-sfx.exe">Портативная версия 1.37.1 x86</a>), но не простой.</p>
 			<p>В одной из глав выше я писал, что в каждой ОС и всех текстовых файлах важна кодировка. <b>В каждом загрузчике есть конфигурационные файлы</b>, которые по сути <b>являются текстовыми в определнных кодировках и с определенным окончанием строк CR+LF или только LF</b>. И чтобы не нарушать ни кодировку конфигурационных файлов ни окончание строк, лучше редактировать их сразу правильно. <u>А значит обычные встроенные в любую ОС текстовые редакторы не подойдут по умолчанию, именно потому что они могут испортить не только кодировку конфигурационных файлов загрузчиков, но и перенос трок между Windows и Linux и в итоге флешка просто не сможет загрузится</u>.</p>
 			<p>Предлагаемый мною текстовый редактор не только адекватно воспринимает и сразу правильно работает с любой кодировкой и переносом строк, но ещё и отображает коды программирования разными цветами не зависимо от языка программирования просто для вашего удобства.</p>
 			<p>Редактор есть как для Windows. так и для Linux и других ОС. Свежая версия для ОС от 10-ки и старше. Портативная должна работать хоть на 7-ке, хоть даже на XP, вроде бы.</p>
 			<p>Если не сможете им воспользоваться, есть альтернативный текстовый редактор, но только для Windows - &laquo;Notepad ++&raquo;. Для Linux подойдут такие как: &laquo;Leafpad&raquo; и &laquo;Gedit&raquo; В консольном варианте Linux скорее всего только один редактор &laquo;Nano&raquo;, <u>но с осторожностью</u>.</p>
-			<p><b>2. Далее нам понадобится универсальная утилита</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/BOOTICEx86_ru.7z">BOOTICE x86 ru</a>, русскоязычная версия.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.3"></a></p>
+			<h3>2.3. Утилита BOOTICE</h3>
+			<p><b>Универсальная утилита</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/BOOTICEx86_ru.7z">BOOTICE x86 ru</a>, русскоязычная версия.</p>
 			<p>Она универсальная тем, что выступает не только как редактор разделов флешек, но и как единственный, качественный и понятный редактор <b>BCD (Boot Configuration Data)</b> файлов загрузчиков Windows.</p>
 			<p><u>В Windows</u> в качестве альтернативы вполне можно воспользоваться и <u>встроенным редактором</u>, но с небольшой оговоркой - <u>он может не видеть всех разделов флешек</u>.</p>
 			<p>В Linux же есть целых 2 варианта редакторов разделов - это &laquo;GParted&raquo; графический редактор разделов и консольный вариант &laquo;cfdisk&raquo;.</p>
-			<p><b>3. Далее понадобится несколько архивов самих установочников загрузчиков.</b> Не волнуйсте, установка возможна не только одним единственным Bootice из Windows, но также и из Linux, и даже из MSDos, если вдруг однажды придётся.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.4"></a></p>
+			<h3>2.4. Дистрибутивы загрузчиков</h3>
+			<p><b>Далее понадобится несколько архивов самих установочников загрузчиков.</b> Не волнуйсте, установка возможна не только одним единственным Bootice из Windows, но также и из Linux, и даже из MSDos, если вдруг однажды придётся.</p>
 			<ul>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/grub4dos-0.4.6a-2024-02-26.7z">grub4dos-0.4.6a-2024-02-26.7z</a> или <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/grubinst_1.0.1_bin_win.7z">grubinst_1.0.1_bin_win.7z</a>.</li>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/syslinux-6.03.tar.gz">syslinux-6.03.tar.gz</a> или <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/syslinux-5.10.tar.gz">syslinux-5.10.tar.gz</a>.</li>
 			</ul>
-			<p><b>4. Теперь сами загрузчики.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.5"></a></p>
+			<h3>2.5. Готовые архивы EFI / GRUB4DOS / SYSLINUX</h3>
+			<p>Теперь сами загрузчики.</p>
 			<ul>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/EFI-Grub4Dos-SysLinux-Full.7z">EFI-Grub4Dos-SysLinux-Full.7z</a></li>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/EFI-Grub4Dos-SysLinux-minimal.7z">EFI-Grub4Dos-SysLinux-minimal.7z</a></li>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/GFX-Editor1.0.exe.7z">GFX-Editor1.0.exe.7z</a></li>
 			</ul>
-			<p><b>5. Примеры конфигурационных файлов загрузчиков.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.6"></a></p>
+			<h3>2.6. Примеры конфигурационных файлов</h3>
 			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
 			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
-			<p><b>6. Остался только Qemu (<a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip для Windows</a>, <a href="https://qemu.weilnetz.de/w32/">32 бит для Windows</a>, <a href="https://qemu.weilnetz.de/w64/">64 бит для Windows</a>) для тестирования загрузочных флешек.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.7"></a></p>
+			<h3>2.7. Утилита виртуализации Qemu</h3>
+			<p><b>Утилита виртуализация Qemu (<a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip для Windows</a>, <a href="https://qemu.weilnetz.de/w32/">32 бит для Windows</a>, <a href="https://qemu.weilnetz.de/w64/">64 бит для Windows</a>) для тестирования загрузочных флешек.</b></p>
 			<p>Для Windows обратите внимание на то, что для наиболее старых версия Windows - вроде 7-ки ищите в 2022 году такую версию как <a href="https://qemu.weilnetz.de/w32/2022/">&laquo;20220419&raquo;</a> для 32 бит или <a href="https://qemu.weilnetz.de/w64/2022/">&laquo;20221230&raquo;</a> для 64 бит. Для старших версий ОС Windows от 10-ки и выше можете ставить любую свежую версию.</p>
 			<ul>
 				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20220419.exe">&laquo;qemu-w32-setup-20220419.exe&raquo;</a></li>
@@ -473,7 +545,10 @@ cmd.exe</pre>
 			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
 			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi. Т.е. в Archlinux вместо &laquo;qemu-system-gui&raquo; вообще &laquo;qemu-ui-gtk&raquo;.</p>
 			<p>Понадобится еще один файлик - <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/edk2-ovmf-202505-1-any.pkg.tar.gz">edk2-ovmf-202505-1-any.pkg.tar.gz</a> - имитация загрузки UEFI режима, если вы не скачивали QemuBootTester, в который она встроена, чтобы не перезагружать вашу ОС для проверки получившейся мультизагрузочной флешки.</p>
-			<p><b>7. Установка самих загрузчиков.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2.8"></a></p>
+			<h3>2.8. Инструкции по установке загрузчиков</h3>
 			<p>Инструкция установки MBR и PBR из утилиты Bootice. (Ниже список одной и той же инструкции в разных форматах для онлайн чтения)</p>
 			<ul>
 				<li><a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/uefi-bios/Multiboot_ReedMe.doc">Multiboot_ReedMe.doc</a></li>
@@ -492,19 +567,65 @@ cmd.exe</pre>
 			<p>Например, пусть будут установчная флешка с Windows 10 и парой других ОС или дополнительных утилит. И флешка для простого восстановления доступа, настроек или просто ремонта.</p>
 			<p>Все смежные и спользуемые внутри загрузчиков утилиты также обговорим - какая и зачем нужна.</p>
 			<hr>
+			<p><a name="part3.1"></a></p>
+			<h3>3.1. Объяснение загрузчиков</h3>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
+			<p><a name="part3.1.1"></a></p>
+			<h4>3.1.1. GRUB4DOS</h4>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.1.2"></a></p>
+			<h4>3.1.2. Syslinux</h4>
 			<p></p>
 			<p></p>
-			<p></p>			
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.1.3"></a></p>
+			<h4>3.1.3. GRUB2</h4>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.2"></a></p>
+			<h3>3.2. Элемент изучения</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>	
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.3"></a></p>
+			<h3>3.3. Практические примеры</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>	
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.4"></a></p>
+			<h3>3.4. Тестирование</h3>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>	
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
