@@ -97,7 +97,8 @@
 						<li><a href="#part1.5.3">Работа с несколькими вариантами одной модели</a></li>
 					</ol>
 					<li><a href="#part1.6">Программирование</a></li>
-					<li><a href="#part1.7">Дополнительная информация</a></li>
+					<li><a href="#part1.7">Загрузка моделей с Hugginface</a></li>
+					<li><a href="#part1.8">Дополнительная информация</a></li>
 				</ol>
 				<li><a href="#part2">Нейронные сети на Android / IOS</a></li>
 				<ol>
@@ -1516,6 +1517,32 @@ image.save("whimsical.png")</pre>
 		</div>
 		<div class="content">
 			<p><a name="part1.7"></a></p>
+			<h3>Загрузка моделей с Hugginface</h3>
+			<p>Пример загрузки моделей с Hugginface.</p>
+			<div class="codeses">
+				<pre>pip install -U "huggingface_hub[cli]"
+huggingface-cli --help
+huggingface-cli login
+huggingface-cli download gpt2 config.json
+huggingface-cli download HuggingFaceH4/zephyr-7b-beta
+huggingface-cli download gpt2 config.json model.safetensors
+huggingface-cli download stabilityai/stable-diffusion-xl-base-1.0 --include "*.safetensors" --exclude "*.fp16.*"*
+huggingface-cli download bigcode/the-stack --repo-type dataset --revision v1.1
+huggingface-cli download adept/fuyu-8b model-00001-of-00002.safetensors --local-dir fuyu
+huggingface-cli download adept/fuyu-8b --cache-dir ./path/to/cache
+huggingface-cli download gpt2 config.json --token=hf_****
+huggingface-cli download gpt2 --quiet</pre>
+			</div>
+			<p>Python файл.</p>
+			<div class="codeses">
+				<pre>from huggingface_hub import hf_hub_download
+ 
+downloaded_model_path = hf_hub_download(repo_id="CompVis/stable-diffusion-v-1-4-original", filename="sd-v1-4.ckpt", use_auth_token=True)
+print(downloaded_model_path)</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.8"></a></p>
 			<h3>1.7. Дополнительная информация</h3>
 			<p><b>Как применять LoRA к Stable Diffusion для генерации изображений с кастомным стилем?</b></p>
 			<p>В Stable-Diffusion-WebUI (AUTOMATIC1111) можно легко загружать и применять LoRA-модели.</p>
