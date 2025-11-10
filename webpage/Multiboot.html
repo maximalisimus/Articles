@@ -864,56 +864,192 @@ MENU END</pre>
 				<li>Параметры iso и bigraw у memdisk указывают тип загружаемого образа (ISO-образ CD/DVD или большой raw-образ диска).</li>
 				<li>linux16 и initrd16 — специальные команды GRUB2 для загрузки 16-битных образов и initrd, которые не являются Linux-ядром, а, например, загрузчиками или утилитами.</li>
 			</ul>
-			<p><b>Как разделить сделать из одного файла &laquo;grub.cfg&raquo; несколько?</b></p>
+			<p><b>Как сделать из одного файла &laquo;grub.cfg&raquo; несколько?</b></p>
 			<p>Рассмотрим структуру файлов.</p>
 			<ul>
-				<li>/boot/grub/grub.cfg          # Главный конфиг</li>
-				<li>/boot/grub/windows.cfg       # Меню загрузки Windows 10</li>
-				<li>/boot/grub/konboot.cfg       # Меню загрузки Konboot EFI</li>
-				<li>/boot/grub/power_help.cfg    # Меню управления питанием и help</li>
+				<li><b>/boot/grub/grub.cfg</b> # Главный конфиг</li>
+				<li><b>/boot/grub/windows.cfg</b> # Меню загрузки Windows 10</li>
+				<li><b>/boot/grub/konboot.cfg</b> # Меню загрузки Konboot EFI</li>
+				<li><b>/boot/grub/power_help.cfg</b> # Меню управления питанием и help</li>
 			</ul>
-			<p>Главный файл grub.cfg</p>
-			<div class="codeses">
-				<pre>menuentry "Windows 10" {
+			<p>Так у нас будет раздельное управление каждой загрузкой и в этом случае мы будет когда и где что-нибудь сломается, или наоборот захотим добавить или удалить какое-либо меню.</p>			
+			<p>Главный файл <b>grub.cfg</b></p>
+			<div class="codesesscroll">
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
+
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+--------------------------------------------------------------------------------------------------
+menuentry 'boot from hd1' {
+    set root=hd1
+    chainloader +1
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10" {
+    search --file --no-floppy --set=root /boot/grub/windows.cfg
     configfile /boot/grub/windows.cfg
 }
-
+--------------------------------------------------------------------------------------------------
 menuentry "Konboot EFI" {
+    search --file --no-floppy --set=root /boot/grub/konboot.cfg
     configfile /boot/grub/konboot.cfg
 }
-
+--------------------------------------------------------------------------------------------------
+menuentry "Memtest" {
+  search --file --no-floppy --set=root /boot/memtest.efi
+  chainloader /boot/memtest.efi
+}
+--------------------------------------------------------------------------------------------------
 menuentry "Power & Help" {
+    search --file --no-floppy --set=root /boot/grub/power_help.cfg
     configfile /boot/grub/power_help.cfg
-}</pre>
-			</div>
-			<p>Например, файл /boot/grub/windows.cfg</p>
-			<div class="codeses">
-				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
-    configfile /boot/grub/grub.cfg
 }
-
-menuentry "Boot Windows 10" {
-    search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
-    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-}</pre>
+--------------------------------------------------------------------------------------------------</pre>
 			</div>
-			<p>Примерное меню загрузки /boot/grub/konboot.cfg</p>
-			<div class="codeses">
-				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
-    configfile /boot/grub/grub.cfg
-}
-
-menuentry "Boot Konboot EFI" {
-    search --file --no-floppy --set=root /EFI/konboot/konbootx64.efi
-    chainloader /EFI/konboot/konbootx64.efi
-}</pre>
-			</div>
-			<p>Файл /boot/grub/power_help.cfg</p>
+			<p>Меню загрузки <b>Windows</b> /boot/grub/windows.cfg</p>
 			<div class="codesesscroll">
-				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
+
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+--------------------------------------------------------------------------------------------------
+menuentry "(ESC) Back to Main Menu" --hotkey=esc {
     configfile /boot/grub/grub.cfg
 }
+--------------------------------------------------------------------------------------------------
+menuentry "Boot Windows 10" {
+  search --file --no-floppy --set=root /EFI/BOOT/win10bootx64.efi
+  chainloader /EFI/BOOT/win10bootx64.efi
+}</pre>
+			</div>
+			<p>Меню загрузки <b>KonBoot</b> /boot/grub/konboot.cfg</p>
+			<div class="codesesscroll">
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
 
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+--------------------------------------------------------------------------------------------------
+menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+    configfile /boot/grub/grub.cfg
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeIA32" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeIA32.efi
+  chainloader /EFI/BOOT/KonBootDxeIA32.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeX64" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeX64.efi
+  chainloader /EFI/BOOT/KonBootDxeX64.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "kon-boot ISO" {
+  set isofile="/boot/kon-bootCD.iso"
+  linux16 /boot/memdisk iso
+  initrd16 $isofile
+}
+--------------------------------------------------------------------------------------------------
+menuentry "kon-boot ISO old" {
+  set isofile="/boot/kon-bootCD_old.iso"
+  linux16 /boot/memdisk iso
+  initrd16 $isofile
+}</pre>
+			</div>
+			<p><b>Меню управления питанием</b> /boot/grub/power_help.cfg</p>
+			<div class="codesesscroll">
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
+
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+--------------------------------------------------------------------------------------------------
+menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+    configfile /boot/grub/grub.cfg
+}
+--------------------------------------------------------------------------------------------------
 menuentry "(F1) Info Disk System and Video" --hotkey="f1" {
     echo "                       www.BootDev.ru"
     echo ""
@@ -925,19 +1061,18 @@ menuentry "(F1) Info Disk System and Video" --hotkey="f1" {
     echo "Press ESC for Main Menu..."
     sleep --interruptible 9999
 }
-
+--------------------------------------------------------------------------------------------------
 menuentry "" {
     echo " "
 }
-
+--------------------------------------------------------------------------------------------------
 menuentry "(r) Reboot" --hotkey="r" {
     reboot
 }
-
+--------------------------------------------------------------------------------------------------
 menuentry "(h) Shutdown" --hotkey="h" {
     halt
-}
-</pre>
+}</pre>
 			</div>
 			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
 			<p>Например <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/grub.cfg.txt"><b>&laquo;grub.cfg.txt&raquo;</b></a></p>
