@@ -808,23 +808,139 @@ MENU END</pre>
 }</pre>
 			</div>
 			<p>Этот пункт загрузит загрузчик с первого сектора второго диска (hd1).</p>
-			<p>Как загрузить GRUB4DOS и Syslinux из GRUB2.</p>
+			<p>Как загрузить GRUB4DOS из GRUB2.</p>
 			<div class="codeses">
 				<pre>menuentry "GRUB4DOS" {
     set root=(hd0,1)
     chainloader +1
 }</pre>
 			</div>
+			<p>Здесь GRUB2 передает управление загрузчику GRUB4DOS, установленному в загрузочном секторе первого раздела первого диска.</p>
 			<p>Либо можно попробовать сделать это другим образом.</p>
-			<p>Скачайте из пункта <a href="#part2.4">&laquo;2.4&raquo;</a> архив &laquo;grub4dos-0.4.6a-2024-02-26.7z&raquo;.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Скачайте из пункта <a href="#part2.4">&laquo;2.4&raquo;</a> архив &laquo;grub4dos-0.4.6a-2024-02-26.7z&raquo; и распакуйте оттуда файл &laquo;grub.exe&raquo; в корень флешки в папку &laquo;/boot&raquo; уже имеющегося у вас там загрузчика &laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo; или &laquo;EFI-Grub4Dos-SysLinux-minimal.7z&raquo;.</p>
+			<p>Тогда загрузка GRUB4DOS из GRUB2 будет такой.</p>
+			<div class="codeses">
+				<pre>menuentry "GRUB4DOS" {
+    search --file --no-floppy --set=root /menu.lst
+    linux /boot/grub.exe --config-file=/menu.lst
+}</pre>
+			</div>
+			<p>Команда search <b>--file --no-floppy --set=root /menu.lst</b> ищет раздел, где находится файл <b>/menu.lst</b>, и устанавливает этот раздел как корневой <b>(root)</b>. Это гарантирует, что <b>GRUB2</b> правильно найдёт и <b>grub.exe</b>, и конфиг <b>menu.lst</b>, даже если у вас несколько дисков или разделов.</p>
+			<p>После этого команда <b>linux /boot/grub.exe --config-file=/menu.lst</b> загрузит <b>grub.exe</b> из папки <b>/boot</b> и передаст ему параметр с указанием конфигурационного файла.</p>
+			<p><b>Создание подменю.</b></p>
+			<p>Рассмотрим пример.</p>
+			<div class="codeses">
+				<pre>submenu '8. Tools' {
+    menuentry '1. Memtest' {
+        set isofile="/iso/memtest.iso"
+        linux16 /boot/memdisk iso
+        initrd16 $isofile
+    }
+    menuentry '2. Plop Boot Manager' {
+        linux16 /boot/plpbt.bin
+    }
+    menuentry "Boot IMG - Seagate Tools" {
+        linux16 /memdisk bigraw
+        initrd16 /SeaTools.img
+    }
+}</pre>
+			</div>
+			<p><b>submenu '8. Tools' { ... }</b> — создаёт подменю с названием "8. Tools". При выборе этого пункта откроется вложенное меню с пунктами, описанными внутри.</p>
+			<p>menuentry '1. Memtest' { ... }</p>
+			<p><b>set isofile="/iso/memtest.iso"</b> — задаёт переменную isofile, указывающую путь к ISO-образу Memtest.</p>
+			<p><b>linux16 /boot/memdisk iso</b> — загружает 16-битный (BIOS) загрузчик memdisk из пакета Syslinux, с параметром iso. Memdisk позволяет загружать образы дисков (ISO, IMG) как виртуальные диски.</p>
+			<p><b>initrd16 $isofile</b> — загружает в память ISO-образ, указанный в переменной isofile, как initrd (initial ramdisk). Memdisk использует этот образ для эмуляции загрузочного диска.</p>
+			<p>Таким образом, этот пункт загружает Memtest из ISO-образа через memdisk.</p>
+			<p>menuentry '2. Plop Boot Manager' { ... }</p>
+			<p><b>linux16 /boot/plpbt.bin</b> — загружает 16-битный бинарник Plop Boot Manager, который позволяет выбирать устройства загрузки (USB, CD и т.п.) на старых системах.</p>
+			<p>menuentry "Boot IMG - Seagate Tools" { ... }</p>
+			<p><b>linux16 /memdisk bigraw</b> — загружает memdisk с параметром bigraw, который позволяет загружать большие образы дисков (например, HDD-образы).</p>
+			<p><b>initrd16 /SeaTools.img</b> — загружает образ SeaTools.img в память как initrd. Это загрузочный образ утилит Seagate для диагностики дисков.</p>
+			<p><b>Как это работает в целом?</b></p>
+			<ul>
+				<li>Подменю "Tools" содержит несколько утилит, которые загружаются через memdisk — это способ загрузить ISO или IMG образы как виртуальные диски, что удобно для запуска диагностических или загрузочных утилит без реальной записи на диск.</li>
+				<li>Использование linux16 и initrd16 — это способ загрузить 16-битные образы и утилиты в BIOS-среде через GRUB2.</li>
+				<li>memdisk — часть пакета Syslinux, позволяет загружать образы дисков (ISO, IMG) как виртуальные диски, что удобно для запуска live-систем, утилит и т.п. из образов.</li>
+				<li>Параметры iso и bigraw у memdisk указывают тип загружаемого образа (ISO-образ CD/DVD или большой raw-образ диска).</li>
+				<li>linux16 и initrd16 — специальные команды GRUB2 для загрузки 16-битных образов и initrd, которые не являются Linux-ядром, а, например, загрузчиками или утилитами.</li>
+			</ul>
+			<p><b>Как разделить сделать из одного файла &laquo;grub.cfg&raquo; несколько?</b></p>
+			<p>Рассмотрим структуру файлов.</p>
+			<ul>
+				<li>/boot/grub/grub.cfg          # Главный конфиг</li>
+				<li>/boot/grub/windows.cfg       # Меню загрузки Windows 10</li>
+				<li>/boot/grub/konboot.cfg       # Меню загрузки Konboot EFI</li>
+				<li>/boot/grub/power_help.cfg    # Меню управления питанием и help</li>
+			</ul>
+			<p>Главный файл grub.cfg</p>
+			<div class="codeses">
+				<pre>menuentry "Windows 10" {
+    configfile /boot/grub/windows.cfg
+}
+
+menuentry "Konboot EFI" {
+    configfile /boot/grub/konboot.cfg
+}
+
+menuentry "Power & Help" {
+    configfile /boot/grub/power_help.cfg
+}</pre>
+			</div>
+			<p>Например, файл /boot/grub/windows.cfg</p>
+			<div class="codeses">
+				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+    configfile /boot/grub/grub.cfg
+}
+
+menuentry "Boot Windows 10" {
+    search --file --no-floppy --set=root /EFI/Microsoft/Boot/bootmgfw.efi
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+}</pre>
+			</div>
+			<p>Примерное меню загрузки /boot/grub/konboot.cfg</p>
+			<div class="codeses">
+				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+    configfile /boot/grub/grub.cfg
+}
+
+menuentry "Boot Konboot EFI" {
+    search --file --no-floppy --set=root /EFI/konboot/konbootx64.efi
+    chainloader /EFI/konboot/konbootx64.efi
+}</pre>
+			</div>
+			<p>Файл /boot/grub/power_help.cfg</p>
+			<div class="codesesscroll">
+				<pre>menuentry "(ESC) Back to Main Menu" --hotkey=esc {
+    configfile /boot/grub/grub.cfg
+}
+
+menuentry "(F1) Info Disk System and Video" --hotkey="f1" {
+    echo "                       www.BootDev.ru"
+    echo ""
+    echo "[---------------- Info disk system ----------------]"
+    ls -l
+    echo "[---------------- Info video system  ----------------]"
+    videoinfo
+    echo ""
+    echo "Press ESC for Main Menu..."
+    sleep --interruptible 9999
+}
+
+menuentry "" {
+    echo " "
+}
+
+menuentry "(r) Reboot" --hotkey="r" {
+    reboot
+}
+
+menuentry "(h) Shutdown" --hotkey="h" {
+    halt
+}
+</pre>
+			</div>
+			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p>Например <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/grub.cfg.txt"><b>&laquo;grub.cfg.txt&raquo;</b></a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.2"></a></p>
