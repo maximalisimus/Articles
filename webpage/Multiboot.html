@@ -3,19 +3,11 @@
 	<meta charset="utf-8">
 	<title>Мультизагрузка</title>
 	<link rel="icon" href="../image/Multiboot/multiboot-icon.png">
-	<!--
-		<link rel="icon" href="image/favicon.png">
-		<link rel="shortcut icon" href="js-css/404-2.ico" Type="image/x-icon">
-		type="image/png"
-		<link rel="shortcut icon" href="favicon.png" type="image/png">
-		<link rel="icon" href="image/favicon.svg" type=" image/svg+xml">
-	-->
 	<link rel="stylesheet" href="../html/main.css" type="text/css">	
 	<link rel="stylesheet" href="../html/zoom.css" type="text/css">
 	<link rel="stylesheet" href="../html/table.css" type="text/css">
 	<link rel="stylesheet" href="../html/frame.css">
 	<link rel="stylesheet" href="../html/ol-li.css" type="text/css">
-	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
 	<script src="../html/jquery.2.2.0.min.js"></script>
 	<script type="text/javascript" src="../html/litezoom.js"></script>
 </head>
@@ -694,20 +686,140 @@ boot</pre>
 			<p>Важен только тот файл, какой вы установили в качестве меню загрузки по умолчанию. Если тот, который в корне флешки - значит его и будем редактировать.</p>
 			<p>Все что находится после знака решетки &laquo;#&raquo; является комментарием для вас и вы можете изменять эту строку как захотите. Она никак и нигде отображаться не будет.</p>
 			<p>В принципе вы могли бы переустановить PBR загрузчик syslinux и указать файл который в &laquo;/boot/syslinux/syslinux.cfg&raquo;, а тот который в корне - вполне могли бы удалить. Если вам так нужна эстетика и меньшее количество файлов в корне. Так тоже можно.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Создание меню Syslinux сложнее и проще одновременно. Оно содержит определенные команды и более конкретную структуру по сравнению с GRUB4DOS.</p>
+			<p><b>Основные команды и их назначение.</b></p>
+			<ul>
+				<li><b>MENU TITLE [текст]</b></li>
+				<p>Задает интерфейс меню, например, UI menu.c32 — подключает модуль меню с графическим интерфейсом. Обычно ставится в начале файла, чтобы включить меню.</p>
+				<li><b>MENU TITLE [текст]</b></li>
+				<p>Заголовок меню, который отображается вверху экрана меню. Например, MENU TITLE Boot Menu</p>
+				<li><b>DEFAULT [метка]</b></li>
+				<p>Устанавливает пункт меню, который будет выбран по умолчанию, если пользователь не сделает выбор в течение таймаута.</p>
+				<li><b>PROMPT [0|1]</b></li>
+				<p>Включает (1) или отключает (0) приглашение выбора пункта меню.</p>
+				<li><b>TIMEOUT [число]</b></li>
+				<p>Время в десятых долях секунды, через которое автоматически загружается пункт по умолчанию. Например, TIMEOUT 50 — 5 секунд.</p>
+			</ul>
+			<p><b>Создание пунктов меню.</b></p>
+			<ul>
+				<li><b>LABEL [имя_метки]</b></li>
+				<p>Определяет уникальную метку пункта меню, по которой можно ссылаться (например, из DEFAULT или из подменю).</p>
+				<li><b>MENU LABEL [текст]</b></li>
+				<p>Текст, который будет отображаться в меню для данного пункта.</p>
+				<li><b>KERNEL [путь_к_ядру]</b></li>
+				<p>Указывает путь к ядру или загрузочному файлу, который будет загружен при выборе пункта,.</p>
+				<li><b>INITRD [путь_к_initrd]</b></li>
+				<p>Указывает initrd (initial ramdisk) для загрузки вместе с ядром.</p>
+				<li><b>APPEND [параметры]</b></li>
+				<p>Дополнительные параметры, передаваемые ядру при загрузке, например, ro root=/dev/sda1</p>
+				<li><b>COM32 [файл]</b></li>
+				<p>Запускает COM32-модуль (например, chain.c32 для цепочки загрузки или menu.c32 для меню).</p>
+			</ul>
+			<p><b>Текст помощи к пункту меню.</b></p>
+			<ul>
+				<li><b>TEXT HELP</b></li>
+				<p>Начинает блок текста с описанием пункта меню, который показывается при выделении пункта.</p>
+				<li><b>ENDTEXT</b></li>
+				<p>Завершает блок текста помощи.</p>
+			</ul>
+			<p><b>Создание подменю и вложенных меню.</b></p>
+			<p>Syslinux поддерживает создание подменю с помощью специальных команд:</p>
+			<ul>
+				<li><b>MENU BEGIN [имя_меню]</b></li>
+				<p>Начинает описание подменю с указанным именем.</p>
+				<li><b>MENU END</b></li>
+				<p>Завершает описание подменю.</p>
+				<li><b>MENU [имя_меню]</b></li>
+				<p>Команда для вызова подменю из главного меню или другого подменю.</p>
+				<li><b>SEPARATOR</b></li>
+				<p>Добавляет разделитель в меню для визуального разделения пунктов.</p>
+			</ul>
+			<p>Пример структуры с подменю:</p>
+			<div class="codeses">
+				<pre>LABEL submenu
+  MENU LABEL Подменю
+  MENU MENU1
+
+MENU BEGIN MENU1
+  LABEL item1
+    MENU LABEL Пункт 1 в подменю
+    KERNEL /vmlinuz
+    APPEND ...
+  LABEL back
+    MENU LABEL Назад
+    MENU EXIT
+MENU END</pre>
+			</div>
+			<p>Здесь <b>MENU MENU1</b> вызывает подменю с именем <b>MENU1</b>, которое описано между <b>MENU BEGIN MENU1</b> и <b>MENU END</b>.</p>
+			<p>Пример простого меню с подменю.</p>
+			<div class="codesesscroll">
+				<pre>MENU TITLE Главное меню
+DEFAULT linux
+
+LABEL linux
+  MENU LABEL Загрузить Linux
+  KERNEL /vmlinuz
+  INITRD /initrd.img
+  APPEND root=/dev/sda1 ro
+
+LABEL submenu
+  MENU LABEL Дополнительные опции
+  MENU MENU1
+
+MENU BEGIN MENU1
+  LABEL memtest
+    MENU LABEL Запустить Memtest86+
+    KERNEL /memtest.bin
+  LABEL back
+    MENU LABEL Назад в главное меню
+    MENU EXIT
+MENU END</pre>
+			</div>
+			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
+			<p>Т.е. <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/syslinux-info.txt"><b>&laquo;здесь&raquo;</b></a> и <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/syslinux.cfg.txt"><b>&laquo;здесь&raquo;</b></a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.1.3"></a></p>
 			<h4>3.1.3. GRUB2</h4>
+			<p>Рассмотрим меню &laquo;grub.cfg&raquo;.</p>
+			<p><b>Основные команды и структура меню GRUB2.</b></p>
+			<ul>
+				<li><b>menuentry 'Название пункта' [опции] { ... }</b></li>
+				<p>Определяет пункт меню с названием, которое будет отображаться. Внутри фигурных скобок описывается логика загрузки.</p>
+				<li><b>set root=(hdX,Y)</b></li>
+				<p>Устанавливает корневой раздел для загрузки, где <b>hdX</b> — диск, <b>Y</b> — номер раздела. Например, <b>(hd0,1)</b> — первый диск, первый раздел.</p>
+				<li><b>search --file --no-floppy --set=root /путь/к/файлу</b></li>
+				<p>Ищет раздел, содержащий указанный файл, и устанавливает его как root. Полезно для динамического определения раздела.</p>
+				<li><b>chainloader +1</b></li>
+				<p>Передает управление загрузчику, установленному в загрузочном секторе выбранного раздела. Используется для загрузки других загрузчиков (Windows, Syslinux, GRUB4DOS).</p>
+				<li><b>configfile /путь/к/файлу</b></li>
+				<p>Загружает и выполняет другой конфигурационный файл GRUB, что позволяет создавать вложенные меню.</p>
+				<li><b>reboot</b></li>
+				<p>Перезагружает компьютер.</p>
+				<li><b>halt</b></li>
+				<p>Выключает систему.</p>
+			</ul>
+			<p>Пример простого пункта меню.</p>
+			<div class="codeses">
+				<pre>menuentry 'Boot from hd1' {
+    set root=(hd1)
+    chainloader +1
+}</pre>
+			</div>
+			<p>Этот пункт загрузит загрузчик с первого сектора второго диска (hd1).</p>
+			<p>Как загрузить GRUB4DOS и Syslinux из GRUB2.</p>
+			<div class="codeses">
+				<pre>menuentry "GRUB4DOS" {
+    set root=(hd0,1)
+    chainloader +1
+}</pre>
+			</div>
+			<p>Либо можно попробовать сделать это другим образом.</p>
+			<p>Скачайте из пункта <a href="#part2.4">&laquo;2.4&raquo;</a> архив &laquo;grub4dos-0.4.6a-2024-02-26.7z&raquo;.</p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
