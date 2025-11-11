@@ -520,7 +520,7 @@ cmd.exe</pre>
 			<hr>
 			<p><a name="part2.6"></a></p>
 			<h3>2.6. Примеры конфигурационных файлов</h3>
-			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p><b>Примеры всех конфигурационных файлов загрузчиков - и для <b>GRUB4DOS</b>, и для <b>SysLinux</b>, и для <b>GRUB2</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</b></p>
 			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -575,6 +575,7 @@ cmd.exe</pre>
 			<p>Теперь подробно поговорим обо всех указанных в главе ПО архивах и как их использовать в любой ОС с конкретными примерами. Для этого создадим пару мултизагрузочных флешек для разных случаев.</p>
 			<p>Например, пусть будут установчная флешка с Windows 10 и парой других ОС или дополнительных утилит. И флешка для простого восстановления доступа, настроек или просто ремонта.</p>
 			<p>Все смежные и спользуемые внутри загрузчиков утилиты также обговорим - какая и зачем нужна.</p>
+			<p><b>Примеры всех конфигурационных файлов загрузчиков - и для <b>GRUB4DOS</b>, и для <b>SysLinux</b>, и для <b>GRUB2</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</b></p>
 			<hr>
 			<p><a name="part3.1"></a></p>
 			<h3>3.1. Объяснение загрузчиков</h3>
@@ -678,6 +679,7 @@ boot</pre>
 			<p>Нет, если вы указали find --set-root /live/vmlinuz, то и initrd /live/initrd.img будет искать файл именно на том же разделе, где был найден /live/vmlinuz, потому что корень уже установлен на этот раздел. <b>Корень — это корень раздела, а не абсолютный путь в файловой системе. Важно понимать, что root в grub4dos — это не абсолютный путь в файловой системе, а именно указание на раздел/устройство, с которого грузятся файлы.</b></p>
 			<p>Пути /live/vmlinuz и /live/initrd.img — это пути внутри этого раздела.</p>
 			<p>Таким образом процесс создания собственной меню загрузки Grub4DOS по сути отчасти даже является творческим процессом. Вы распологаете те пункты меню какие вам нужны и там, где вам нужно, в том порядке, в каком вы сами захотите.</p>
+			<p><b>Примеры всех конфигурационных файлов загрузчиков - и для <b>GRUB4DOS</b>, и для <b>SysLinux</b>, и для <b>GRUB2</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</b></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.1.2"></a></p>
@@ -776,7 +778,7 @@ MENU BEGIN MENU1
     MENU EXIT
 MENU END</pre>
 			</div>
-			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p><b>Примеры всех конфигурационных файлов загрузчиков - и для <b>GRUB4DOS</b>, и для <b>SysLinux</b>, и для <b>GRUB2</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</b></p>
 			<p>Там вы найдете множество разных вариантов настроек для очень многих случаев любых настроек загрузки ОС - будь то хоть совместно Windows 7 + Alkid Live DVD, или Windows 10 + AlKid Live USB + Linux Mint, и многие многие другие.</p>
 			<p>Т.е. <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/syslinux-info.txt"><b>&laquo;здесь&raquo;</b></a> и <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/syslinux.cfg.txt"><b>&laquo;здесь&raquo;</b></a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
@@ -1078,7 +1080,7 @@ menuentry "(h) Shutdown" --hotkey="h" {
     halt
 }</pre>
 			</div>
-			<p>Примеры всех конфигурационных файлов загрузчиков - и для GRUB4DOS, и для SysLinux, и для GRUB2 <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</p>
+			<p><b>Примеры всех конфигурационных файлов загрузчиков - и для <b>GRUB4DOS</b>, и для <b>SysLinux</b>, и для <b>GRUB2</b> <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/">смотрите здесь</a>.</b></p>
 			<p>Например <a href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/boot-info/grub.cfg.txt"><b>&laquo;grub.cfg.txt&raquo;</b></a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
