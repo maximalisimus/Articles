@@ -71,6 +71,11 @@
 					</ol>
 					<li><a href="#part3.2">Элемент изучения</a></li>
 					<li><a href="#part3.3">Практические примеры</a></li>
+					<ol>
+						<li><a href="part3.3.1">Загрузчики флешки</a></li>
+						<li><a href="part3.3.2">Проверка запуска загрузчиков</a></li>
+						<li><a href="part3.3.3">Наполнение флешки</a></li>
+					</ol>
 					<li><a href="#part3.4">Тестирование</a></li>
 				</ol>
 			</ol>
@@ -1110,20 +1115,197 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			<hr>
 			<p><a name="part3.3"></a></p>
 			<h3>3.3. Практические примеры</h3>
+			<p>Рассмотрим с вами процесс созданию любой мультизагрузочной флешки.</p>
+			<p><a name="part3.3.1"></a></p>
+			<h4>3.3.1. Загрузчики флешки</h4>
+			<p>Для начала нам понадобится сама флешка. Я это сэмитирую виртуальным диском. Для примера разницы никакой не будет. Работать будет абсолютно одинаково.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-1.png" width="1200px"/>
+			</div>
+			<p>Согласно пункту <a href="#part2.5"><b>&laquo;2.5&raquo;</b></a> скачиваю архив, например, <b>&laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;</b>, распаковываю с помощью утилиты <b>&laquo;7Z&raquo;</b> и копирую файлы из распакованной папки на флешку.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-2.png" width="1200px"/>
+			</div>
+			<p>После чего записываю <b>&laquo;MBR / PBR&raquo;</b> загрузчики согласно инструкциям пункту <a href="#part2.8"><b>&laquo;2.8&raquo;</b></a>.</p>
+			<div class="images">				
+				<img src="../image/Multiboot/scr-3.png" width="1200px"/>
+				<p><b>Запись загрузчика &laquo;GRUB4DOS&raquo;.</b></p>				
+				<img src="../image/Multiboot/scr-4.png" width="1200px"/>
+				<p><b>Проверка, что запись загрузчика &laquo;GRUB4DOS&raquo; удалась.</b></p>
+				<img src="../image/Multiboot/scr-5.png" width="1200px"/>
+				<p><b>Запись загрузчика &laquo;SYSLINUX&raquo;. Решил убрать файл &laquo;syslinux.cfg&raquo; подальше в подпапку &laquo;/boot/syslinux/&raquo; просто ради удобства.</b></p>
+				<img src="../image/Multiboot/scr-6.png" width="1200px"/>
+				<p><b>Проверка, что запись загрузчика &laquo;SYSLINUX&raquo; удалась.</b></p>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.3.2"></a></p>
+			<h4>3.3.2. Проверка запуска загрузчиков.</h4>
+			<p>Теперь необходимо проверить все записанные загрузчики успешно загружаются и работают. Для этого используем утилиту виртуализации <b>&laquo;Qemu&raquo;</b>, а точнее <b>&laquo;QemuBootTester&raquo;</b> из пункта <a href="#part2.7"><b>&laquo;2.7&raquo;</b></a>.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-7.png" width="1200px"/>
+				<p><b>Проверка запуска &laquo;MBR / PBR&raquo;, в данном случае &laquo;GRUB4DOS&raquo;.</b></p>
+				<img src="../image/Multiboot/scr-8.png" width="1200px"/>
+				<p><b>Проверка перехода от &laquo;GRUB4DOS&raquo; к &laquo;SYSLINUX&raquo;.</b></p>
+				<img src="../image/Multiboot/scr-9.png" width="1200px"/>
+				<p><b>Проверка запуска флешки в режиме &laquo;UEFI&raquo;.</b></p>
+			</div>
+			<p>Как видите все загрузчики прекрасно работают во всех режимах - и <b>&laquo;BIOS&raquo;</b> и <b>&laquo;UEFI&raquo;</b>.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.3.3"></a></p>
+			<h4>3.3.3. Наполнение флешки.</h4>
 			<p></p>
 			<p></p>
 			<p></p>
 			<p></p>
-			<p></p>	
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
+			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.4"></a></p>
 			<h3>3.4. Тестирование</h3>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>	
+			<p>Рассмотрим коды запуска для самой утилиты <b>&laquo;Qemu&raquo;</b> и для <b>&laquo;Windows&raquo;</b> и для <b>&laquo;Linux&raquo;</b>.</p>
+			<p>Для этого вам понадобится сама утилита <b>&laquo;Qemu&raquo;</b> для вашей ОС, а также архив <b>&laquo;edk2-ovmf-202505-1-any.pkg.tar.gz&raquo;</b> из того же пункта <a href="#part2.7"><b>&laquo;2.7&raquo;</b></a>.</p>
+			<p>Архив нужен и в <b>&laquo;Windows&raquo;</b> и в <b>&laquo;Linux&raquo;</b>. Потому что его надо будет распаковать и достать из него 2 файла - <b>&laquo;usr/share/edk2/ia32/OVMF_CODE.4m.fd&raquo;</b> и <b>&laquo;usr/share/edk2/x64/OVMF_CODE.4m.fd&raquo;</b>.</p>
+			<p>Можете даже переименовать их по очереди например так: <b>&laquo;OVMF_CODE.4m.x64.fd&raquo;</b> и <b>&laquo;OVMF_CODE.4m.x86.fd&raquo;</b> просто для удобства использования.</p>
+			<p>Эти два файла как раз и будут имитировать нам полноценную среду <b>UEFI</b> при запуске любого современного ПК. Для проверки в режиме <b>BIOS</b> они будут не нужны.</p>
+			<p><b>Windows.</b> <u>Убедительная просьба устанавливать утилиту <b>&laquo;Qemu&raquo;</b> на любой диск так, чтобы в путях установки не было никаких пробелов и знаков препинания!</u></p>
+			<p>Например, <b>&laquo;C:\Qemu\&raquo;</b>.</p>			
+			<p>Теперь создайте файл, например, <b>&laquo;Qemu-test.bat&raquo;</b> в любом удобном для вас месте, но главное в том же месте где и лежат ваши распакованные  <b>&laquo;OVMF_CODE.4m.fd&raquo;</b> файлы.</p>
+			<div class="codeses">
+				<pre>@echo off
+SET PATH=C:\Qemu\;%PATH%
+qemu-system-x86_64 ^
+-vga std ^
+-cpu qemu64 ^
+-smp cores=1 ^
+-m 1024 ^
+-machine q35 ^
+-device intel-iommu ^
+-device e1000,netdev=net0 ^
+-netdev user,id=net0,hostfwd=tcp::2222-:22 ^
+-boot menu=on ^
+-L . ^
+-drive file=OVMF_CODE-x64.fd,if=pflash,format=raw,unit=0,readonly=on ^
+-usb --device usb-host,vendorid=0x8564,productid=0x1000</pre>
+			</div>
+			<p>Пока не запускайте этот файл. Нам еще нужно определить <b>&laquo;vendorid&raquo;</b> и <b>&laquo;productid&raquo;</b> вашей флешки. Как видите, мы здесь сразу подключили 64 битный вариант имитации <b>UEFI</b> системы, а также подключили сетевую карту с пробросом с 2222 порта на 22 внутрь виртуальной машины. Остальные параметры выставлены согласно утилите <b>&laquo;QemuBootTester&raquo;</b>. Для замены <b>UEFI</b> на 32 битную - просто перепешите файл  <b>&laquo;OVMF_CODE.4m.x64.fd&raquo;</b> на <b>&laquo;OVMF_CODE.4m.x86.fd&raquo;</b> внутри этой команды.</p>
+			<p>Без <b>UEFI</b> код запуска выглядел бы следующим образом.</p>
+			<div class="codeses">
+				<pre>@echo off
+SET PATH=C:\Qemu\;%PATH%
+qemu-system-x86_64 ^
+-vga std ^
+-cpu qemu64 ^
+-smp cores=1 ^
+-m 1024 ^
+-machine q35 ^
+-device intel-iommu ^
+-device e1000,netdev=net0 ^
+-netdev user,id=net0,hostfwd=tcp::2222-:22 ^
+-boot menu=on ^
+-usb --device usb-host,vendorid=0x8564,productid=0x1000</pre>
+			</div>
+			<p>Для определения <b>&laquo;vendorid&raquo;</b> и <b>&laquo;productid&raquo;</b> вашей флешки скачайте архив cmd утилит <a href="https://github.com/maximalisimus/Archivers-Configs-Linux/releases/download/v1.0/bash-cmd-variant.7z"><b>&laquo;bash-cmd-variant.7z&raquo;</b></a>.</p>
+			<p>Распакуйте этот архив куда-нибудь, зайдти в полученную папку и запустите файл <b>&laquo;cmd-x86.bat&raquo;</b>. Затем используйте несколько последовательных комманд.</p>
+			<p class="codes">
+				listdisk</br>
+				blkid</br>
+				lsblk</br>
+				lsusb
+			</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-10.png" width="670px"/>
+				<p><b>&laquo;listdisk&raquo;.</b></p>
+				<img src="../image/Multiboot/scr-11.png" width="670px"/>
+				<p><b>Остальные команды.</b></p>
+			</div>
+			<p>Все эти команды помогают понять где именно ваша флешка и какие у нее <b>&laquo;vendorid&raquo;</b> и <b>&laquo;productid&raquo;</b>. В моем случае виртуальные диски просто не отображаются, т.к. это всё таки <b>Windows</b>.</p>
+			<p>Есть и другой вариант кода запуска проверки любой флешки или виртуального диска.</p>
+			<div class="codeses">
+				<pre>@echo off
+SET PATH=C:\Qemu\;%PATH%
+qemu-system-x86_64 ^
+-vga std ^
+-cpu qemu64 ^
+-smp cores=1 ^
+-m 1024 ^
+-machine q35 ^
+-device intel-iommu ^
+-device e1000,netdev=net0 ^
+-netdev user,id=net0,hostfwd=tcp::2222-:22 ^
+-boot menu=on ^
+-L . ^
+-drive file=OVMF_CODE-x64.fd,if=pflash,format=raw,unit=0,readonly=on ^
+-hda \\.\PhysicalDrive2</pre>
+			</div>
+			<p>Исходя из скриншотов выше, вы сами можете убедиться, что в качестве имитации флешки здесь выступает физический носитель <b>&laquo;\\.\PhysicalDrive2&raquo;</b>, что в коде я и выставил.</p>
+			<p><b>Linux.</b></p>
+			<p>Здесь всё намного проще!</p>
+			<p>Флешкой может быть любое <b>&laquo;/dev/sdX&raquo;</b> устройство. Наша задача определить букву этого устройства.</p>
+			<p class="codes">
+				df -h</br>
+				lsblk</br>
+				blkid</br>
+				lsusb
+			</p>
+			<p>Обычно чаще всего одной команды <b>&laquo;lsblk&raquo;</b> достаточно.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-12.png" width="630px"/>
+			</div>
+			<p>В данном случае мы видим на скриншоте что это конкретное устройство <b>&laquo;/dev/sdc&raquo;</b>.</p>
+			<p>Теперь создайте в том же месте где и ваши распакованные файлы <b>&laquo;OVMF_CODE.4m.x64.fd&raquo;</b> и <b>&laquo;OVMF_CODE.4m.x86.fd&raquo;</b> файл запуска, например, <b>&laquo;linux-qemu.sh&raquo;</b> для <b>UEFI</b> режимма проверки. Не забудьте заменить <b>&laquo;/dev/sdX&raquo;</b> на вашу флешку, например, для примера из скриншота выше <b>&laquo;/dev/sdc&raquo;</b>.</p>
+			<div class="codesesscroll">
+				<pre>qemu-system-x86_64
+-enable-kvm
+-soundhw ac97
+-cpu host
+-smp cores=1
+-m 1024
+-machine q35
+-device intel-iommu
+-vga virtio
+-device e1000,netdev=wan
+-netdev user,id=wan
+-hda /dev/sdX
+-boot d
+-device e1000,netdev=net0
+-netdev user,id=net0,hostfwd=tcp::22-:22,hostfwd=tcp::80-:80,hostfwd=tcp::443-:443
+-L .
+-drive file=/usr/share/ovmf/x64/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on</pre>
+			</div>
+			<p>Прописывать путь к файлу <b>&laquo;OVMF_CODE.4m.fd&raquo;</b> обязательно полностью в <b>Linux</b> формате. При этом не важно, установили ли вы <b>&laquo;edk2-ovmf&raquo;</b> или скачали и распаковали вручную из скачанного архива.</p>
+			<p>Соответственно для проверки флешки в режиме <b>BIOS</b>.</p>
+			<div class="codesesscroll">
+				<pre>qemu-system-x86_64
+-enable-kvm
+-soundhw ac97
+-cpu host
+-smp cores=1
+-m 1024
+-machine q35
+-device intel-iommu
+-vga virtio
+-device e1000,netdev=wan
+-netdev user,id=wan
+-hda /dev/sdX
+-boot d
+-device e1000,netdev=net0
+-netdev user,id=net0,hostfwd=tcp::22-:22,hostfwd=tcp::80-:80,hostfwd=tcp::443-:443</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
