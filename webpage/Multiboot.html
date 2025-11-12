@@ -1160,18 +1160,142 @@ menuentry "(h) Shutdown" --hotkey="h" {
 				<li>&laquo;Alkid-Live-DVD&raquo;</li>
 				<li>&laquo;gparted-live-1.6.0-10-i686&raquo;</li>
 				<li>&laquo;gparted-live-1.7.0-8-amd64&raquo;</li>
-				<li>&laquo;WIN7PE-COMPACT&raquo;</li>
 				<li>&laquo;Microsoft Dyagnostic and Recovery Toolset&raquo; или сокращенно &laquo;MSDaRT&raquo;.</li>
 			</ul>
 			<p>Нет ничего невозможного. И мы с вами такую флешку сделаем вместе. Для начала вам приёдся скачать все эти диски с <b>Sourceforge.net</b> официального сайта моего репозитория из пункта <a href="#part2.1"><b>&laquo;2.1. Операционные системы, Live диски&raquo;</b></a> и распаковать по отдельным директориям.</p>
 			<p>Далее нам необходимо досконально изучить все загрузчики каждого диска по отдельности и так сказать скопировать все параметры запуска систем в какой-нибудь текстовый файлик, чтобы можно было их переписать под наши загрузчики и расположить все эти диски внутри нашей флешки, причем раздельно друг от друга.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
+			<p>Распакуем образ системы <b>&laquo;Windows-10-22H2-x64-Ru.iso&raquo;</b>, например, в папку с тем же названием, с помощью утилиты <b>&laquo;7Z File Manager&raquo;</b> и посмотрим на файлы внутри.</p>
+			<ul>
+				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;boot</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;efi</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;sources</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;support</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;autorun.inf</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;bootmgr</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;bootmgr.efi</li>
+				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;setup.exe</li>
+			</ul>
+			<p>Предлагаю сразу перенести файл <b>&laquo;bootmgr.efi&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
+			<p>Также считаю необходимым также перенести все <b>&laquo;.efi&raquo;</b> и <b>&laquo;.bin&raquo;</b> файлы из папки <b>&laquo;efi/microsoft/boot&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
+			<p>И обязательно переименовать файлы <b>&laquo;BOOTIA32.EFI&raquo;</b> и <b>&laquo;BOOTX64.EFI&raquo;</b> в любые другие названия, например, <b>&laquo;win10bootia32.EFI&raquo;</b> и <b>&laquo;win10bootix64.EFI&raquo;</b> по пути <b>&laquo;efi/boot&raquo;</b> если такие там вообще имеются.</p>
+			<p>Вот теперь файлы этого образа готовы для копирования на нашу мультизагрузочную флешку в том виде в каком они есть. <b>BIOS BCD</b> и <b>UEFI BCD</b> поправим при необходимости немного позже. В <b>Windows</b> загрузчиках главное это сами <b>&laquo;.efi&raquo;</b> файлы. Остальное при необходимости вполне можно исправить.</p>
+			<p>Теперь отредактируем следующие файлы наших загрузчиков через редактор <b>Geany</b>.</p>
+			<ul>
+				<li><b>&laquo;menu.lst&raquo;</b> - меню загрузчика <b>GRUB4DOS</b></li>
+				<li><b>&laquo;boot/syslinux/syslinux.cfg&raquo;</b> - меню загрузчика <b>SYSLINUX</b></li>
+				<li><b>&laquo;boot/grub/grub.cfg&raquo;</b> - меню <b>UEFI</b> загрузчика <b>GRUB2</b></li>
+			</ul>
+			<p><b>&laquo;menu.lst&raquo; - GRUB4DOS</b></p>
+			<p>Давайте поправим буквально только 1 строку. Вместо &laquo;title Win7 RU SP1 x86-x64&raquo; вставим такую.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				title Windows 10 22H2 x64 Ru
+			</p>
+			<p>И для <b>GRUB4DOS</b> для загрузки <b>Windows 10</b> этого вполне хватит.</p>
+			<p><b>&laquo;boot/syslinux/syslinux.cfg&raquo; SYSLINUX</b></p>
+			<p>Тоже самое. Опускаемся до строк с &laquo;Win7 RU SP1 x86-x64 18in1 activated v4&raquo; и меняем только строки со следующими командами: LABEL, MENU LABEL и TEXT HELP.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				LABEL title Windows 10 22H2 x64 Ru<br>
+				MENU LABEL title Windows 10 22H2 x64 Ru<br>
+				KERNEL /boot/syslinux/chain.c32 hd0 1 ntldr=/bootmgr<br>
+				TEXT HELP<br>
+				Windows 10 22H2 x64 Ru<br>
+				ENDTEXT
+			</p>
+			<p><b>&laquo;boot/grub/grub.cfg&raquo; GRUB2</b></p>
+			<p>Для начала точно также меняем все &laquo;Win7 RU SP1 x86-x64&raquo; на &laquo;Windows 10 22H2 x64 Ru&raquo;.</p>
+			<p>Также если помните нам нужно еще сопоставить загрузочные <b>&laquo;.efi&raquo;</b> файлы с каждым типом загрузки из папки <b>&laquo;efi/boot&raquo;</b>.</p>
+			<div class="codesesscroll">
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
+
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+--------------------------------------------------------------------------------------------------
+menuentry 'boot from hd1' {
+set root=hd1
+chainloader +1
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10 22H2 x64 Ru efi 64" {
+  search --file --no-floppy --set=root /EFI/BOOT/win10bootx64.efi
+  chainloader /EFI/BOOT/win10bootx64.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10 22H2 x64 Ru cdboot" {
+  search --file --no-floppy --set=root /EFI/BOOT/cdboot.efi
+  chainloader /EFI/BOOT/cdboot.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10 22H2 x64 Ru cdboot noprompt" {
+  search --file --no-floppy --set=root /EFI/BOOT/cdboot_noprompt.efi
+  chainloader /EFI/BOOT/cdboot_noprompt.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeIA32" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeIA32.efi
+  chainloader /EFI/BOOT/KonBootDxeIA32.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeX64" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeX64.efi
+  chainloader /EFI/BOOT/KonBootDxeX64.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Memtest" {
+  search --file --no-floppy --set=root /boot/memtest.efi
+  chainloader /boot/memtest.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "" {
+ echo " "
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(F1) Info Disk System and Video" --hotkey="f1" {
+ echo "                       www.BootDev.ru"
+ echo ""
+ echo "[---------------- Info disk system ----------------]"
+ ls -l
+ echo "[---------------- Info video system  ----------------]"
+ videoinfo
+ echo ""
+ echo "Press ESC for Main Menu..."
+ sleep --interruptible 9999
+}
+--------------------------------------------------------------------------------------------------
+menuentry "" {
+ echo " "
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(r) Reboot" --hotkey="r" {
+ reboot
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(h) Shutdown" --hotkey="r" {
+ halt
+}
+--------------------------------------------------------------------------------------------------</pre>
+			</div>
+			<p>Для загрузки только одной <b>Windows 10</b> этого будет вполне достаточно. Но у нас с вами еще несколько различных дисков утилит диагностики и восстановления.</p>
 			<p></p>
 			<p></p>
 			<p></p>
