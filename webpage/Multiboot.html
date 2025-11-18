@@ -1173,9 +1173,11 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			<h4>3.3.3. Наполнение флешки.</h4>
 			<p>Допустим я хочу себе флешку, на которой у меня будет не только скажем <b>&laquo;Windows 10 x64&raquo;</b>, но и набор мультизагрузочных средств диагностики и ремонта. Например, пусть будут следующие.</p>
 			<ul>
+				<li>&laquo;Acronis-2012&raquo;</li>
 				<li>&laquo;Alkid-Live-DVD&raquo;</li>
 				<li>&laquo;gparted-live-1.6.0-10-i686&raquo;</li>
 				<li>&laquo;gparted-live-1.7.0-8-amd64&raquo;</li>
+				<li>&laquo;Linux Mint&raquo;</li>
 				<li>&laquo;WIN7PE-COMPACT&raquo;</li>
 				<li>&laquo;Microsoft Dyagnostic and Recovery Toolset&raquo; или сокращенно &laquo;MSDaRT&raquo;.</li>
 			</ul>
@@ -1198,17 +1200,839 @@ menuentry "(h) Shutdown" --hotkey="h" {
 				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;bootmgr.efi</li>
 				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;setup.exe</li>
 			</ul>
-			<p>Предлагаю сразу перенести файл <b>&laquo;bootmgr.efi&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
-			<p>Также считаю необходимым перенести все <b>&laquo;.efi&raquo;</b> и <b>&laquo;.bin&raquo;</b> файлы из папки <b>&laquo;efi/microsoft/boot&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
+			<p>Предлагаю сразу скопировать файл <b>&laquo;bootmgr.efi&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
+			<p>Также считаю необходимым скопировать все <b>&laquo;.efi&raquo;</b> и <b>&laquo;.bin&raquo;</b> файлы из папки <b>&laquo;efi/microsoft/boot&raquo;</b> в папку <b>&laquo;efi/boot&raquo;</b>.</p>
 			<p>И обязательно переименовать файлы <b>&laquo;BOOTIA32.EFI&raquo;</b> и <b>&laquo;BOOTX64.EFI&raquo;</b> в любые другие названия, например, <b>&laquo;win10bootia32.EFI&raquo;</b> и <b>&laquo;win10bootix64.EFI&raquo;</b> по пути <b>&laquo;efi/boot&raquo;</b> если такие там вообще имеются.</p>
-			<p>Вот теперь файлы этого образа готовы для копирования на нашу мультизагрузочную флешку в том виде в каком они есть. <b>BIOS BCD</b> и <b>UEFI BCD</b> поправим при необходимости немного позже. В <b>Windows</b> загрузчиках главное это сами <b>&laquo;.efi&raquo;</b> файлы. Остальное при необходимости вполне можно исправить.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-13.png" width="800px"/>
+			</div>
+			<p>Вот теперь файлы этого образа готовы для копирования на нашу мультизагрузочную флешку в том виде в каком они есть. <b>BIOS BCD</b> и <b>UEFI BCD</b> поправим немного позже, пока они должны остаться такими какие они есть. В <b>Windows</b> загрузчиках главное это сами <b>&laquo;.efi&raquo;</b> файлы. Остальное при необходимости вполне можно исправить.</p>
+			<p>Скопируйте все файлы в корень флешки.</p>
+			<p>Переходим к остальным дискам.</p>
+			<p>Распакуйте оставшиеся диски в отдельные директории: &laquo;Acronis-BootCD-Collection-2012-Grub4Dos-Edition-11-in-1-v6-12.2012.iso&raquo;, &laquo;Alkid-Live-DVD.iso&raquo;, &laquo;linuxmint-22.2-xfce-64bit.iso&raquo;, &laquo;MSDaRTFull.iso&raquo;.</p>
+			<p>Распаковывать &laquo;WIN7PE-COMPACT.ISO&raquo; не нужно, чуть позже поясню почему.</p>
+			<p>Итак. Нужно понимать одну важную деталь. Некоторые из дисков будут запускаться только в <b>GRUB4DOS</b>, некоторые только в <b>Syslinux</b>, а некоторые только в <b>GRUB2</b>. Но мы с вами пропишем загрузки во всех. Будут конкретные определенные ограничения по запуску и это нужно будет учитывать. Позже в самих текстах конфигурационных файлов вы это увидете.</p>
+			<p>Вот так выглядит текущее состояние структуры папок флешки.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-14.png" width="1000px"/>
+			</div>
+			<p>Теперь поясню по каждому диску.</p>
+			<p><b>Acronis</b> может работать только в <b>BIOS</b> режиме. Скопировать его можно практически в любую отдельную папку на флешку, чтобы в названии не было ни пробелов, ни знаков препинаний, ни каких либо других символов, сохраняя при этом структуру диска.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-15.png" width="780px"/>
+			</div>
+			<p>Чтобы правильно перенести &laquo;Alkid-Live-DVD&raquo; надо проделать несколько операций.</p>
+			<ol>
+				<li>Во первых переименовать папку &laquo;A386&raquo; в &laquo;minint&raquo;.</li>
+				<li>А во вторых скопировать из переименованной папки &laquo;minint&raquo; файл &laquo;NTDETECT.COM&raquo; в корень флешки.</li>
+			</ol>
+			<p>Иначе диск попросту не запустится.</p>
+			<p>Теперь просто перенесите все файлы &laquo;Alkid-Live-DVD&raquo; тоже в корень флешки.</p>
+			<p>Из диска &laquo;MSDaRTFull&raquo; нам нужна только одна единственная папки &laquo;ERDC&raquo;, из которой надо удалить только один единственный файл &laquo;BCD&raquo;. Скопируйте ее в корень флешки.</p>
+			<p>Можете сразу скопировать на флешку в папку &laquo;isoimage&raquo; 3 образа дисков &laquo;gparted-live-1.6.0-10-i686.iso&raquo;, &laquo;gparted-live-1.7.0-8-amd64.iso&raquo; и &laquo;WIN7PE-COMPACT.ISO&raquo;.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-16.png" width="850px"/>
+			</div>
+			<p>А вот с &laquo;Linux Mint&raquo;-ом все немного сложнее.</p>
+			<p>Вы уже заметили по скриншоту, что в корне флешки имеется отдельная папка для <b>Linux</b> систем. Так и есть. Но тут есть нюансы по их копированию, вставке, прописываю параметров загрузке и запуску в разных режимах - <b>BIOS</b> и <b>UEFI</b>.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/scr-17.png" class="fz__minimized" alt="клик для увеличения" title="linuxmint-22.2-xfce-64bit директория" />
+				<img src="../image/Multiboot/scr-18.png" class="fz__minimized" alt="клик для увеличения" title="linuxmint-22.2-xfce-64bit/casper директория" />
+			</div>
+			<p><b>Обратите внимание на то, что я скопировал далеко не все папки и файлы. А самое главное в том, что в директории &laquo;casper&raquo; с файлами лежит сам образ диска и отсутствуют файлы &laquo;filesystem.*&raquo; самой файловой системы Linux Mint диска - это важно!</b></p>
+			<p>Так надо делать далеко не у всех <b>Linux</b> систем. И это важно!</p>
+			<p>Дело в том, что именно <b>Linux Mint</b> не может напрямую загрузить &laquo;filesystem.*&raquo; файлы. Это конкретно прописано в загрузочном меню &laquo;boot/grub/grub.cfg&raquo;прописано:</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				iso-scan/filename=${iso_path}
+			</p>
+			<p>Именно этот параметр нам и понадобится для корректной и <b>BIOS</b> и <b>UEFI</b> загрузки этой системы. Если бы его не было, в таком случае мы просто бы скопировали распакованные файлы &laquo;filesystem.*&raquo; и прописали бы более длинную загрузку.</p>
+			<p>Важен также тот момент, что мы соблюдали структуру папок образа.</p>
+			<p>Для простой загрузки системы нужна только папка &laquo;casper&raquo;. А вот для установки и обновления уже нужны будут пара других важных папок локальных репозиториев информации обо всех пакетах системы: &laquo;dists&raquo;, &laquo;pool&raquo;, &laquo;efi.img&raquo;, &laquo;md5sum.README&raquo;, &laquo;md5sum.txt&raquo;.</p>
+			<p>Для Debian скорее всего вы будете копировать все файлы целиком. Я имею введу папку &laquo;casper&raquo; или другую для указанного диска, включая файлы &laquo;filesystem.*&raquo;.</p>
 			<p>Теперь отредактируем следующие файлы наших загрузчиков через редактор <b>Geany</b>.</p>
 			<ul>
 				<li><b>&laquo;menu.lst&raquo;</b> - меню загрузчика <b>GRUB4DOS</b></li>
+				<li><b>&laquo;boot/menu_u.lst&raquo;</b> - второе меню загрузчика <b>GRUB4DOS</b></li>
+				<li><b>&laquo;boot/acronis.lst&raquo;</b> - второе меню загрузчика <b>GRUB4DOS</b></li>
 				<li><b>&laquo;boot/syslinux/syslinux.cfg&raquo;</b> - меню загрузчика <b>SYSLINUX</b></li>
 				<li><b>&laquo;boot/grub/grub.cfg&raquo;</b> - меню <b>UEFI</b> загрузчика <b>GRUB2</b></li>
 			</ul>
-			<p></p>
+			<p><b>&laquo;menu.lst&raquo;</b></p>
+			<div class="codesesscroll">
+				<pre>timeout 30
+gfxmenu /boot/Rainbow
+/boot/unifont --all-font /boot/CONSOLA_U16.bin 
+default 0
+
+title Load HDD
+find --set-root --ignore-floppies --ignore-cd /bootmgr || find --set-root --ignore-floppies --ignore-cd /ntldr
+map (hd0) (hd1)
+map (hd1) (hd0)
+map --hook
+rootnoverify (hd0)
+chainloader (hd0)+1
+
+title Windows Utilites
+find --set-root --ignore-floppies --ignore-cd /bootmgr
+map --unmap=0:0xff
+map --unhook
+root (hd0,0)
+chainloader (hd0,0)/bootmgr
+
+title Alkid Live CD
+find --set-root /minint/setupldr.bin
+chainloader /minint/setupldr.bin
+
+title Alkid Live CD (without SCSI/RAID)
+find --set-root /minint/setuplns.bin
+chainloader /minint/setuplns.bin
+
+title WIN7PE COMPACT
+find --set-root /isoimage/WIN7PE-COMPACT.iso 
+map /isoimage/WIN7PE-COMPACT.iso  (0xff) || map --mem /isoimage/WIN7PE-COMPACT.iso  (0xff)
+map --hook
+chainloader (0xff)
+
+title Linux Mint 22.2 Xfce 64-bit
+find --set-root /linux/linuxmint-22.2-xfce-64bit/casper/linuxmint-22.2-xfce-64bit.iso
+map /linux/linuxmint-22.2-xfce-64bit/casper/linuxmint-22.2-xfce-64bit.iso  (0xff) || map --mem /linux/linuxmint-22.2-xfce-64bit/casper/linuxmint-22.2-xfce-64bit.iso  (0xff)
+map --hook
+chainloader (0xff)
+
+title GParted live 1.7.0-8 AMD64
+find --set-root /isoimage/gparted-live-1.7.0-8-amd64.iso
+map /isoimage/gparted-live-1.7.0-8-amd64.iso  (0xff) || map --mem /isoimage/gparted-live-1.7.0-8-amd64.iso  (0xff)
+map --hook
+chainloader (0xff)
+
+title GParted live 1.6.0-10 I686
+find --set-root /isoimage/gparted-live-1.6.0-10-i686.iso
+map /isoimage/gparted-live-1.6.0-10-i686.iso  (0xff) || map --mem /isoimage/gparted-live-1.6.0-10-i686.iso  (0xff)
+map --hook
+chainloader (0xff)
+
+title Acrnois 2012 Utilites >>>
+configfile /boot/acronis.lst
+
+title SYSLINUX 
+find --set-root --ignore-floppies /boot/syslinux/ldlinux.sys
+chainloader +1
+
+title Kon-Boot (CURRENT VERSION)
+map --mem /boot/konboot.img (fd0)
+map --hook
+chainloader (fd0)+1
+map (hd1) (hd0)
+map --hook
+rootnoverify (fd0)
+
+title Kon-Boot v2.1 (OLD VERSION)
+map --mem /boot/konbootOLD.img (fd0)
+map --hook
+chainloader (fd0)+1
+map (hd1) (hd0)
+map --hook
+rootnoverify (fd0)
+
+title Kon-Boot (CURRENT VERSION) CD
+find --set-root /boot/kon-bootCD.ISO
+map --mem /boot/kon-bootCD.ISO (hd32)
+map --hook
+chainloader (hd32)
+
+title Kon-Boot v2.1 (OLD VERSION) CD
+find --set-root /boot/kon-bootCD_old.ISO
+map --mem /boot/kon-bootCD_old.ISO (hd32)
+map --hook
+chainloader (hd32)
+
+title Symantec Ghost v11.0
+find --set-root /boot/Ghost.IMA
+map --mem /boot/Ghost.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+ 
+title Plop Boot Manager
+ls /usbdrive.tag || find --set-root --ignore-cd /usbdrive.tag
+kernel /plpbt.bin
+
+title Comand Line
+commandline
+
+title Else Utilites >>>
+configfile /boot/menu_u.lst
+
+title
+root
+
+title CD/DVD-ROM
+cdrom --init
+map --hook
+chainloader (cd0)
+
+title Reboot
+reboot
+
+title Shutdown
+halt</pre>
+			</div>
+			<p><b>&laquo;boot/menu_u.lst&raquo;</b></p>
+			<div class="codesesscroll">
+				<pre>timeout 30
+gfxmenu /boot/Moonlight
+/boot/unifont --all-font /boot/CONSOLA_U16.bin 
+default 0
+
+title <<< Back to Start Menu" 
+configfile /menu.lst
+
+title FreeDOS - Load comand line and DOS-Navigator and VC  
+find --set-root /boot/FreeDOS.IMA
+map --mem /boot/FreeDOS.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title Universal MultiBoot Disk v3.7 - NTFS on DOS
+find --set-root /boot/UniversalDisk.IMA
+map --mem /boot/UniversalDisk.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title NT Password & Registry Editor - edit password and regedit
+find --set-root /boot/NtPasRec.IMA 
+map --mem /boot/NtPasRec.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title Active@ Boot Disk Professional v2.1 - Recovery files
+find --set-root /boot/ActiveCD.WBT
+map --mem /boot/ActiveCD.WBT (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title QuickTech Pro v5.8 - Test for Hardware  
+find --set-root /grldr 
+kernel /boot/memdisk 
+initrd /boot/Qtpro580.IMG
+
+title MemTest86+ v4.20 
+find --set-root /boot/MemTest.IMG
+map --mem /boot/MemTest.IMG (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title MHDD v4.6 
+find --set-root /boot/MHDD.IMA
+map --mem /boot/MHDD.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title Victoria v3.52 - IDE, ATA, HDD  
+find --set-root /boot/Victoria.IMA
+map --mem /boot/Victoria.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title HDD Regenerator v2011
+find --set-root /boot/HDDReg.IMG
+map --mem /boot/HDDReg.IMG (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title abrsw
+find --set-root /IMG/abrsw.iso
+map /IMG/abrsw.iso (0xff) || map --mem /IMG/abrsw.iso (0xff)
+map --hook
+chainloader (0xff)
+
+title atiesdds
+find --set-root /IMG/atiesdds.iso
+map /IMG/atiesdds.iso (0xff) || map --mem /IMG/atiesdds.iso (0xff)
+map --hook
+chainloader (0xff)
+
+title ghost
+find --set-root /IMG/ghost.iso
+map /IMG/ghost.iso (0xff) || map --mem /IMG/ghost.iso (0xff)
+map --hook
+chainloader (0xff)
+
+title hddreg2011
+find --set-root /IMG/hddreg2011.iso
+map /IMG/hddreg2011.iso (0xff) || map --mem /IMG/hddreg2011.iso (0xff)
+map --hook
+chainloader (0xff)
+
+title mt420
+find --set-root /IMG/mt420.iso
+map /IMG/mt420.iso (0xff) || map --mem /IMG/mt420.iso (0xff)
+map --hook
+chainloader (0xff)
+
+title active
+find --set-root /IMG/active.IMA
+map --mem /IMG/active.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title victoria
+find --set-root /IMG/victoria.IMA
+map --mem /IMG/victoria.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title vmtce
+find --set-root /IMG/vmtce.IMA
+map --mem /IMG/vmtce.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title win98
+find --set-root /IMG/win98.IMA
+map --mem /IMG/win98.IMA (fd0) 
+map --hook
+rootnoverify (fd0)
+chainloader (fd0)+1
+
+title
+root
+
+title CD/DVD-ROM
+cdrom --init
+map --hook
+chainloader (cd0)
+
+title Reboot
+reboot
+
+title Shutdown
+halt</pre>
+			</div>
+			<p><b>&laquo;boot/acronis.lst&raquo;</b></p>
+			<div class="codesesscroll">
+				<pre>timeout 30
+gfxmenu /boot/Moonlight
+/boot/unifont --all-font /boot/CONSOLA_U16.bin 
+default 0
+
+title <<< Back to Start Menu" 
+configfile /menu.lst
+
+title Acronis Disk Director Server 10.0.2169 Full version
+find --set-root /acronis2012/ADDS10/DAT3.DAT
+kernel /acronis2012/ADDS10/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ADDS10/DAT2.DAT
+
+title Acronis Disk Director Advanced 11.0.12077
+find --set-root /acronis2012/ADDA11/DAT3.DAT
+kernel /acronis2012/ADDA11/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ADDA11/DAT2.DAT
+
+title Acronis Disk Director Home Update 2 11.0.2343
+find --set-root /acronis2012/ADDH11/DAT4.DAT
+kernel /acronis2012/ADDH11/DAT4.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ADDH11/DAT3.DAT
+
+title Acronis Snap Deploy Server 3.0.3470 with UR Master Image Creator
+find --set-root /acronis2012/ASDS3/66A6188E
+kernel /acronis2012/ASDS3/66A6188E vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ASDS3/720018DC
+
+title Acronis Snap Deploy Server 3.0.3470 with UR Standalone deployment
+find --set-root /acronis2012/ASDS3/3FE01872
+kernel /acronis2012/ASDS3/3FE01872 vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ASDS3/98FE18F8
+
+title Acronis Snap Deploy Server 4.0.540 with UR Master Image Creator
+find --set-root /acronis2012/ASDS4/DAT5.DAT
+kernel /acronis2012/ASDS4/DAT5.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ASDS4/DAT4.DAT
+
+title Acronis Snap Deploy Server 4.0.540 with UR Standalone deployment
+find --set-root /acronis2012/ASDS4/DAT3.DAT
+kernel /acronis2012/ASDS4/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ASDS4/DAT2.DAT
+
+title Acronis True Image Home 2011 Plus Pack 14.0.6942
+find --set-root /acronis2012/ATIH2011PP/DAT3.DAT
+kernel /acronis2012/ATIH2011PP/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ATIH2011PP/DAT2.DAT
+
+title Acronis True Image Home 2012 Plus Pack 15.0.7133
+find --set-root /acronis2012/ATIH2012PP/DAT3.DAT
+kernel /acronis2012/ATIH2012PP/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ATIH2012PP/DAT2.DAT
+
+title Acronis True Image Home 2013 Plus Pack 16.0.5551
+find --set-root /acronis2012/ATIH2013PP/DAT3.DAT
+kernel /acronis2012/ATIH2013PP/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ATIH2013PP/DAT2.DAT
+
+title Acronis Backup & Recovery 10.0.13762 with UR
+find --set-root /acronis2012/ABR10UR/DAT3.DAT
+kernel /acronis2012/ABR10UR/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ABR10UR/DAT2.DAT
+
+title Acronis Backup & Recovery 11.5.32308 with UR (32-bit)
+find --set-root /acronis2012/ABR11UR/DAT3.DAT
+kernel /acronis2012/ABR11UR/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ABR11UR/DAT2.DAT
+
+title Acronis Backup & Recovery 11.5.32308 with UR (64-bit, with UEFI support)
+find --set-root /acronis2012/ABR11UR/DAT5.DAT
+kernel /acronis2012/ABR11UR/DAT5.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/ABR11UR/DAT4.DAT
+
+title Acronis vmProtect 8.0.8128
+find --set-root /acronis2012/AvmP8/DAT3.DAT
+kernel /acronis2012/AvmP8/DAT3.DAT vga=788 ramdisk_size=28672 acpi=off quiet
+initrd /acronis2012/AvmP8/DAT2.DAT
+
+title
+root
+
+title CD/DVD-ROM
+cdrom --init
+map --hook
+chainloader (cd0)
+
+title Reboot
+reboot
+
+title Shutdown
+halt</pre>
+			</div>
+			<p><b>&laquo;boot/syslinux/syslinux.cfg&raquo;</b></p>
+			<div class="codesesscroll">
+				<pre>PROMPT				0
+TIMEOUT				300
+NOESCAPE			1
+ALLOWOPTIONS		0
+
+DEFAULT /boot/syslinux/vesamenu.c32
+FONT /boot/syslinux/866_8x16.psf
+MENU BACKGROUND /boot/syslinux/bg-2.jpg
+
+MENU WIDTH 42
+MENU MARGIN 0
+MENU ROWS 14
+MENU TIMEOUTROW 17
+MENU TABMSGROW 24
+MENU CMDLINEROW 24
+MENU HSHIFT 2
+MENU VSHIFT 1
+menu helpmsgrow 19
+menu helpmsgendrow 28
+
+#== Ќ §ў ­ЁҐ Ї а ¬Ґва  =  ?? ===== ЏҐаҐ¤ жў. = ”®­ жў. = ?? == Ї®¤бЄ §Є  ==== >
+
+	menu color screen	37;40      #ffffffff #00000000 none
+	menu color border	30;44      #00000000 #00000000 none # ђ ¬Є 
+	menu color title	7;37;40    #ffffffff #00000000 none # ‡ Ј®«®ў®Є
+	menu color unsel	37;44      #ff60CA00 #00000000 none # Џг­Євл § Јаг§ЄЁ
+	menu color hotkey	1;37;44    #ff60CA00 #00000000 none
+	menu color sel		37;44      #ffffffff #00000000 none # Љгаб®а
+	menu color hotsel	1;7;37;40  #ffffffff #ff60CA00 none
+	menu color scrollbar	30;44      #ffffffff #00000000 none # Џа®ЄагвЄ 
+
+	menu color tabmsg	31;40      #ffffffff #00000000 none
+	menu color cmdmark	1;36;40    #ffff0000 #00000000 none
+	menu color cmdline	37;40      #ffffffff #00000000 none
+	menu color pwdborder	30;47      #ffff0000 #00000000 std
+	menu color pwdheader	31;47      #ffff0000 #00000000 std
+	menu color pwdentry	30;47      #ffff0000 #00000000 std
+	menu color timeout_msg	37;40      #aae1ff6a #00000000 std # ’ҐЄбв в ©¬Ґа 
+	menu color timeout	1;37;40    #ffff0000 #00000000 none # –лдал в ©¬Ґа 
+	menu color help		37;40      #ffffffff #00000000 none # Џ®¤бЄ §Є 
+	menu color msg07	37;40      #90ffffff #00000000 std
+
+
+
+# =================================== >  ‡ Ј®«®ў®Є Ё в ©¬ гв
+
+MENU TITLE Њг«мвЁ§ Јаг§®з­ п д«ҐиЄ  maximalisimus121
+MENU AUTOBOOT Ђўв®ўлЎ®а зҐаҐ§ # бҐЄ.
+
+
+# =================================== >  ‡ Јаг§Є  б ¦сбвЄ®Ј® ¤ЁбЄ 
+
+LABEL boot_hdd
+MENU DEFAULT
+MENU LABEL ‡ Јаг§Є  б HDD
+LOCALBOOT 0x81
+TEXT HELP
+‡ Јаг§Є  ЏЉ б ЇҐаў®Ј® ¦сбвЄ®Ј® ¤ЁбЄ .
+ENDTEXT
+
+LABEL GRUB4DOS 
+MENU LABEL Grub4dos
+BOOT /grldr
+#KERNEL /boot/grub.exe
+#APPEND --config-file=/menu.lst
+TEXT HELP
+Grub4dos
+ENDTEXT
+
+# =================================== >  Џ®¤¬Ґ­о Win32
+
+MENU BEGIN Windows System
+MENU TITLE Windows System
+TEXT HELP
+Menu Windows system
+ENDTEXT
+
+LABEL Exit
+MENU LABEL  Back
+MENU EXIT
+TEXT HELP
+Back to Main Menu
+ENDTEXT
+
+MENU SEPARATOR # < ============  ђ §¤Ґ«ЁвҐ«м
+
+LABEL title Windows Utilites
+MENU LABEL Windows Utilites
+KERNEL /boot/syslinux/chain.c32 hd0 1 ntldr=/bootmgr
+TEXT HELP
+Menu Windows Utilites
+ENDTEXT
+
+LABEL Alkid Live CD
+MENU LABEL Alkid Live CD
+COM32 chain.c32
+APPEND ntldr=/minint/setupldr.bin
+TEXT HELP
+Alkid Live CD
+ENDTEXT
+
+LABEL Alkid Live CD (without SCSI/RAID)
+MENU LABEL Alkid Live CD (without SCSI/RAID)
+COM32 chain.c32
+APPEND ntldr=/minint/setuplns.bin
+TEXT HELP
+Alkid Live CD (without SCSI/RAID
+ENDTEXT
+
+LABEL WIN7PE COMPACT
+MENU LABEL WIN7PE COMPACT
+KERNEL /boot/memdisk iso
+APPEND initrd=/isoimage/WIN7PE-COMPACT.iso
+TEXT HELP
+Menu WIN7PE COMPACT
+ENDTEXT
+
+LABEL Win 98
+MENU LABEL Win 98
+KERNEL /boot/memdisk
+APPEND initrd=/IMG/win98.ima
+TEXT HELP
+Windows 98
+ENDTEXT
+
+LABEL XP Inst
+MENU LABEL XP Inst
+KERNEL /boot/memdisk
+APPEND initrd=/IMG/xp_inst.gz
+TEXT HELP
+XP Instalation
+ENDTEXT
+
+MENU END
+
+# =================================== >  Џ®¤¬Ґ­о Linux
+
+MENU BEGIN Linux System
+MENU TITLE Linux System
+TEXT HELP
+Menu Linux system
+ENDTEXT
+
+LABEL Exit
+MENU LABEL  Back
+MENU EXIT
+TEXT HELP
+Back to Main Menu
+ENDTEXT
+
+MENU SEPARATOR # < ============  ђ §¤Ґ«ЁвҐ«м
+
+LABEL Linux Mint 22.2 Xfce 64-bit
+MENU LABEL Linux Mint 22.2 Xfce 64-bit
+kernel /linux/linuxmint-22.2-xfce-64bit/casper/vmlinuz
+APPEND boot=casper iso-scan/filename=/linux/linuxmint-22.2-xfce-64bit/casper/linuxmint-22.2-xfce-64bit.iso uuid=6e72f523-dc09-4880-8910-93ffa64401c5 username=mint hostname=mint quiet splash --
+INITRD /linux/linuxmint-22.2-xfce-64bit/casper/initrd.lz
+TEXT HELP
+Menu Linux Mint 22.2 Xfce 64-bit
+ENDTEXT
+
+MENU END
+
+LABEL Shutdown PC
+MENU LABEL  Shutdown PC
+COM32 /boot/syslinux/poweroff.c32
+TEXT HELP
+Shutdown the PC
+ENDTEXT
+
+LABEL Restart PC
+MENU LABEL  Restart PC
+COM32 /boot/syslinux/reboot.c32
+TEXT HELP
+Restart the PC
+ENDTEXT</pre>
+			</div>
+			<p><b>&laquo;boot/grub/grub.cfg&raquo;</b></p>
+			<div class="codesesscroll">
+				<pre>insmod part_gpt
+insmod part_msdos
+insmod efi_gop
+insmod efi_uga
+insmod gfxterm
+insmod loopback
+insmod all_video
+insmod gzio
+insmod ext2
+insmod fat
+insmod iso9660
+insmod ntfs
+insmod efi_gop
+insmod efi_uga
+insmod memdisk
+insmod png
+
+loadfont "${prefix}/fonts/unicode.pf2"
+
+GRUB_GFXMODE=1024x768
+
+color_normal=black/black
+menu_color_normal=white/cyan
+menu_color_highlight=yellow/light-magenta
+background_color gray
+
+set timeout=60
+set default=0
+set pager=1
+efitextmode 0
+--------------------------------------------------------------------------------------------------
+menuentry 'boot from hd1' {
+set root=hd1
+chainloader +1
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows Utilites" {
+  search --file --no-floppy --set=root /EFI/boot/win10x64.efi
+  chainloader /EFI/boot/win10x64.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10 22H2 x64 Ru cdboot" {
+  search --file --no-floppy --set=root /EFI/microsoft/boot/cdboot.efi
+  chainloader /EFI/microsoft/boot/cdboot.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Windows 10 22H2 x64 Ru cdboot noprompt" {
+  search --file --no-floppy --set=root /EFI/microsoft/boot/cdboot_noprompt.efi
+  chainloader /EFI/microsoft/boot/cdboot_noprompt.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Linux Mint 22.2 Xfce 64-bit (UEFI)" {
+    search --set=root --file /linux/linuxmint-22.2-xfce-64bit/casper/vmlinuz
+    linux /linux/linuxmint-22.2-xfce-64bit/casper/vmlinuz boot=casper iso-scan/filename=/linux/linuxmint-22.2-xfce-64bit/casper/linuxmint-22.2-xfce-64bit.iso uuid=6e72f523-dc09-4880-8910-93ffa64401c5 username=mint hostname=mint quiet splash --
+    initrd /linux/linuxmint-22.2-xfce-64bit/casper/initrd.lz
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeIA32" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeIA32.efi
+  chainloader /EFI/BOOT/KonBootDxeIA32.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "KonBootDxeX64" {
+  search --file --no-floppy --set=root /EFI/BOOT/KonBootDxeX64.efi
+  chainloader /EFI/BOOT/KonBootDxeX64.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Memtest" {
+  search --file --no-floppy --set=root /boot/memtest.efi
+  chainloader /boot/memtest.efi
+}
+--------------------------------------------------------------------------------------------------
+menuentry "" {
+ echo " "
+}
+--------------------------------------------------------------------------------------------------
+menuentry "abrsw" {
+  set isofile="/IMG/abrsw.iso"
+  linux16 /boot/memdisk iso
+  initrd16 $isofile
+}
+--------------------------------------------------------------------------------------------------
+menuentry "atiesdds" {
+  set isofile="/IMG/atiesdds.iso"
+  linux16 /boot/memdisk iso
+  initrd16 $isofile
+}
+--------------------------------------------------------------------------------------------------
+menuentry "" {
+ echo " "
+}
+--------------------------------------------------------------------------------------------------
+menuentry "Grub4Dos" {
+  linux /boot/grub.exe --config-file=/menu.lst
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(F1) Info Disk System and Video" --hotkey="f1" {
+  echo "                       www.BootDev.ru"
+  echo ""
+  echo "[---------------- Info disk system ----------------]"
+  ls -l
+  echo "[---------------- Info video system  ----------------]"
+  videoinfo
+  echo ""
+  echo "Press ESC for Main Menu..."
+  sleep --interruptible 9999
+}
+--------------------------------------------------------------------------------------------------
+menuentry "" {
+  echo " "
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(r) Reboot" --hotkey="r" {
+  reboot
+}
+--------------------------------------------------------------------------------------------------
+menuentry "(h) Shutdown" --hotkey="r" {
+  halt
+}
+--------------------------------------------------------------------------------------------------</pre>
+			</div>
+			<p><b>Если вы думаете, что это всё, то вы забыли про BCD загрузчики!</b></p>
+			<p>Я уже проанализировал <b>BCD</b> меню и <b>BIOS</b> и <b>UEFI</b> диска <b>&laquo;MSDaRTFull&raquo;</b>. Вот основные наиболее важные параметры, которые нам понадобятся.</p>
+			<div class="codesesscroll">
+				<pre>Windows-10-22H2-x64-Ru
+
+BIOS
+\ERDC\boot.sdi
+\Windows\system32\boot\winload.exe
+\Windows
+ru-RU
+HAL Kernel
+WinPE
+Test
+Не проверять целостность
+UEFI
+\Windows\system32\boot\winload.efi
+
+Запуск Windows (с локального HDD)
+\ERDC\start_os.bin
+
+ДОС утилиты HD DaRTs
+\ERDC\HDDARTS.BIN
+
+Erd Commander for Windows XP (x86)
+\ERDC\GRLDR
+
+Plop Boot Manager
+\ERDC\PLOP.BIN
+
+Перезагрузка
+\ERDC\RESTART.BIN
+
+MS-DaRT for Windows Vista (x86)
+\ERDC\ERD6X86.WIM
+
+MS-DaRT for Windows Vista (x64)
+\ERDC\ERD6X64.WIM
+
+MS-DaRT for Windows 7 (x86)
+\ERDC\ERD7X86.WIM
+
+MS-DaRT for Windows 7 (x64)
+\ERDC\ERD7X64.WIM
+
+MS-DaRT for Windows 8 (x86)
+\ERDC\ERD8X86.WIM
+
+MS-DaRT for Windows 8 (x64)
+\ERDC\ERD8X64.WIM
+
+MS-DaRT for Windows 8.1 (x86)
+\ERDC\ERD81X86.WIM
+
+MS-DaRT for Windows 8.1 (x64)
+\ERDC\ERD81X64.WIM
+
+MS-DaRT for Windows 10 (x86)
+\ERDC\ERD10X86.WIM
+Загрузчик Metro Win8
+
+MS-DaRT for Windows 10 (x64)
+\ERDC\ERD10X64.WIM
+Загрузчик Metro Win8</pre>
+			</div>
+			<p>Запускаем утилиту <b>&laquo;BOOTICEx86_ru&raquo;</b>.</p>
+			<p>Перейдите на вкладку <b>&laquo;Редактирование BCD&raquo;</b> и выберите <b>&laquo;Другой BCD файл&raquo;</b>, а затем откройте <b>BIOS BCD</b> по пути вашей флешки - <b>&laquo;/boot/BCD&raquo;</b>, а затем нажмите кнопку <b>&laquo;Простой режим&raquo;</b>.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-19.png" width="1000px"/>
+			</div>
+			<p>Начинаем редактировать <b>BIOS BCD</b> вашей флешки.</p>			
+			<p><b>Во первых обязательно, обязательно снимите галочку &laquo;Загрузчик Metro (Win8)&raquo; со всех систем. И прежде чем переключаться в списке слева - обязательно нажимайте &laquo;Сохранить текущую систему&raquo;. И в левой части меню поставте галочку напротив &laquo;Показать меню загрузки&raquo;.</b></p>
+			<p>Для загрузки файлов &laquo;*.bin&raquo; или просто файла загрузки &laquo;GRLDR&raquo; - выбирайте меню: &laquo;Добавить&raquo; затем &laquo;Новая запись Windows XP / 2003&raquo;.</p>
+			<p>Для всех остальных меню выбирайте &laquo;Добавить&raquo; затем &laquo;Новая запись WIM boot&raquo;.</p>
+			<p>Слева кнопками &laquo;Вверх&raquo; и &laquo;Вниз&raquo; перемещайте меню как вам нравится. А кнопкой &laquo;Умолчание&raquo; выставьте конкретно на <b>Windows-10</b> загрузку по умолчанию спустя 30 сек.</p>
+			<p>Параметр <b>&laquo;OS GUID&raquo;</b> выставляется автоматически, его нельзя поменять, да и не стоит даже пытаться во избежании проблем. Все остальное выставьте согласно скриншотам или приложенному конфигурационному файлу. Или тому, который получится у вас, когда вы также проанализируете такой же <b>BCD</b> файл точно также как мы сейчас редактируем его.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/bios-bcd/Screenshot_1.png" class="fz__minimized" alt="клик для увеличения" title="Start Local HDD" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_2.png" class="fz__minimized" alt="клик для увеличения" title="Windows-10-22H2-x64-Ru" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_3.png" class="fz__minimized" alt="клик для увеличения" title="DOS Utils HD DaRTs" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_4.png" class="fz__minimized" alt="клик для увеличения" title="Erd Commander for Windows XP (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_5.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows Vista (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_6.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows Vista (x64)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_7.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 7 (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_8.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 7 (x64)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_9.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8 (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_10.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8 (x64)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_11.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8.1 (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_12.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8.1 (x64)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_13.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 10 (x86)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_14.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 10 (x64)" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_15.png" class="fz__minimized" alt="клик для увеличения" title="Plop Boot Manager" />
+				<img src="../image/Multiboot/bios-bcd/Screenshot_16.png" class="fz__minimized" alt="клик для увеличения" title="Restart PC" />
+			</div>
+			<p>Закройте этот <b>BCD</b>.</p>
+			<p>Теперь нажмите на три точки в строке с путем к <b>BCD</b> файлу и выберите <b>UEFI BCD</b> по пути <b>&laquo;efi/microsoft/boot/bcd&raquo;</b>. Все также нажмите на кнопку <b>&laquo;Простой режим&raquo;</b>.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-20.png" width="1000px"/>
+			</div>
+			<p>Начинаем редактировать <b>UEFI BCD</b> вашей флешки.</p>			
+			<p><b>Во первых обязательно, обязательно снимите галочку &laquo;Загрузчик Metro (Win8)&raquo; со всех систем. И прежде чем переключаться в списке слева - обязательно нажимайте &laquo;Сохранить текущую систему&raquo;. И в левой части меню поставте галочку напротив &laquo;Показать меню загрузки&raquo;.</b></p>
+			<p>Для загрузки файлов &laquo;*.bin&raquo; или просто файла загрузки &laquo;GRLDR&raquo; - выбирайте меню: &laquo;Добавить&raquo; затем &laquo;Новая запись Windows XP / 2003&raquo;.</p>
+			<p>Для всех остальных меню выбирайте &laquo;Добавить&raquo; затем &laquo;Новая запись WIM boot&raquo;.</p>
+			<p>Слева кнопками &laquo;Вверх&raquo; и &laquo;Вниз&raquo; перемещайте меню как вам нравится. А кнопкой &laquo;Умолчание&raquo; выставьте конкретно на <b>Windows-10</b> загрузку по умолчанию спустя 30 сек.</p>
+			<p>Параметр <b>&laquo;OS GUID&raquo;</b> выставляется автоматически, его нельзя поменять, да и не стоит даже пытаться во избежании проблем. Все остальное выставьте согласно скриншотам или приложенному конфигурационному файлу. Или тому, который получится у вас, когда вы также проанализируете такой же <b>BCD</b> файл точно также как мы сейчас редактируем его.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/uefi-bcd/Screenshot_1.png" class="fz__minimized" alt="клик для увеличения" title="Windows-10-22H2-x64-Ru" />
+				<img src="../image/Multiboot/uefi-bcd/Screenshot_2.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 7 (x64)" />
+				<img src="../image/Multiboot/uefi-bcd/Screenshot_3.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8 (x64)" />
+				<img src="../image/Multiboot/uefi-bcd/Screenshot_4.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 8.1 (x64)" />
+				<img src="../image/Multiboot/uefi-bcd/Screenshot_5.png" class="fz__minimized" alt="клик для увеличения" title="MS-DaRT for Windows 10 (x64)" />
+			</div>
+			<p>И теперь все что нам остаётся это проверить запуск нашей флешки. Но меня больше волнует запуск <b>Linux Mint</b>-а в двух режимах - <b>BIOS</b> и <b>UEFI</b>.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-21.png" width="1000px"/>
+				<img src="../image/Multiboot/scr-22.png" width="1000px"/>
+			</div>
+			<p>Как видите выполне успешный запуск в обоих режимах.</p>
 			<p></p>
 			<p></p>
 			<p></p>
@@ -1314,43 +2138,62 @@ qemu-system-x86_64 ^
 			<p>В данном случае мы видим на скриншоте что это конкретное устройство <b>&laquo;/dev/sdc&raquo;</b>.</p>
 			<p>Теперь создайте в том же месте где и ваши распакованные файлы <b>&laquo;OVMF_CODE.4m.x64.fd&raquo;</b> и <b>&laquo;OVMF_CODE.4m.x86.fd&raquo;</b> файл запуска, например, <b>&laquo;linux-qemu.sh&raquo;</b> для <b>UEFI</b> режимма проверки. Не забудьте заменить <b>&laquo;/dev/sdX&raquo;</b> на вашу флешку, например, для примера из скриншота выше <b>&laquo;/dev/sdc&raquo;</b>.</p>
 			<div class="codesesscroll">
-				<pre>qemu-system-x86_64
--enable-kvm
--soundhw ac97
--cpu host
--smp cores=1
--m 1024
--machine q35
--device intel-iommu
--vga virtio
--device e1000,netdev=wan
--netdev user,id=wan
--hda /dev/sdX
--boot d
--device e1000,netdev=net0
--netdev user,id=net0,hostfwd=tcp::22-:22,hostfwd=tcp::80-:80,hostfwd=tcp::443-:443
--L .
+				<pre>qemu-system-x86_64 \
+-enable-kvm \
+-cpu host \
+-smp cores=1 \
+-m 1024 \
+-machine q35 \
+-device intel-iommu \
+-vga virtio \
+-device e1000,netdev=wan \
+-netdev user,id=wan \
+-hda /dev/sdX \
+-boot d \
+-device e1000,netdev=net0 \
+-netdev user,id=net0,hostfwd=tcp::22-:22,hostfwd=tcp::80-:80,hostfwd=tcp::443-:443 \
+-L . \
 -drive file=/usr/share/ovmf/x64/OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on</pre>
 			</div>
 			<p>Прописывать путь к файлу <b>&laquo;OVMF_CODE.4m.fd&raquo;</b> обязательно полностью в <b>Linux</b> формате. При этом не важно, установили ли вы <b>&laquo;edk2-ovmf&raquo;</b> или скачали и распаковали вручную из скачанного архива.</p>
 			<p>Соответственно для проверки флешки в режиме <b>BIOS</b>.</p>
 			<div class="codesesscroll">
-				<pre>qemu-system-x86_64
--enable-kvm
--soundhw ac97
--cpu host
--smp cores=1
+				<pre>qemu-system-x86_64 \
+-enable-kvm \
+-soundhw ac97 \
+-cpu host \
+-smp cores=1 \
 -m 1024
--machine q35
--device intel-iommu
--vga virtio
--device e1000,netdev=wan
--netdev user,id=wan
--hda /dev/sdX
--boot d
--device e1000,netdev=net0
+-machine q35 \
+-device intel-iommu \
+-vga virtio \
+-device e1000,netdev=wan \
+-netdev user,id=wan \
+-hda /dev/sdX \
+-boot d \
+-device e1000,netdev=net0 \
 -netdev user,id=net0,hostfwd=tcp::22-:22,hostfwd=tcp::80-:80,hostfwd=tcp::443-:443</pre>
 			</div>
+			<p>Вот так выглядят различные варианты запуска <b>bios</b> в <b>Qemu</b> из кода.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				-bios OVMF_CODE.fd<br><br>
+				-L .<br>
+				-drive file=OVMF_CODE.fd,if=pflash,format=raw,unit=0,readonly=on<br>
+			</p>
+			<p>Не забывайте про переносы в разных ОС. В <b>Linux</b> это косой слеш - &laquo;/&raquo;, а в <b>Windows</b> - это &laquo;^&raquo;.</p>
+			<p>А вот так выглядят различные варианты подключения дисков и съемных устройств в <b>Qemu</b>.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				-cdrom my-iso.iso<br>
+				-hda /dev/sdX<br>
+				-hda ubuntu.qcow<br>
+				-hda \\.\PhysicalDrive1<br>
+				-drive format=raw,file=raw.img<br>
+				-drive format=vmdk,file=disk.vmdk<br>
+				-drive format=vhdx,file=disk.vhdx<br>
+				-drive format=vpc,file=image_vhd.vhd<br>
+				-drive format=vdi,file=image_vdi.vdi<br>
+				-usb --device usb-host,vendorid=0x125f,productid=0xdb8a
+			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
