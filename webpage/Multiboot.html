@@ -1228,24 +1228,24 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			</ol>
 			<p>Иначе диск попросту не запустится.</p>
 			<p>Теперь просто перенесите все файлы &laquo;Alkid-Live-DVD&raquo; тоже в корень флешки.</p>
-			<p>Из диска &laquo;MSDaRTFull&raquo; нам нужна только одна единственная папки &laquo;ERDC&raquo;, из которой надо удалить только один единственный файл &laquo;BCD&raquo;. Скопируйте ее в корень флешки.</p>
+			<p>Из диска &laquo;MSDaRTFull&raquo; нам нужна только одна единственная папка &laquo;ERDC&raquo;, из которой надо удалить только один единственный файл &laquo;BCD&raquo;. Скопируйте папку в корень флешки.</p>
 			<p>Можете сразу скопировать на флешку в папку &laquo;isoimage&raquo; 3 образа дисков &laquo;gparted-live-1.6.0-10-i686.iso&raquo;, &laquo;gparted-live-1.7.0-8-amd64.iso&raquo; и &laquo;WIN7PE-COMPACT.ISO&raquo;.</p>
 			<div class="images">
 				<img src="../image/Multiboot/scr-16.png" width="850px"/>
 			</div>
 			<p>А вот с &laquo;Linux Mint&raquo;-ом все немного сложнее.</p>
-			<p>Вы уже заметили по скриншоту, что в корне флешки имеется отдельная папка для <b>Linux</b> систем. Так и есть. Но тут есть нюансы по их копированию, вставке, прописываю параметров загрузке и запуску в разных режимах - <b>BIOS</b> и <b>UEFI</b>.</p>
+			<p>Вы уже заметили по скриншоту, что в корне флешки имеется отдельная папка для <b>Linux</b> систем. Так и есть. Но тут есть нюансы по их копированию, вставке, прописываю параметров загрузки и запуску в разных режимах - <b>BIOS</b> и <b>UEFI</b>.</p>
 			<div id="page" class="clearfix">
 				<img src="../image/Multiboot/scr-17.png" class="fz__minimized" alt="клик для увеличения" title="linuxmint-22.2-xfce-64bit директория" />
 				<img src="../image/Multiboot/scr-18.png" class="fz__minimized" alt="клик для увеличения" title="linuxmint-22.2-xfce-64bit/casper директория" />
 			</div>
 			<p><b>Обратите внимание на то, что я скопировал далеко не все папки и файлы. А самое главное в том, что в директории &laquo;casper&raquo; с файлами лежит сам образ диска и отсутствуют файлы &laquo;filesystem.*&raquo; самой файловой системы Linux Mint диска - это важно!</b></p>
 			<p>Так надо делать далеко не у всех <b>Linux</b> систем. И это важно!</p>
-			<p>Дело в том, что именно <b>Linux Mint</b> не может напрямую загрузить &laquo;filesystem.*&raquo; файлы. Это конкретно прописано в загрузочном меню &laquo;boot/grub/grub.cfg&raquo;прописано:</p>
+			<p>Дело в том, что именно <b>Linux Mint</b> не может напрямую загрузить &laquo;filesystem.*&raquo; файлы. Это конкретно прописано в загрузочном меню &laquo;boot/grub/grub.cfg&raquo;:</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
 				iso-scan/filename=${iso_path}
 			</p>
-			<p>Именно этот параметр нам и понадобится для корректной и <b>BIOS</b> и <b>UEFI</b> загрузки этой системы. Если бы его не было, в таком случае мы просто бы скопировали распакованные файлы &laquo;filesystem.*&raquo; и прописали бы более длинную загрузку.</p>
+			<p>Именно этот параметр нам и понадобится для корректной и <b>BIOS</b> и <b>UEFI</b> загрузки этой системы. Если бы его не было, в таком случае мы просто бы скопировали распакованные файлы &laquo;filesystem.*&raquo; и прописали бы более длинную загрузку, точнее бы по большей части просто скопировали ее из указанных ранее файлов.</p>
 			<p>Важен также тот момент, что мы соблюдали структуру папок образа.</p>
 			<p>Для простой загрузки системы нужна только папка &laquo;casper&raquo;. А вот для установки и обновления уже нужны будут пара других важных папок локальных репозиториев информации обо всех пакетах системы: &laquo;dists&raquo;, &laquo;pool&raquo;, &laquo;efi.img&raquo;, &laquo;md5sum.README&raquo;, &laquo;md5sum.txt&raquo;.</p>
 			<p>Для Debian скорее всего вы будете копировать все файлы целиком. Я имею введу папку &laquo;casper&raquo; или другую для указанного диска, включая файлы &laquo;filesystem.*&raquo;.</p>
@@ -1253,7 +1253,7 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			<ul>
 				<li><b>&laquo;menu.lst&raquo;</b> - меню загрузчика <b>GRUB4DOS</b></li>
 				<li><b>&laquo;boot/menu_u.lst&raquo;</b> - второе меню загрузчика <b>GRUB4DOS</b></li>
-				<li><b>&laquo;boot/acronis.lst&raquo;</b> - второе меню загрузчика <b>GRUB4DOS</b></li>
+				<li><b>&laquo;boot/acronis.lst&raquo;</b> - Acronis меню загрузчика <b>GRUB4DOS</b></li>
 				<li><b>&laquo;boot/syslinux/syslinux.cfg&raquo;</b> - меню загрузчика <b>SYSLINUX</b></li>
 				<li><b>&laquo;boot/grub/grub.cfg&raquo;</b> - меню <b>UEFI</b> загрузчика <b>GRUB2</b></li>
 			</ul>
@@ -2033,15 +2033,6 @@ MS-DaRT for Windows 10 (x64)
 				<img src="../image/Multiboot/scr-22.png" width="1000px"/>
 			</div>
 			<p>Как видите выполне успешный запуск в обоих режимах.</p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.4"></a></p>
@@ -2122,6 +2113,13 @@ qemu-system-x86_64 ^
 -hda \\.\PhysicalDrive2</pre>
 			</div>
 			<p>Исходя из скриншотов выше, вы сами можете убедиться, что в качестве имитации флешки здесь выступает физический носитель <b>&laquo;\\.\PhysicalDrive2&raquo;</b>, что в коде я и выставил.</p>
+			<p>Есть еще один вариант определения номера драйва.</p>
+			<p>Запусте управление дисками вашей <b>Windows</b>. И все что нужно - это посмотреть в списке какой номер у диска.</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-23.png" width="360px"/>
+				<img src="../image/Multiboot/scr-24.png" width="980px"/>
+			</div>
+			<p>В данном случае исходя из скриншота выше - диск номер 6. Т.е. команда <b>&laquo;\\.\PhysicalDrive6&raquo;</b>.</p>
 			<p><b>Linux.</b></p>
 			<p>Здесь всё намного проще!</p>
 			<p>Флешкой может быть любое <b>&laquo;/dev/sdX&raquo;</b> устройство. Наша задача определить букву этого устройства.</p>
