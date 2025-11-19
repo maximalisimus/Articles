@@ -532,12 +532,15 @@ cmd.exe</pre>
 			<p><a name="part2.7"></a></p>
 			<h3>2.7. Утилита виртуализации Qemu</h3>
 			<p><b>Утилита виртуализация Qemu (<a href="https://maximalisimus.github.io/usb-loader/USB-Loader/QemuBootTester.zip">QemuBootTester.zip для Windows</a>, <a href="https://qemu.weilnetz.de/w32/">32 бит для Windows</a>, <a href="https://qemu.weilnetz.de/w64/">64 бит для Windows</a>) для тестирования загрузочных флешек.</b></p>
-			<p>Для Windows обратите внимание на то, что для наиболее старых версия Windows - вроде 7-ки ищите в 2022 году такую версию как <a href="https://qemu.weilnetz.de/w32/2022/">&laquo;20220419&raquo;</a> для 32 бит или <a href="https://qemu.weilnetz.de/w64/2022/">&laquo;20221230&raquo;</a> для 64 бит. Для старших версий ОС Windows от 10-ки и выше можете ставить любую свежую версию.</p>
+			<p>Для Windows обратите внимание на то, что для наиболее старых версия Windows - вроде 7-ки ищите в 2022 году такую версию как <a href="https://qemu.weilnetz.de/w32/2022/">&laquo;qemu-w32-setup-20221230.exe&raquo;</a> для 32 бит или <a href="https://qemu.weilnetz.de/w64/2022/">&laquo;qemu-w64-setup-20221230.exe&raquo;</a> для 64 бит. Для старших версий ОС Windows от 10-ки и выше можете ставить любую свежую версию.</p>
+			<p>Вот вам сразу прямые ссылки на несколько версий, включая указанную и для 32 Бит и для 64 Бит.</p>
 			<ul>
-				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20220419.exe">&laquo;qemu-w32-setup-20220419.exe&raquo;</a></li>
-				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20220419.exe">&laquo;qemu-w64-setup-20220419.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w32/2020/qemu-w32-setup-20200201.exe">&laquo;qemu-w32-setup-20200201.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w64/2020/qemu-w64-setup-20200201.exe">&laquo;qemu-w64-setup-20200201.exe&raquo;</a></li>
 				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20221230.exe">&laquo;qemu-w32-setup-20221230.exe&raquo;</a></li>
 				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20221230.exe">&laquo;qemu-w64-setup-20221230.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w32/2022/qemu-w32-setup-20220419.exe">&laquo;qemu-w32-setup-20220419.exe&raquo;</a></li>
+				<li><a href="https://qemu.weilnetz.de/w64/2022/qemu-w64-setup-20220419.exe">&laquo;qemu-w64-setup-20220419.exe&raquo;</a></li>
 			</ul>
 			<p>Для Linux установку смотрите <a href="https://www.qemu.org/download/#linux">здесь</a>.</p>
 			<p>НО, в Linux еще надо установить некий GUI, иначе отображение результата не будет как такового. Например в Linux Mint - это &laquo;qemu-system-gui&raquo; кажись. Кажись, потому что в разных дистрибутивых Linux, у них даже названия разные. В Archlinux например вообще вот такой список пакетов потребуется установить: qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi. Т.е. в Archlinux вместо &laquo;qemu-system-gui&raquo; вообще &laquo;qemu-ui-gtk&raquo;.</p>
@@ -1114,7 +1117,7 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			<p><b>Теперь поговорим отдельно про загрузчики других ОС.</b></p>
 			<p>В любом диске или ОС может быть определен один из нескольких типов загрузчиков, а иногда даже несколько из них:</p>
 			<ul>
-				<li><b>&laquo;Windows NT 5.x / 6.x MBR&raquo;</b></li>
+				<li><b>&laquo;Windows NT 5.x / 6.x MBR&raquo;</b> или по другому <b>&laquo;bootmgr&raquo;</b></li>
 				<li><b>&laquo;GRUB4DOS&raquo;</b></li>
 				<li><b>&laquo;Syslinux&raquo;</b></li>
 				<li><b>&laquo;GRUB2&raquo;</b></li>
@@ -1132,6 +1135,50 @@ menuentry "(h) Shutdown" --hotkey="h" {
 			<p><a name="part3.3"></a></p>
 			<h3>3.3. Практические примеры</h3>
 			<p>Рассмотрим с вами процесс созданию любой мультизагрузочной флешки.</p>
+			<p>При форматировании любого носителя через &laquo;Мой компьютер&raquo; вы можете только выбрать файловую систему носителя. А вот выбрать таблицу разделов увы нельзя.</p>
+			<p>В <b>Windows</b> лучше всего форматировать носители через &laquo;Управление дисками&raquo;. В <b>Linux</b> удобнее всего через программу &laquo;Gparted&raquo;, либо если не доступно графическая оболочка &laquo;&raquo;.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/scr-25.png" class="fz__minimized" alt="клик для увеличения" title="Управление дисками Windows" />
+			</div>
+			<p>Запуск в <b>Linux</b> достаточно простой. Определяем носитель и при запуске утилиты указываем носитель, просто чтобы не трогать другие диски и устройства.</p>
+			<p><b>Для Gparted</b></p>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				<span style="color:blue;"># Определили устройство</span></br>
+				lsblk<br>
+				<span style="color:blue;"># Запустили gparted</span></br>
+				gparted /dev/sda<br>
+				<span style="color:blue;"># или</span></br>
+				<span style="color:blue;"># Определили устройство</span></br>
+				lsblk<br>
+				<span style="color:blue;"># Запустили gparted</span></br>
+				gparted /dev/sdc<br>
+			</p>
+			<div class="images">
+				<img src="../image/Multiboot/scr-12.png" width="630px"/>
+				<img src="../image/Multiboot/scr-26.png" width="780px"/>
+			</div>
+			<p><b>Для cfdisk</b></p>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				<span style="color:blue;"># Определили устройство</span></br>
+				lsblk<br>
+				<span style="color:blue;"># Запустили cfdisk</span></br>
+				cfdisk /dev/sda<br>
+				<span style="color:blue;"># или</span></br>
+				<span style="color:blue;"># Определили устройство</span></br>
+				lsblk<br>
+				<span style="color:blue;"># Запустили cfdisk</span></br>
+				cfdisk /dev/sdb<br>
+				<span style="color:blue;"># или</span></br>
+				<span style="color:blue;"># Определили устройство</span></br>
+				lsblk<br>
+				<span style="color:blue;"># Запустили cfdisk</span></br>
+				cfdisk /dev/sdc<br>
+			</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/scr-12.png" class="fz__minimized" alt="клик для увеличения" title="lsblk" />
+				<img src="../image/Multiboot/scr-27.png" class="fz__minimized" alt="клик для увеличения" title="Выбор таблицы разделов" />
+				<img src="../image/Multiboot/scr-28.png" class="fz__minimized" alt="клик для увеличения" title="Редактирование носителя" />
+			</div>
 			<p><a name="part3.3.1"></a></p>
 			<h4>3.3.1. Загрузчики флешки</h4>
 			<p>Для начала нам понадобится сама флешка. Я это сэмитирую виртуальным диском. Для примера разницы никакой не будет. Работать будет абсолютно одинаково.</p>
