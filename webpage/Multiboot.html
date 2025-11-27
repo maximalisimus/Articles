@@ -2122,10 +2122,10 @@ MS-DaRT for Windows 10 (x64)
 			</ul>
 			<p>В <b>Linux</b>-е мы бы воспользовались уитилитами вроде &laquo;Gparted&raquo;, &laquo;parted&raquo;, или &laquo;cfdisk&raquo;.</p>
 			<p>В любом <b>Windows</b>-е, к сожалению, встроенный редактор дисков не позволит нам это сделать. И мы можем воспользовать только утилитой <b>&laquo;BOOTICE&raquo;</b>.</p>
-			<p>И первое с чем надо определиться - это на сколько делить флешку для &laquo;fat32&raquo; и сколько для &laquo;ntfs&raquo;. Например флешка 16 ГБ. И стоит оставить 8 ГБ для &laquo;fat32&raquo; и столько же для laquo;ntfs&raquo;.</p>
-			<p>Рассмотрим в качестве наиболее наглядного примера как <b>&laquo;Windows 11&raquo;</b>. Да. Именно его, т.к. у него внутри в папке <b>&laquo;source&raquo;</b> файл <b>&laquo;install.wim&raquo;</b> или если у вас некая другая пусть даже переделанная в nlite или vlite Windows некий файл <b>&laquo;install.esd&raquo;</b> вдруг превышает объем 4,7 ГБ и сжать его хотя бы на 100...200 МБ даже не представляется возможным.</p>
-			<p>Открываем <b>&laquo;BOOTICE&raquo;</b>, выбираем нужную правильную флешку для редактирования. Убедитесь, что выбрали верную, потому что все файлы и раздели с неё будут полностью стерты.</p>
-			<p>Затем откройте <b>&laquo;Управление разделами&raquo;</b>, далее <b>&laquo;Переразбить разделы&raquo;</b>, выставите параметры как на скриншоте и согласитесь со всплывающим окном.</p>
+			<p>И первое с чем надо определиться - это на сколько делить флешку для &laquo;fat32&raquo; и сколько для &laquo;ntfs&raquo;. Например флешка 16 ГБ. И стоит оставить 8 ГБ для &laquo;fat32&raquo; и столько же для &laquo;ntfs&raquo;.</p>
+			<p>Рассмотрим в качестве наиболее наглядного примера как <b>&laquo;Windows 11&raquo;</b>. Да. Именно его, т.к. у него внутри в папке <b>&laquo;source&raquo;</b> файл <b>&laquo;install.wim&raquo;</b> (или если у вас некая другая <b>Windows</b>, например, пусть даже переделанная в <b>nlite</b> или <b>vlite</b>, в которой некий файл <b>&laquo;install.wim&raquo;</b> или <b>&laquo;install.esd&raquo;</b>) вдруг превышает объем 4,7 ГБ и сжать его хотя бы на 100...200 МБ даже не представляется возможным.</p>
+			<p>Открываем <b>&laquo;BOOTICE&raquo;</b>, выбираем нужную правильную флешку для редактирования. Убедитесь, что выбрали верную, потому что все файлы и разделы с неё будут полностью стерты.</p>
+			<p>Затем откройте <b>&laquo;Управление разделами&raquo;</b>, далее <b>&laquo;Переразбить разделы&raquo;</b>, выставьте параметры как на скриншоте и согласитесь со всплывающим окном.</p>
 			<div class="images">
 				<img src="../image/Multiboot/scr-29.png" width="1000px"/>
 			</div>
@@ -2133,25 +2133,27 @@ MS-DaRT for Windows 10 (x64)
 			<div class="images">
 				<img src="../image/Multiboot/scr-30.png" width="1000px"/>
 			</div>
-			<p>Здесь я форматировал виртуальный диск. Вот конкретным пример уже готовой флешки.</p>
+			<p>Здесь я форматировал виртуальный диск. Вот конкретный пример уже готовой флешки.</p>
 			<div class="images">
 				<img src="../image/Multiboot/scr-31.png" width="1000px"/>
 			</div>
-			<p>Разница в том, что объем для &laquo;fat32&raquo; выбран минимальный в 1 ГБ, т.к. больше и не требуется, но в конкретном этом случае. Были бы на флешке и другие диски, тогда да, размер был бы значительно больше. Всё остальное я отдал под &laquo;ntfs&raquo;, решив что пусть все образы или диски храняться на втором разделе.</p>
+			<p>Разница в том, что объем для &laquo;fat32&raquo; выбран минимальный в 1 ГБ, т.к. больше и не требуется, но в конкретном этом случае. Были бы на флешке и другие диски, тогда да, размер &laquo;fat32&raquo; был бы значительно больше. Всё остальное я отдал под &laquo;ntfs&raquo;, решив что пусть все образы или диски храняться именно на втором разделе.</p>
 			<p>Теперь обратите внимание вот на что. Второй раздел флешки практически всегда во всех ОС будет недоступным, кроме Linux-ов. Просто так его увидеть и что-то туда записать не выйдет. Видите кнопку <b>&laquo;Установить доступным&raquo;</b>?</p>
-			<p><b>Она именно для этого и нужна, сделать невидимый раздел видимым, т.е. доступным.</b></p>
-			<p>После деления на несколько разделов на каждый из них необходимо установить и <b>&laquo;MBR GRUB4DOS&raquo;</b> и <b>&laquo;PBR syslinux&raquo;</b>. Для этого делаете нужный раздел доступным как указано выше и согласно <a href="#part2.8"><b>&laquo;пункту 2.8&raquo;</b></a> записываете оба загрузчика. Снова возвращаете к управлению разделами, делаете второй раздел доступным и снова записываете оба загрузчика.</p>
-			<p>И только после этого можно приступить к распаковке и копированию конкретных файлов дисков и загрузчиков на флешку на оба раздела, с прописыванием уже совсем другого меню, значительно отличающихся от предыдущего пункта.</p>
-			<p>Сначала рассмотрим <b>GRUB2</b>.</p>
+			<p><b>Она именно для этого и нужна, сделать невидимый раздел видимым, т.е. доступным. И в Windows-ах первый раздел временно становится невидимым, т.е. не доступным, пока доступен второй раздел.</b></p>
+			<p>После деления на несколько разделов на каждый из них необходимо установить и <b>&laquo;MBR GRUB4DOS&raquo;</b> и <b>&laquo;PBR syslinux&raquo;</b>. Для этого делаете нужный раздел доступным как указано выше и согласно <a href="#part2.8"><b>&laquo;пункту 2.8&raquo;</b></a> записываете оба загрузчика. Снова возвращаете к управлению разделами, делаете следующий раздел доступным и снова записываете оба загрузчика.</p>
+			<p>И только после этого можно приступить к распаковке и копированию конкретных файлов дисков и загрузчиков на флешку на оба раздела, с прописыванием уже совсем других меню управления каждым загрузчиком, значительно отличающихся от тех, что мы делали в <a href="#part3.3.3"><b>&laquo;пункте 3.3.3&raquo;</b></a>.</p>
+			<p>Сначала рассмотрим теорию <b>GRUB2</b>, потому что без этого правильные переходы сделать не получится.</p>
 			<p>У него есть так называемая строка поиска загрузчика, а затем сама загрузка.</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
 				search --file --no-floppy --set=root /efi/Microsoft/Boot/bootx64.efi<br>
 				chainloader /efi/Microsoft/Boot/bootx64.efi
 			</p>
 			<p>Дело в том, что это лучший вариант, т.к. <b>grub2</b> будет искать конкретный уникальный файл на всех разделах, и после того как найдет его, сделает именно этот раздел корневым и далее вся остальная загрузка с некими параметрами будет осуществляться уже относительно установленного корневого раздела.</p>
+			<p>Вы вполне можете создать отдельную директорию и положить туда некий уникальный файл для данной системы, просто для того, чтобы именно этот раздел флешки сделать корневым. При этом не обязательно, чтобы этот уникальный файл был загрузочным или настройками. Это может быть абсолютно любой файл. Смысл строки поиска (<b>&laquo;search --file --no-floppy --set=root файл-с-путем-поиска&raquo;</b>) в том, чтобы это был уникальный файл нужной ОС в том же разделе, что и файл загрузчика строки <b>&laquo;chainloader&raquo;</b> или других параметров, если это другая ОС. Вы просто можете скопировать файл загрузчика <b>&laquo;/efi/Microsoft/Boot/bootx64.efi&raquo;</b> пусть, например, сюда <b>&laquo;/efi/win11/win11.efi&raquo;</b>, не забыв создать директорию. И таким образом определить вашу записываемую на флешку ОС.</p>
+			<p>Таким же образом можно определиться и с любыми другими ОС и разделами, если их вдруг гораздо больше.</p>
 			<p>Загрузчики <b>Grub4dos</b> и <b>Syslinux</b> значительно отличаются.</p>
-			<p>Сначала посмотрим на <b>Syslinux</b>. У него нет таких инструментов поиска и установки конкретного раздела корневым. Поэтому он всегда будет считать корневым относительно самого себя. Ну а чтобы можно было это хоть как-то изменить мы как раз и записала на оба раздела флешки в качестве <b>&laquo;PBR syslinux&raquo;</b> как раз решая эту проблему.</p>
-			<p>Остаётся только правильно его загрузить.</p>
+			<p>Посмотрим на <b>Syslinux</b>. У него нет таких инструментов поиска и установки конкретного раздела корневым. Поэтому он всегда будет считать корневым относительно самого себя. Ну а чтобы можно было это хоть как-то изменить мы как раз и записали на оба раздела флешки в качестве <b>&laquo;PBR syslinux&raquo;</b> как раз решая эту проблему.</p>
+			<p>Остаётся только правильно загрузить каждый <b>Syslinux</b>, т.е. сделать правильные переходы между ними.</p>
 			<p>Есть и другой способ, но он немного сложнее, т.к. всегда требует конкретный файл самого загрузчика - будь то &laquo;bootmgr&raquo;, &laquo;grldr&raquo; и другие. У самого <b>Syslinux</b> такого вообще нет.</p>
 			<p>И для последнего есть конкретная команда.</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
@@ -2161,9 +2163,10 @@ MS-DaRT for Windows 10 (x64)
 			<ul>
 				<li>hd0 0 — первый раздел флешки</li>
 				<li>hd0 1 — второй раздел флешки</li>
+				<li>и так далее</li>
 			</ul>
-			<p>А соответственно <b>&laquo;ntldr=/grldr&raquo;</b> - передать управление загрузчику в этом разделе такому-то.</p>
-			<p>Пусть для наглядного примера будет меню для <b>Windows 11</b>.</p>
+			<p>А соответственно <b>&laquo;ntldr=/grldr&raquo;</b> - передать управление загрузчику в этом разделе с указанным наименованием и путем до него, в данном случае <b>&laquo;/grldr&raquo;</b>.</p>
+			<p>Пусть для наглядного примера будет меню для <b>Windows 11</b> в режиме <b>BIOS</b>, т.е. <b>MBR</b>.</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
 				LABEL Win11 24H2 Ru x64<br>
 				MENU LABEL Win11 24H2 Ru x64<br>
@@ -2172,13 +2175,13 @@ MS-DaRT for Windows 10 (x64)
 				Menu Win11 24H2 Ru x64<br>
 				ENDTEXT
 			</p>
-			<p>Рассмотрим <b>Grub4dos</b>.</p>
+			<p>Теория <b>Grub4dos</b>.</p>
 			<p>Здесь вы либо ищите некий уникальный файл вашего диска по всем разделам устанавливая найденый раздел в качестве корневого и далее передаете управление туда, либо вы вручную указываете конкретный раздел без поиска и далее передаете управление уже принудительно.</p>			
 			<p>Например, с поиском это выглядело бы так.</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
 				find --set-root --ignore-floppies --ignore-cd /bootmgr
 			</p>
-			<p>У нас же 2 раздела. Да, мы могли бы осуществить такой поиск, но он может и не сработать и лучше не рисковать. Тогда наше grub4dos меню выглядело бы так для Windows 11.</p>
+			<p>У нас на флешке 2 раздела. Да, мы могли бы осуществить такой поиск, а могли бы и принудительно передать управление. Тогда наше grub4dos меню выглядело бы для Windows 11 следующим образом.</p>
 			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
 				title Win11 24H2 Ru x64<br>
 				root (hd0,1)<br>
@@ -2190,9 +2193,11 @@ MS-DaRT for Windows 10 (x64)
 			<ul>
 				<li>(hd0,0) — первый раздел флешки</li>
 				<li>(hd0,1) — второй раздел флешки</li>
+				<li>и другие разделы</li>
 			</ul>
-			<p>С загрузчиками разобрались. Можно приступать к распределению файлов.</p>
+			<p>С теорией разобрались. Можно приступать к распределению файлов.</p>
 			<p>Стоит уделить внимание еще одному моменту - это тому, чтобы в каждом из загрузчиков были разные фоновые изображения, чтобы мы могли точно понимать, что переходы между ними точно отрабатывают на все 100%. Если в <b>Grub4dos</b> это легко изменить, то для <b>Syslinux</b> чутка сложнее. Для него нужна картинка размером &laquo;640 X 360&raquo;. Например, пусть будет <a target="_blank" href="../image/Multiboot/bg-1.jpg"><b>&laquo;Такая&raquo;</b></a>, которую необходимо поместить в <b>&laquo;/boot/syslinux/&raquo;</b> флешки второго раздела. Ниже в примерах будет приведен полный код каждого загрузчика.</p>
+			<p>Фоновые изображения для <b>GRUB4DOS</b> вроде используемых, т.е. встроенных в архивы <b>&laquo;EFI-Grub4Dos-SysLinux-....7z&raquo;</b>, (<b>&laquo;Moonlight&raquo;</b> и <b>&laquo;Rainbow&raquo;</b>) можно изготовить с помощью утилиты <a target="_blank" href="https://maximalisimus.github.io/usb-loader/USB-Loader/MultiBootUSB/GFX-Editor1.0.exe.7z"><b>&laquo;GFX-Editor1.0.exe.7z&raquo;</b></a> из <a href="#part2.5"><b>&laquo;пункта 2.5&raquo;</b></a>.</p>
 			<p>Распакуйте <b>&laquo;Win11_24H2_Russian_x64.iso&raquo;</b> в отдельную папку и также распакуйте в отдельную папку <b>&laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;</b> как в <a href="#part3.3.1"><b>&laquo;пункте 3.3.1&raquo;</b></a>.</p>
 			<p><span style="color:red;">Сделайте доступным первый раздел флешки <b>Fat32</b>. Скопируйте туда все распакованный <b>&laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;</b> файлы как есть.</span></p>
 			<p><b>Содержимое файла &laquo;/menu.lst&raquo; первого раздела.</b></p>
@@ -2489,7 +2494,7 @@ TEXT HELP
 Restart the PC
 ENDTEXT</pre>
 			</div>
-			<p><b>Содержимое файла &laquo;/boot/grub/grub.cfg&raquo;  первого раздела.</b></p>
+			<p><b>Содержимое файла &laquo;/boot/grub/grub.cfg&raquo;  первого раздела, он же UEFI загрузчик, т.к. работает только на FAT32 и только по указанному пути.</b></p>
 			<div class="codesesscroll">
 				<pre>insmod part_gpt
 insmod part_msdos
@@ -2585,7 +2590,7 @@ menuentry "(h) Shutdown" --hotkey="r" {
 			</div>
 			<p><span style="color:red;">Сделайте активным второй раздел флешки &laquo;NTFS&raquo;.</span></p>
 			<p>Скопируйте туда все распакованные файлы диска <b>&laquo;Win11_24H2_Russian_x64.iso&raquo;</b> как есть.</p>
-			<p>А вот копировать распакованные файлы архива <b>&laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;</b> нужно будет на второй раздел не все.</p>			
+			<p><u>А вот копировать распакованные файлы архива <b>&laquo;EFI-Grub4Dos-SysLinux-Full.7z&raquo;</b> нужно будет на второй раздел не все.</u></p>			
 			<p>Вот список файлов и папок, которые необходимо скопировать <b>БЕЗ ЗАМЕНЫ</b> на второй раздел флешки из указанного архива.</p>
 			<ul>
 				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2wQECAEI1xyfEAAABF1JREFUaIHtmM1vVFUYh59zO3NnWiCSRhOQVoMf0cS4MBgXLR+GRBaaLmBRBVO2Ji5152oWblyZ+BeQmChBFpi6MYGFGxdSE+QrJQWDKYXBMjC0dDpzz8fr4kzbKfd2mCtTexP7JJOTObnzzvu77+8959wLm2zy/0YlTY6NjW2x1oZpg9VqNTlz5kz16dPqnJiAj8eOfmOM/kQp5dIGE0EpxYJxMnL65Olfu5Nie2ICjh4brbx78O3+rVv6UgcTgXJ5lomJqw9x0ZsnT/443ZUs25CLzSh4Z88w/f3Pcv/+bOqALw7OUa9HW69cvnF2ZGTkrfHx8Vo3El2LuAAgDEOqD+9z4eJ5RDp3UqFQZHBgNwf27+upVh8NzsyUvy+VSodLpVJqO3ZKzEIfHRutfP7Zp/1TU1eZm59LH1AFvLT7VYqFAuM//bx486+ZALDdSDZQqh7k1JfffXvq66W5hAoIiKCNRuvoX/3R5LVL7Hp+kA9Hj/Q6Jz7mYxhjAEEbgzUarQ3GGIzVfjR+jLQfrTHMLzzqO//bZAloJ8BjtUVHOlXiIkKj+ZvJa5NMXb9OsVhMyt+jfOMjgiCIOETEzyE4x9IFOHHkegJEXL41xJoCtDFEKQRUKvPM3L5HIUy9fXRMI4oIlOppnYsJEO8gokijdWcCGg3N7TsVjo8dYdeunQSB/w/nHM5Z78pmGUSWRvClEUQU4PvcWtecV81rV8pXrT7ixIkfVt2h5B5AaDTqRFFnPVAuVxka2sPw0D5EBOcs3vugFDjn7eGcw4kgq0bnx+Y1AE6a353FNeOJgzAsYuzq9WBtC2nDwkJ9+Y4lIUCtFtGTD/ng/UMsLi4wdX2yI9HdIlHAxO8XuHjpBn19RXK5nqRLAAhUwODAAAcPDrNzxwAX/pigjd51IakHcleuTnJ87DDbtm15YgClFK+/9ga3bt1E68a6JNmOmIAwzPUeeu8Aw0P7yefbryjes4q5+Sp3yjNt7bZexCuACvbt3cvfs3d48KCyxs/U8srinO14tVoP4j0goorFIpXKPRqN+gaklI5goxN4WhJXIb+7y4Z4Oi1r7gNLG1rWSbSQuK6cfruOUvFH+MQKaG1wzmXOQkrF73eigKWzetYsFAQdVsAY03IuzxIdVUCw1saOslkg6LQHjLHLzwWZotMesNbgHzCypSBFD1icI3OrUNKb0MR9wLl1e43zVARBCguJs5mrgFqpQB7QEBewDcA626xWxgSs9MAOoAzoVgF54DkAZ5cesv/bBJ9Ey068A6gDs60CeoHtIqKcCFlchVrOQtuBZ4Bqq4AQKALNjSyD+8BKPiFQAILHe8C/bnKOIAhWNXHSSXADWT4mtApoAItAdPnKtcLLr7xATmWoBEoxdeNP8mHO4f1fB0yrgBrwYHp65quz53754uw51n4htEGoIJDZu/dOAdXmxz7uiz78SrQdsiegSR2f/F0SBIBvkF6yKyDCuyWbx4VNNtkkHf8Al2k6f7TD2+wAAAAASUVORK5CYII=" />&nbsp;boot</li>
@@ -2606,7 +2611,7 @@ menuentry "(h) Shutdown" --hotkey="r" {
 				<li><img class="files" width="17px" src="data:image/png;base64, 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" />&nbsp;plpbt.bin</li>
 				<li><img class="files" width="17px" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH2QcUFSoXYuvT6wAABdlJREFUaIHtWUtvHTUU/o5nmse9AVoF9cFDJAFKA1J3LCv4AWxYgErFphX8AdZddItYkRULQEItFYlaNuxBSEhI0KJWYlG1qEFAIgoFFiRNbm5mDovx49hjz517b6QKqUe6sT22x99nf+fY4wAP7IGNZZSqOH/5/JFJVp/vFuWLALLqKQPs2rDXY5Q6BhHtkFK/oMQXxL13T516+86eEFi5dPGrEydefunwwcPU0GxkK4oC97Y20dvpobe9jZu3buysr60XUPzOm2+c/qDte5LILi5f6J987VT+9z93UXIJ5mremBlgBoPBDJ0Gz0xZP7N50d78AIaCwqFDj+HOH7/j6g9XNot+f+XWzZ/fOnfuXDmIQJ6q4LLIiagOHloCrOlbPZi5YK9ITNUT0nWss7qeGegXffy29iueWXgWIHSvXb/2+vzRuS4znyQiX42BqSQBRECL53Z0h84a2ZTsA9LPiQgg0rUEIoJSChsb/0JlGQ4fPILnFxe7ncmpV85/+vH7TeCbCbDLOInATr90RNfYMQjBV3myBMkwAqCUgsoIZVFiXz6BAwdmsfjCYifL8jOfXPjo1ZEIwJOLIwGtc5dKIl4JnABv/pgVAIA8z/H91W/x9Tdf4sqV73D3z7/w3LFjXQZ/uLS0NDk0AbcAxhFhHVEKqskoyHjgxQpUMsqgsgxZnoEZWF9bx73NLex/5MDEQ/u7p4cnwEL1LHzC8w2KUzGOKhy8Bl4DN79OZxqPzs7iycefwPzcHObmnkJvp4eFhadnMkVnUjiTUQjsA5WS4RrsOo2QUJWSDVwEAoN991eETCl08hydbgdKKXSmZ7C7u3t8aALs0IJJ6ruCT1xpvElFpFfIgYaVo6m3yyHrTZkI3U4XRVEmfSBNQMK1oVJGIpM2MkCEgXXceBeyJIgIU5NTfuhuS0BGIdJ/pEDs4puVqAE3QHz0TeDN++0+op27FqbbEJD7AEBwriCIGW9tWAmiqgvJ7TdhTpE+2Qb8TRJyvUpwpVfvTewlPgwN2Gi9YdbTRuDSj3wxaxGFDCb2q9x5wSPhH4/E5tXC5GtNQSk1poR0gYl8Hux2WgoWh8T5YaSDuGWyJxLyYzuRcAUxZSS3VmHhbtwE2q4ehVVjSEgOIF9MtbNNfeQo5vBhGHraYBE2WEJGOggB+xtQ+MyrazLRIJijOpaIDZQQBecYl43MdiTaUCSXGnEQlpgNlJAvlXDWZTnutcPEoeTJZBwJUQJ0CLgG1Mu2IRAc7uS3xXgSkqD1XwoA2yQ6/S0JeIP7vjHKCoglCOK6A03BjEeB0jDwzbmjBibZo7WEosAD0NEjQ8vd2B0a01hi1ioK1cCKvA+aIoFIUEyxSOwF8rM2ZS0k1AK4J5OQRCCh2EYWDf5JZJ4NllAIWIB1JIJvXpFP4ZYVNQ72nCU/a4cm4H/a1QBLp/aAx3fs1o4sDokxLK0J2E+LJPi2JIYg4L58UF0iDO7V7jgtNzMKUgk+RSK2dxiQ5onOVNGo2tLMGONLqEZEpBK0AO8DT+wdjgeqb26qwOv+4aXyUARiYSACvw46Bt6LXq6nd2HA+j6CNAkxTpMNvtyN2ZAnA7+fF3CDF8Zf3LQCLa4WY5V+wfv0Zlf221f3S/KfG+7qXqSRYfdMQiZIhLc9trmYQOuMNqiYHqIdu9buZiaciGZLEdgnSTObOxoHnZlAJFLhgODqWOzlzcu8ggPt83EkzPga624bAlMApuXyEsiSkGQ8EmA7yVHwtVkPzJtx/38PGssMgC0AvSYCOYBJAA8ToWDmzN0i+ySqaBOC94lYC8sJAj4/N6ZSqgDQBVAC6Os0SkCh+p9wd3ur9+Pq6u3j8/MLNNrN2vjGzLi9+hP3er3rqAhsaoxJAiWAAsDm8mfLZ5n5vYnJiaMQ0aopIoxa12Dlbr9/Y+XS5bMafCnBA/HAOwVgWv+6ACZQyep+2DaAHQAbOl/zgZQ29qECnus290dDlUuUqKLPDiJR6H9v/wGbSgV/KKAx6gAAAABJRU5ErkJggg==" />&nbsp;usbdrive.tag</li>
 			</ul>
-			<p>Теперь поправим меню загрузок.</p>
+			<p>Теперь поправим все меню-ки загрузок второго раздела.</p>
 			<p><b>Содержимое файла &laquo;/menu.lst&raquo; второго раздела.</b></p>
 			<div class="codesesscroll">
 				<pre>timeout 30
