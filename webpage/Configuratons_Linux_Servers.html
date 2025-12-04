@@ -3284,6 +3284,14 @@ verifyPeer = yes   ; если хотите проверять клиентски
 			<p class="codes">
 				openssl pkcs12 -export -out client.p12 -inkey client.key -in client.crt -certfile ca.pem
 			</p>
+			<p>Если хотите создавать сертификаты без паролей, то конвертация может выглядеть так.</p>
+			<p class="codes">
+				openssl pkcs12 -export -out client.p12 -inkey client.key -in client.crt -certfile ca.pem -passout pass:
+			</p>
+			<p>Чтобы конвертировать сертификат в формат <b>PKCS#7 (.p7b)</b> с помощью <b>OpenSSL</b>, при этом без пароля (в <b>p7b</b> не хранится закрытый ключ, только сертификаты), используйте следующую команду.</p>
+			<p class="codes">
+				openssl crl2pkcs7 -nocrl -certfile stunnel.crt -out stunnel.p7b -certfile ca.pem
+			</p>
 			<p>Теперь <b>client.p12</b> можно использовать хоть на <b>Android</b>, хоть на <b>Windows</b>.</p>
 			<p>В системном хранилище Linux (например, для Ubuntu):</p>
 			<p class="codes">
