@@ -3204,8 +3204,18 @@ connect = 127.0.0.1:1080
 			<p>Создаём CA (самоподписанный сертификат CA):</p>
 			<p class="codes">
 				openssl genpkey -algorithm RSA -out ca.key -pkeyopt rsa_keygen_bits:4096</br>
-				openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.pem -subj "/C=RU/ST=Moscow/O=MyCA/CN=MyRootCA"
+				openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.pem
 			</p>
+			<p><b>Где</b></p>
+			<ul>
+				<li>Country Name (2 letter code) [AU]:<b>RU</b></li>
+				<li>State or Province Name (full name) [Some-State]:<b>Moscow</b></li>
+				<li>Locality Name (eg, city) []:<b></b></li>
+				<li>Organization Name (eg, company) [Internet Widgits Pty Ltd]:<b>MyCA</b></li>
+				<li>Organizational Unit Name (eg, section) []:<b></b></li>
+				<li>Common Name (e.g. server FQDN or YOUR name) []:<b>MyRootCA</b></li>
+				<li>Email Address []:<b></b></li>
+			</ul>
 			<ul>
 				<li><b>ca.key</b> — закрытый ключ CA.</li>
 				<li><b>ca.pem</b> — сертификат CA.</li>
@@ -3213,8 +3223,17 @@ connect = 127.0.0.1:1080
 			<p>Создаём запрос на сертификат (CSR) для сервера:</p>
 			<p class="codes">
 				openssl genpkey -algorithm RSA -out stunnel.key -pkeyopt rsa_keygen_bits:2048</br>
-				openssl req -new -key stunnel.key -out stunnel.csr -subj "/C=RU/ST=Moscow/O=MyServer/CN=your.server.domain"
+				openssl req -new -key stunnel.key -out stunnel.csr
 			</p>
+			<ul>
+				<li>Country Name (2 letter code) [AU]:<b>RU</b></li>
+				<li>State or Province Name (full name) [Some-State]:<b>Moscow</b></li>
+				<li>Locality Name (eg, city) []:<b></b></li>
+				<li>Organization Name (eg, company) [Internet Widgits Pty Ltd]:<b>MyServer</b></li>
+				<li>Organizational Unit Name (eg, section) []:<b></b></li>
+				<li>Common Name (e.g. server FQDN or YOUR name) []:<b>your.server.domain</b></li>
+				<li>Email Address []:<b></b></li>
+			</ul>
 			<p>Подписываем серверный сертификат CA:</p>
 			<p class="codes">
 				openssl x509 -req -in stunnel.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out stunnel.crt -days 3650 -sha256
@@ -3239,8 +3258,18 @@ verifyPeer = yes   ; если хотите проверять клиентски
 			</p>
 			<p>Создаём запрос на сертификат (CSR) для клиента.</p>
 			<p class="codes">
-				openssl req -new -key client.key -out client.csr -subj "/C=RU/ST=Moscow/O=ClientOrg/CN=client1"
+				openssl req -new -key client.key -out client.csr
 			</p>
+			<ul>
+				<li>Country Name (2 letter code) [AU]:<b>RU</b></li>
+				<li>State or Province Name (full name) [Some-State]:<b>Moscow</b></li>
+				<li>Locality Name (eg, city) []:<b></b></li>
+				<li>Organization Name (eg, company) [Internet Widgits Pty Ltd]:<b>ClientOrg</b></li>
+				<li>Organizational Unit Name (eg, section) []:<b></b></li>
+				<li>Common Name (e.g. server FQDN or YOUR name) []:<b>client1</b></li>
+				<li>Email Address []:<b></b></li>
+			</ul>
+			<p>Если хотите, укажите <b>&laquo;Email Address []:&raquo;</b>.</p>
 			<p>Здесь CN=client1 — имя клиента, можно заменить на любое удобное.</p>
 			<p>Подписываем клиентский CSR вашим CA.</p>
 			<p class="codes">
