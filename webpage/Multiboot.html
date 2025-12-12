@@ -77,7 +77,8 @@
 						<li><a href="#part3.3.3">Наполнение флешки</a></li>
 						<li><a href="#part3.3.4">Деление флешки на несколько разделов</a></li>
 					</ol>
-					<li><a href="#part3.4">Тестирование</a></li>
+					<li><a href="#part3.4">Новое поколение материнский плат UEFI-NON-CSM</a></li>
+					<li><a href="#part3.5">Тестирование</a></li>
 				</ol>
 			</ol>
 		</div>
@@ -2782,7 +2783,78 @@ ENDTEXT</pre>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part3.4"></a></p>
-			<h3>3.4. Тестирование</h3>
+			<h3>3.4. Новое поколение материнский плат UEFI-NON-CSM.</h3>
+			<p><b>Что такое fTPM, Secure Boot и CSM, и как они связаны?</b></p>
+			<p><b>fTPM (Firmware TPM)</b> — это реализация модуля TPM (Trusted Platform Module) в прошивке процессора или материнской платы, а не отдельный физический чип. TPM отвечает за аппаратное обеспечение безопасности: хранение криптографических ключей, проверку целостности системы и т.п. В современных системах с Windows 11 и некоторыми играми требуется включённый TPM 2.0 (в вашем случае — fTPM) для обеспечения безопасности и совместимости.</p>
+			<p><b>Secure Boot</b> — это функция UEFI, которая проверяет цифровую подпись загрузочных компонентов (загрузчика, драйверов и ОС) перед их запуском. Это предотвращает загрузку неподписанного или вредоносного кода. Secure Boot требует, чтобы загрузчик был подписан и соответствовал политике безопасности. В BIOS у вас есть выбор между "MS Windows UEFI" (включает Secure Boot с проверкой ключей) и "Other OS" (отключает Secure Boot).</p>
+			<p><b>CSM (Compatibility Support Module)</b> — это модуль в UEFI, который обеспечивает поддержку загрузки в режиме Legacy BIOS, то есть позволяет загружаться с устройств, использующих старый MBR-разметку и BIOS-загрузчики. В современных платах с UEFI и Secure Boot CSM часто отключён или заблокирован, чтобы не допустить загрузку устаревших и потенциально небезопасных загрузчиков.</p>
+			<p>В новых поколениях материнских плат <b>AM5 / DDR5</b> CSM отключён по умолчанию и заблокирован, потому что:</p>
+			<ul>
+				<li>Плата ориентирована на современный UEFI-загрузчик и GPT-диски.</li>
+				<li>Включён Secure Boot, который несовместим с Legacy-загрузкой.</li>
+				<li>Производитель ограничивает использование Legacy BIOS для повышения безопасности и совместимости с Windows 11 и новыми ОС.</li>
+			</ul>
+			<p><b>Что такое Platform Key (PK) и зачем он нужен?</b></p>
+			<p><b>Platform Key (PK)</b> — это ключ, который используется для управления Secure Boot. Он устанавливается производителем или пользователем и служит для подписания и проверки загрузочных компонентов.</p>
+			<p>В состоянии <b>Standard</b> ключи <b>Secure Boot</b> отсутствуют или используются стандартные ключи производителя.</p>
+			<p>В режиме <b>Custom</b> вы можете вручную управлять ключами <b>Secure Boot</b> (добавлять, удалять, сбрасывать), что даёт полный контроль над политикой загрузки и безопасностью.</p>
+			<p>PK нужен для того, чтобы система могла проверять подписи загрузчиков и драйверов, обеспечивая защиту от неподписанного кода.</p>
+			<p><b>Почему не загружаются флешки с MBR-загрузчиками (Grub4Dos, Syslinux), а только GRUB2 с FAT32?</b></p>
+			<ul>
+				<li>MBR-загрузчики (Grub4Dos, Syslinux) обычно требуют Legacy BIOS или CSM для загрузки.</li>
+				<li>Поскольку CSM у вас заблокирован и Secure Boot включён (или хотя бы UEFI-only режим), загрузка с MBR не поддерживается.</li>
+				<li>GRUB2, установленный в режиме UEFI и использующий файловую систему FAT32 с правильной структурой (например, /boot/grub/grub.cfg), воспринимается и загружается, так как он соответствует требованиям UEFI и Secure Boot (если он подписан или Secure Boot отключён).</li>
+			</ul>
+			<p><b>В современных материнских платах CSM (т.е. старый вариант запуска BIOS MBR) нельзя включить из-за политики производителя и архитектуры <b>AM5</b>. Поэтому единственная возможность устанавливать ОС остаётся только записывать флешки утилитой <a target="_blank" href="https://maximalisimus.github.io/usb-loader/USB-Loader/Rufus.zip">&laquo;Rufus&raquo;</a> (для старых ОС типа Windows 7. Для более старших используйте версию с официального сайта). Поэтому все новые и современные материнские платы типа &laquo;AM5 / DDR5&raquo; и старше поддерживают только один единственный UEFI, правильнее говоря &laquo;UEFI-NON-CSM&raquo;. Старые назывются &laquo;UEFI-CSM&raquo;.</b></p>
+			<p><u>Поэтому попытка сбросить или удалить ключи <b>Platform Key (PK)</b> никакого результата толком не даст и ваша настройка &laquo;CSM&raquo; всё равно не включится!<br> А из-за удалённых или сброшенных ключей у вас наверняка возникнут проблемы с самим UEFI Биосом.</u></p>
+			<p>Рассмотрим несколько вариантов записей уже известных образов дисков для записи для MBR BIOS флешек, т.е. CSM вариантов запуска, и записи GPT UEFI флешек, т.е. UEFI-NON-CSM без CSM MBR как такового.</p>
+			<hr>
+			<p><b>&laquo;MSDaRTFull.iso&raquo;</b> - MBR - &laquo;BIOS + UEFI-CSM&raquo;. А также проверка запуска через &laquo;QemuBootTester&raquo;.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/rufus-flashcard/scr-1.png" class="fz__minimized" alt="клик для увеличения" title="Rufus NTFS" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-2.png" class="fz__minimized" alt="клик для увеличения" title="Rufus Bios-UEFI-CSM" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-3.png" class="fz__minimized" alt="клик для увеличения" title="Qemu-Bios-Config" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-4.png" class="fz__minimized" alt="клик для увеличения" title="Qemu-Bios-Test" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-5.png" class="fz__minimized" alt="клик для увеличения" title="Qemu-UEFI-Config" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-6.png" class="fz__minimized" alt="клик для увеличения" title="Qemu-UEFI-Test" />
+			</div>
+			<hr>
+			<p><b>&laquo;MSDaRTFull.iso&raquo;</b> - GPT - &laquo;UEFI-NON-CSM&raquo;. А также проверка запуска через &laquo;QemuBootTester&raquo;.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/rufus-flashcard/scr-8.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-9.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-10.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-11.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-12.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<hr>
+			<p><b>&laquo;Win11_24H2_Russian_x64.iso&raquo;</b> - GPT - &laquo;UEFI-NON-CSM&raquo;. А также проверка запуска через &laquo;QemuBootTester&raquo;.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/rufus-flashcard/scr-13.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-14.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-15.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-16.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-17.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-18.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<hr>
+			<p><b>&laquo;linuxmint-22.2-xfce-64bit.iso&raquo;</b> - MBR - &laquo;BIOS + UEFI-CSM&raquo;. А также проверка запуска через &laquo;QemuBootTester&raquo;.</p>
+			<div id="page" class="clearfix">
+				<img src="../image/Multiboot/rufus-flashcard/scr-19.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-20.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-21.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-22.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-23.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-24.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-25.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+				<img src="../image/Multiboot/rufus-flashcard/scr-26.png" class="fz__minimized" alt="клик для увеличения" title="Title" />
+			</div>
+			<hr>
+			<p><b>Самое забавное в том, что последний диск с &laquo;linuxmint-22.2-xfce-64bit.iso&raquo;, не смотря на то, что записан &laquo;Rufus&raquo;-ом и в MBR работает как в &laquo;BIOS + UEFI-CSM&raquo;, так и в &laquo;UEFI-NON-CSM&raquo;.</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.5"></a></p>
+			<h3>3.5. Тестирование</h3>
 			<p>Рассмотрим коды запуска для самой утилиты <b>&laquo;Qemu&raquo;</b> и для <b>&laquo;Windows&raquo;</b> и для <b>&laquo;Linux&raquo;</b>.</p>
 			<p>Для этого вам понадобится сама утилита <b>&laquo;Qemu&raquo;</b> для вашей ОС, а также архив <b>&laquo;edk2-ovmf-202505-1-any.pkg.tar.gz&raquo;</b> из того же пункта <a href="#part2.7"><b>&laquo;2.7&raquo;</b></a>.</p>
 			<p>Архив нужен и в <b>&laquo;Windows&raquo;</b> и в <b>&laquo;Linux&raquo;</b>. Потому что его надо будет распаковать и достать из него 2 файла - <b>&laquo;usr/share/edk2/ia32/OVMF_CODE.4m.fd&raquo;</b> и <b>&laquo;usr/share/edk2/x64/OVMF_CODE.4m.fd&raquo;</b>.</p>
