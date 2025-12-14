@@ -1,0 +1,647 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Linux Programs</title>
+	<link rel="icon" href="../image/Linux-Programs/Linux-Programs-Icon.png">
+	<link rel="stylesheet" href="../html/main.css" type="text/css">	
+	<link rel="stylesheet" href="../html/zoom.css" type="text/css">
+	<link rel="stylesheet" href="../html/table.css" type="text/css">
+	<link rel="stylesheet" href="../html/frame.css">
+	<link rel="stylesheet" href="../html/ol-li.css" type="text/css">
+	<!-- <link rel="stylesheet" href="html/ol-li.css" type="text/css"> -->
+	<script src="../html/jquery.2.2.0.min.js"></script>
+	<script type="text/javascript" src="../html/litezoom.js"></script>
+</head>
+<body>
+	<div class="site">
+		<div class="header">
+			<div id="logo">
+				<p style="margin:10px; padding:0px;">Linux Programs</p>
+			</div>
+		</div>
+		<div class="content">
+			<p><a name="oglavlenie"></a></p>
+			<center>
+				<h1>Linux list of programs.</h1>
+			</center>
+			<h2>Оглавление</h2>
+			<ol>
+				<li><a href="#part1">Base Package</a></li>
+				<li><a href="#part2">Package for grub and uefi menu</a></li>
+				<li><a href="#part3">Else package</a></li>
+				<ol>
+					<li><a href="#part3.1">Network tools.</a></li>
+					<li><a href="#part3.2">Server list of packages.</a></li>
+					<li><a href="#part3.3">Network time protocol server packages.</a></li>
+					<li><a href="#part3.4">WiFi packages.</a></li>
+					<li><a href="#part3.5">Graphic Card packages.</a></li>
+					<li><a href="#part3.6">Display Manager packages.</a></li>
+					<li><a href="#part3.7">Shells.</a></li>
+					<li><a href="#part3.8">Alsa PulseAudio and xf86-input packages.</a></li>
+					<li><a href="#part3.9">Common for Desktop packages.</a></li>
+					<li><a href="#part3.10">User Packages.</a></li>
+					<li><a href="#part3.11">Programing.</a></li>
+				</ol>
+			</ol>
+		</div>
+		<div class="content">
+			<p><a name="part1"></a></p>
+			<h2>1. Base Package</h2>
+			<p><b>Base Package:</b></p>
+			<div class="codesesscroll">
+				<pre>bash btrfs-progs ntp sudo f2fs-tools dialog htop nano vi ntfs-3g linux-headers squashfs-tools upower mlocate testdisk hwinfo mkinitcpio</pre>
+			</div>
+			<p><b>Base Devel Package:</b></p>
+			<div class="codesesscroll">
+				<pre>bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils e2fsprogs file filesystem findutils gawk gcc-libs gettext glibc grep gzip inetutils iproute2 iputils jfsutils less licenses logrotate lvm2 man-db man-pages mdadm nano netctl pacman pciutils perl procps-ng psmisc reiserfsprogs s-nail sed shadow sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux vi which xfsprogs btrfs-progs ntp sudo f2fs-tools dialog htop mc ntfs-3g bash-completion gparted net-tools linux-headers squashfs-tools upower mlocate recordmydesktop testdisk hwinfo mkinitcpio</pre>
+			</div>
+			<p><b>Linux Kernel:</b></p>
+			<div class="codesesscroll">
+				<pre>linux-lts linux-lts-headers linux-lts-docs</pre>
+			</div>
+			<p><b>Linux Headers:</b></p>
+			<div class="codesesscroll">
+				<pre>linux linux-headers linux-docs</pre>
+			</div>
+			<p><b>User and Groups.</b></p>
+			<p>Users:</p>
+			<div class="codesesscroll">
+				<pre>adm ftp games http log rfkill sys systemd-journal users uucp wheel</pre>
+			</div>
+			<p>System:</p>
+			<div class="codesesscroll">
+				<pre>dbus kmem locate lp mail nobody proc smmsp tty utmp</pre>
+			</div>
+			<p>Presystemd:</p>
+			<div class="codesesscroll">
+				<pre>audio disk floppy input kvm optical scanner storage video</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part2"></a></p>
+			<h2>2. Package for grub and uefi menu.</h2>
+			<p><b>Grub:</b></p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				grub os-prober
+			</p>
+			<p><b>Grub theme:</b></p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				breeze-grub grub-theme-vimix
+			</p>
+			<p><b>Grub BTRFS:</b></p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				grub-btrfs
+			</p>
+			<p><b>Syslinux:</b></p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				syslinux
+			</p>
+			<p><b>Grub UEFI:</b></p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				grub os-prober efibootmgr dosfstools
+			</p>
+			<p><b>ReFind:</b></p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				refind efibootmgr dosfstools
+			</p>
+			<p><b>Systemd boot:</b></p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				efibootmgr dosfstools
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3"></a></p>
+			<h2>3. Else Package</h2>
+			<p><a name="part3.1"></a></p>
+			<h3>3.1. Network tools.</h3>
+			<ul>
+				<li>netctl</li>
+				<li>connman</li>
+				<li>dhcpcd</li>
+				<li>networkmanager network-manager-applet rp-pppoe ppp networkmanager-openconnect networkmanager-openvpn networkmanager-pptp</li>
+				<li>wicd-gtk, wicd</li>
+				<li>samba libwbclient smb4k smbclient smbnetfs gvfs-smb libgtopnetworkmanager-vpnc</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.2"></a></p>
+			<h3>3.2. Server list of packages.</h3>
+			<p><b>SSH.</b></p>
+			<div class="codesesscroll">
+				<pre>openssh</pre>
+			</div>
+			<p><b>Ansible.</b></p>
+			<div class="codesesscroll">
+				<pre>ansible ansible-core</pre>
+			</div>
+			<p><b>Docker.</b></p>
+			<div class="codesesscroll">
+				<pre>docker docker-compose</pre>
+			</div>
+			<p><b>Podman.</b></p>
+			<div class="codesesscroll">
+				<pre>podman podman-compose podman-docker podman-dnsname buildah cockpit cockpit-podman</pre>
+			</div>
+			<p><b>Mail.</b></p>
+			<div class="codesesscroll">
+				<pre>postfix</pre>
+			</div>
+			<p><b>Namp (nginx, apache, mariadb, phpmyadmin).</b></p>
+			<div class="codesesscroll">
+				<pre>nginx apache mysql++ mariadb mariadb-clients php phpmyadmin php-fpm php-apache uwsgi</pre>
+			</div>
+			<p><b>FTP.</b></p>
+			<div class="codesesscroll">
+				<pre>atftp bftpd curlftpfs filezilla gftp lftp tnftp vsftpd</pre>
+			</div>
+			<p><b>Firewals.</b></p>
+			<ul>
+				<li>ufw gufw</li>
+				<li>firewalld</li>
+			</ul>
+			<p><b>Fail2ban.</b></p>
+			<div class="codesesscroll">
+				<pre>fail2ban</pre>
+			</div>
+			<p><b>ClamAV.</b></p>
+			<div class="codesesscroll">
+				<pre>clamav clamtk glibc</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.3"></a></p>
+			<h3>3.3. Network time protocol server packages.</h3>
+			<div class="codesesscroll">
+				<pre>ntp networkmanager-dispatcher-ntpd</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.4"></a></p>
+			<h3>3.4. WiFi packages.</h3>
+			<p><b>WiFi:</b></p>
+			<div class="codesesscroll">
+				<pre>iw wireless_tools wpa_actiond wpa_supplicant wicd</pre>
+			</div>
+			<p><b>Broadcom:</b></p>
+			<div class="codesesscroll">
+				<pre>b43-fwcutter</pre>
+			</div>
+			<p><b>Intel 2100:</b></p>
+			<div class="codesesscroll">
+				<pre>ipw2100-fw</pre>
+			</div>
+			<p><b>Intel 2200:</b></p>
+			<div class="codesesscroll">
+				<pre>ipw2200-fw</pre>
+			</div>
+			<p><b>Bluetooth:</b></p>
+			<div class="codesesscroll">
+				<pre>blueman bluez bluez-libs bluez-plugins bluez-utils bluez-tools</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.5"></a></p>
+			<h3>3.5. Graphic Card packages.</h3>
+			<p><b>INTEL ucode:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-intel libva-intel-driver intel-ucode</pre>
+			</div>
+			<p><b>AMD ucode:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-ati amd-ucode</pre>
+			</div>
+			<p><b>Nvidia:</b></p>
+			<div class="codesesscroll">
+				<pre>nvidia nvidia-settings nvidia-utils lib32-nvidia-utils pangox-compat</pre>
+			</div>
+			<p><b>Nvidia LTS:</b></p>
+			<div class="codesesscroll">
+				<pre>nvidia-lts nvidia-settings nvidia-utils lib32-nvidia-utils pangox-compat</pre>
+			</div>
+			<p><b>Nvidia DKMS:</b></p>
+			<div class="codesesscroll">
+				<pre>nvidia-dkms nvidia-settings nvidia-utils lib32-nvidia-utils pangox-compat</pre>
+			</div>
+			<p><b>Libs:</b></p>
+			<div class="codesesscroll">
+				<pre>cuda bumblebee mesa mesa-demos libva-utils libvdpau lib32-libvdpau lib32-virtualgl</pre>
+			</div>
+			<p><b>Nouveau:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-nouveau</pre>
+			</div>
+			<p><b>Openchrome:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-openchrome</pre>
+			</div>
+			<p><b>VBox:</b></p>
+			<div class="codesesscroll">
+				<pre>virtualbox-guest-utils virtualbox-guest-modules</pre>
+			</div>
+			<p><b>VMware:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-vmware xf86-input-vmmouse</pre>
+			</div>
+			<p><b>Generic:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-video-fbdev</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.6"></a></p>
+			<h3>3.6. Display Manager packages.</h3>
+			<ul>
+				<li>lxdm</li>
+				<li>lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings</li>
+				<li>sddm sddm-kcm</li>
+				<li>slim</li>
+				<li>gdm</li>
+			</ul>
+			<p>Lightdm Configuration - &laquo;/etc/lightdm/lightdm-gtk-greeter.conf&raquo;, uses &laquo;/usr/share/wallpapers/Carbon-Mesh/carbon_mesh_arch.png&raquo;.</p>
+			<div class="codesesscroll">
+				<pre>[greeter]
+theme-name = Adwaita
+icon-theme-name = Adwaita
+background = /usr/share/wallpapers/Full-HD/looking-out.jpg
+default-user-image = #avatar-default-symbolic
+panel-position = bottom
+panel-position = bottom
+indicators = ~spacer;~separator;~session;~separator;~layout;~separator;~language;~separator;~a11y;~separator;~power;~separator;~spacer;~host;~spacer;~clock;~spacer</pre>
+			</div>
+			<p>Lightdm Configuration - &laquo;/etc/lightdm/lightdm-gtk-greeter.conf&raquo;, not uses background.</p>
+			<div class="codesesscroll">
+				<pre>[greeter]
+theme-name = Adwaita
+icon-theme-name = Adwaita
+background = 
+default-user-image = #avatar-default-symbolic
+panel-position = bottom
+indicators = ~spacer;~separator;~session;~separator;~layout;~separator;~language;~separator;~a11y;~separator;~power;~separator;~spacer;~host;~spacer;~clock;~spacer
+				</pre>
+			</div>
+			<p>Применить Lightdm.</p>
+			<p class="codes">
+				<span style="color:blue;"># Проверить текущий менеджер</span></br>
+				systemctl status display-manager.service</br></br>
+				<span style="color:blue;"># Установить пакет LightDM, Выбрать новый менеджер</span></br>
+				sudo dpkg-reconfigure lightdm</br></br>
+				<span style="color:blue;"># или</span></br>
+				sudo dpkg-reconfigure mdm
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.7"></a></p>
+			<h3>3.7. Shells.</h3>
+			<p><b>Screen Startup:</b></p>
+			<div class="codesesscroll">
+				<pre>screenfetch</pre>
+			</div>
+			<p><b>Shell SH:</b></p>
+			<ul>
+				<li>bash bash-completion</li>
+				<li>fish</li>
+				<li>zsh zsh-completions</li>
+				<li>dash</li>
+				<li>ksh</li>
+				<li>tcsh</li>
+			</ul>
+			<p>Чтобы вывести список всех установленных оболочек.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				chsh -l
+			</p>
+			<p>Чтобы изменить оболочку воспользуйтесь следующей командой.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				chsh -s /full/path/to/shell
+			</p>
+			<p>Например для fish.</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				chsh -s /usr/bin/fish
+			</p>
+			<p>Если хотите изменить оболочку для &laquo;root&raquo; пользователя войдите в него.</p>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				sudo su
+			</p>
+			<p><b>Однако, я не рекомендую менять оболочку для ROOT пользователя во избежание проблем!</b></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.8"></a></p>
+			<h3>3.8. Alsa PulseAudio and xf86-input packages.</h3>
+			<p><b>XF86 Input:</b></p>
+			<div class="codesesscroll">
+				<pre>xf86-input-synaptics xf86-input-keyboard xf86-input-mouse</pre>
+			</div>
+			<p><b>ALSA package:</b></p>
+			<div class="codesesscroll">
+				<pre>alsa-tools alsa-lib alsa-utils alsa-plugins volumeicon lib32-alsa-plugins alsa-card-profiles</pre>
+			</div>
+			<p><b>Pulseaudio package:</b></p>
+			<div class="codesesscroll">
+				<pre>pavucontrol pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-jack pulsemixer pasystray pamixer pulseview lib32-libpulse libpulse pipewire</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.9"></a></p>
+			<h3>3.9. Common for Desktop packages.</h3>
+			<p><b>Gnome keyring:</b></p>
+			<div class="codesesscroll">
+				<pre>gnome-keyring</pre>
+			</div>
+			<p><b>XDG Utils:</b></p>
+			<div class="codesesscroll">
+				<pre>python2-xdg xdg-user-dirs xdg-utils</pre>
+			</div>
+			<p><b>General Package:</b></p>
+			<div class="codesesscroll">
+				<pre>polkit gvfs gvfs-afc gvfs-mtp gvfs-smb acpid avahi cronie</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.10"></a></p>
+			<h3>3.10. User Packages.</h3>
+			<p><b>Archivers:</b></p>
+			<div class="codesesscroll">
+				<pre>ark xarchiver file-roller</pre>
+			</div>
+			<p><b>Zip:</b></p>
+			<div class="codesesscroll">
+				<pre>unzip zip unrar p7zip</pre>
+			</div>
+			<p><b>TTF:</b></p>
+			<div class="codesesscroll">
+				<pre>ttf-liberation ttf-dejavu opendesktop-fonts ttf-bitstream-vera ttf-arphic-ukai ttf-arphic-uming ttf-hanazono terminus-font</pre>
+			</div>
+			<p><b>TTF Edit:</b></p>
+			<div class="codesesscroll">
+				<pre>fontforge</pre>
+			</div>
+			<p><b>Theme package:</b></p>
+			<div class="codesesscroll">
+				<pre>gnome-icon-theme breeze breeze-grub breeze-icons faenza-icon-theme adwaita-icon-theme</pre>
+			</div>
+			<p><b>Menu edit:</b></p>
+			<div class="codesesscroll">
+				<pre>alacarte</pre>
+			</div>
+			<p><b>Terminals:</b></p>
+			<div class="codesesscroll">
+				<pre>xterm gnome-terminal lxterminal</pre>
+			</div>
+			<p><b>CD/DVD/ISO:</b></p>
+			<div class="codesesscroll">
+				<pre>brasero acetoneiso2 fuseiso cdrtools</pre>
+			</div>
+			<p><b>Browsers:</b></p>
+			<div class="codesesscroll">
+				<pre>firefox chromium opera vivaldi tor torbrowser-launcher lynx links</pre>
+			</div>
+			<p><b>Messengers:</b></p>
+			<ul>
+				<li>telegram-desktop protobuf</li>
+				<li>discord</li>
+				<li>pidgin pidgin-otr</li>
+			</ul>
+			<p>Evolution:</p>
+			<div class="codesesscroll">
+				<pre>evolution evolution-bogofilter evolution-ews evolution-on</pre>
+			</div>
+			<p>Thunderbird:</p>
+			<div class="codesesscroll">
+				<pre>thunderbird thunderbird-extension-enigmail</pre>
+			</div>
+			<p><b>Torrent:</b></p>
+			<ul>
+				<li>transmission-gtk</li>
+				<li><u>qbittorrent</u></li>
+				<li>ktorrent</li>
+			</ul>
+			<p><b>Concolse downloads:</b></p>
+			<div class="codesesscroll">
+				<pre>curl git wget youtube-dl</pre>
+			</div>
+			<p><b>GUI Downloaders:</b></p>
+			<ul>
+				<li>gwget</li>
+				<li><u>kget</u></li>
+				<li>uget</li>
+			</ul>
+			<p><b>VPN:</b></p>
+			<div class="codesesscroll">
+				<pre>openvpn</pre>
+			</div>
+			<p><b>File manager:</b></p>
+			<ul>
+				<li>doublecmd-gtk2</li>
+				<li>krusader</li>
+			</ul>
+			<p class="codes">
+				doublecmd-gtk2 krusader
+			</p>
+			<p><b>Graphic programs:</b></p>
+			<div class="codesesscroll">
+				<pre>blender inkscape gimp pinta krita krita-plugin-gmic gcolor3</pre>
+			</div>
+			<p><b>Image Viewer:</b></p>
+			<ul>
+				<li>viewnior</li>
+				<li>gthumb</li>
+				<li>gpicview</li>
+			</ul>
+			<p><b>Media player:</b></p>
+			<div class="codesesscroll">
+				<pre>vlc smplayer kmplayer</pre>
+			</div>
+			<p>Audio player:</p>
+			<div class="codesesscroll">
+				<pre>rhythmbox audacious</pre>
+			</div>
+			<p><b>Audio edit:</b></p>
+			<div class="codesesscroll">
+				<pre>audacity lmms</pre>
+			</div>
+			<p><b>Video converters:</b></p>
+			<div class="codesesscroll">
+				<pre>ffmpeg handbrake ciano</pre>
+			</div>
+			<p><b>Video editors:</b></p>
+			<div class="codesesscroll">
+				<pre>shotcut pitivi openshot avidemux-qt</pre>
+			</div>
+			<p><b>Text editors:</b></p>
+			<div class="codesesscroll">
+				<pre>vim geany leafpad mousepad gedit micro</pre>
+			</div>
+			<p><b>Code editors:</b></p>
+			<div class="codesesscroll">
+				<pre>atom emacs geany</pre>
+			</div>
+			<p><b>Offices:</b></p>
+			<div class="codesesscroll">
+				<pre>libreoffice-fresh okular evince djvulibre</pre>
+			</div>
+			<p><b>System:</b></p>
+			<div class="codesesscroll">
+				<pre>ksysguard libksysguard grub-customizer galculator dmidecode dconf dconf-editor</pre>
+			</div>
+			<p><b>GPG:</b></p>
+			<div class="codesesscroll">
+				<pre>gpa kgpg kleopatra</pre>
+			</div>
+			<p><b>Science:</b></p>
+			<div class="codesesscroll">
+				<pre>bc calc galculator kcalc octave genius stellarium celestia</pre>
+			</div>
+			<p><b>Clipboard:</b></p>
+			<ul>
+				<li>parcellite</li>
+				<li>xclip</li>
+				<li>clipmenu</li>
+				<li>gpaste</li>
+			</ul>
+			<p><b>CAD Programs:</b></p>
+			<div class="codesesscroll">
+				<pre>kicad kicad-library kicad-library-3d geda-gaf</pre>
+			</div>
+			<p><b>Virtualization:</b></p>
+			<ul>
+				<li>virtualbox</li>
+				<div class="codesesscroll">
+					<pre>virtualbox virtualbox-guest-iso virtualbox-guest-utils virtualbox-host-dkms virtualbox-host-modules-arch</pre>
+				</div>
+				<li>qemu</li>
+				<div class="codesesscroll">
+					<pre>qemu-full qemu-img qemu-ui-gtk qemu-tools edk2-ovmf qemu-block-gluster qemu-block-iscsi</pre>
+				</div>
+			</ul>
+			<p><b>Games:</b></p>
+			<div class="codesesscroll">
+				<pre>steam teeworlds supertuxkart xonotic warsow aisleriot kpat kmines gnome-chess gnuchess pychess gnome-sudoku hitori bomber</pre>
+			</div>
+			<p><b>Arduino:</b></p>
+			<div class="codesesscroll">
+				<pre>arduino arduino-avr-core arduino-cli arduino-builder avr-gcc avrdude avr-binutils avr-libc arduino-ctags arduino-docs</pre>
+			</div>
+			<p><b>Emulators:</b></p>
+			<div class="codesesscroll">
+				<pre>dosbox desmume mednafen mupen64plus ppsspp</pre>
+			</div>
+			<p><b>Crypt:</b></p>
+			<div class="codesesscroll">
+				<pre>keepassxc veracrypt</pre>
+			</div>
+			<p><b>Wine:</b></p>
+			<div class="codesesscroll">
+				<pre>wine wine-mono winetricks</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part3.11"></a></p>
+			<h3>3.11. Programing.</h3>
+			<p><b>Bash:</b></p>
+			<div class="codesesscroll">
+				<pre>shellcheck</pre>
+			</div>
+			<p><b>Make, Cmake:</b></p>
+			<div class="codesesscroll">
+				<pre>make cmake</pre>
+			</div>
+			<p><b>GCC, CPP:</b></p>
+			<div class="codesesscroll">
+				<pre>gcc gcc-libs binutils</pre>
+			</div>
+			<p><b>MinGW + W64:</b></p>
+			<div class="codesesscroll">
+				<pre>mingw-w64-binutils mingw-w64-headers</pre>
+			</div>
+			<p><b>Golang:</b></p>
+			<div class="codesesscroll">
+				<pre>go go-tools</pre>
+			</div>
+			<p><b>Python</b></p>
+			<div class="codesesscroll">
+				<pre>python python-pip python-setuptools python-virtualenv python-virtualenvwrapper python-wheel</pre>
+			</div>
+			<p>Или <a target="_blank" href="https://maximalisimus.github.io/Articles/Python_Virtualenv.html">&laquo;Python_Virtualenv.html&raquo;</a>:</p>
+			<div class="codesesscroll">
+				<pre>python3-virtualenv python3-venv virtualenv python3-virtualenvwrapper python3-distlib python3-filelock python3-platformdirs python3-stevedore</pre>
+			</div>
+			<p><b>Python-2:</b></p>
+			<div class="codesesscroll">
+				<pre>python2 python2-pip python2-setuptools python2-virtualenv python2-wheel</pre>
+			</div>
+			<p><b>Python IDE:</b></p>
+			<div class="codesesscroll">
+				<pre>pycharm-community-edition</pre>
+			</div>
+			<p><b>QT Creator:</b></p>
+			<div class="codesesscroll">
+				<pre>qtcreator qt5-base qt5-doc qt6-base qt6-doc</pre>
+			</div>
+			<p><b>GTK3:</b></p>
+			<div class="codesesscroll">
+				<pre>gtk3 libcolord</pre>
+			</div>
+			<p><b>GTKMM3:</b></p>
+			<div class="codesesscroll">
+				<pre>gtkmm3</pre>
+			</div>
+			<p><b>GTKMM:</b></p>
+			<div class="codesesscroll">
+				<pre>libsigc++-3.0 cairomm pangomm atkmm pkgconf glibc atk pango cairo gdk-pixbuf2 lib32-gdk-pixbuf2</pre>
+			</div>
+			<p><b>GTK4:</b></p>
+			<div class="codesesscroll">
+				<pre>gtk4 libcolord</pre>
+			</div>
+			<p><b>GTKMM4:</b></p>
+			<div class="codesesscroll">
+				<pre>gtkmm-4.0</pre>
+			</div>
+			<p><b>Java:</b></p>
+			<div class="codesesscroll">
+				<pre>jre-openjdk jdk-openjdk</pre>
+			</div>
+			<p><b>Java IDE:</b></p>
+			<div class="codesesscroll">
+				<pre>intellij-idea-community-edition eclipse-ecj</pre>
+			</div>
+			<p><b>Perl:</b></p>
+			<div class="codesesscroll">
+				<pre>perl</pre>
+			</div>
+			<p><b>Rudy:</b></p>
+			<div class="codesesscroll">
+				<pre>ruby ruby-irb</pre>
+			</div>
+			<p><b>NodeJS:</b></p>
+			<div class="codesesscroll">
+				<pre>nodejs</pre>
+			</div>
+			<p><b>NodeJS LTS:</b></p>
+			<div class="codesesscroll">
+				<pre>nodejs-lts-fermium nodejs-lts-erbium</pre>
+			</div>
+			<p><b>IDE Editors:</b></p>
+			<div class="codesesscroll">
+				<pre>codeblocks kdevelop</pre>
+			</div>
+			<p><b>Pascal:</b></p>
+			<div class="codesesscroll">
+				<pre>fpc fpc-src lazarus</pre>
+			</div>
+			<p><b>HTML:</b></p>
+			<div class="codesesscroll">
+				<pre>bluegriffon htmldoc xchm</pre>
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>
+		<div class="content">
+			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
+		</div>	
+		<div class="about">
+			<p>Copyright &copy; xx.xx.xxxx by <a href="mailto:maximalis171091@yandex.ru">Mikhail Artamonov</a></p>
+		</div>
+		</br>
+	</div>
+	<script type="text/javascript">$('.fz__minimized').litezoom({speed:400, viewTitle:true});</script>
+</body>
+</html>
