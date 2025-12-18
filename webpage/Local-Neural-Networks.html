@@ -66,7 +66,7 @@
 					</ol>
 					<li><a href="#part1.3">Модели</a></li>
 					<ol>
-						<li><a href="#part1.3.1">Mykes/medicus</a></li>
+						<li><a href="#part1.3.1">Mykes/medicus, TheBloke/medalpaca-13B-GGUF, TheBloke/med42-70B-GGUF</a></li>
 						<li><a href="#part1.3.2">gemma3:4b</a></li>
 						<li><a href="#part1.3.3">codegemma</a></li>
 						<li><a href="#part1.3.4">codellama</a></li>
@@ -755,6 +755,55 @@ hf download Mykes/medicus</pre>
 				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.json">tokenizer.json</a><br>
 				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer.model">tokenizer.model</a><br>
 				<a target="_blank" href="https://huggingface.co/Mykes/medicus/blob/main/tokenizer_config.json">tokenizer_config.json</a><br>
+			</p>
+			<p><b><span style="color:red;">&laquo;TheBloke/medalpaca-13B-GGUF&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF">medalpaca-13B-GGUF</a> — это большая языковая модель, специально доработанная для задач медицинской области. Она основана на LLaMA (Large Language Model Meta AI) и содержит 13 миллиардов параметров. Основная цель этой модели — улучшение задач ответов на вопросы и медицинского диалога.</p>
+			<div class="codeses">
+				<pre>huggingface-cli download TheBloke/medalpaca-13B-GGUF medalpaca-13b.Q4_K_M.gguf --local-dir . --local-dir-use-symlinks False</pre>
+			</div>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/.gitattributes">.gitattributes</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/README.md">README.md</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/config.json">config.json</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q2_K.gguf">medalpaca-13b.Q2_K.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q3_K_L.gguf">medalpaca-13b.Q3_K_L.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q3_K_M.gguf">medalpaca-13b.Q3_K_M.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q3_K_S.gguf">medalpaca-13b.Q3_K_S.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q4_0.gguf">medalpaca-13b.Q4_0.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q4_K_M.gguf">medalpaca-13b.Q4_K_M.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q4_K_S.gguf">medalpaca-13b.Q4_K_S.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q5_0.gguf">medalpaca-13b.Q5_0.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q5_K_M.gguf">medalpaca-13b.Q5_K_M.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q5_K_S.gguf">medalpaca-13b.Q5_K_S.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q6_K.gguf">medalpaca-13b.Q6_K.gguf</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/medalpaca-13B-GGUF/blob/main/medalpaca-13b.Q8_0.gguf">medalpaca-13b.Q8_0.gguf</a><br>
+			</p>
+			<p><b><span style="color:red;">&laquo;TheBloke/med42-70B-GGUF&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF">med42-70B-GGUF</a> — это клиническая большая языковая модель (LLM) с открытым доступом, разработанная компанией M42 для расширения доступа к медицинским знаниям. Созданная на основе LLaMA-2 и содержащая 70 миллиардов параметров, эта генеративная система искусственного интеллекта предоставляет высококачественные ответы на медицинские вопросы.</p>
+			<div class="codeses">
+				<pre>huggingface-cli download TheBloke/med42-70B-GGUF med42-70b.Q4_K_M.gguf --local-dir . --local-dir-use-symlinks False</pre>
+			</div>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/.gitattributes">.gitattributes</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/LICENSE.txt">LICENSE.txt</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/Notice">Notice</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/README.md">README.md</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/USE_POLICY.md">USE_POLICY.md</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/config.json">config.json</a><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q2_K.gguf">med42-70b.Q2_K.gguf</a>&nbsp;<span style="color:gray;">(29.3 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q3_K_L.gguf">med42-70b.Q3_K_L.gguf</a>&nbsp;<span style="color:gray;">(36.1 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q3_K_M.gguf">med42-70b.Q3_K_M.gguf</a>&nbsp;<span style="color:gray;">(33.2 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q3_K_S.gguf">med42-70b.Q3_K_S.gguf</a>&nbsp;<span style="color:gray;">(29.9 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q4_0.gguf">med42-70b.Q4_0.gguf</a>&nbsp;<span style="color:gray;">(38.9 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q4_K_M.gguf">med42-70b.Q4_K_M.gguf</a>&nbsp;<span style="color:gray;">(41.4 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q4_K_S.gguf">med42-70b.Q4_K_S.gguf</a>&nbsp;<span style="color:gray;">(39.1 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q5_0.gguf">med42-70b.Q5_0.gguf</a>&nbsp;<span style="color:gray;">(47.5 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q5_K_M.gguf">med42-70b.Q5_K_M.gguf</a>&nbsp;<span style="color:gray;">(48.8 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q5_K_S.gguf">med42-70b.Q5_K_S.gguf</a>&nbsp;<span style="color:gray;">(47.5 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q6_K.gguf-split-a">med42-70b.Q6_K.gguf-split-a</a>&nbsp;<span style="color:gray;">(28.3 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q6_K.gguf-split-b">med42-70b.Q6_K.gguf-split-b</a>&nbsp;<span style="color:gray;">(28.3 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q8_0.gguf-split-a">med42-70b.Q8_0.gguf-split-a</a>&nbsp;<span style="color:gray;">(36.6 GB)</span><br>
+				<a target="_blank" href="https://huggingface.co/TheBloke/med42-70B-GGUF/blob/main/med42-70b.Q8_0.gguf-split-b">med42-70b.Q8_0.gguf-split-b</a>&nbsp;<span style="color:gray;">(36.6 GB)</span><br>
 			</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
