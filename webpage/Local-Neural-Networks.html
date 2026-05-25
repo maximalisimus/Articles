@@ -57,6 +57,9 @@
 						<li><a href="#part1.1.18">Image Creator</a></li>
 						<li><a href="#part1.1.19">Stability Matrix</a></li>
 						<li><a href="#part1.1.20">DALL·E mini</a></li>
+						<li><a href="#part1.1.21">SillyTavern</a></li>
+						<li><a href="#part1.1.22">KoboldCpp</a></li>
+						<li><a href="#part1.1.23">Axolotl</a></li>
 					</ol>
 					<li><a href="#part1.2">Параметры</a></li>
 					<ol>
@@ -88,6 +91,7 @@
 						<li><a href="#part1.3.21">Gemini</a></li>
 						<li><a href="#part1.3.22">Claude Haiku</a></li>
 						<li><a href="#part1.3.23">DeepSeek</a></li>
+						<li><a href="#part1.3.24">Qwen-Claude-Sonnet</a></li>
 					</ol>
 					<li><a href="#part1.4">Конвертирование моделей</a></li>
 					<li><a href="#part1.5">Запуск GGML/GGUF через ollama</a></li>
@@ -99,6 +103,27 @@
 					<li><a href="#part1.6">Программирование</a></li>
 					<li><a href="#part1.7">Загрузка моделей с Hugginface</a></li>
 					<li><a href="#part1.8">Дополнительная информация</a></li>
+					<li><a href="#part1.9">Roleplay модели (с акцентом на русский)</a></li>
+					<ol>
+						<li><a href="#part1.9.1">Введение</a></li>
+						<li><a href="#part1.9.2">Системный промпт</a></li>
+						<li><a href="#part1.9.3">MythoMax-L2-13B</a></li>
+						<li><a href="#part1.9.4">Nous-Hermes-2-Yi-34B</a></li>
+						<li><a href="#part1.9.5">OpenHermes-2.5-Mistral-7B</a></li>
+						<li><a href="#part1.9.6">Chronos-Hermes</a></li>
+						<li><a href="#part1.9.7">Noromaid-Mixtral</a></li>
+						<li><a href="#part1.9.8">Mag Mell 12B</a></li>
+						<li><a href="#part1.9.9">Qwen2.5-7B/14B</a></li>
+						<li><a href="#part1.9.10">Llama 3.1/3.3</a></li>
+					</ol>
+					<li><a href="#part1.10">Датасеты на HuggingFace</a></li>
+					<ol>
+						<li><a href="#part1.10.1">taozi555/rp-opus</a></li>
+						<li><a href="#part1.10.2">taozi555/novel-rp</a></li>
+						<li><a href="#part1.10.3">kingbri/PIPPA-shareGPT</a></li>
+						<li><a href="#part1.10.4">aimeri/rp-reasoning</a></li>
+						<li><a href="#part1.10.5">Как сделать свой датасет для русского Roleplay</a></li>
+					</ol>
 				</ol>
 				<li><a href="#part2">Нейронные сети на Android / IOS</a></li>
 				<ol>
@@ -562,6 +587,29 @@ Keywords=</pre>
 			<p><a target="_blank" href="https://github.com/marcelb/craiyon.git">Craiyon Github https</a></p>
 			<p><a target="_blank" href="git@github.com:marcelb/craiyon.git">Craiyon Github git</a></p>
 			<p><a target="_blank" href="https://github.com/marcelb/craiyon/releases">Craiyon Github release</a></p>
+			<hr>
+			<p><a name="part1.1.21"></a></p>
+			<p><b><span style="color:red;">&laquo;SillyTavern&raquo;</span></b></p>
+			<p><b>SillyTavern</b> - пользовательский интерфейс для взаимодействия с языковыми моделями ИИ (LLM), ориентированный на ролевые игры и кастомизированное общение.</p>
+			<p><a target="_blank" href="https://github.com/SillyTavern/SillyTavern">SillyTavern Github</a></p>
+			<p><b>SillyTavern</b> — дружелюбный интерфейс для <b>roleplay</b>, <b>KoboldCpp</b> — высокопроизводительный бэкенд, запускающий модели локально. Вместе они дают полностью приватные, нелимитированные взаимодействия без интернета.</p>
+			<p>Ollama — ещё проще: ollama run mistral и всё готово, потом подключаешь SillyTavern к localhost:11434.</p>
+			<p>SillyTavern сам по себе — локально устанавливаемый интерфейс, форк TavernAI 1.2.8 с февраля 2023, уже более 300 контрибьюторов, бесплатный и open-source. Требования к железу минимальны — работает на всём, что запускает NodeJS 20+. Поддерживает character cards, lorebooks, память, групповые чаты.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.1.22"></a></p>
+			<p><b><span style="color:red;">&laquo;KoboldCpp&raquo;</span></b></p>
+			<p><b>KoboldCpp</b> — это лёгкое <i>open‑source</i>‑приложение для локального запуска больших языковых моделей (LLM) в форматах GGML и GGUF. Основано на движке llama.cpp, включает встроенный веб‑интерфейс и API для разработчиков.</p>
+			<p><a target="_blank" href="https://github.com/LostRuins/koboldcpp">KoboldCpp Github</a></p>
+			<p><b>KoboldCpp</b> — один бинарник, запускается без установки, поддерживает GGUF-модели, работает на CPU+GPU. Простой в использовании API с CPU-offloading (полезно при малом VRAM) и стримингом — запускается из одного файла на Windows, Mac и Linux.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.1.23"></a></p>
+			<p><b><span style="color:red;">&laquo;Axolotl&raquo;</span></b></p>
+			<p><b>Axolotl</b> — это open‑source‑инструмент с лицензией Apache 2.0 для тонкой настройки (fine‑tuning) больших языковых моделей (LLM), в т. ч. с поддержкой LoRA, QLoRA и полного fine‑tuning. Разработан коллективом OpenAccess‑AI‑Collective.</p>
+			<p><a target="_blank" href="https://github.com/axolotl-ai-cloud/axolotl">Axolotl</a></p>
+			<p></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.2"></a></p>
 			<h3>1.2. Параметры</h3>
@@ -1077,6 +1125,17 @@ hf download Mykes/medicus</pre>
 			<ul>
 				<li><a target="_blank" href="https://huggingface.co/unsloth/DeepSeek-R1-0528-Qwen3-8B-GGUF">DeepSeek R1-0528 Qwen 3-8B обычная версия huggingface</a></li>
 				<li><a target="_blank" href="https://huggingface.co/mradermacher/DeepSeek-R1-Distill-Qwen-7B-Uncensored-i1-GGUF">DeepSeek R1 Distill Qwen 7B Uncensored i1 huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/mradermacher/DeepSeek-R1-Distill-Qwen-7B-Uncensored-GGUF">mradermacher/DeepSeek-R1-Distill-Qwen-7B-Uncensored-GGUF</a></li>
+				<li><a target="_blank" href="https://huggingface.co/mradermacher/DeepSeek-R1-Distill-Qwen-14B-Uncensored-i1-GGUF">mradermacher/DeepSeek-R1-Distill-Qwen-14B-Uncensored-i1-GGUF</a></li>
+				<li><a target="_blank" href="https://huggingface.co/antirez/deepseek-v4-gguf">antirez/deepseek-v4-gguf</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.24"></a></p>
+			<p><b><span style="color:red;">&laquo;Qwen-Claude-Sonnet&raquo;</span></b></p>
+			<p><b>Qwen-Claude-Sonnet</b> — дистиллированная версия модели, которая сочетает архитектуру Qwen3 с особенностями Claude Sonnet 4.5, ориентированными на глубокое рассуждение.</p>
+			<ul>
+				<li><a href="https://huggingface.co/TeichAI/Qwen3-8B-Claude-Sonnet-4.5-Reasoning-Distill-GGUF">TeichAI/Qwen3-8B-Claude-Sonnet-4.5-Reasoning-Distill-GGUF</a></li>
 			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
@@ -1716,6 +1775,113 @@ After downloading this .safetensor file, place it in the folder stable-diffusion
 				<img src="../image/Neural-Networks/neural-image.png" width="1000px"/>
 				<img src="../image/Neural-Networks/neural-networks-show.png" width="500px"/>
 			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.9"></a></p>
+			<h3>1.9. Roleplay модели (с акцентом на русский)</h3>
+			<p><a name="part1.9.1"></a></p>
+			<p><b>Введение</b></p>
+			<p><b>Важная честность:</b> чисто русскоязычных roleplay/NSFW моделей на HuggingFace практически нет — ниша маленькая. Но хорошие модели на базе Mistral/Llama отлично понимают русский и отвечают на нём при правильном системном промпте.</p>
+			<p><a name="part1.9.2"></a></p>
+			<p><b>Системный промпт</b></p>
+			<p>Это самое важное. Вот структура и пример:</p>
+			<div class="codeses">
+				<pre>Ты — Катя, 24 года. Живёшь в Москве, работаешь барista. 
+Характер: открытая, немного дерзкая, говоришь с юмором и иногда матом, 
+не стесняешься в выражениях. Любишь кофе и ночные прогулки.
+
+ПРАВИЛА:
+- Всегда отвечай от первого лица, никогда не выходи из роли
+- Пиши живым разговорным русским языком, с паузами, сленгом
+- Можешь задавать встречные вопросы, проявлять характер
+- Помни детали из разговора и ссылайся на них
+- Никогда не говори что ты ИИ или что это симуляция
+- Реагируй эмоционально и непредсказуемо, как живой человек
+
+Текущая обстановка: вечер, Катя только пришла домой после смены.</pre>
+			</div>
+			<p>Ключевые принципы хорошего промпта: конкретика (возраст, профессия, город), запрет на выход из роли, инструкция по стилю речи, начальная сцена.</p>
+			<p><a name="part1.9.3"></a></p>
+			<p><b>MythoMax-L2-13B</b> — легенда среди roleplay-моделей. Специально дообучен для высококачественного, нецензурированного roleplay и сторителлинга, умеет держать очень длинный контекст. Отлично понимает русский язык.</p>
+			<p><a target="_blank" href="https://huggingface.co/TheBloke/MythoMax-L2-13B-GGUF">TheBloke/MythoMax-L2-13B-GGUF huggingface</a></p>
+			<p><a name="part1.9.4"></a></p>
+			<p><b>Nous-Hermes-2-Yi-34B</b> — удивляет человекоподобностью речи, большая модель требует мощного GPU, но качество на высоте.</p>
+			<ul>
+				<li><a target="_blank" href="https://huggingface.co/TheBloke/Nous-Hermes-2-Yi-34B-GGUF">TheBloke/Nous-Hermes-2-Yi-34B-GGUF huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/NousResearch/Nous-Hermes-2-Yi-34B-GGUF">NousResearch/Nous-Hermes-2-Yi-34B-GGUF huggingface</a></li>
+			</ul>
+			<p><a name="part1.9.5"></a></p>
+			<p><b>OpenHermes-2.5-Mistral-7B</b> — обучен на 1 000 000 записей данных, сгенерированных преимущественно GPT-4, использует ChatML как формат промпта, что обеспечивает стойкое следование инструкциям на протяжении многих ходов. Лёгкий, быстрый.</p>
+			<p><a target="_blank" href="https://huggingface.co/TheBloke/OpenHermes-2.5-Mistral-7B-GGUF">TheBloke/OpenHermes-2.5-Mistral-7B-GGUF huggingface</a></p>
+			<p><a name="part1.9.6"></a></p>
+			<p><b>Chronos-Hermes</b> — впечатляет способностью выстраивать сложные нарративные структуры и поддерживать сложные характеры персонажей без потери связности, хорошо подходит для долгосрочного развития историй.</p>
+			<ul>
+				<li><a target="_blank" href="https://huggingface.co/TheBloke/chronos-hermes-13B-GGUF">TheBloke/chronos-hermes-13B-GGUF huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/TheBloke/Chronos-Hermes-13b-v2-GGUF">TheBloke/Chronos-Hermes-13b-v2-GGUF huggingface</a></li>
+			</ul>
+			<p><a name="part1.9.7"></a></p>
+			<p><b>Noromaid-Mixtral</b> — фаворит сообщества для плавного RP-диалога. Mixtral-база даёт отличный русский.</p>
+			<ul>
+				<li><a target="_blank" href="https://huggingface.co/TheBloke/Noromaid-v0.4-Mixtral-Instruct-8x7b-Zloss-GGUF">TheBloke/Noromaid-v0.4-Mixtral-Instruct-8x7b-Zloss-GGUF huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/NeverSleep/Noromaid-v0.4-Mixtral-Instruct-8x7b-Zloss-GGUF">NeverSleep/Noromaid-v0.4-Mixtral-Instruct-8x7b-Zloss-GGUF huggingface</a></li>
+			</ul>
+			<p><a name="part1.9.8"></a></p>
+			<p><b>Mag Mell 12B</b> — сбалансированная модель для нарративного погружения, входит в топ для roleplay вместе с LLaMA 3 70B при использовании в SillyTavern.</p>
+			<ul>
+				<li><a target="_blank" href="https://huggingface.co/mradermacher/MN-12B-Mag-Mell-R1-GGUF">mradermacher/MN-12B-Mag-Mell-R1-GGUF huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/QuantFactory/MN-12B-Mag-Mell-R1-GGUF">QuantFactory/MN-12B-Mag-Mell-R1-GGUF huggingface</a></li>
+			</ul>
+			<p><a name="part1.9.9"></a></p>
+			<p><b>Qwen2.5-7B/14B</b></p>
+			<p><a target="_blank" href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF">Qwen/Qwen2.5-7B-Instruct-GGUF huggingface</a></p>
+			<p><a name="part1.9.10"></a></p>
+			<p><b>Llama 3.1/3.3</b></p>
+			<ul>
+				<li><a target="_blank" href="https://huggingface.co/bartowski/Llama-3.1-SuperNova-Lite-GGUF">bartowski/Llama-3.1-SuperNova-Lite-GGUF huggingface</a></li>
+				<li><a target="_blank" href="https://huggingface.co/modularai/Llama-3.1-8B-Instruct-GGUF">modularai/Llama-3.1-8B-Instruct-GGUF huggingface</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.10"></a></p>
+			<h3>1.10. Датасеты на HuggingFace</h3>
+			<p><a name="part1.10.1"></a></p>
+			<p><b><a target="_blank" href="https://huggingface.co/datasets/taozi555/rp-opus">taozi555/rp-opus</a></b> — многоходовые roleplay-диалоги между пользователями и AI-персонажами, тщательно отфильтрованные, с NSFW-меткой, в формате ShareGPT, есть reasoning-версия с < think> блоками.</p>
+			<p><a name="part1.10.2"></a></p>
+			<p><b><a target="_blank" href="https://huggingface.co/datasets/taozi555/novel-rp">taozi555/novel-rp</a></b> — датасет на основе новелл в ShareGPT-формате, есть русский сегмент (ru/). Это золото для русскоязычного файн-тюна.</p>
+			<p><a name="part1.10.3"></a></p>
+			<p><b><a target="_blank" href="https://huggingface.co/datasets/kingbri/PIPPA-shareGPT">kingbri/PIPPA-shareGPT</a></b> — частично синтетический conversational датасет в ShareGPT-формате, совместим с Axolotl. </p>
+			<p><a name="part1.10.4"></a></p>
+			<p><b><a target="_blank" href="https://huggingface.co/datasets/aimeri/rp-reasoning">aimeri/rp-reasoning</a></b> — roleplay-диалоги с injected < think> блоками — "режиссёрские заметки" писателя перед каждым ответом, что делает персонажа более связным и глубоким.</p>
+			<p><a name="part1.10.5"></a></p>
+			<p><b>Как сделать свой датасет для русского roleplay?</b></p>
+			<p>Инструмент для обучения — <u>Axolotl</u>.</p>
+			<p><b>Axolotl</b> — бесплатный open-source инструмент для файн-тюнинга LLM, поддерживает LoRA, QLoRA, DPO, несколько GPU, и большинство популярных архитектур. Конфигурация через один YAML-файл.</p>
+			<p>Базовый YAML для QLoRA roleplay:</p>
+			<div class="codeses">
+				<pre>base_model: mistralai/Mistral-7B-Instruct-v0.3
+load_in_4bit: true
+adapter: qlora
+lora_r: 32
+lora_alpha: 16
+lora_target_linear: true
+datasets:
+  - path: твой_датасет.jsonl
+    type: sharegpt
+sequence_len: 4096
+num_epochs: 3
+learning_rate: 0.0002
+output_dir: ./roleplay-lora</pre>
+			</div>
+			<p>Формат ShareGPT (JSONL):</p>
+			<div class="codeses">
+				<pre>{"conversations": [
+  {"from": "system", "value": "Ты — Катя, 24 года..."},
+  {"from": "human", "value": "Привет, как дела?"},
+  {"from": "gpt", "value": "Нормально, только со смены пришла. А ты кто вообще?"}
+]}</pre>
+			</div>
+			<p>Способы набрать данные: взять готовые диалоги из novel-rp (ru-сегмент), сгенерировать синтетику через GPT-4o/Claude с промптом "напиши 20 диалогов в стиле живого русского человека", или вручную написать 200–500 примеров — этого уже хватит для приличного LoRA.</p>
+			<p>Запуск обучения без своего GPU — через RunPod или Vast.ai (аренда GPU от $0.3/час, достаточно A100 на пару часов для QLoRA 7B модели).</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
