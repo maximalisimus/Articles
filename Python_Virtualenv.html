@@ -38,6 +38,7 @@
 				<li><a href="#part4">Практика <b>Windows</b></a></li>
 				<li><a href="#part5">Python embeddable</a></li>
 				<li><a href="#part6">Pyhon Portable</a></li>
+				<li><a href="#part7">Современный Python ecosystem</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -496,7 +497,43 @@ cmd.exe</pre>
 			<p>А также установить виртуальные окружения из <a href="#part1">&laquo;Главы 1&raquo;</a>.</p>
 			<p>Можете просто перенести текущую директорию прямо на флешку и продолжать работать с Python-ом выбранной версии на любом другом ПК и даже с созданными вами виртуальными окружениями.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
-			<hr>
+		</div>
+		<div class="content">
+			<p><a name="part7"></a></p>
+			<h3>Современный Python ecosystem</h3>
+			<p>Старый стек:</p>
+			<ul>
+				<li>pip</li>
+				<li>virtualenv</li>
+			</ul>
+			<p>Современный:</p>
+			<ul>
+				<li>uv</li>
+				<li>pyproject.toml</li>
+				<li>hatch</li>
+				<li>poetry</li>
+			</ul>
+			<p><b>UV:</b> <a target="_blank" href="https://github.com/astral-sh/uv">GiTHub UV</a></p>
+			<p><b>Linux:</b></p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				curl -LsSf https://astral.sh/uv/install.sh | sh
+			</p>
+			<p><b>Windows:</b></p>
+			<p class="selections" style="border-left: 5px solid #548eaa; background-color: #ccdfe8;">
+				powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+			</p>
+			<p>Команды:</p>
+			<p class="codes">
+				Создание проекта: </br>uv init myproject</br></br>
+				Создание окружения:</br>uv venv</br></br>
+				Установка:</br>uv add torch transformers</br></br>
+				PyProject:</br>заменяет requirements.txt.</br></br>
+				Poetry:</br><a target="_blank" href="https://python-poetry.org/">python-poetry.org</a></br></br>
+				Hatch:</br><a target="_blank" href="https://hatch.pypa.io/">hatch.pypa.io</a></br></br>
+				pipx:</br><a target="_blank" href="https://pipx.pypa.io/">pipx.pypa.io</a>
+			</p>
+			<p>Используется для isolated CLI apps.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
 			<p>Ну а на этом на сегодня всё. Моё дело - лишь заинтересовать вас. Не пренебрегайте виртуальным окружением для своих проектов.</p>

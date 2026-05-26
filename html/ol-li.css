@@ -7,12 +7,12 @@ ol
 	counter-reset: list1;  /* Список первого уровня */
 }
 
-ol li
+ol > li
 {
 	list-style-type: none;  /* Убираем исходную нумерацию */
 }
 
-ol li:before
+ol > li:before
 {
 	counter-increment: list1; /* Увеличиваем значение счетчика */
 	content: counter(list1) ". "; /* Выводим значение в виде 1., 2.*/
@@ -23,7 +23,7 @@ ol ol
 	counter-reset: list2;  /* Список второго уровня*/
 }
 
-ol ol li:before { /* Список второго уровня */
+ol ol > li:before { /* Список второго уровня */
 	counter-increment: list2; /* Увеличиваем значение счетчика */
 	content: counter(list1) "." counter(list2) ". "; /* Выводим значение типа 2.1, 2.2,... */
 }
@@ -33,7 +33,7 @@ ol ol ol
 	counter-reset: list3;  /* Список третьего уровня*/
 }
 
-ol ol ol li:before { /* Список третьего уровня */
+ol ol ol > li:before { /* Список третьего уровня */
 	counter-increment: list3; /* Увеличиваем значение счетчика */
 	content: counter(list1) "." counter(list2) "." counter(list3) ". "; /* Выводим значение типа 2.1, 2.2,... */
 }
@@ -53,7 +53,23 @@ ol ol ol ol ol
 	counter-reset: list5;  /* Список пятого уровня*/
 }
 
-ol ol ol ol ol li:before { /* Список пятого уровня */
+ol ol ol ol ol > li:before { /* Список пятого уровня */
 	counter-increment: list5; /* Увеличиваем значение счетчика */
 	content: counter(list1) "." counter(list2) "." counter(list3) "." counter(list4) "." counter(list5) ". "; /* Выводим значение типа 2.1, 2.2,... */
+}
+
+/* Возвращаем маркеры для ul */
+ol ul,
+ul ul {
+    list-style-type: disc !important;
+}
+
+/* ===== OL внутри UL: сброс нумерации с 1 ===== */
+ul ol {
+    counter-reset: ulist1; /* Начинаем нумерацию заново! */
+}
+
+ul ol > li:before {
+    counter-increment: ulist1;
+    content: counter(ulist1) ". ";
 }

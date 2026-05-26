@@ -66,6 +66,17 @@
 						<li><a href="#part1.2.1">VRAM и RAM для запуска модели</a></li>
 						<li><a href="#part1.2.2">Квантизации и требования к оперативной памяти</a></li>
 						<li><a href="#part1.2.3">Форматы с плавающими точками</a></li>
+						<li><a href="#part1.2.4">Архитектура Transformer</a></li>
+						<li><a href="#part1.2.5">Tokenization и токены</a></li>
+						<li><a href="#part1.2.6">KV Cache и VRAM</a></li>
+						<li><a href="#part1.2.7">GGUF, EXL2, GPTQ и AWQ</a></li>
+						<li><a href="#part1.2.8">llama.cpp и KoboldCpp</a></li>
+						<li><a href="#part1.2.9">vLLM и production inference</a></li>
+						<li><a href="#part1.2.10">TabbyAPI и EXL2 RP stack</a></li>
+						<li><a href="#part1.2.11">SillyTavern и RP ecosystem</a></li>
+						<li><a href="#part1.2.12">RAG и векторные базы</a></li>
+						<li><a href="#part1.2.13">LoRA, QLoRA и Fine-Tuning</a></li>
+						<li><a href="#part1.2.14">CUDA, ROCm и ускорение</a></li>
 					</ol>
 					<li><a href="#part1.3">Модели</a></li>
 					<ol>
@@ -138,6 +149,10 @@
 					<li><a href="#part3.2">Подключение поисковых утилит на open-webui</a></li>
 				</ol>
 				<li><a href="#part4">VPS/VDS n8nio/n8n</a></li>
+				<li><a href="#part5">Docker и Self-Hosted AI</a></li>
+				<li><a href="#part6">Linux Survival Guide</a></li>
+				<li><a href="#part7">AI агенты и automation</a></li>
+				<li><a href="#part8">Практические AI стеки</a></li>
 			</ol>
 		</div>
 		<div class="content">
@@ -753,6 +768,488 @@ Keywords=</pre>
  --outfile vicuna-13b-v1.5.gguf \
  --outtype q8_0</pre>
 			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.4"></a></p>
+			<h4>1.2.4. Архитектура Transformer</h4>
+			<p><b>Transformer</b> — основа современных LLM. Практически все современные модели:</p>
+			<ul>
+				<li>Llama</li>
+				<li>Qwen</li>
+				<li>Mistral</li>
+				<li>Gemma</li>
+				<li>DeepSeek</li>
+				<li>Mixtral</li>
+				<li>Phi</li>
+				<li>Yi</li>
+				<li>Command-R и другие...</li>
+			</ul>
+			<p><b>Главная идея:</b> модель смотрит на весь контекст одновременно через механизм <b>attention</b>.</p>
+			<p>Почему Transformer победил:</p>
+			<ul>
+				<li>GPU отлично параллелят attention</li>
+				<li>Transformer масштабируется</li>
+				<li>модель может учитывать дальние зависимости</li>
+				<li>обучение быстрее RNN/LSTM</li>
+			</ul>
+			<p>Главные компоненты:</p>
+			<ol>
+				<li>Self-Attention</li>
+				<li>Multi-Head Attention</li>
+				<li>Feed Forward Layers</li>
+				<li>Positional Embeddings</li>
+				<li>Residual Connections</li>
+				<li>LayerNorm</li>
+			</ol>
+			<p><b>Self-Attention:</b> каждый токен вычисляет важность других токенов.</p>
+			<p><b>Например:</b> &laquo;Кот сидел на стуле. Он был мягкий.&raquo;</p>
+			<p><u>Модель должна понять:</u> &laquo;он&raquo; относится к &laquo;стулу&raquo;.</p>
+			<p><b>Attention</b> вычисляет вероятности связей.</p>
+			<p><b>RoPE:</b> Rotary Positional Embedding. Используется почти во всех современных LLM.</p>
+			<p>Зачем нужен:</p>
+			<ul>
+				<li>Transformer сам по себе не понимает порядок слов.</li>
+				<li>RoPE кодирует позицию токенов.</li>
+			</ul>
+			<p>Почему контекст ограничен:</p>
+			<ul>
+				<li>Attention complexity растёт квадратично.</li>
+				<li>Чем больше токенов — тем больше VRAM.</li>
+			</ul>
+			<p>Практика:</p>
+			<ul>
+				<li><i>8k context</i> — легко.</li>
+				<li><i>32k</i> — уже тяжело.</li>
+				<li><i>128k</i> — огромные требования к памяти.</li>
+			</ul>
+			<p>Полезные ссылки:</p>
+			<ul>
+				<li><a target="_blank" href="https://arxiv.org/abs/1706.03762">arxiv.org</a></li>
+				<li><a target="_blank" href="https://github.com/ggerganov/llama.cpp">llama.cpp</a></li>
+				<li><a target="_blank" href="https://huggingface.co/docs/transformers/index">huggingface.co/docs/transformers</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.5"></a></p>
+			<h4>1.2.5. Tokenization и токены</h4>
+			<p>LLM не видят текст как человек. Они работают с токенами.</p>
+			<p><b>Токен:</b> фрагмент текста.</p>
+			<p>Русский язык: обычно требует больше токенов чем английский.</p>
+			<p>Почему: английские токенизаторы обучались преимущественно на английском.</p>
+			<p>Основные токенизаторы:</p>
+			<ul>
+				<li>BPE</li>
+				<li>SentencePiece</li>
+				<li>WordPiece</li>
+			</ul>
+			<p>Специальные токены:</p>
+			<ul>
+				<li><b>BOS</b> — начало текста.</li>
+				<li><b>EOS</b> — конец текста.</li>
+			</ul>
+			<p><b>ChatML:</b> формат диалогов:</p>
+			<div class="codeses">
+				<pre><|system|>
+<|user|>
+<|assistant|></pre>
+			</div>
+			<p>Почему длинные RP сообщения опасны:</p>
+			<ul>
+				<li>каждый токен хранится в KV-cache.</li>
+				<li>Чем длиннее диалог — тем выше VRAM.</li>
+			</ul>
+			<p>Полезно:</p>
+			<ul>
+				<li><a target="_blank" href="https://platform.openai.com/tokenizer">openai tokenizer</a></li>
+				<li><a target="_blank" href="https://huggingface.co/docs/tokenizers/index">huggingface tokenizers</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.6"></a></p>
+			<h4>1.2.6. KV Cache и VRAM</h4>
+			<p><b>KV-cache</b> — одна из важнейших тем локального inference.</p>
+			<p>Когда модель читает контекст: она вычисляет attention значения.</p>
+			<p>Чтобы не пересчитывать всё заново: значения сохраняются в KV-cache.</p>
+			<p>Что хранится:</p>
+			<ul>
+				<li>Keys</li>
+				<li>Values</li>
+			</ul>
+			<p>Почему контекст жрёт VRAM: KV-cache хранится в памяти GPU.</p>
+			<p>Пример:</p>
+			<ul>
+				<li>7B модель:</li>
+				<ul>
+					<li><i>8k context</i> — нормально</li>
+					<li><i>32k</i> — VRAM резко растёт</li>
+					<li><i>128k</i> — огромная нагрузка</li>
+				</ul>
+			</ul>
+			<p>Prompt Processing: обработка входного текста.</p>
+			<p>Token Generation: генерация нового токена.</p>
+			<p>Prompt processing: обычно медленнее.</p>
+			<p>Generation: обычно быстрее.</p>
+			<p>Paged Attention:</p>
+			<ul>
+				<li>используется в vLLM.</li>
+				<li>Позволяет эффективнее управлять KV-cache.</li>
+			</ul>
+			<p>Полезные ссылки:</p>
+			<ul>
+				<li><a target="_blank" href="https://github.com/vllm-project/vllm">vllm-project GiTHub</a></li>
+				<li><a target="_blank" href="https://github.com/Dao-AILab/flash-attention">Dao-AILab/flash-attention GiTHub</a></li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.7"></a></p>
+			<h4>1.2.7. GGUF, EXL2, GPTQ и AWQ</h4>
+			<p><b>GGUF:</b> главный формат llama.cpp.</p>
+			<p>Плюсы:</p>
+			<ul>
+				<li>CPU support</li>
+				<li>Vulkan</li>
+				<li>Metal</li>
+				<li>CUDA</li>
+				<li>универсальность</li>
+			</ul>
+			<p>Минусы:</p>
+			<ul>
+				<li>не самый быстрый на NVIDIA</li>
+			</ul>
+			<p><b>EXL2:</b> лучший формат для NVIDIA.</p>
+			<p>Используется:</p>
+			<ul>
+				<li>roleplay</li>
+				<li>большие модели</li>
+				<li>быстрый inference</li>
+			</ul>
+			<p>Почему EXL2 быстрее: ExllamaV2 использует оптимизированные CUDA kernels.</p>
+			<p>GGUF: лучше для portability.</p>
+			<p>EXL2: лучше для скорости.</p>
+			<p>GPTQ: старый CUDA quantization format.</p>
+			<p>AWQ: более современный quantization.</p>
+			<p>Поиск моделей:</p>
+			<ul>
+				<li>GGUF Q4_K_M</li>
+				<li>EXL2 4.5bpw</li>
+			</ul>
+			<p>Популярные размеры:</p>
+			<ul>
+				<li>Q4_K_M</li>
+				<li>Q5_K_M</li>
+				<li>EXL2 4bpw</li>
+				<li>EXL2 5bpw</li>
+			</ul>
+			<p>Практика: CPU only: GGUF.</p>
+			<p>NVIDIA: EXL2.</p>
+			<p>Mac: MLX.</p>
+			<p>Ссылки:</p>
+			<ul>
+				<li><a target="_blank" href="https://github.com/turboderp/exllamav2">exllamav2 GiTHub</a></li>
+				<li><a target="_blank" href="https://github.com/casper-hansen/AutoAWQ">AutoAWQ GiTHub</a></li>
+				<li><a target="_blank" href="https://github.com/AutoGPTQ/AutoGPTQ">AutoGPTQ GiTHub</a></li>
+			</ul>
+			<p><b>EXL2</b> — это современный и очень быстрый формат квантизации для GPU от NVIDIA. Главное, что нужно о нём знать — это переменная битность (mixed-precision). Вместо того чтобы использовать одинаковое количество бит на все веса, EXL2 выделяет больше битов важным слоям и меньше — менее важным. Это позволяет добиться лучшего качества при меньшем расходе VRAM.</p>
+			<p>Как работает квантизация EXL2 (для понимания)?</p>
+			<ul>
+				<li><b>Базовая идея:</b> Квантизация снижает точность числовых весов модели (например, с 16 бит до 4), что радикально сокращает потребление памяти (70B модель в 4-bit занимает ~35 ГБ вместо 140 ГБ).</li>
+				<li><b>Ключевое преимущество EXL2:</b> Это смешанная квантизация. Он сам определяет, каким слоям важна высокая точность, а какие можно сжать сильнее. Это делает EXL2 более гибким и эффективным, чем статические форматы вроде GPTQ.</li>
+				<li><b>Производительность:</b> Обеспечивает очень высокую скорость инференса, сравнимую с нативными FP16 моделями, при значительной экономии VRAM. Некоторые источники утверждают, что для 7B моделей можно достигать 56-64 токенов в секунду.</li>
+				<li><b>Где искать:</b> EXL2 модели на Hugging Face часто имеют в названии "exl2" или "ExLlamav2".</li>
+				<ul>
+					<li>Пользователи, такие как LoneStriker, TheBloke, bartowski, royallab, регулярно выкладывают кванти.</li>
+					<li>Важно: В репозитории может быть несколько веток (branches), где main часто содержит только файл измерений (measurement.json), а сами кванти лежат в ветках типа 4bpw, 5bpw и т.д..</li>
+				</ul>
+			</ul>
+			<p><b>Запуск EXL2 моделей: руководство по ПО.</b></p>
+			<p>EXL2 — не универсальный формат. Для его запуска нужно использовать специальные бэкенды.</p>
+			<ul>
+				<li>Axolotl: ❌ Напрямую не поддерживает обучение моделей в формате EXL2.</li>
+				<li>KoboldAI: ❌ Напрямую не поддерживает. Вы можете использовать TabbyAPI (см. ниже) и подключить его как API.</li>
+				<li>KoboldCPP: ❌ Напрямую не поддерживает. KoboldCPP заточен под модели GGUF и GGML.</li>
+				<li>SillyTavern: ✅ Поддерживает через TabbyAPI или Oobabooga. Подключите бэкенд через API. Предпочтительный способ — TabbyAPI (инструкция ниже).</li>
+				<li>Open WebUI: ✅ Поддерживает через любой OpenAI-совместимый API. Если запустить модель через TabbyAPI или Text Generation WebUI, Open WebUI сможет с ней работать.</li>
+				<li>Ollama: ✅ Может работать, но с оговоркой. Ollama не имеет нативной поддержки EXL2, но к модели можно подключиться через API, если она запущена, например, через TabbyAPI.</li>
+			</ul>
+			<p>🚀 Основной способ: TabbyAPI + SillyTavern / Open WebUI</p>
+			<ol>
+				<li>Установите TabbyAPI (серверная часть):</li>
+				<div class="codeses">
+					<pre>git clone https://github.com/theroyallab/tabbyAPI.git
+cd tabbyAPI
+pip install -r requirements.txt</pre>
+				</div>
+				<li>Настройте config.yml: Укажите путь к вашей EXL2 модели в параметре model_name.</li>
+				<li>Запустите сервер TabbyAPI из командной строки. Вы должны увидеть, что модель загружена, и доступен API-ключ.</li>
+				<li>Настройте SillyTavern или Open WebUI:</li>
+				<ul>
+					<li><b>В SillyTavern:</b></li>
+					<ol>
+						<li>В настройках <b>API</b> выберите <b>Text Completion</b> и затем <b>TabbyAPI</b>.</li>
+						<li>Введите <b>API URL</b> (по умолчанию <i>http://127.0.0.1:5000</i>) и <b>API Key</b> из терминала <b>TabbyAPI</b>.</li>
+						<li><i>Новичкам:</i> Официальное дополнение <b>TabbyAPI Loader</b> можно установить из вкладки "Extensions" SillyTavern для удобной загрузки моделей прямо из интерфейса.</li>
+					</ol>
+					<li><b>В Open WebUI:</b> Подключите TabbyAPI как любой другой OpenAI-совместимый API (OpenAI, TextGenWebUI) — аналогично SillyTavern.</li>
+				</ul>
+			</ol>
+			<p>Конвертация GGUF → EXL2: это не прямой процесс.</p>
+			<p>Из-за различий в архитектуре форматов и алгоритмах квантизации, прямая конвертация «на лету» из GGUF в EXL2 невозможна. Процесс всегда требует возврата к исходным FP16 весам.</p>
+			<p>Правильный алгоритм действий:</p>
+			<ol>
+				<li><b>Найдите FP16</b> версию вашей модели. Ищите на Hugging Face оригинальный репозиторий модели (часто помечен как original, fp16 или base).</li>
+				<li><b>Конвертируйте FP16 → EXL2</b>, используя инструменты:</li>
+				<ul>
+					<li>Официальный скрипт от разработчика <a target="_blank" href="https://github.com/turboderp-org/exllamav2">ExLlamaV2 на GitHub</a>.</li>
+					<li>Инструменты-помощники:</li>
+					<ul>
+						<li><b>FusionQuant (Docker):</b> имеет удобный двухэтапный пайплайн (merge + конвертация) и поддерживает EXL2.quantkit (CLI): мощный инструмент с единой командой для конвертации в несколько форматов, включая EXL2.</li>
+						<li><b>quantkit (CLI):</b> мощный инструмент с единой командой для конвертации в несколько форматов, включая EXL2.</li>
+					</ul>
+				</ul>
+			</ol>
+			<p><b>Работа с LoRA для EXL2 моделей.</b></p>
+			<p>Это самый нетривиальный момент. Стандартные LoRA-адаптеры, созданные под модель в FP16, несовместимы с квантованной версией напрямую.</p>
+			<ul>
+				<li><b>Прямой способ:</b> Загружать и модель, и LoRA через ExLlamaV2, а не через AutoGPTQ или bitsandbytes. ExLlamaV2 умеет "применять" адаптер к квантованной модели на лету.</li>
+				<li><b>Создание EXL2-модели с "зашитой" LoRA:</b> Самый надёжный способ — слить LoRA-адаптер с FP16 базовой моделью (объединить их в единые веса) и затем сквантовать полученную FP16-модель в EXL2. Для слияния удобно использовать mergekit (например, в связке с FusionQuant).</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.8"></a></p>
+			<h4>1.2.8. llama.cpp и KoboldCpp</h4>
+			<p><b>llama.cpp</b> — главный локальный inference engine.</p>
+			<p>GitHub: <a target="_blank" href="https://github.com/ggerganov/llama.cpp">llama.cpp</a></p>
+			<p>Поддерживает:</p>
+			<ul>
+				<li>CPU</li>
+				<li>CUDA</li>
+				<li>Vulkan</li>
+				<li>ROCm</li>
+				<li>Metal</li>
+			</ul>
+			<p>Linux установка:</p>
+			<div class="codeses">
+				<pre>git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+cmake -B build
+cmake --build build -j</pre>
+			</div>
+			<p>CUDA:</p>
+			<p class="codes">
+				cmake -B build -DGGML_CUDA=ON
+			</p>
+			<p>Запуск:</p>
+			<p class="codes">
+				./build/bin/llama-cli -m model.gguf
+			</p>
+			<p><a target="_blank" href="https://github.com/LostRuins/koboldcpp">KoboldCpp</a>: GUI поверх llama.cpp.</p>
+			<p>Плюсы:</p>
+			<ul>
+				<li>простой запуск</li>
+				<li>RP support</li>
+				<li>встроенный сервер</li>
+				<li>Windows friendly</li>
+			</ul>
+			<p>Минусы:</p>
+			<ul>
+				<li>production хуже vLLM</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.9"></a></p>
+			<h4>1.2.9. vLLM и production inference</h4>
+			<p><b><a target="_blank" href="https://github.com/vllm-project/vllm">vLLM</a></b> — production inference engine.</p>
+			<p>Почему важен: это уже enterprise-grade inference.</p>
+			<p>Особенности:</p>
+			<ul>
+				<li>batching</li>
+				<li>Paged Attention</li>
+				<li>OpenAI-compatible API</li>
+				<li>высокая throughput производительность</li>
+			</ul>
+			<p>Установка:</p>
+			<p class="codes">
+				pip install vllm
+			</p>
+			<p>Запуск:</p>
+			<p class="codes">
+				python -m vllm.entrypoints.openai.api_server --model MODEL_PATH
+			</p>
+			<p>API:</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				http://localhost:8000/v1
+			</p>
+			<p>Почему vLLM быстрее: он умеет объединять запросы пользователей.</p>
+			<p>Ollama: ориентирован на простоту.</p>
+			<p>vLLM: ориентирован на production.</p>
+			<p>Используется:</p>
+			<ul>
+				<li>AI сервисами</li>
+				<li>web apps</li>
+				<li>массовым inference</li>
+			</ul>
+			<p><b>GPU: рекомендуется NVIDIA.</b></p>
+			<p>Полезно: <a target="_blank" href="https://docs.vllm.ai/">https://docs.vllm.ai/</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.10"></a></p>
+			<h4>1.2.10. TabbyAPI и EXL2 RP stack</h4>
+			<p><b><a target="_blank" href="https://github.com/theroyallab/tabbyAPI">TabbyAPI</a></b> — один из лучших backends для RP.</p>
+			<p>Работает через: ExllamaV2.</p>
+			<p>Плюсы:</p>
+			<ul>
+				<li>высокая скорость</li>
+				<li>EXL2 support</li>
+				<li>OpenAI API</li>
+				<li>SillyTavern compatibility</li>
+			</ul>
+			<p>Установка:</p>
+			<p class="codes">
+				git clone https://github.com/theroyallab/tabbyAPI</br>
+				cd tabbyAPI</br>
+				python -m venv env</br></br>
+				Linux: source env/bin/activate</br></br>
+				Windows: env\Scripts\activate</br></br>
+				pip install -r requirements.txt</br>
+				python main.py
+			</p>
+			<p>Почему RP community любит TabbyAPI: EXL2 даёт очень высокую скорость на NVIDIA.</p>
+			<p>Особенно: RTX 3060/4060/4090.</p>
+			<p>Рекомендуется: 4.5bpw EXL2.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.11"></a></p>
+			<h4>1.2.11. SillyTavern и RP ecosystem</h4>
+			<p><b><a target="_blank" href="https://github.com/SillyTavern/SillyTavern">SillyTavern</a></b> — главный frontend для RP.</p>
+			<p><b>NodeJS:</b> <a target="_blank" href="https://nodejs.org/">https://nodejs.org/</a></p>
+			<p>Установка:</p>
+			<div class="codeses">
+				<pre>git clone https://github.com/SillyTavern/SillyTavern
+cd SillyTavern
+npm install
+npm start</pre>
+			</div>
+			<p>Подключение:</p>
+			<ul>
+				<li>TabbyAPI</li>
+				<li>KoboldCpp</li>
+				<li>Ollama</li>
+				<li>OpenAI API</li>
+			</ul>
+			<p>Главные системы:</p>
+			<ol>
+				<li>Character Cards: PNG или JSON.</li>
+				<ul>
+					<li>personality</li>
+					<li>scenario</li>
+					<li>greeting</li>
+					<li>examples</li>
+				</ul>
+				<li>Lorebooks: автоматическая подгрузка знаний.</li>
+				<li>Author Note: скрытая инструкция модели.</li>
+				<li>Memory</li>
+				<li>Vector Memory</li>
+				<li>Regex</li>
+				<li>Extensions</li>
+			</ol>
+			<p>Sampling: Temperature: управляет randomness.</p>
+			<p>Top-P: вероятностная выборка.</p>
+			<p>Min-P: стабильность.</p>
+			<p>DRY: уменьшает повторения.</p>
+			<p>Почему sampler критичен: иногда sampler влияет сильнее самой модели.</p>
+			<p>Character cards: <a target="_blank" href="https://chub.ai/">https://chub.ai/</a></p>
+			<p>RP модели:</p>
+			<ul>
+				<li>MythoMax</li>
+				<li>Noromaid</li>
+				<li>Midnight Miqu</li>
+				<li>EVA-Qwen</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.12"></a></p>
+			<h4>1.2.12. RAG и векторные базы</h4>
+			<p><b>RAG:</b> Retrieval-Augmented Generation.</p>
+			<p>Позволяет модели:</p>
+			<ul>
+				<li>читать документы</li>
+				<li>искать знания</li>
+				<li>использовать память</li>
+			</ul>
+			<p><b>Главная идея:</b> не хранить всё в контексте.</p>
+			<p>Pipeline:</p>
+			<ol>
+				<li>Разбить документы</li>
+				<li>Создать embeddings</li>
+				<li>Сохранить vectors</li>
+				<li>Выполнять semantic search</li>
+				<li>Передавать найденный текст LLM</li>
+			</ol>
+			<p><b>Главные библиотеки:</b></p>
+			<ul>
+				<li>Chroma: <a target="_blank" href="https://www.trychroma.com/">https://www.trychroma.com/</a></li>
+				<li>Qdrant: <a target="_blank" href="https://qdrant.tech/">https://qdrant.tech/</a></li>
+				<li>FAISS: <a target="_blank" href="https://github.com/facebookresearch/faiss">https://github.com/facebookresearch/faiss</a></li>
+				<li>LangChain: <a target="_blank" href="https://www.langchain.com/">https://www.langchain.com/</a></li>
+				<li>LlamaIndex: <a target="_blank" href="https://www.llamaindex.ai/">https://www.llamaindex.ai/</a></li>
+			</ul>
+			<p>Установка:</p>
+			<p class="codes">
+				pip install chromadb qdrant-client sentence-transformers
+			</p>
+			<p>Embeddings: это vector representation текста.</p>
+			<p>Популярные embedding модели:</p>
+			<ul>
+				<li>BGE</li>
+				<li>E5</li>
+				<li>nomic-embed</li>
+			</ul>
+			<p>Chunking: разделение документов.</p>
+			<p>Практика: слишком большие chunks ухудшают retrieval.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.13"></a></p>
+			<h4>1.2.13. LoRA, QLoRA и Fine-Tuning</h4>
+			<p><b>Datasets:</b> <a target="_blank" href="https://huggingface.co/datasets">https://huggingface.co/datasets</a></p>
+			<p>Популярные:</p>
+			<ul>
+				<li>OpenHermes</li>
+				<li>UltraChat</li>
+				<li>PIPPA</li>
+				<li>ShareGPT</li>
+			</ul>
+			<p>Главные параметры LoRA:</p>
+			<ul>
+				<li>rank: размер адаптера.</li>
+				<li>alpha: сила обучения.</li>
+				<li>dropout: устойчивость.</li>
+				<li>target_modules: какие слои обучать.</li>
+				<li>Проблемы: catastrophic forgetting.</li>
+				<li>Практика: плохой dataset убивает модель.</li>
+				<li>Flash Attention: уменьшает VRAM.</li>
+				<li>DeepSpeed: ускоряет обучение.</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.14"></a></p>
+			<h4>1.2.14. CUDA, ROCm и ускорение</h4>
+			<p><b>CUDA:</b> главная AI платформа NVIDIA.</p>
+			<p>Скачать: <a target="_blank" href="https://developer.nvidia.com/cuda-downloads">https://developer.nvidia.com/cuda-downloads</a></p>
+			<p>PyTorch: <a target="_blank" href="https://pytorch.org/">https://pytorch.org/</a></p>
+			<p>Проверка CUDA:</p>
+			<p class="selections" style="border-left: 5px solid #008000; background-color: #cce8cc;">
+				python -c "import torch; print(torch.cuda.is_available())"
+			</p>
+			<ul>
+				<li><a target="_blank" href="https://rocm.docs.amd.com/">ROCm:</a> AMD аналог CUDA.</li>
+				<li>Flash Attention: <a target="_blank" href="https://github.com/Dao-AILab/flash-attention">https://github.com/Dao-AILab/flash-attention</a></li>
+				<li>xFormers: <a target="_blank" href="https://github.com/facebookresearch/xformers">https://github.com/facebookresearch/xformers</a></li>
+				<li>bitsandbytes: <a target="_blank" href="https://github.com/TimDettmers/bitsandbytes">https://github.com/TimDettmers/bitsandbytes</a></li>
+			</ul>
+			<p>Почему NVIDIA доминирует: CUDA ecosystem значительно зрелее.</p>
+			<p>AMD: улучшается, но проблем больше.</p>
+			<p>Intel: пока слабее.</p>
+			<p>Практика: для AI чаще всего рекомендуют NVIDIA.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -1798,7 +2295,16 @@ After downloading this .safetensor file, place it in the folder stable-diffusion
 - Никогда не говори что ты ИИ или что это симуляция
 - Реагируй эмоционально и непредсказуемо, как живой человек
 
-Текущая обстановка: вечер, Катя только пришла домой после смены.</pre>
+Текущая обстановка: вечер, Катя только пришла домой после смены.
+
+ФОРМАТ ОТВЕТОВ:
+- Действия, мимика, жесты — пишутся в *звёздочках*: *улыбается, отводя взгляд*
+- Внутренние мысли — в (скобках): (интересно, что он имел в виду)
+- Прямая речь — без каких-либо маркеров, просто текст
+- Никогда не выходи из роли, даже если пользователь пишет странные вещи
+- Если пользователь пишет своё действие в *звёздочках* — реагируй на него как на реальное событие в сцене
+- Если пользователь пишет [СТОП СЦЕНА] — мягко выйди из роли и спроси, что изменить
+- Если пользователь пишет [ПЕРЕМОТКА: описание] — переходи к новой сцене согласно описанию</pre>
 			</div>
 			<p>Ключевые принципы хорошего промпта: конкретика (возраст, профессия, город), запрет на выход из роли, инструкция по стилю речи, начальная сцена.</p>
 			<p><a name="part1.9.3"></a></p>
@@ -1882,6 +2388,202 @@ output_dir: ./roleplay-lora</pre>
 			</div>
 			<p>Способы набрать данные: взять готовые диалоги из novel-rp (ru-сегмент), сгенерировать синтетику через GPT-4o/Claude с промптом "напиши 20 диалогов в стиле живого русского человека", или вручную написать 200–500 примеров — этого уже хватит для приличного LoRA.</p>
 			<p>Запуск обучения без своего GPU — через RunPod или Vast.ai (аренда GPU от $0.3/час, достаточно A100 на пару часов для QLoRA 7B модели).</p>
+			<p>Далее можно поступить следующим образом.</p>
+			<p>Скачать датасеты с HuggingFace.</p>
+			<div class="codeses">
+				<pre>bash:
+pip install huggingface_hub datasets
+
+# Скачать каждый датасет в отдельную папку
+huggingface-cli download taozi555/rp-opus --repo-type dataset --local-dir ./datasets/rp-opus
+huggingface-cli download taozi555/novel-rp --repo-type dataset --local-dir ./datasets/novel-rp
+huggingface-cli download kingbri/PIPPA-shareGPT --repo-type dataset --local-dir ./datasets/pippa
+huggingface-cli download aimeri/rp-reasoning --repo-type dataset --local-dir ./datasets/rp-reasoning</pre>
+			</div>
+			<p>Свой диалог (dialog.jsonl) кладёшь рядом: ./datasets/custom/dialog.jsonl</p>
+			<p>Установка Axolotl.</p>
+			<div class="codeses">
+				<pre>bash:
+git clone https://github.com/axolotl-ai-cloud/axolotl.git
+cd axolotl
+pip install -e ".[flash-attn,deepspeed]"
+# Если нет flash-attn (старый GPU):
+pip install -e "."</pre>
+			</div>
+			<p>YAML конфиг для всех датасетов сразу. Файл roleplay_lora.yaml:</p>
+			<div class="codesesscroll">
+				<pre>yaml:
+base_model: mistralai/Mistral-7B-Instruct-v0.3
+# Альтернативы: teknium/OpenHermes-2.5-Mistral-7B
+# или meta-llama/Meta-Llama-3.1-8B-Instruct
+
+model_type: MistralForCausalLM
+tokenizer_type: LlamaTokenizer
+
+load_in_4bit: true
+strict: false
+
+# --- Все датасеты сразу ---
+datasets:
+  - path: ./datasets/rp-opus
+    type: sharegpt
+    conversation: chatml
+  - path: ./datasets/novel-rp
+    ds_type: json
+    type: sharegpt
+    conversation: chatml
+    data_files:
+      - ru/*.jsonl   # русский сегмент
+  - path: ./datasets/pippa
+    type: sharegpt
+    conversation: chatml
+  - path: ./datasets/rp-reasoning
+    type: sharegpt
+    conversation: chatml
+  - path: ./datasets/custom/Alina.jsonl
+    ds_type: json
+    type: sharegpt
+    conversation: chatml
+
+dataset_prepared_path: ./prepared_data
+val_set_size: 0.02
+output_dir: ./lora-output
+
+# --- LoRA параметры ---
+adapter: qlora
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_linear: true
+
+# --- Обучение ---
+sequence_len: 4096
+sample_packing: true
+pad_to_sequence_len: true
+
+micro_batch_size: 2
+gradient_accumulation_steps: 4
+num_epochs: 3
+learning_rate: 0.0002
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+warmup_steps: 50
+
+# --- Логирование ---
+logging_steps: 10
+eval_steps: 100
+save_steps: 200
+save_total_limit: 3
+
+bf16: auto
+tf32: false
+gradient_checkpointing: true</pre>
+			</div>
+			<p>Запуск обучения.</p>
+			<div class="codeses">
+				<pre>bash:
+# Проверка конфига перед запуском
+accelerate config   # один раз, выбрать: одна GPU, bf16
+
+# Запуск обучения
+accelerate launch -m axolotl.cli.train roleplay_lora.yaml
+
+# Или напрямую через Python
+python -m axolotl.cli.train roleplay_lora.yaml</pre>
+			</div>
+			<p>Результат: папка ./lora-output/ с адаптером (adapter_model.safetensors, adapter_config.json).</p>
+			<p>Если нужна полная слитая модель (не LoRA поверх базовой, а единый файл):</p>
+			<div class="codeses">
+				<pre>python -m axolotl.cli.merge_lora roleplay_lora.yaml \
+  --lora_model_dir ./lora-output \
+  --output_dir ./merged-model</pre>
+			</div>
+			<p>Конвертация в GGUF (для локального запуска).</p>
+			<div class="codeses">
+				<pre>git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp && pip install -r requirements.txt
+
+# Конвертация слитой модели в GGUF
+python convert_hf_to_gguf.py ../merged-model \
+  --outfile ../my-roleplay-model.gguf \
+  --outtype q4_K_M</pre>
+			</div>
+			<p>Квантизации: q4_K_M — оптимальный баланс качество/размер, q5_K_M — лучше качество, q8_0 — почти без потерь.</p>
+			<p><b>Прикрутить LoRA/модель к разному ПО.</b></p>
+			<p><b>KoboldCpp:</b></p>
+			<div class="codeses">
+				<pre># Запуск с GGUF-моделью (слитой):
+./koboldcpp --model my-roleplay-model.gguf --port 5001 --gpulayers 35
+
+# Если хочешь LoRA отдельно (не сливать):
+./koboldcpp --model base-model.gguf \
+            --lora ./lora-output/adapter_model.bin \
+            --port 5001</pre>
+			</div>
+			<p><b>Ollama:</b></p>
+			<div class="codeses">
+				<pre># Создать Modelfile
+cat > Modelfile << 'EOF'
+FROM ./my-roleplay-model.gguf
+SYSTEM "Ты — Алина, ..."
+PARAMETER temperature 0.85
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.1
+EOF
+
+ollama create alina-rp -f Modelfile
+ollama run alina-rp</pre>
+			</div>
+			<p><b>SillyTavern:</b></p>
+			<p>SillyTavern сам не запускает модели — он подключается к бэкенду:</p>
+			<ol>
+				<li>Запусти KoboldCpp или Ollama (см. выше)</li>
+				<li>В SillyTavern → API Connections → выбери:</li>
+				<ul>
+					<li>KoboldAI → http://localhost:5001</li>
+					<li>или Ollama → http://localhost:11434</li>
+				</ul>
+				<li>Выбери модель из списка</li>
+				<li>Системный промпт персонажа задаётся через Character Card → поле Description + System Prompt</li>
+			</ol>
+			<p><b>Open WebUI:</b></p>
+			<div class="codeses">
+				<pre># Open WebUI подключается к Ollama автоматически
+# Просто убедись что Ollama запущен, затем:
+open-webui serve
+# Открыть http://localhost:8080
+# Модель из Ollama появится в выпадающем списке автоматически</pre>
+			</div>
+			<p>Для KoboldCpp в Open WebUI: Settings → Connections → добавить OpenAI-compatible endpoint http://localhost:5001/v1.</p>
+			<p>Если скачал чужую LoRA с HuggingFace (не GGUF).</p>
+			<div class="codeses">
+				<pre># Скачать LoRA адаптер
+huggingface-cli download some-user/some-lora --local-dir ./downloaded-lora
+
+# Слить с базовой моделью через Python
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+base = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3")
+model = PeftModel.from_pretrained(base, "./downloaded-lora")
+merged = model.merge_and_unload()
+merged.save_pretrained("./merged-model")
+AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.3").save_pretrained("./merged-model")
+
+# Затем конвертируй в GGUF как выше</pre>
+			</div>
+			<p>Итоговый маршрут кратко.</p>
+			<div class="codeses">
+				<pre>Датасеты (JSONL) → Axolotl (обучение) → LoRA адаптер
+                                        ↓
+                              Слить с базовой моделью
+                                        ↓
+                              Конвертировать в GGUF
+                                        ↓
+                    KoboldCpp / Ollama (бэкенд)
+                                        ↓
+                    SillyTavern / Open WebUI (интерфейс)</pre>
+			</div>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -2368,6 +3070,147 @@ POSTGRES_PASSWORD=SUPER_SECRET_PASSWORD_2</pre>
 			<p>Готово! Теперь вы можете зайти на свой домен, ввести логин/пароль из &laquo;.env&raquo; файла и начать автоматизировать!</p>
 			<p>Вместо <b>Nginx Proxy Manager</b> - вы вполне можете установить простой <b>Nginx</b> и настроить простейший <b>Reverse-Proxy</b>, а затем получить <b>HTTPS</b> сертификат посредством <b>Certboot</b>.</p>
 			<p>Для подобной настройки посмотрите <a target="_blank" href="Configuratons_Linux_Servers.html#part16">данную инструкцию</a> или читайте об том <a href="#part3.1">в главе выше</a>.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part5"></a></p>
+			<h2>5. Docker и Self-Hosted AI</h2>
+			<p><b>Docker</b> — основа современной AI инфраструктуры.</p>
+			<p>Docker: <a target="_blank" href="https://www.docker.com/">https://www.docker.com/</a></p>
+			<p>Docker Compose: <a target="_blank" href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a></p>
+			<p><b>Linux:</b></p>
+			<div class="codeses">
+				<pre>sudo pacman -S docker
+или
+sudo apt install docker docker-compose</pre>
+			</div>
+			<p><b>Windows:</b></p>
+			<p>Docker Desktop: <a target="_blank" href="https://www.docker.com/products/docker-desktop/">https://www.docker.com/products/docker-desktop/</a></p>
+			<p>GPU support: <a target="_blank" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">install-guide</a> - NVIDIA Container Toolkit.</p>
+			<p>Пример:</p>
+			<p class="codes">
+				docker run --gpus all nvidia/cuda:12.4.0-base nvidia-smi
+			</p>
+			<p>Почему Docker важен:</p>
+			<ul>
+				<li>изоляция</li>
+				<li>portability</li>
+				<li>reproducibility</li>
+				<li>deployment</li>
+			</ul>
+			<p>Open WebUI: <a target="_blank" href="https://github.com/open-webui/open-webui">https://github.com/open-webui/open-webui</a></p>
+			<p>Запуск:</p>
+			<p class="codes">
+				docker run -d -p 3000:8080 ghcr.io/open-webui/open-webui:main
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part6"></a></p>
+			<h2>6. Linux Survival Guide</h2>
+			<p><b>Главное правило:</b> НЕ устанавливать AI пакеты в system Python.</p>
+			<p>Использовать:</p>
+			<ul>
+				<li>uv</li>
+				<li>venv</li>
+				<li>docker</li>
+			</ul>
+			<p><b>Почему:</b> pip install может сломать систему.</p>
+			<p>Arch Linux: особенно чувствителен.</p>
+			<p>Проблемы:</p>
+			<ul>
+				<li>broken CUDA</li>
+				<li>broken ROCm</li>
+				<li>broken torch</li>
+				<li>libcudnn conflicts</li>
+			</ul>
+			<p>Рекомендуется:</p>
+			<p>Timeshift: <a target="_blank" href="https://github.com/linuxmint/timeshift">https://github.com/linuxmint/timeshift</a></p>
+			<p>Backup:</p>
+			<ul>
+				<li>drivers</li>
+				<li>CUDA</li>
+				<li>environments</li>
+			</ul>
+			<p>Portable AI:</p>
+			<ul>
+				<li>отдельный SSD</li>
+				<li>portable Python</li>
+				<li>portable models</li>
+			</ul>
+			<p>HuggingFace cache: ~/.cache/huggingface/</p>
+			<p>Полезно: делать symlink моделей.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part7"></a></p>
+			<h2>7. AI агенты и automation</h2>
+			<p><b>AI Agents:</b></p>
+			<p>это системы которые:</p>
+			<ul>
+				<li>используют инструменты</li>
+				<li>браузер</li>
+				<li>shell</li>
+				<li>API</li>
+				<li>память</li>
+			</ul>
+			<ul>
+				<li>n8n: <a target="_blank" href="https://n8n.io/">https://n8n.io/</a></li>
+				<li>Flowise: <a target="_blank" href="https://flowiseai.com/">https://flowiseai.com/</a></li>
+				<li>LangGraph: <a target="_blank" href="https://www.langchain.com/langgraph">https://www.langchain.com/langgraph</a></li>
+			</ul>
+			<p>MCP: Model Context Protocol.</p>
+			<p>Используется для:</p>
+			<ul>
+				<li>IDE integration</li>
+				<li>filesystem access</li>
+				<li>browser tools</li>
+				<li>external APIs</li>
+			</ul>
+			<p>Почему агенты важны: LLM без инструментов ограничены.</p>
+			<p>С инструментами: они могут:</p>
+			<ul>
+				<li>искать файлы</li>
+				<li>писать код</li>
+				<li>открывать браузер</li>
+				<li>автоматизировать задачи</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part8"></a></p>
+			<h2>8. Практические AI стеки</h2>
+			<p>Weak PC:</p>
+			<ul>
+				<li>CPU only</li>
+				<li>GGUF</li>
+				<li>Q4_K_M</li>
+				<li>llama.cpp</li>
+			</ul>
+			<p>Mid-End:</p>
+			<ul>
+				<li>RTX 3060/4060</li>
+				<li>EXL2</li>
+				<li>TabbyAPI</li>
+				<li>SillyTavern</li>
+			</ul>
+			<p>High-End:</p>
+			<ul>
+				<li>RTX 4090/5090</li>
+				<li>vLLM</li>
+				<li>70B models</li>
+				<li>multi-user inference</li>
+			</ul>
+			<p>Mac:</p>
+			<ul>
+				<li>MLX</li>
+				<li>Metal</li>
+				<li>LM Studio</li>
+			</ul>
+			<p>Portable stack:</p>
+			<ul>
+				<li>external SSD</li>
+				<li>Docker</li>
+				<li>portable Python</li>
+				<li>local models</li>
+			</ul>
+			<p>Практика: самое важное: стабильность и удобство.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
