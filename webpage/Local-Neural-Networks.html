@@ -60,6 +60,8 @@
 						<li><a href="#part1.1.21">SillyTavern</a></li>
 						<li><a href="#part1.1.22">KoboldCpp</a></li>
 						<li><a href="#part1.1.23">Axolotl</a></li>
+						<li><a href="#part1.1.24">Backyard AI</a></li>
+						<li><a href="#part1.1.25">InvokeAI</a></li>
 					</ol>
 					<li><a href="#part1.2">Параметры</a></li>
 					<ol>
@@ -77,6 +79,8 @@
 						<li><a href="#part1.2.12">RAG и векторные базы</a></li>
 						<li><a href="#part1.2.13">LoRA, QLoRA и Fine-Tuning</a></li>
 						<li><a href="#part1.2.14">CUDA, ROCm и ускорение</a></li>
+						<li><a href="#part1.2.15">MLA (Multi-head Latent Attention)</a></li>
+						<li><a href="#part1.2.16">Flash Attention 3</a></li>
 					</ol>
 					<li><a href="#part1.3">Модели</a></li>
 					<ol>
@@ -103,6 +107,10 @@
 						<li><a href="#part1.3.22">Claude Haiku</a></li>
 						<li><a href="#part1.3.23">DeepSeek</a></li>
 						<li><a href="#part1.3.24">Qwen-Claude-Sonnet</a></li>
+						<li><a href="#part1.3.25">Mistral-7B-Instruct-v0.3</a></li>
+						<li><a href="#part1.3.26">Phi-3/Phi-4</a></li>
+						<li><a href="#part1.3.27">saiga2 7b</a></li>
+						<li><a href="#part1.3.28">SDXL Turbo и SD 3.5</a></li>
 					</ol>
 					<li><a href="#part1.4">Конвертирование моделей</a></li>
 					<li><a href="#part1.5">Запуск GGML/GGUF через ollama</a></li>
@@ -626,6 +634,19 @@ Keywords=</pre>
 			<p></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
+			<p><a name="part1.1.24"></a></p>
+			<p><b><span style="color:red;">&laquo;Backyard AI&raquo;</span></b></p>
+			<p><a target="_blank" href="https://desktop.backyard.ai/">Backyard AI</a></p>
+			<div id="page" class="clearfix">
+				<img src="../image/Neural-Networks/Backyard-AI.jpg" class="fz__minimized" alt="клик для увеличения" title="Backyard AI" />
+			</div>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.1.25"></a></p>
+			<p><b><span style="color:red;">&laquo;InvokeAI&raquo;</span></b></p>
+			<p><a target="_blank" href="https://github.com/invoke-ai/InvokeAI">https://github.com/invoke-ai/InvokeAI</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
 			<p><a name="part1.2"></a></p>
 			<h3>1.2. Параметры</h3>
 			<p><a name="part1.2.1"></a></p>
@@ -894,6 +915,7 @@ Keywords=</pre>
 				<li>используется в vLLM.</li>
 				<li>Позволяет эффективнее управлять KV-cache.</li>
 			</ul>
+			<p>например, --kv-cache-type q8_0 в llama.cpp позволяет увеличить контекст без взрывного роста VRAM.</p>
 			<p>Полезные ссылки:</p>
 			<ul>
 				<li><a target="_blank" href="https://github.com/vllm-project/vllm">vllm-project GiTHub</a></li>
@@ -1250,6 +1272,21 @@ npm start</pre>
 			<p>AMD: улучшается, но проблем больше.</p>
 			<p>Intel: пока слабее.</p>
 			<p>Практика: для AI чаще всего рекомендуют NVIDIA.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.15"></a></p>
+			<h4>1.2.15. MLA (Multi-head Latent Attention)</h4>
+			<p>Это новая архитектура внимания, предложенная DeepSeek в их модели V2. Если совсем просто — это способ заставить LLM (Large Language Model — большая языковая модель) "думать" намного быстрее и использовать меньше видеопамяти (VRAM), особенно при работе с длинными текстами.</p>
+			<p>💡 Аналогия: Библиотекарь и Конспекты</p>
+			<p>Представь, что традиционное "внимание" модели (Multi-Head Attention, MHA) — это библиотекарь, который для ответа на каждый вопрос заново ходит к огромному стеллажу, берет с него все книги целиком (ключа и значение — K и V) и пытается найти в них ответ. Это занимает много места (нужно держать все книги рядом) и времени.</p>
+			<p>А MLA — это очень умный библиотекарь. Он не таскает все книги, а предварительно делает краткие конспекты (сжимает в latent space — скрытое/потенциальное пространство). Когда ему задают вопрос, он берет не огромные книги, а только этот маленький конспект. Это занимает в разы меньше места и позволяет ориентироваться намного быстрее.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.2.16"></a></p>
+			<h4>1.2.16. Flash Attention 3</h4>
+			<p>Это третья версия алгоритма для супер-быстрого расчета одного из самых "тяжелых" компонентов в архитектуре трансформера — механизма внимания. Простыми словами, это ультра-оптимизированный инструмент, который заставляет видеокарту работать на пределе ее возможностей.</p>
+			<p>💡 Аналогия: Конвейер на Заводе</p>
+			<p>Старый способ расчета внимания был неэффективен: конвейер завода то включался, то выключался, тратя время на загрузку деталей. FlashAttention переделал конвейер так, чтобы основная работа велась без остановок (использование быстрой памяти GPU — SRAM вместо HBM). FlashAttention-3 — это как добавить роботизированные руки и систему предзаказа. Теперь параллельно можно выполнять несколько операций, а детали доставляются еще до того, как они понадобятся (асинхронность). Это позволило «выжать» из современных видеокарт почти все их теоретические ресурсы.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
@@ -1634,6 +1671,29 @@ hf download Mykes/medicus</pre>
 			<ul>
 				<li><a href="https://huggingface.co/TeichAI/Qwen3-8B-Claude-Sonnet-4.5-Reasoning-Distill-GGUF">TeichAI/Qwen3-8B-Claude-Sonnet-4.5-Reasoning-Distill-GGUF</a></li>
 			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.25"></a></p>
+			<p><b><span style="color:red;">&laquo;Mistral-7B-Instruct-v0.3&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/QuantFactory/Mistral-7B-Instruct-v0.3-GGUF">QuantFactory/Mistral-7B-Instruct-v0.3-GGUF</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.26"></a></p>
+			<p><b><span style="color:red;">&laquo;Phi-3/Phi-4&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf">microsoft/Phi-3-mini-4k-instruct-gguf</a></p>
+			<p><a target="_blank" href="https://huggingface.co/microsoft/phi-4-gguf">microsoft/phi-4-gguf</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.27"></a></p>
+			<p><b><span style="color:red;">&laquo;saiga2 7b&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/IlyaGusev/saiga2_7b_gguf">IlyaGusev/saiga2_7b_gguf</a></p>
+			<p><a target="_blank" href="https://huggingface.co/IlyaGusev/saiga_llama3_8b_gguf">IlyaGusev/saiga_llama3_8b_gguf</a></p>
+			<p><a target="_blank" href="https://huggingface.co/QuantFactory/saiga_llama3_8b-GGUF">QuantFactory/saiga_llama3_8b-GGUF</a></p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part1.3.28"></a></p>
+			<p><b><span style="color:red;">&laquo;SDXL Turbo и SD 3.5&raquo;</span></b></p>
+			<p><a target="_blank" href="https://huggingface.co/stabilityai/sdxl-turbo">stabilityai/sdxl-turbo</a></p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part1.4"></a></p>

@@ -532,7 +532,39 @@ cmd.exe</pre>
 				Hatch:</br><a target="_blank" href="https://hatch.pypa.io/">hatch.pypa.io</a></br></br>
 				pipx:</br><a target="_blank" href="https://pipx.pypa.io/">pipx.pypa.io</a>
 			</p>
+			<p>Пример.</p>
+			<div class="codeses">
+				<pre>uv init myproject
+cd myproject
+uv venv --python 3.12
+uv sync  # устанавливает зависимости из pyproject.toml
+uv add requests
+uv run python script.py
+uv tool install ruff  # аналог pipx</pre>
+			</div>
 			<p>Используется для isolated CLI apps.</p>
+			<p>Direnv / .envrc — очень удобная штука: при переходе в папку проекта автоматически активируется виртуальное окружение.</p>
+			<div class="codeses">
+				<pre># .envrc
+source .venv/bin/activate</pre>
+			</div>
+			<p>И direnv allow.</p>
+			<p>Docker для изоляции Python — особенно для проектов с нативными расширениями (например, AI-библиотеки с CUDA).</p>
+			<p>Dockerfile:</p>
+			<div class="codeses">
+				<pre>FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]</pre>
+			</div>
+			<p>Pyenv — для управления разными версиями Python глобально.</p>
+			<div class="codeses">
+				<pre>pyenv install 3.11.9
+pyenv local 3.11.9
+python -m venv .venv</pre>
+			</div>
+			<p>Очистка зависимостей — не только mkvirtualenv --clear, но и pip-autoremove для точечного удаления пакетов с их зависимостями. Или как в uv: uv remove package.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
 		<div class="content">
