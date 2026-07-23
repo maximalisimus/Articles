@@ -161,6 +161,16 @@
 				<li><a href="#part6">Linux Survival Guide</a></li>
 				<li><a href="#part7">AI агенты и automation</a></li>
 				<li><a href="#part8">Практические AI стеки</a></li>
+				<li><a href="#part9">Самообучение (Self-Learning Loop)</a></li>
+				<ol>
+					<li><a href="#part9.1">Общая архитектура</a></li>
+					<li><a href="#part9.2">Шаг 1. Мгновенная память через RAG</a></li>
+					<li><a href="#part9.3">Шаг 2. Сбор данных для дообучения</a></li>
+					<li><a href="#part9.4">Шаг 3. Периодическое дообучение через LoRA</a></li>
+					<li><a href="#part9.5">Шаг 4. Применение LoRA в Ollama</a></li>
+					<li><a href="#part9.6">Инструменты для полного цикла самообучения</a></li>
+					<li><a href="#part9.7">Рекомендуемый порядок действий (для начинающих)</a></li>
+				</ol>
 			</ol>
 		</div>
 		<div class="content">
@@ -3298,6 +3308,373 @@ sudo apt install docker docker-compose</pre>
 			<p>Практика: самое важное: стабильность и удобство.</p>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 		</div>
+		<div class="content">
+			<p><a name="part9"></a></p>
+			<h2>9. Самообучение (Self-Learning Loop)</h2>
+			<hr>
+			<p><a name="part9.1"></a></p>
+			<h3>9.1. Общая архитектура</h3>
+			<p class="selections" style="border-left: 5px solid #808080; background-color: #d9d9d9;">
+				[Ваш диалог] → [Лайк/дизлайк + правка] → <br>
+   				→ (мгновенно) → RAG-база (векторная память)<br>
+   				→ (ежедневно/еженедельно) → Сбор датасета → LoRA-дообучение → Новая версия модели
+			</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.2"></a></p>
+			<h3>9.2. Шаг 1. Мгновенная память через RAG</h3>
+			<p>Готовые решения (выберите одно).</p>
+			<p><b>Вариант А:</b> AnythingLLM — самый простой старт:</p>
+			<ul>
+				<li>Установка: скачайте AppImage с <a target="_blank" href="https://anythingllm.com/">anythingllm.com</a></li>
+				<li>Создайте <i>Workspace</i>, подключите вашу модель Ollama</li>
+				<li>В настройках <i>Workspace</i> включите векторную базу (по умолчанию LanceDB)</li>
+				<li><b>Сбор лайков:</b> AnythingLLM имеет встроенные кнопки <b>👍/👎</b> в каждом ответе. Лайкнутые ответы можно экспортировать для дальнейшего дообучения</li>
+				<li>При следующем похожем вопросе система найдёт сохранённый ответ в векторной базе и подставит как контекст</li>
+			</ul>
+			<p><b>Вариант Б:</b> Open WebUI — более гибкий, но сложнее.</p>
+			<ul>
+				<li>Установка: <i> pip install open-webui && open-webui serve</i></li>
+				<li>В админ-панели → Documents настройте векторную базу (поддерживается ChromaDB)</li>
+				<li><b>Важно:</b> установите порог релевантности (Relevance Threshold) в районе 0.6 для баланса точности и полноты</li>
+				<li>Чат с файлами и Knowledge Collections — встроенная RAG-функциональность</li>
+			</ul>
+			<p><b>Вариант В:</b> LangChain + Ollama — для программистов.</p>
+			<ul>
+				<li>Репозиторий-пример: <a target="_blank" href="https://github.com/hereandnowai/chatbot-rag-and-finetuning-updated-for-2026">chatbot-rag-and-finetuning-updated-for-2026</a></li>
+				<li>Используйте langchain и chromadb для создания кастомной RAG-системы</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.3"></a></p>
+			<h3>9.3. Шаг 2. Сбор данных для дообучения</h3>
+			<p>Чтобы модель училась на ваших оценках, нужно накапливать правильные пары (вопрос, ответ):</p>
+			<p><b>Формат датасета (JSONL):</b></p>
+			<div class="codeses">
+				<pre>{"conversations": [{"role": "user", "content": "Ваш вопрос"}, {"role": "assistant", "content": "Ваш откорректированный ответ"}]}</pre>
+			</div>
+			<p>Правила сбора:</p>
+			<ul>
+				<li><b>👍</b> Лайк → сохраняем пару (вопрос, ответ) как есть</li>
+				<li><b>👎</b> Дизлайк → вы правите ответ → сохраняем пару (вопрос, исправленный_ответ)</li>
+				<li><b>Важно:</b> НЕ используйте для дообучения сырые непроверенные ответы — только те, которые вы одобрили или исправили</li>
+			</ul>
+			<p><b>AnythingLLM:</b> экспорт чатов с фильтром по лайкам доступен через API или ручной выгрузкой</p>
+			<p>Вот где искать экспорт в разных интерфейсах:</p>
+			<ul>
+				<li><b>AnythingLLM:</b> Внутри нужного <b>Workspace</b> нажмите кнопку <span style="background-color: #d9d9d9;">Export</span> вверху экрана. Выберите формат <span style="background-color: #d9d9d9;">JSONL (OpenAI fine-tune)</span> — это идеальный вариант для дообучения. Можно экспортировать все чаты или только те, где есть ваши оценки (лайки).</li>
+				<li><b>Open WebUI:</b> В боковом меню нажмите <span style="background-color: #d9d9d9;">Export Chats</span>. Весь чат сохранится как <b>JSON-файл</b>. В нем будет много метаданных. Вам нужно будет написать небольшой Python-скрипт, чтобы превратить его в формат для обучения.</li>
+				<li><b>LLaMA-Factory (Web UI):</b> Самый простой путь. Перейдите на вкладку <span style="background-color: #d9d9d9;">Dataset</span>, создайте новый датасет, выберите нужный формат (например, <span style="background-color: #d9d9d9;">sharegpt</span>) и загрузите ваш JSON/JSONL-файл. Интерфейс сам приведет его к нужному виду.</li>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.4"></a></p>
+			<h3>9.4. Шаг 3. Периодическое дообучение через LoRA</h3>
+			<p>Раз в день/неделю запускайте дообучение на накопленном датасете.</p>
+			<p>Инструменты для дообучения (выберите один).</p>
+			<p><b>Вариант А: LLaMA-Factory</b> — самый популярный, с Web-интерфейсом</p>
+			<div class="codeses">
+				<pre>bash:<br>
+# Установка
+git clone https://github.com/hiyouga/LLaMA-Factory.git
+cd LLaMA-Factory
+pip install -e .
+
+# Запуск Web UI
+CUDA_VISIBLE_DEVICES=0 python src/train_web.py</pre>
+			</div>
+			<p>Конфиг для LoRA (qwen3_lora_sft.yaml):</p>
+			<div class="codeses">
+				<pre>yaml<br>
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+dataset: your_dataset.json
+lora_rank: 32
+lora_alpha: 16
+lora_dropout: 0.05
+num_train_epochs: 3
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 2e-4</pre>
+			</div>
+			<p><b>Важно:</b> не используйте квантизированную модель для дообучения</p>
+			<p><b>Вариант Б: Unsloth</b> — до 5× быстрее, 70% меньше VRAM</p>
+			<div class="codeses">
+				<pre>python<br>
+from unsloth import FastLanguageModel
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Qwen2.5-7B-Instruct",
+    load_in_4bit=True,
+)
+model = FastLanguageModel.get_peft_model(model, r=32, lora_alpha=16)
+# ... обучение на вашем датасете</pre>
+			</div>
+			<p><b>Вариант В: Axolotl</b> — для продвинутых, с YAML-конфигами</p>
+			<div class="codeses">
+				<pre>yaml<br>
+# config.yaml
+base_model: Qwen/Qwen2.5-7B-Instruct
+model_type: AutoModelForCausalLM
+tokenizer_type: AutoTokenizer
+lora_r: 32
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_linear: true
+datasets:
+  - path: your_dataset.json
+    type: chat_template</pre>
+			</div>
+			<p>Запуск: <span style="background-color: #d9d9d9;">&nbsp;axolotl train config.yaml&nbsp;</span></p>
+			<hr style="border-top: 1px dashed">
+			<h4>Подробнее.</h4>
+			<p><b>LoRA</b> дообучает модель, не меняя все ее веса, а добавляя небольшие "адаптеры". Это экономит память и ускоряет процесс.</p>
+			<p><b>Вариант А: LLaMA-Factory (Самый удобный):</b></p>
+			<ol>
+				<li><b>Подготовка:</b> Установите:</li>
+				<p class="codes" style="background-color: #d9d9d9;">git clone https://github.com/hiyouga/LLaMA-Factory.git && cd LLaMA-Factory && pip install -e .</p>
+				<li><b>Создание конфига:</b> Создайте файл, например <span style="background-color: #d9d9d9;">train_lora.yaml</span>, со следующим содержимым:</li>
+				<div class="codeses">
+					<pre>yaml<br>
+# train_lora.yaml
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct  # Ваша базовая модель
+dataset: your_dataset.json                    # Ваш файл с данными
+template: qwen                                # Шаблон для вашей модели
+lora_rank: 32                                 # Размерность LoRA[reference:11]
+lora_alpha: 16                                # Коэффициент масштабирования[reference:12]
+lora_dropout: 0.05
+output_dir: ./output_lora                     # Папка для сохранения
+num_train_epochs: 3.0
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-4</pre>
+				</div>
+				<li><b>Запуск обучения:</b> Выполните команду: <span style="background-color: #d9d9d9;">&nbsp;llamafactory-cli train train_lora.yaml &nbsp;</span>.</li>
+				<li><b>Результат:</b> В папке <span style="background-color: #d9d9d9;">./output_lora</span> появятся файлы адаптера (<span style="background-color: #d9d9d9;">adapter_model.bin</span>, <span style="background-color: #d9d9d9;">adapter_config.json</span>).</li>
+			</ol>
+			<p><b>Вариант Б: Unsloth (Самый быстрый):</b></p>
+			<ol>
+				<li><b>Установка:</b> <span style="background-color: #d9d9d9;">pip install unsloth</span></li>
+				<li><b>Скрипт обучения</b> (<span style="background-color: #d9d9d9;">train_unsloth.py</span>):</li>
+				<div class="codesesscroll">
+				<pre>python<br>
+from unsloth import FastLanguageModel
+import torch
+from trl import SFTTrainer
+from transformers import TrainingArguments
+
+# 1. Загрузка модели в 4-битном формате[reference:14]
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Qwen2.5-7B-Instruct",
+    load_in_4bit=True,
+)
+
+# 2. Добавление LoRA-адаптеров[reference:15]
+model = FastLanguageModel.get_peft_model(
+    model,
+    r=32,                # Ранг LoRA
+    lora_alpha=16,       # Коэффициент масштабирования
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"], # Целевые слои[reference:16]
+    lora_dropout=0,
+)
+
+# 3. Настройка и запуск обучения
+trainer = SFTTrainer(
+    model=model,
+    tokenizer=tokenizer,
+    train_dataset=your_dataset, # Ваш датасет
+    args=TrainingArguments(
+        per_device_train_batch_size=2,
+        gradient_accumulation_steps=4,
+        num_train_epochs=3,
+        learning_rate=2e-4,
+        output_dir="./output_unsloth",
+    ),
+)
+trainer.train()</pre>
+			</div>
+			</ol>
+			<p><b>Вариант В: Axolotl (Самый гибкий):</b></p>
+			<ol>
+				<li><b>Установка:</b> <span style="background-color: #d9d9d9;">pip install axolotl</span></li>
+				<li><b>Конфиг</b> (<span style="background-color: #d9d9d9;">config.yaml</span>):</li>
+				<div class="codesesscroll">
+					<pre>yaml<br>
+					base_model: Qwen/Qwen2.5-7B-Instruct
+model_type: AutoModelForCausalLM
+tokenizer_type: AutoTokenizer
+
+lora_r: 32
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_linear: true      # Применять ко всем линейным слоям[reference:17]
+
+datasets:
+  - path: your_dataset.json
+    type: chat_template
+
+num_epochs: 3
+micro_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 2e-4</pre>
+				</div>
+				<li><b>Запуск:</b> <span style="background-color: #d9d9d9;">axolotl train config.yaml</span></li>
+			</ol>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.5"></a></p>
+			<h3>9.5. Шаг 4. Применение LoRA в Ollama</h3>
+			<p>Новое в Ollama (2026) — поддержка горячей замены LoRA-адаптеров без перезагрузки модели.</p>
+			<div class="codeses">
+				<pre>bash<br>
+# Загружаем базовую модель
+ollama run qwen2.5:7b
+
+# Подключаем LoRA-адаптер на лету (через API)
+# После дообучения конвертируем адаптер в GGUF-формат
+# и применяем через --lora при запуске</pre>
+			</div>
+			<p>Альтернатива — <b>смержить LoRA</b> с базовой моделью и создать новую:</p>
+			<div class="codeses">
+				<pre>bash<br>
+# В LLaMA-Factory
+python src/export_model.py --model_name your_model --adapter_name your_lora --export_dir merged_model
+
+# В Ollama — создаём Modelfile и новую модель
+ollama create my-selflearning-model -f Modelfile</pre>
+			</div>
+			<hr style="border-top: 1px dashed">
+			<h4>Подробнее.</h4>
+			<p>Есть два основных способа.</p>
+			<p><b>Способ 1: Адаптер на лету (Горячая замена)</b></p>
+			<p>Современные версии Ollama (например, 0.30.8) поддерживают быструю смену LoRA-адаптеров без перезагрузки модели. Для этого используется директива <span style="background-color: #d9d9d9;">ADAPTER</span> в Modelfile:</p>
+			<div class="codeses">
+				<pre>text<br>
+FROM Qwen2.5:7b
+ADAPTER ./path/to/your/lora-adapter.gguf</pre>
+			</div>
+			<p>Затем создаете модель: <span style="background-color: #d9d9d9;">ollama create my-super-model -f Modelfile</span></p>
+			<p><b>Способ 2: Слияние (Рекомендуемый)</b></p>
+			<p>Этот способ создает единый, самодостаточный файл модели.</p>
+			<ol>
+				<li><b>Слияние в LLaMA-Factory:</b> Создайте конфиг <span style="background-color: #d9d9d9;">merge_lora.yaml</span>:</li>
+				<div class="codeses">
+				<pre>yaml<br>
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+adapter_name_or_path: ./output_lora    # Путь к адаптеру
+template: qwen
+export_dir: ./merged_model             # Папка для результата
+export_size: 4                         # Размер шардов в ГБ
+export_legacy_format: false</pre>
+			</div>
+				<p>Запустите: <span style="background-color: #d9d9d9;">llamafactory-cli export merge_lora.yaml</span>. LLaMA-Factory может создать Modelfile для Ollama автоматически.</p>
+				<li><b>Создание модели в Ollama:</b> Создайте <span style="background-color: #d9d9d9;">Modelfile</span>:</li>
+				<div class="codeses">
+					<pre>text<br>
+FROM ./merged_model</pre>
+				</div>
+				<p>И выполните: <span style="background-color: #d9d9d9;">ollama create my-final-model -f Modelfile</span></p>
+			</ol>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.6"></a></p>
+			<h3>9.6. Инструменты для полного цикла самообучения</h3>
+			<table>
+				<tr>
+					<th>Инструкт</th>
+					<th>Назначение</th>
+				</tr>
+				<tr>
+					<td><b>SIDIX</b></td>
+					<td>Готовая система с RAG, ReAct-циклом и growth-loop</td>
+				</tr>
+				<tr>
+					<td><b>Engram</b></td>
+					<td>AI-память с семантическим поиском и LoRA-дообучением</td>
+				</tr>
+				<tr>
+					<td><b>Shiftgate</b></td>
+					<td>Интеллектуальная маршрутизация к нужному LoRA-адаптеру</td>
+				</tr>
+				<tr>
+					<td><b>Local LoRA Cookbook</b></td>
+					<td>Дообучение на своих данных за 15 минут</td>
+				</tr>
+			</table>
+			<p>Эти инструменты реализуют идею «замкнутого цикла» (continuous-learning loop), где система не просто отвечает на вопросы, но и учится на вашем взаимодействии с ней.</p>
+			<ul>
+				<li><b>SIDIX (Self-learning Intelligent Digital Infrastructure X)</b></li>
+				<p>Это полноценная, автономная агентная система, работающая полностью локально. Она выходит за рамки простого чат-бота и включает в себя:</p>
+				<ul>
+					<li><b>Ядро агента:</b> Реализует цикл <b>ReAct</b> (Reasoning + Acting), позволяя агенту рассуждать, планировать действия и использовать инструменты.</li>
+					<li><b>Механизм самообучения:</b> Имеет встроенный «цикл роста» (growth loop). Это означает, что система может, например, <b>ежедневно переобучать свой LoRA-адаптер</b> на основе накопленных данных, постоянно становясь умнее.</li>
+					<li><b>Память и инструменты:</b> Включает RAG, семантический кеш для быстрых ответов и более 48 встроенных инструментов.</li>
+					<li><b>Технически:</b> Это LoRA-адаптер поверх модели <b>Qwen2.5-7B-Instruct</b>. Для работы требуется настроить бэкенд (например, vLLM) и оркестратор (brain_qa).</li>
+				</ul>
+				<li><b>Engram</b></li>
+				<p>Это система ИИ-памяти, предназначенная для агентов. Ее ключевая особенность — обучение на вашем уникальном контексте, чтобы со временем превзойти большие модели, используя при этом в <b>1-10% токенов</b>. В ее архитектуре:</p>
+				<ul>
+					<li><b>Два цикла обучения:</b> Есть «тренер» для ежедневного/еженедельного обновления моделей и механизм глубокого <b>LoRA-дообучения</b>.</li>
+					<li><b>Гибкая память:</b> Использует гибридный поиск (векторный + разреженный) и может генерировать гипотетические документы (HyDE) для улучшения поиска.</li>
+					<li><b>Компоненты:</b> Состоит из ядра на Rust, MCP-сервера на TypeScript и Python-тренера.</li>
+				</ul>
+				<li><b>Shiftgate</b></li>
+				<p>Это не модель и не система памяти, а <b>интеллектуальный маршрутизатор</b>. Его задача — автоматически выбирать наиболее подходящий LoRA-адаптер для каждой конкретной задачи. Представьте, что у вас есть несколько специализированных адаптеров (один для кода, другой для финансов, третий для общих вопросов). Shiftgate:</p>
+				<ul>
+					<li><b>Анализирует запрос:</b> Встраивает (embed) ваш вопрос и сравнивает с каталогом задач.</li>
+					<li><b>Принимает решение:</b> Выбирает лучший адаптер и перенаправляет запрос к нему в бэкенде (Ollama или vLLM).</li>
+					<li><b>Работает как прокси:</b> Может выступать в роли OpenAI-совместимого прокси-сервера, автоматически направляя запросы с параметром <span style="background-color: #d9d9d9;">model="auto"</span> на нужный адаптер.</li>
+				</ul>
+				<li><b>Local LoRA Cookbook</b></li>
+				<p>Это практическое руководство и набор скриптов, которые показывают, как за <b>15-40 минут</b> на обычном компьютере (даже на Mac с M-чипом) дообучить локальную 4B-модель. Он идеально подходит для знакомства с процессом. Его философия:</p>
+				<ol>
+					<li><b>Сбор:</b> С помощью вашего RAG-пайплайна генерируются сотни примеров (вопрос-ответ).</li>
+					<li><b>Аннотация:</b> Один раз используется облачная модель (например, Claude) для создания «золотых» ответов в нужном стиле.</li>
+					<li><b>Обучение:</b> Запускается локальное LoRA-дообучение.</li>
+					<li><b>Сервинг:</b> Готовая модель сливается и запускается локально навсегда.</li>
+				</ol>
+			</ul>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+			<hr>
+			<p><a name="part9.7"></a></p>
+			<h3>9.7. Рекомендуемый порядок действий (для начинающих)</h3>
+			<ol>
+				<li><b>Начните с AnythingLLM</b> — включите RAG, начните ставить лайки</li>
+				<li><b>Экспортируйте чаты</b> раз в неделю, отфильтруйте только лайкнутые</li>
+				<li><b>Запустите LLaMA-Factory</b> с Web UI — загрузите датасет, нажмите «Train»</li>
+				<li><b>Смержите LoRA</b> и создайте новую модель в Ollama</li>
+				<li><b>Повторяйте цикл</b> — каждую неделю новая версия вашей «умнеющей» модели</li>
+			</ol>
+			<p><b>Совет:</b> сначала отработайте RAG (мгновенная память), а LoRA подключайте только когда накопится <b>100+ качественных примеров</b> — иначе модель может испортиться.</p>
+			<hr style="border-top: 1px dashed">
+			<h4>Подробнее.</h4>
+			<p>Это пошаговый план, который позволит вам пройти путь от нуля до собственной самообучающейся системы, не перегружая себя сложностью.</p>
+			<p><b>Шаг 1. Настройка базы (RAG) и сбор данных</b></p>
+			<ul>
+				<li>Начните с AnythingLLM или Open WebUI. Подключите их к Ollama.</li>
+				<li>Начните активно использовать систему. Ваша цель — накопить <b>минимум 100-200 качественных примеров</b> взаимодействия (вопрос + ваш одобренный ответ). Это основа для будущего обучения. Используйте лайки/дизлайки для фильтрации.</li>
+			</ul>
+			<p><b>Шаг 2. Знакомство с дообучением</b></p>
+			<ul>
+				<li>Установите и запустите <b>LLaMA-Factory</b>. Это самый дружелюбный инструмент с веб-интерфейсом.</li>
+				<li>Экспортируйте собранные чаты из AnythingLLM/Open WebUI в формат JSONL.</li>
+				<li>Загрузите датасет в LLaMA-Factory и запустите первую пробную тренировку LoRA. Не стремитесь к идеалу, ваша цель — понять процесс.</li>
+			</ul>
+			<p><b>Шаг 3. Изучение продвинутых инструментов</b></p>
+			<ul>
+				<li>Попробуйте <b>Local LoRA Cookbook</b>. Следуйте его инструкциям, чтобы на практике увидеть весь цикл: от сбора данных до деплоя готовой модели. Это отличный способ закрепить знания.</li>
+			</ul>
+			<p><b>Шаг 4. Внедрение полного цикла</b></p>
+			<ul>
+				<li>Теперь, когда вы понимаете основы, можно двигаться дальше. Изучите <b>SIDIX</b> или <b>Engram</b>.</li>
+				<li>Это потребует больше усилий по настройке, но именно здесь начинается настоящее самообучение. Настройте их так, чтобы они периодически (раз в день/неделю) запускали переобучение на новых данных.</li>
+			</ul>
+			<p><b>Шаг 5. Масштабирование и специализация</b></p>
+			<ul>
+				<li>Создайте несколько специализированных LoRA-адаптеров для разных задач (например, «эксперт по Python», «финансовый советник»).</li>
+				<li>Внедрите <b>Shiftgate</b> в качестве маршрутизатора, чтобы ваш главный агент автоматически направлял запросы к нужному эксперту.</li>
+			</ul>
+			<p>Этот план позволит вам двигаться от простого к сложному, постепенно осваивая каждый этап создания самообучающейся системы.</p>
+			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
+		</div>	
 		<div class="content">
 			<p>Ну а сегодня на этом всё. Всем Добра и Удачи!</p>
 		</div>	
