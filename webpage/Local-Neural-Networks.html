@@ -3388,10 +3388,21 @@ sudo apt install docker docker-compose</pre>
 				<li><b>Open WebUI:</b> В боковом меню нажмите <span style="background-color: #d9d9d9;">Export Chats</span>. Весь чат сохранится как <b>JSON-файл</b>. В нем будет много метаданных. Вам нужно будет написать небольшой Python-скрипт, чтобы превратить его в формат для обучения.</li>
 				<li><b>LLaMA-Factory (Web UI):</b> Самый простой путь. Перейдите на вкладку <span style="background-color: #d9d9d9;">Dataset</span>, создайте новый датасет, выберите нужный формат (например, <span style="background-color: #d9d9d9;">sharegpt</span>) и загрузите ваш JSON/JSONL-файл. Интерфейс сам приведет его к нужному виду.</li>
 			</ul>
+			<p>Ссылки на интерфейсы:</p>
+			<ul>
+				<li><a target="_blank" href="https://github.com/hiyouga/LlamaFactory"></a>LLaMA-Factory GitHub</li>
+				<li><a target="_blank" href="https://sourceforge.net/projects/llama-factory.mirror/"></a>LLaMA-Factory SourceForge.Net</li>
+				<li><a target="_blank" href="https://github.com/unslothai/unsloth">Unsloth GitHub</a></li>
+			</ul>
 			<p><a href="#oglavlenie">Перейти к оглавлению</a>.</p>
 			<hr>
 			<p><a name="part9.4"></a></p>
 			<h3>9.4. Шаг 3. Периодическое дообучение через LoRA</h3>
+			<p>Давайте для начала определимся что вообще такое RAG, а что LoRA.</p>
+			<ul>
+				<li><b>RAG</b> → мгновенная память (модель читает из базы).</li>
+				<li><b>LoRA</b> → долгосрочное изменение (запускается отдельно, раз в день/неделю).</li>
+			</ul>
 			<p>Раз в день/неделю запускайте дообучение на накопленном датасете.</p>
 			<p>Инструменты для дообучения (выберите один).</p>
 			<p><b>Вариант А: LLaMA-Factory</b> — самый популярный, с Web-интерфейсом</p>
